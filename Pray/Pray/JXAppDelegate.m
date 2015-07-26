@@ -13,6 +13,8 @@
 @end
 
 @implementation JXAppDelegate
+@synthesize window;
+@synthesize navigationController;
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -43,6 +45,26 @@
     // Saves changes in the application's managed object context before the application terminates.
     [self saveContext];
 }
+
+
+
+#pragma mark - PKReveal delegates
+- (void)loadRootViewController:(UIViewController *)newViewController {
+    
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:newViewController];
+    navController.navigationBar.barTintColor = Colour_PrayDarkBlue;
+    
+    self.revealController = [PKRevealController revealControllerWithFrontViewController:navController leftViewController:self.leftMenuViewController];
+    self.window.rootViewController = self.revealController;
+    [self.window makeKeyAndVisible];
+}
+
+- (void)updateFrontViewControllerWithController:(UIViewController *)controller andFocus:(BOOL)focus {
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller];
+    if (!ISIOS6()) navController.navigationBar.barTintColor = Colour_PrayDarkBlue;
+    [self.revealController setFrontViewController:navController];
+}
+
 
 #pragma mark - Core Data stack
 
