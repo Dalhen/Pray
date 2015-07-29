@@ -7,6 +7,12 @@
 //
 
 #import "JxAppDelegate.h"
+#import <Parse/Parse.h>
+#import "WelcomeController.h"
+#import "FeedController.h"
+
+#define ParseAppID @""
+#define ParseClientKEY @""
 
 @interface JXAppDelegate ()
 
@@ -19,6 +25,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    [self setupParse];
+    [self setupWindow];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [self launchApp];
+    
     return YES;
 }
 
@@ -38,6 +50,8 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -46,6 +60,61 @@
     [self saveContext];
 }
 
+
+
+#pragma mark - Setup
+- (void)setupWindow {
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
+}
+
+
+- (void)setupParse {
+    [Parse setApplicationId:ParseAppID clientKey:ParseClientKEY];
+}
+
+- (void)launchPushNotifications {
+    // Register for Push Notitications, if running iOS 8
+    if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+        UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
+                                                        UIUserNotificationTypeBadge |
+                                                        UIUserNotificationTypeSound);
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
+                                                                                 categories:nil];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+    } else {
+        // Register for Push Notifications before iOS 8
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+                                                                               UIRemoteNotificationTypeAlert |
+                                                                               UIRemoteNotificationTypeSound)];
+    }
+}
+
+
+#pragma mark - Starting App
+- (void)launchApp {
+    
+    if ([UserService isUserLoggedIn]) {
+        [self launchPushNotifications];
+        [self displayMainView];
+    }
+    else {
+        [self displayPrehome];
+    }
+}
+
+- (void)displayPrehome {
+    WelcomeController *welcomeController = [[WelcomeController alloc] init];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:welcomeController];
+    self.window.rootViewController = navController;
+    [self.window makeKeyAndVisible];
+}
+- (void)displayMainView {
+    self.leftMenuViewController = [[LeftMenuController alloc] init];
+    FeedController *feedController = [[FeedController alloc] init];
+    [self loadRootViewController:feedController];
+}
 
 
 #pragma mark - PKReveal delegates

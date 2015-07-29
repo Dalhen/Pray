@@ -23,3 +23,5 @@
 #define ISIOS6()                                    SYSTEM_VERSION_LESS_THAN(@"7.0")
 
 #define isDemo ([[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"] isEqualToString:@""])
+
+#define sratio (([[UIScreen mainScreen] bounds].size.height <= 568.0)? 1 : 1.172)

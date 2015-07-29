@@ -60,6 +60,9 @@ struct UserServicesStruct {
     __unsafe_unretained NSString * const RefreshChatNow;
     __unsafe_unretained NSString * const SendMessageSuccess;
     __unsafe_unretained NSString * const SendMessageFailed;
+    
+    __unsafe_unretained NSString * const FacebookLoginSuccess;
+    __unsafe_unretained NSString * const FacebookLoginFailed;
 };
 
 struct MeetingsServicesStruct {
