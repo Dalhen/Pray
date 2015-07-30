@@ -7,7 +7,23 @@
 //
 
 #import "SignupController.h"
+#import "BaseView.h"
+
+@interface SignupController ()
+
+@end
 
 @implementation SignupController
+
+
+- (void)loadView {
+    self.view = [[BaseView alloc] init];
+}
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
 
 @end

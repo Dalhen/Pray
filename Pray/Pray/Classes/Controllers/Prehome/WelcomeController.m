@@ -9,6 +9,7 @@
 #import "WelcomeController.h"
 #import "SigninController.h"
 #import "SignupController.h"
+#import "BaseView.h"
 
 @interface WelcomeController ()
 
@@ -17,8 +18,13 @@
 @implementation WelcomeController
 
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
 - (void)loadView {
-    self.view = [[UIView alloc] init];
+    self.view = [[BaseView alloc] init];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [self setupLayout];
 }
 
