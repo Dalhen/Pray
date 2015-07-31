@@ -11,7 +11,10 @@
 #import "PKRevealController.h"
 #import "LeftMenuController.h"
 
-@interface JXAppDelegate : UIResponder <UIApplicationDelegate>
+@interface JXAppDelegate : UIResponder <UIApplicationDelegate> {
+    
+    UIButton *notificationPopup;
+}
 
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, strong) PKRevealController *revealController;
@@ -25,6 +28,14 @@
 - (NSURL *)applicationDocumentsDirectory;
 - (void)updateFrontViewControllerWithController:(UIViewController *)controller andFocus:(BOOL)focus;
 
+
+#pragma mark - Main Views
+- (void)displayPrehome;
+- (void)displayMainView;
+
+
+#pragma mark - Push Notifications
+- (void)launchPushNotifications;
 
 @end
 

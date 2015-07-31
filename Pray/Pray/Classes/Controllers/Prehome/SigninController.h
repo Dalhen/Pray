@@ -8,6 +8,10 @@
 
 #import "BaseViewController.h"
 
-@interface SigninController : BaseViewController
+@interface SigninController : BaseViewController <UITextFieldDelegate> {
+    
+    UITextField *emailField;
+    UITextField *passwordField;
+}
 
 @end
