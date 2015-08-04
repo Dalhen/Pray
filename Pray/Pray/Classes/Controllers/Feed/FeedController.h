@@ -8,6 +8,17 @@
 
 #import "BaseViewController.h"
 
-@interface FeedController : BaseViewController
+@interface FeedController : BaseViewController <UITableViewDataSource, UITableViewDelegate> {
+ 
+    UITableView *mainTable;
+    UIRefreshControl *refreshControl;
+    BOOL refreshing;
+    
+    NSMutableArray *prayers;
+    
+    NSInteger currentPage;
+    NSInteger maxMomentPerPage;
+    NSInteger maxPagesCount;
+}
 
 @end

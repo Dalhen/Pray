@@ -9,11 +9,6 @@
 #import <Foundation/Foundation.h>
 
 
-struct CalendarStruct {
-    __unsafe_unretained NSString * const ConfirmDateSuccess;
-    __unsafe_unretained NSString * const ConfirmDateFailed;
-};
-
 struct UserServicesStruct {
     __unsafe_unretained NSString * const UpdateOAuthTokenSuccess;
     __unsafe_unretained NSString * const UpdateOAuthTokenFailed;
@@ -65,11 +60,18 @@ struct UserServicesStruct {
     __unsafe_unretained NSString * const FacebookLoginFailed;
 };
 
-struct MeetingsServicesStruct {
-    __unsafe_unretained NSString * const GetMeetingsSuccess;
-    __unsafe_unretained NSString * const GetMeetingsFailed;
-    __unsafe_unretained NSString * const CancelMeetingSuccess;
-    __unsafe_unretained NSString * const CancelMeetingFailed;
+struct FeedServicesStruct {
+    __unsafe_unretained NSString * const LoadFeedSuccess;
+    __unsafe_unretained NSString * const LoadFeedFailed;
+    __unsafe_unretained NSString * const DeletePostSuccess;
+    __unsafe_unretained NSString * const DeletePostFailed;
+    __unsafe_unretained NSString * const ReportPostSuccess;
+    __unsafe_unretained NSString * const ReportPostFailed;
+};
+
+struct PostServicesStruct {
+    __unsafe_unretained NSString * const PostPrayerSuccess;
+    __unsafe_unretained NSString * const PostPrayerFailed;
 };
 
 struct PushNotificationServicesStruct {
@@ -87,9 +89,9 @@ struct ChatServicesStruct {
 
 
 struct JXNotificationStruct {
-    struct CalendarStruct const CalendarServices;
     struct UserServicesStruct const UserServices;
-    struct MeetingsServicesStruct const MeetingsServices;
+    struct FeedServicesStruct const FeedServices;
+    struct PostServicesStruct const PostServices;
     struct PushNotificationServicesStruct const PushNotificationServices;
     struct ChatServicesStruct const ChatServices;
 };

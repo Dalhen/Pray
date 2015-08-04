@@ -1,18 +1,47 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14E46" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="CDComments" representedClassName="CDComments" syncable="YES">
+        <attribute name="commentText" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="creationDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="creatorId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="timeAgo" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="creator" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDUser" inverseName="comments" inverseEntity="CDUser" syncable="YES"/>
+        <relationship name="prayer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDPrayer" inverseName="comments" inverseEntity="CDPrayer" syncable="YES"/>
+    </entity>
+    <entity name="CDPrayer" representedClassName="CDPrayer" syncable="YES">
+        <attribute name="categoryId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="commentsCount" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="creationDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="creatorId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="imageURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isLiked" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="likesCount" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="prayerText" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="timeAgo" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="comments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDComments" inverseName="prayer" inverseEntity="CDComments" syncable="YES"/>
+        <relationship name="creator" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDUser" inverseName="prayers" inverseEntity="CDUser" syncable="YES"/>
+    </entity>
     <entity name="CDUser" representedClassName="CDUser" syncable="YES">
         <attribute name="avatar" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="bio" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="birthday" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="created" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="facebookId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="firstname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="followersCount" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="followingCount" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="gender" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="prayersCount" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="uniqueId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="comments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDComments" inverseName="creator" inverseEntity="CDComments" syncable="YES"/>
+        <relationship name="prayers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDPrayer" inverseName="creator" inverseEntity="CDPrayer" syncable="YES"/>
     </entity>
     <elements>
-        <element name="CDUser" positionX="-54" positionY="-9" width="128" height="195"/>
+        <element name="CDComments" positionX="-36" positionY="126" width="128" height="135"/>
+        <element name="CDPrayer" positionX="-54" positionY="72" width="128" height="210"/>
+        <element name="CDUser" positionX="-54" positionY="-9" width="128" height="285"/>
     </elements>
 </model>
