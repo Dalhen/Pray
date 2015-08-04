@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>743ACE28-E884-4562-A758-9B6B0747F0B9</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Pray</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>80C6EEE0AFDB49D60DFA244A32DAA354876C2F23</key>
+		<string>https://bitbucket.org/JasonTech/pray.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Pray/Pray.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>80C6EEE0AFDB49D60DFA244A32DAA354876C2F23</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://bitbucket.org/JasonTech/pray.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>80C6EEE0AFDB49D60DFA244A32DAA354876C2F23</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>80C6EEE0AFDB49D60DFA244A32DAA354876C2F23</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Pray</string>
+		</dict>
+	</array>
+</dict>
+</plist>
