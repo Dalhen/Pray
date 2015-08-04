@@ -677,4 +677,12 @@ fromAnchorPoint:(CGPoint)point
     self.layer.masksToBounds = YES;
 }
 
+- (float)screenWidth {
+    return [[UIScreen mainScreen] bounds].size.width;
+}
+
+- (float)screenHeight {
+    return [[UIScreen mainScreen] bounds].size.height;
+}
+
 @end

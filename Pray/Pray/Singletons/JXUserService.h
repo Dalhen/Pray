@@ -30,15 +30,9 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)setUserWithUsername:(NSString *)username
                      userID:(NSString *)userID
-                 linkedinID:(NSString *)linkedinID
                   firstname:(NSString *)firstname
                    lastname:(NSString *)lastname
                    fullname:(NSString *)fullname
-                companyName:(NSString *)companyName
-                  companyID:(NSString *)companyID
-                   position:(NSString *)position
-             departmentName:(NSString *)departmentName
-               departmentID:(NSString *)departmentID
                         bio:(NSString *)bio
                        city:(NSString *)city
                  profileURL:(NSString *)profileURL;

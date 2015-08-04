@@ -7,16 +7,30 @@
 //
 
 #import "JxAppDelegate.h"
+#import <Parse/Parse.h>
+#import "WelcomeController.h"
+#import "FeedController.h"
+
+#define ParseAppID @""
+#define ParseClientKEY @""
 
 @interface JXAppDelegate ()
 
 @end
 
 @implementation JXAppDelegate
+@synthesize window;
+@synthesize navigationController;
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    [self setupParse];
+    [self setupWindow];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [self launchApp];
+    
     return YES;
 }
 
@@ -36,6 +50,8 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -43,6 +59,212 @@
     // Saves changes in the application's managed object context before the application terminates.
     [self saveContext];
 }
+
+
+
+#pragma mark - Setup
+- (void)setupWindow {
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
+}
+
+
+- (void)setupParse {
+    [Parse setApplicationId:ParseAppID clientKey:ParseClientKEY];
+}
+
+- (void)launchPushNotifications {
+    // Register for Push Notitications, if running iOS 8
+    if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+        UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
+                                                        UIUserNotificationTypeBadge |
+                                                        UIUserNotificationTypeSound);
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
+                                                                                 categories:nil];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+    } else {
+        // Register for Push Notifications before iOS 8
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+                                                                               UIRemoteNotificationTypeAlert |
+                                                                               UIRemoteNotificationTypeSound)];
+    }
+}
+
+
+#pragma mark - Starting App
+- (void)launchApp {
+    
+    if ([UserService isUserLoggedIn]) {
+        [self launchPushNotifications];
+        [self displayMainView];
+    }
+    else {
+        [self displayPrehome];
+    }
+}
+
+- (void)displayPrehome {
+    WelcomeController *welcomeController = [[WelcomeController alloc] init];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:welcomeController];
+    self.window.rootViewController = navController;
+    [self.window makeKeyAndVisible];
+}
+
+- (void)displayMainView {
+    self.leftMenuViewController = [[LeftMenuController alloc] init];
+    FeedController *feedController = [[FeedController alloc] init];
+    [self loadRootViewController:feedController];
+}
+
+
+#pragma mark - PKReveal delegates
+- (void)loadRootViewController:(UIViewController *)newViewController {
+    
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:newViewController];
+    navController.navigationBar.barTintColor = Colour_PrayDarkBlue;
+    
+    self.revealController = [PKRevealController revealControllerWithFrontViewController:navController leftViewController:self.leftMenuViewController];
+    self.window.rootViewController = self.revealController;
+    [self.window makeKeyAndVisible];
+}
+
+- (void)updateFrontViewControllerWithController:(UIViewController *)controller andFocus:(BOOL)focus {
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller];
+    if (!ISIOS6()) navController.navigationBar.barTintColor = Colour_PrayDarkBlue;
+    [self.revealController setFrontViewController:navController];
+}
+
+
+
+#pragma mark - Push notifications delegates
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
+    //register to receive notifications
+    [application registerForRemoteNotifications];
+}
+
+- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler {
+    //handle the actions
+    if ([identifier isEqualToString:@"declineAction"]){
+    }
+    else if ([identifier isEqualToString:@"answerAction"]){
+        [self launchedFromNotification:[userInfo objectForKey:@"cdata"]];
+    }
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation setDeviceTokenFromData:deviceToken];
+    [currentInstallation saveInBackground];
+    
+    if ([UserService getUserID]) {
+        [NetworkService updateDeviceToken:deviceToken];
+    }
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    if (debugMode) NSLog(@"App failed to register for push notifications. Error: %@", [error description]);
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    //[PFPush handlePush:userInfo];
+    
+    //App was in the background
+    if (application.applicationState == UIApplicationStateInactive || application.applicationState == UIApplicationStateBackground) {
+        [self launchedFromNotification:[userInfo objectForKey:@"cdata"]];
+    }
+    
+    //App was in the foreground
+    else {
+        NSDictionary *notificationInfo = [userInfo objectForKey:@"cdata"];
+        switch ([[notificationInfo objectForKey:@"notification_type"] intValue]) {
+                
+//                //New message
+//            case 1:
+//                Notification_Post(JXNotification.PushNotificationServices.NewMessages, nil);
+//                break;
+//                
+//                //New match confirmed
+//            case 2:
+//                [[[UIAlertView alloc] initWithTitle:LocString(@"New lunch") message:LocString(@"You have a new lunch confirmed!") delegate:nil cancelButtonTitle:LocString(@"Ok") otherButtonTitles:nil] show];
+//                Notification_Post(JXNotification.PushNotificationServices.NewMeeting, nil);
+//                break;
+//                
+//                //Match cancelled
+//            case 3:
+//                [[[UIAlertView alloc] initWithTitle:LocString(@"Lunch canceled") message:LocString(@"One of your lunches has been canceled!") delegate:nil cancelButtonTitle:LocString(@"Ok") otherButtonTitles:nil] show];
+//                Notification_Post(JXNotification.PushNotificationServices.NewMeeting, nil);
+//                break;
+//                
+//                //Match updated
+//            case 4:
+//                [[[UIAlertView alloc] initWithTitle:LocString(@"Lunch updated") message:LocString(@"The time of one of your lunches has been changed!") delegate:nil cancelButtonTitle:LocString(@"Ok") otherButtonTitles:nil] show];
+//                Notification_Post(JXNotification.PushNotificationServices.NewMeeting, nil);
+//                break;
+                
+                
+            default:
+                break;
+        }
+    }
+}
+
+- (void)launchedFromNotification:(NSDictionary *)notification {
+    switch ([[notification objectForKey:@"notification_type"] intValue]) {
+            
+            //New message
+        case 1:
+            
+            break;
+            
+            //New match confirmed
+        case 2:
+            
+            break;
+            
+            //New match cancelled
+        case 3:
+            break;
+            
+            //Match updated
+        case 4:
+            break;
+            
+            
+        default:
+            break;
+    }
+}
+
+- (void)showNotificationPopupWithText:(NSString *)text {
+    if (!notificationPopup) {
+        notificationPopup = [UIButton buttonWithType:UIButtonTypeCustom];
+        [notificationPopup setFrame:CGRectMake(0, -65, self.window.width, 65)];
+        [notificationPopup setBackgroundColor:Colour_PrayBlue];
+        [notificationPopup setTitleColor:Colour_White forState:UIControlStateNormal];
+        [notificationPopup.titleLabel setFont:[FontService systemFontBold:13]];
+    }
+    
+    [notificationPopup setTitle:text forState:UIControlStateNormal];
+    [[[self.window subviews] lastObject] addSubview:notificationPopup];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        [notificationPopup setTop:0];
+    } completion:^(BOOL finished) {
+        [NSTimer scheduledTimerWithTimeInterval:2.5 target:self selector:@selector(hideNotificationPanel) userInfo:nil repeats:NO];
+    }];
+}
+
+- (void)hideNotificationPanel {
+    [UIView animateWithDuration:0.3 animations:^{
+        [notificationPopup setTop:-65];
+    } completion:^(BOOL finished) {
+        [notificationPopup removeFromSuperview];
+    }];
+}
+
+
 
 #pragma mark - Core Data stack
 

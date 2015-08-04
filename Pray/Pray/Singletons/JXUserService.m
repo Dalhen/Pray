@@ -90,15 +90,9 @@
 
 - (void)setUserWithUsername:(NSString *)username
                      userID:(NSString *)userID
-                 linkedinID:(NSString *)linkedinID
                   firstname:(NSString *)firstname
                    lastname:(NSString *)lastname
                    fullname:(NSString *)fullname
-                companyName:(NSString *)companyName
-                  companyID:(NSString *)companyID
-                   position:(NSString *)position
-             departmentName:(NSString *)departmentName
-               departmentID:(NSString *)departmentID
                         bio:(NSString *)bio
                        city:(NSString *)city
                  profileURL:(NSString *)profileURL {
@@ -108,14 +102,8 @@
     [[NSUserDefaults standardUserDefaults] setObject:firstname forKey:@"firstname"];
     [[NSUserDefaults standardUserDefaults] setObject:lastname forKey:@"lastname"];
     [[NSUserDefaults standardUserDefaults] setObject:fullname forKey:@"fullname"];
-    [[NSUserDefaults standardUserDefaults] setObject:companyName forKey:@"companyName"];
-    [[NSUserDefaults standardUserDefaults] setObject:companyID forKey:@"companyID"];
-    [[NSUserDefaults standardUserDefaults] setObject:position forKey:@"position"];
-    [[NSUserDefaults standardUserDefaults] setObject:departmentName forKey:@"departmentName"];
-    [[NSUserDefaults standardUserDefaults] setObject:departmentID forKey:@"departmentID"];
     [[NSUserDefaults standardUserDefaults] setObject:bio forKey:@"bio"];
     [[NSUserDefaults standardUserDefaults] setObject:city forKey:@"city"];
-    [[NSUserDefaults standardUserDefaults] setObject:linkedinID forKey:@"linkedinID"];
     [[NSUserDefaults standardUserDefaults] setObject:profileURL forKey:@"avatarURL"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }

@@ -132,5 +132,7 @@ fromAnchorPoint:(CGPoint)point;
 - (void)addRoundEdgesWithRadius:(float)radius;
 - (void)maskWithImageNamed:(NSString *)imageName;
 
+- (float)screenWidth;
+- (float)screenHeight;
 
 @end

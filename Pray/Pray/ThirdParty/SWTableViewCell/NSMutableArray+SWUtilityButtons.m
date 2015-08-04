@@ -16,7 +16,7 @@
     button.backgroundColor = color;
     [button setTitle:title forState:UIControlStateNormal];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [button.titleLabel setFont:[FontService prayBold:13]];
+    [button.titleLabel setFont:[FontService prayRegular:11]];
     [button.titleLabel setAdjustsFontSizeToFitWidth:YES];
     [self addObject:button];
 }

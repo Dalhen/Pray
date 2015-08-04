@@ -60,6 +60,9 @@ const struct JXNotificationStruct JXNotification = {
         .RefreshChatNow = @"com.nea.userServices.RefreshChatNow",
         .SendMessageSuccess = @"com.nea.userServices.SendMessageSuccess",
         .SendMessageFailed = @"com.nea.userServices.SendMessageFailed",
+        
+        .FacebookLoginSuccess = @"com.nea.userServices.FacebookLoginSuccess",
+        .FacebookLoginFailed = @"com.nea.userServices.FacebookLoginFailed",
     },
     
     .MeetingsServices = {
