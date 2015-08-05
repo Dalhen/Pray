@@ -7,8 +7,9 @@
 //
 
 #import "BaseViewController.h"
+#import "PrayerCell.h"
 
-@interface FeedController : BaseViewController <UITableViewDataSource, UITableViewDelegate> {
+@interface FeedController : BaseViewController <UITableViewDataSource, UITableViewDelegate, PrayerCellDelegate> {
  
     UITableView *mainTable;
     UIRefreshControl *refreshControl;

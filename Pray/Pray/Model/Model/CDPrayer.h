@@ -13,6 +13,7 @@
 
 @interface CDPrayer : NSManagedObject
 
+@property (nonatomic, retain) NSNumber * uniqueId;
 @property (nonatomic, retain) NSNumber * categoryId;
 @property (nonatomic, retain) NSString * commentsCount;
 @property (nonatomic, retain) NSDate * creationDate;

@@ -127,127 +127,22 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MomentViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RegularMomentCell"];
+    PrayerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PrayerCell"];
     
     if(!cell) {
-        cell = [[MomentViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RegularMomentCell"];
+        cell = [[PrayerCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"PrayerCell"];
         cell.delegate = self;
-        [cell setBackgroundColor:Colour_White];
     }
     
-    [cell.favouriteButton setTag:indexPath.row];
-    [cell updateWithMoment:cellMoment andHeightData:
-     [computedHeightsData objectForKey:[NSString stringWithFormat:@"%li", (long)indexPath.row]]];
-    
-    [cell updateMomentMediaInTableView:tableView forIndexPath:indexPath];
+    [cell updateWithPrayerObject:[prayers objectAtIndex:indexPath.row]];
     
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    switch (tabOption) {
-        case TabOptionFeed: {
-            CDMoment *momentClicked = [moments objectAtIndex:indexPath.row];
-            if ([momentClicked.type isEqualToString:@"col_album"]) {
-                AlbumController *albumController = [[AlbumController alloc] initWithAlbumMoment:[moments objectAtIndex:indexPath.row]
-                                                                         andCollectionDisplayed:YES];
-                [self.navigationController pushViewController:albumController animated:YES];
-            }
-        }
-            break;
-            
-        case TabOptionPhotos: {
-            if (indexPath.row == 0) {
-                if([group.images count]>0) {
-                    MediaViewController *mediaController = [[MediaViewController alloc] initWithGroup:group andType:typeImage];
-                    [self.navigationController pushViewController:mediaController animated:YES];
-                }
-                else {
-                    [ErrorService showErrorForCode:104];
-                }
-            }
-            else if (indexPath.row == 1) {
-                if([group.videos count]>0) {
-                    MediaViewController *mediaController = [[MediaViewController alloc] initWithGroup:group andType:typeVideo];
-                    [self.navigationController pushViewController:mediaController animated:YES];
-                }
-                else {
-                    [ErrorService showErrorForCode:105];
-                }
-            }
-            else if (indexPath.row>2) {
-                AlbumController *albumController = [[AlbumController alloc] initWithAlbumMoment:[albums objectAtIndex:indexPath.row-3]
-                                                                         andCollectionDisplayed:YES];
-                [self.navigationController pushViewController:albumController animated:YES];
-            }
-        }
-            break;
-            
-            //        case TabOptionMembersAndLink: {
-            //            //Private Group OR Group Admin
-            //            if ([group.privacyType isEqualToNumber:[NSNumber numberWithInt:0]] || [self isGroupAdmin]) {
-            //                if (indexPath.row == 0 && [self isGroupAdmin]) {
-            //                    [self displayFriendsSelector];
-            //                }
-            //                else {
-            //                    if ([groupMembers count]>indexPath.row-([self isGroupAdmin]? 1 : 0)) {
-            //                        CDUser *user = [DataAccess getUserForID:[NSNumber numberWithInt:[[[groupMembers objectAtIndex:indexPath.row - ([self isGroupAdmin]? 1 : 0)] objectForKey:@"unique_id"] intValue]]];
-            //                        ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:user andGroupId:[group.uniqueId stringValue]];
-            //                        [self.navigationController pushViewController:profileViewController animated:YES];
-            //                    }
-            //                }
-            //            }
-            //
-            //            //Public Group
-            //            else {
-            //
-            //            }
-            //        }
-            //            break;
-            
-            //        case TabOptionSettings: {
-            //
-            //            //Edit group
-            //            if (indexPath.row == 0) {
-            //                EditGroupController *editGroupController = [[EditGroupController alloc] initWithGroup:group];
-            //                [self.navigationController pushViewController:editGroupController animated:YES];
-            //            }
-            //
-            //            //Invite friends
-            //            else if (indexPath.row == 1) {
-            //                InviteFriendsController *inviteController = [[InviteFriendsController alloc] initWithGroup:group];
-            //                UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:inviteController];
-            //                [self.navigationController presentViewController:navController animated:YES completion:nil];
-            //            }
-            //        }
-            //            break;
-            
-        default:
-            break;
-    }
-    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return NO;
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle==UITableViewCellEditingStyleDelete)
-    {
-        
-    }
-    
-    [tableView reloadData];
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return LocString(@"Remove this user");
-}
-
-
 
 
 #pragma mark - Delete post

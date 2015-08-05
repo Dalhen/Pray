@@ -13,6 +13,7 @@
 
 @implementation CDComments
 
+@dynamic uniqueId;
 @dynamic commentText;
 @dynamic creationDate;
 @dynamic creatorId;

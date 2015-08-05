@@ -140,6 +140,76 @@
 }
 
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - User
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+- (CDUser *)addUserWithData:(NSDictionary *)userObject {
+    NSManagedObjectContext *moc = [JXDataAccess getDBContext];
+    
+    NSNumber *userId = [NSNumber numberWithInt:[[userObject objectForKey:@"id"] intValue]];
+    NSString *avatarUrl = [userObject objectForKey:@"avatar"];
+    NSString *bio = [userObject objectForKey:@"additional_info"];
+    NSString *username = [userObject objectForKey:@"username"];
+    NSString *email = [userObject objectForKey:@"email"];
+    NSString *facebookId = [userObject objectForKey:@"fb_id"];
+    NSString *firstname = [userObject objectForKey:@"first_name"];
+    NSString *lastname = [userObject objectForKey:@"last_name"];
+    NSString *followersCount = [userObject objectForKey:@"followers_count"];
+    NSString *followingCount = [userObject objectForKey:@"following_count"];
+    NSString *prayersCount = [userObject objectForKey:@"prayers_count"];
+    //NSDate *dateOfBirth = [NSDate dateFromUTCServer:[userObject objectForKey:@"dob"]];
+    
+    CDUser *user = [self getUserForID:userId];
+    if (!user) {
+        user = (CDUser *)[NSEntityDescription insertNewObjectForEntityForName:@"CDUser" inManagedObjectContext:moc];
+    }
+    
+    user.uniqueId = validObject(userId)? userId : user.uniqueId;
+    user.avatar = validObject(avatarUrl)? avatarUrl : user.avatar;
+    user.bio = validObject(bio)? bio : user.bio;
+    user.username = validObject(username)? username : user.username;
+    user.email = validObject(email)? email : user.email;
+    user.username = validObject(username)? username : user.username;
+    user.firstname = validObject(firstname)? firstname : user.firstname;
+    user.lastname = validObject(lastname)? lastname : user.lastname;
+    user.username = validObject(username)? username : user.username;
+
+    user.followersCount = validObject(followersCount)? followersCount : user.followersCount;
+    user.followingCount = validObject(followingCount)? followingCount : user.followingCount;
+    
+    
+    NSError *error;
+    if (![moc save:&error]) {
+        // Handle the error.
+        if(DEBUGDataAccess) NSLog(@"Error saving user");
+    } else {
+        if(DEBUGDataAccess) NSLog(@"New user added");
+    }
+    
+    return user;
+}
+
+- (CDUser *)getUserForID:(NSNumber *)uniqueId {
+    NSManagedObjectContext *moc = [JXDataAccess getDBContext];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"CDUser" inManagedObjectContext:moc]];
+    [request setPredicate:[NSPredicate predicateWithFormat:@"uniqueId == %@", uniqueId]];
+    
+    NSError *error;
+    NSMutableArray *mutableFetchResults = [[moc executeFetchRequest:request error:&error] mutableCopy];
+    return ([mutableFetchResults count]>0) ? [mutableFetchResults objectAtIndex:0] : nil;
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Prayer
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Comment
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 @end

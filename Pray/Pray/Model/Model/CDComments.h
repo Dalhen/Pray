@@ -13,6 +13,7 @@
 
 @interface CDComments : NSManagedObject
 
+@property (nonatomic, retain) NSNumber * uniqueId;
 @property (nonatomic, retain) NSString * commentText;
 @property (nonatomic, retain) NSDate * creationDate;
 @property (nonatomic, retain) NSNumber * creatorId;

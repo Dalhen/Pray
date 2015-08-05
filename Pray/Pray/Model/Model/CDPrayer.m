@@ -13,6 +13,7 @@
 
 @implementation CDPrayer
 
+@dynamic uniqueId;
 @dynamic categoryId;
 @dynamic commentsCount;
 @dynamic creationDate;
