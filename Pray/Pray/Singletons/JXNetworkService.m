@@ -700,9 +700,9 @@
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark - Cards
+#pragma mark - Comments
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-- (void)getUsersToMachWithDepartmentID:(NSString *)departmentID locationID:(NSString *)locationID {
+- (void)loadCommentsForPrayerID:(NSString *)prayerID {
     void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
         if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
         
@@ -710,6 +710,7 @@
         
         //success
         if (statusCode == 200) {
+            //[DataAccess ]
             Notification_Post(JXNotification.UserServices.GetUsersToMatchSuccess, [responseObject objectForKey:@"data"]);
         }
         
@@ -725,15 +726,14 @@
     };
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   departmentID, @"department_id",
-                                   locationID, @"location_id",
+                                   prayerID, @"prayer_id",
                                    [UserService getUserID], @"user_id",
                                    [UserService getOAuthToken], @"access_token", nil];
     
-    [self checkAccessTokenAndCall:@"api/v1/users" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
+    [self checkAccessTokenAndCall:@"api/v1/comments" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
-- (void)getDepartmentsForCompanyID:(NSString *)companyID {
+- (void)deleteCommentWithID:(NSString *)commentID {
     void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
         if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
         
@@ -741,312 +741,35 @@
         
         //success
         if (statusCode == 200) {
-            Notification_Post(JXNotification.UserServices.GetCompanyDepartmentsSuccess, [responseObject objectForKey:@"data"]);
+            Notification_Post(JXNotification.FeedServices.DeleteCommentSuccess, nil);
         }
         
         //invalid
         else {
-            Notification_Post(JXNotification.UserServices.GetCompanyDepartmentsFailed, nil);
+            Notification_Post(JXNotification.FeedServices.DeleteCommentFailed, nil);
         }
     };
     
     void (^failureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
         if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
-        Notification_Post(JXNotification.UserServices.GetCompanyDepartmentsFailed, nil);
+        Notification_Post(JXNotification.FeedServices.DeleteCommentFailed, nil);
     };
     
-    NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   commentID, @"comment_id",
                                    [UserService getUserID], @"user_id",
                                    [UserService getOAuthToken], @"access_token", nil];
     
-    [self checkAccessTokenAndCall:[NSString stringWithFormat:@"api/v1/companies/%@", companyID] isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
-}
-
-- (void)getLocationsForCompanyID:(NSString *)companyID {
-    void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
-        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
-        
-        NSInteger statusCode = [operation.response statusCode];
-        
-        //success
-        if (statusCode == 200) {
-            Notification_Post(JXNotification.UserServices.GetCompanyLocationsSuccess, [responseObject objectForKey:@"data"]);
-        }
-        
-        //invalid
-        else {
-            Notification_Post(JXNotification.UserServices.GetCompanyLocationsFailed, nil);
-        }
-    };
-    
-    void (^failureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
-        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
-        Notification_Post(JXNotification.UserServices.GetCompanyLocationsFailed, nil);
-    };
-    
-    NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-                                   [UserService getUserID], @"user_id",
-                                   [UserService getOAuthToken], @"access_token", nil];
-    
-    [self checkAccessTokenAndCall:[NSString stringWithFormat:@"api/v1/companies/%@/locations", companyID] isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
+    [self checkAccessTokenAndCall:@"api/v1/comment/delete" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark - Cards
+#pragma mark - Helpers
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-- (void)wantToMatchUser:(NSString *)userID {
-    void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
-        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
-        
-        NSInteger statusCode = [operation.response statusCode];
-        
-        //success
-        if (statusCode == 200) {
-            Notification_Post(JXNotification.UserServices.WantToMatchSuccess, nil);
-        }
-        
-        //invalid
-        else {
-            Notification_Post(JXNotification.UserServices.WantToMatchFailed, nil);
-        }
-    };
-    
-    void (^failureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
-        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
-        Notification_Post(JXNotification.UserServices.WantToMatchFailed, nil);
-    };
-    
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   userID, @"invitee_id",
-                                   [UserService getUserID], @"inviter_id",
-                                   [UserService getOAuthToken], @"access_token", nil];
-    
-    [self checkAccessTokenAndCall:@"api/v1/matches/invite" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
-}
-
-- (void)confirmMatchWithUser:(NSString *)userID date:(NSString *)dateString withPlusOne:(NSString *)plusOne {
-    void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
-        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
-        
-        NSInteger statusCode = [operation.response statusCode];
-        
-        //success
-        if (statusCode == 200) {
-            Notification_Post(JXNotification.UserServices.ConfirmMatchSuccess, nil);
-        }
-        
-        //invalid
-        else {
-            Notification_Post(JXNotification.UserServices.ConfirmMatchFailed, nil);
-        }
-    };
-    
-    void (^failureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
-        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
-        Notification_Post(JXNotification.UserServices.ConfirmMatchFailed, nil);
-    };
-    
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   userID, @"inviter_id",
-                                   dateString, @"lunch_date",
-                                   (plusOne? @"1":@"0"), @"plus_one",
-                                   [UserService getUserID], @"invitee_id",
-                                   [UserService getOAuthToken], @"access_token", nil];
-    
-    [self checkAccessTokenAndCall:@"api/v1/matches/confirm" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
-}
-
-- (void)getAllMatches {
-    void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
-        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
-        
-        NSInteger statusCode = [operation.response statusCode];
-        
-        //success
-        if (statusCode == 200) {
-            Notification_Post(JXNotification.UserServices.GetAllMatchesSuccess, [responseObject objectForKey:@"data"]);
-        }
-        
-        //invalid
-        else {
-            Notification_Post(JXNotification.UserServices.GetAllMatchesFailed, nil);
-        }
-    };
-    
-    void (^failureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
-        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
-        Notification_Post(JXNotification.UserServices.GetAllMatchesFailed, nil);
-    };
-    
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   [UserService getUserID], @"user_id",
-                                   [UserService getOAuthToken], @"access_token", nil];
-    
-    [self checkAccessTokenAndCall:@"api/v1/matches" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
-}
-
-- (void)changeMatch:(NSString *)matchID withDate:(NSString *)dateString withPlusOne:(NSString *)plusOne {
-    void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
-        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
-        
-        NSInteger statusCode = [operation.response statusCode];
-        
-        //success
-        if (statusCode == 200) {
-            Notification_Post(JXNotification.UserServices.ChangeMatchDateSuccess, nil);
-        }
-        
-        //invalid
-        else {
-            Notification_Post(JXNotification.UserServices.ChangeMatchDateFailed, nil);
-        }
-    };
-    
-    void (^failureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
-        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
-        Notification_Post(JXNotification.UserServices.ChangeMatchDateFailed, nil);
-    };
-    
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   matchID, @"match_id",
-                                   dateString, @"lunch_date",
-                                   (plusOne? @"1":@"0"), @"plus_one",
-                                   [UserService getUserID], @"user_id",
-                                   [UserService getOAuthToken], @"access_token", nil];
-    
-    [self checkAccessTokenAndCall:@"api/v1/matches/update" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
-}
-
-- (void)cancelMatch:(NSString *)matchID {
-    void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
-        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
-        
-        NSInteger statusCode = [operation.response statusCode];
-        
-        //success
-        if (statusCode == 200) {
-            Notification_Post(JXNotification.UserServices.CancelMatchSuccess, nil);
-        }
-        
-        //invalid
-        else {
-            Notification_Post(JXNotification.UserServices.CancelMatchFailed, nil);
-        }
-    };
-    
-    void (^failureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
-        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
-        Notification_Post(JXNotification.UserServices.CancelMatchFailed, nil);
-    };
-    
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   matchID, @"match_id",
-                                   [UserService getUserID], @"user_id",
-                                   [UserService getOAuthToken], @"access_token", nil];
-    
-    [self checkAccessTokenAndCall:@"api/v1/matches/cancel" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
-}
-
-- (void)reportMatch:(NSString *)matchID {
-    void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
-        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
-        
-        NSInteger statusCode = [operation.response statusCode];
-        
-        //success
-        if (statusCode == 200) {
-            Notification_Post(JXNotification.UserServices.ReportMatchSuccess, nil);
-        }
-        
-        //invalid
-        else {
-            Notification_Post(JXNotification.UserServices.ReportMatchFailed, nil);
-        }
-    };
-    
-    void (^failureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
-        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
-        Notification_Post(JXNotification.UserServices.ReportMatchFailed, nil);
-    };
-    
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   matchID, @"match_id",
-                                   [UserService getUserID], @"user_id",
-                                   [UserService getOAuthToken], @"access_token", nil];
-    
-    [self checkAccessTokenAndCall:@"api/v1/matches/report" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
-}
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark - Chat
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-- (void)viewMessagesForMatch:(NSString *)matchId {
-    
-    void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
-        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
-        
-        NSInteger statusCode = [operation.response statusCode];
-        
-        //success
-        if (statusCode == 200) {
-            Notification_Post(JXNotification.UserServices.UpdateMessagesSuccess, [responseObject objectForKey:@"data"]);
-        }
-        
-        //invalid
-        else {
-            Notification_Post(JXNotification.UserServices.UpdateMessagesFailed, nil);
-        }
-    };
-    
-    void (^failureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
-        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
-        Notification_Post(JXNotification.UserServices.UpdateMessagesFailed, nil);
-    };
-    
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   matchId, @"match_id",
-                                   [UserService getUserID], @"user_id",
-                                   [UserService getOAuthToken], @"access_token", nil];
-    
-    [self checkAccessTokenAndCall:@"api/v1/messages" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
-}
-
-- (void)sendMessageWithText:(NSString *)text toMatch:(NSString *)matchId {
-    void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
-        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
-        
-        NSInteger statusCode = [operation.response statusCode];
-        //success
-        if (statusCode == 200) {
-            Notification_Post(JXNotification.UserServices.SendMessageSuccess, nil);
-        }
-        
-        //invalid
-        else {
-            if(DEBUGConnections) NSLog(@"Error message: %@", nil);
-            Notification_Post(JXNotification.UserServices.SendMessageFailed, nil);
-        }
-    };
-    
-    void (^failureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
-        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
-        Notification_Post(JXNotification.UserServices.SendMessageFailed, nil);
-    };
-    
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   text, @"body",
-                                   matchId, @"match_id",
-                                   [UserService getUserID], @"user_id",
-                                   [UserService getOAuthToken], @"access_token", nil];
-    
-    [self checkAccessTokenAndCall:@"api/v1/messages/send" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
-}
-
-
 - (NSString *)validString:(NSString *)string {
     return (string && ![string isKindOfClass:[NSNull class]])? string : @"";
 }
+
 
 @end

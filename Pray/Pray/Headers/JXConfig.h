@@ -20,7 +20,7 @@
 
 #import "CDUser.h"
 #import "CDPrayer.h"
-#import "CDComments.h"
+#import "CDComment.h"
 
 #import "JXTools.h"
 #import "JXNetworkService.h"

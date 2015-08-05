@@ -7,7 +7,7 @@
 //
 
 #import "CDUser.h"
-#import "CDComments.h"
+#import "CDComment.h"
 #import "CDPrayer.h"
 
 

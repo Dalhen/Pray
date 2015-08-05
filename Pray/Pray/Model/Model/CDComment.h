@@ -1,5 +1,5 @@
 //
-//  CDComments.h
+//  CDComment.h
 //  
 //
 //  Created by Jason LAPIERRE on 04/08/2015.
@@ -11,7 +11,7 @@
 
 @class CDPrayer, CDUser;
 
-@interface CDComments : NSManagedObject
+@interface CDComment : NSManagedObject
 
 @property (nonatomic, retain) NSNumber * uniqueId;
 @property (nonatomic, retain) NSString * commentText;

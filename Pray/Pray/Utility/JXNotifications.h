@@ -67,6 +67,10 @@ struct FeedServicesStruct {
     __unsafe_unretained NSString * const DeletePostFailed;
     __unsafe_unretained NSString * const ReportPostSuccess;
     __unsafe_unretained NSString * const ReportPostFailed;
+    __unsafe_unretained NSString * const DeleteCommentSuccess;
+    __unsafe_unretained NSString * const DeleteCommentFailed;
+    __unsafe_unretained NSString * const ReportCommentSuccess;
+    __unsafe_unretained NSString * const ReportCommentFailed;
 };
 
 struct PostServicesStruct {

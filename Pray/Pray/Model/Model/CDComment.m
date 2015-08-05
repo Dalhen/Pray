@@ -1,17 +1,17 @@
 //
-//  CDComments.m
+//  CDComment.m
 //  
 //
 //  Created by Jason LAPIERRE on 04/08/2015.
 //
 //
 
-#import "CDComments.h"
+#import "CDComment.h"
 #import "CDPrayer.h"
 #import "CDUser.h"
 
 
-@implementation CDComments
+@implementation CDComment
 
 @dynamic uniqueId;
 @dynamic commentText;

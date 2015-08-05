@@ -67,6 +67,10 @@ const struct JXNotificationStruct JXNotification = {
         .DeletePostFailed = @"com.pray.feedServices.DeletePostFailed",
         .ReportPostSuccess = @"com.pray.feedServices.ReportPostSuccess",
         .ReportPostFailed = @"com.pray.feedServices.ReportPostFailed",
+        .DeleteCommentSuccess = @"com.pray.feedServices.DeletePostSuccess",
+        .DeleteCommentFailed = @"com.pray.feedServices.DeleteCommentFailed",
+        .ReportCommentSuccess = @"com.pray.feedServices.ReportCommentSuccess",
+        .ReportCommentFailed = @"com.pray.feedServices.ReportCommentFailed",
     },
     
     .PostServices = {

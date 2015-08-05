@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class CDComments, CDPrayer;
+@class CDComment, CDPrayer;
 
 @interface CDUser : NSManagedObject
 
@@ -33,8 +33,8 @@
 
 @interface CDUser (CoreDataGeneratedAccessors)
 
-- (void)addCommentsObject:(CDComments *)value;
-- (void)removeCommentsObject:(CDComments *)value;
+- (void)addCommentsObject:(CDComment *)value;
+- (void)removeCommentsObject:(CDComment *)value;
 - (void)addComments:(NSSet *)values;
 - (void)removeComments:(NSSet *)values;
 

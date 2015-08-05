@@ -7,7 +7,7 @@
 //
 
 #import "CDPrayer.h"
-#import "CDComments.h"
+#import "CDComment.h"
 #import "CDUser.h"
 
 
@@ -23,6 +23,9 @@
 @dynamic likesCount;
 @dynamic prayerText;
 @dynamic timeAgo;
+@dynamic locationName;
+@dynamic latitude;
+@dynamic longitude;
 @dynamic comments;
 @dynamic creator;
 

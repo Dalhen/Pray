@@ -205,11 +205,274 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Prayer
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+- (CDPrayer *)addPrayerWithData:(NSDictionary *)prayerData {
+    NSManagedObjectContext *moc = [JXDataAccess getDBContext];
+    
+    NSNumber *uniqueId = [NSNumber numberWithInt:[[prayerData objectForKey:@"id"] intValue]];
+    NSNumber *creatorId = [NSNumber numberWithInt:[[prayerData objectForKey:@"creator_id"] intValue]];
+    NSNumber *categoryId = [NSNumber numberWithInt:[[prayerData objectForKey:@"category_id"] intValue]];
+    NSString *prayerText = [prayerData objectForKey:@"message"];
+    NSString *imageURL = [prayerData objectForKey:@"image_url"];
+    NSString *latitude = [prayerData objectForKey:@"lat"];
+    NSString *longitude = [prayerData objectForKey:@"lon"];
+    NSString *locationName = [prayerData objectForKey:@"location_name"];
+    NSString *commentsCount = [prayerData objectForKey:@"comments_count"];
+    NSString *likesCount = [prayerData objectForKey:@"likes_count"];
+    NSString *timeAgo = [prayerData objectForKey:@"time_ago"];
+    NSNumber *isLiked = [NSNumber numberWithInt:[[prayerData objectForKey:@"is_liked"] intValue]];
+    NSDate *creationDate = [NSDate dateFromUTCServer:[prayerData objectForKey:@"created"]];
+    
+    CDPrayer *prayer = [self getPrayerForID:uniqueId];
+    if (!prayer) {
+        prayer = (CDPrayer *)[NSEntityDescription insertNewObjectForEntityForName:@"CDPrayer" inManagedObjectContext:moc];
+    }
+    
+    prayer.uniqueId = validObject(uniqueId)? uniqueId : prayer.uniqueId;
+    prayer.creatorId = validObject(creatorId)? creatorId : prayer.creatorId;
+    prayer.categoryId = validObject(categoryId)? categoryId : prayer.categoryId;
+    prayer.prayerText = validObject(prayerText)? prayerText : prayer.prayerText;
+    prayer.imageURL = validObject(imageURL)? imageURL : prayer.imageURL;
+    prayer.latitude = validObject(latitude)? latitude : prayer.latitude;
+    prayer.longitude = validObject(longitude)? longitude : prayer.longitude;
+    prayer.locationName = validObject(locationName)? locationName : prayer.locationName;
+    prayer.commentsCount = validObject(commentsCount)? commentsCount : prayer.commentsCount;
+    prayer.likesCount = validObject(likesCount)? likesCount : prayer.likesCount;
+    prayer.timeAgo = validObject(timeAgo)? timeAgo : prayer.timeAgo;
+    prayer.isLiked = validObject(isLiked)? isLiked : prayer.isLiked;
+    prayer.creationDate = validObject(creationDate)? creationDate : prayer.creationDate;
+    
+    CDUser *user = [self getUserForID:[NSNumber numberWithInt:[creatorId intValue]]];
+    if (user) {
+        [prayer setCreator:user];
+    }
+    
+    NSError *error;
+    if (![moc save:&error]) {
+        // Handle the error.
+        if(DEBUGDataAccess) NSLog(@"Error saving prayer");
+    } else {
+        if(DEBUGDataAccess) NSLog(@"New prayer added");
+    }
+    
+    return prayer;
+}
+
+- (NSArray *)addPrayers:(NSArray *)prayersData {
+    NSManagedObjectContext *moc = [JXDataAccess getDBContext];
+    NSMutableArray *prayersObjects = [[NSMutableArray alloc] initWithCapacity:[prayersData count]];
+    
+    for (NSDictionary *prayerData in prayersData) {
+        NSNumber *uniqueId = [NSNumber numberWithInt:[[prayerData objectForKey:@"id"] intValue]];
+        NSNumber *creatorId = [NSNumber numberWithInt:[[prayerData objectForKey:@"creator_id"] intValue]];
+        NSNumber *categoryId = [NSNumber numberWithInt:[[prayerData objectForKey:@"category_id"] intValue]];
+        NSString *prayerText = [prayerData objectForKey:@"message"];
+        NSString *imageURL = [prayerData objectForKey:@"image_url"];
+        NSString *latitude = [prayerData objectForKey:@"lat"];
+        NSString *longitude = [prayerData objectForKey:@"lon"];
+        NSString *locationName = [prayerData objectForKey:@"location_name"];
+        NSString *commentsCount = [prayerData objectForKey:@"comments_count"];
+        NSString *likesCount = [prayerData objectForKey:@"likes_count"];
+        NSString *timeAgo = [prayerData objectForKey:@"time_ago"];
+        NSNumber *isLiked = [NSNumber numberWithInt:[[prayerData objectForKey:@"is_liked"] intValue]];
+        NSDate *creationDate = [NSDate dateFromUTCServer:[prayerData objectForKey:@"created"]];
+        
+        CDPrayer *prayer = [self getPrayerForID:uniqueId];
+        if (!prayer) {
+            prayer = (CDPrayer *)[NSEntityDescription insertNewObjectForEntityForName:@"CDPrayer" inManagedObjectContext:moc];
+        }
+        
+        prayer.uniqueId = validObject(uniqueId)? uniqueId : prayer.uniqueId;
+        prayer.creatorId = validObject(creatorId)? creatorId : prayer.creatorId;
+        prayer.categoryId = validObject(categoryId)? categoryId : prayer.categoryId;
+        prayer.prayerText = validObject(prayerText)? prayerText : prayer.prayerText;
+        prayer.imageURL = validObject(imageURL)? imageURL : prayer.imageURL;
+        prayer.latitude = validObject(latitude)? latitude : prayer.latitude;
+        prayer.longitude = validObject(longitude)? longitude : prayer.longitude;
+        prayer.locationName = validObject(locationName)? locationName : prayer.locationName;
+        prayer.commentsCount = validObject(commentsCount)? commentsCount : prayer.commentsCount;
+        prayer.likesCount = validObject(likesCount)? likesCount : prayer.likesCount;
+        prayer.timeAgo = validObject(timeAgo)? timeAgo : prayer.timeAgo;
+        prayer.isLiked = validObject(isLiked)? isLiked : prayer.isLiked;
+        prayer.creationDate = validObject(creationDate)? creationDate : prayer.creationDate;
+        
+        CDUser *user = [self getUserForID:[NSNumber numberWithInt:[creatorId intValue]]];
+        if (user) {
+            [prayer setCreator:user];
+        }
+        
+        [prayersObjects addObject:prayer];
+    }
+    
+    NSError *error;
+    if (![moc save:&error]) {
+        // Handle the error.
+        if(DEBUGDataAccess) NSLog(@"Error saving prayer");
+    } else {
+        if(DEBUGDataAccess) NSLog(@"New prayer added");
+    }
+    
+    return prayersObjects;
+}
+
+- (CDPrayer *)getPrayerForID:(NSNumber *)uniqueId {
+    NSManagedObjectContext *moc = [JXDataAccess getDBContext];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"CDPrayer" inManagedObjectContext:moc]];
+    [request setPredicate:[NSPredicate predicateWithFormat:@"uniqueId == %@", uniqueId]];
+    
+    NSError *error;
+    NSMutableArray *mutableFetchResults = [[moc executeFetchRequest:request error:&error] mutableCopy];
+    return ([mutableFetchResults count]>0) ? [mutableFetchResults objectAtIndex:0] : nil;
+}
+
+- (void)removePrayerForID:(NSNumber *)prayerId {
+    CDPrayer *prayer = [self getPrayerForID:prayerId];
+    
+    if (prayer) {
+        NSManagedObjectContext *moc = [JXDataAccess getDBContext];
+        [moc deleteObject:prayer];
+        
+        NSError *error;
+        if (![moc save:&error]) {
+            // Handle the error.
+            if(DEBUGDataAccess) NSLog(@"Error deleting prayer");
+        } else {
+            if(DEBUGDataAccess) NSLog(@"Prayer deleted");
+        }
+    }
+}
+
+- (void)deleteAllPrayers {
+    NSManagedObjectContext *moc = [JXDataAccess getDBContext];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"CDPrayer" inManagedObjectContext:moc]];
+    
+    NSError *error;
+    NSMutableArray *mutableFetchResults = [[moc executeFetchRequest:request error:&error] mutableCopy];
+    
+    for (CDPrayer *prayer in mutableFetchResults) {
+        [moc deleteObject:prayer];
+    }
+    
+    if (![moc save:&error]) {
+        // Handle the error.
+        if(DEBUGDataAccess) NSLog(@"Error deleting prayers");
+    } else {
+        if(DEBUGDataAccess) NSLog(@"Prayers deleted");
+    }
+}
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Comment
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+- (CDComment *)addCommentWithData:(NSDictionary *)commentData {
+    NSManagedObjectContext *moc = [JXDataAccess getDBContext];
+    
+    NSNumber *uniqueId = [NSNumber numberWithInt:[[commentData objectForKey:@"id"] intValue]];
+    NSString *commentText = [commentData objectForKey:@"comment"];
+    NSDate *creationDate = [NSDate dateFromUTCServer:[commentData objectForKey:@"created"]];
+    NSNumber *creatorId = [NSNumber numberWithInt:[[commentData objectForKey:@"creator_id"] intValue]];
+    NSString *timeAgo = [commentData objectForKey:@"time_ago"];
+    
+    CDComment *comment = [self getCommentForID:uniqueId];
+    if (!comment) {
+        comment = (CDComment *)[NSEntityDescription insertNewObjectForEntityForName:@"CDComment" inManagedObjectContext:moc];
+    }
+    
+    comment.uniqueId = validObject(uniqueId)? uniqueId : comment.uniqueId;
+    comment.creatorId = validObject(creatorId)? creatorId : comment.creatorId;
+    comment.commentText = validObject(commentText)? commentText : comment.commentText;
+    comment.timeAgo = validObject(timeAgo)? timeAgo : comment.timeAgo;
+    comment.creationDate = validObject(creationDate)? creationDate : comment.creationDate;
+    
+    CDUser *user = [self getUserForID:[NSNumber numberWithInt:[creatorId intValue]]];
+    if (user) {
+        [comment setCreator:user];
+    }
+    
+    NSError *error;
+    if (![moc save:&error]) {
+        // Handle the error.
+        if(DEBUGDataAccess) NSLog(@"Error saving prayer");
+    } else {
+        if(DEBUGDataAccess) NSLog(@"New prayer added");
+    }
+    
+    return comment;
+}
+
+- (NSArray *)addComments:(NSArray *)commentsData {
+    NSManagedObjectContext *moc = [JXDataAccess getDBContext];
+    NSMutableArray *commentsObjects = [[NSMutableArray alloc] initWithCapacity:[commentsData count]];
+    
+    for (NSDictionary *commentData in commentsData) {
+        NSNumber *uniqueId = [NSNumber numberWithInt:[[commentData objectForKey:@"id"] intValue]];
+        NSString *commentText = [commentData objectForKey:@"comment"];
+        NSDate *creationDate = [NSDate dateFromUTCServer:[commentData objectForKey:@"created"]];
+        NSNumber *creatorId = [NSNumber numberWithInt:[[commentData objectForKey:@"creator_id"] intValue]];
+        NSString *timeAgo = [commentData objectForKey:@"time_ago"];
+        
+        CDComment *comment = [self getCommentForID:uniqueId];
+        if (!comment) {
+            comment = (CDComment *)[NSEntityDescription insertNewObjectForEntityForName:@"CDComment" inManagedObjectContext:moc];
+        }
+        
+        comment.uniqueId = validObject(uniqueId)? uniqueId : comment.uniqueId;
+        comment.creatorId = validObject(creatorId)? creatorId : comment.creatorId;
+        comment.commentText = validObject(commentText)? commentText : comment.commentText;
+        comment.timeAgo = validObject(timeAgo)? timeAgo : comment.timeAgo;
+        comment.creationDate = validObject(creationDate)? creationDate : comment.creationDate;
+        
+        CDUser *user = [self getUserForID:[NSNumber numberWithInt:[creatorId intValue]]];
+        if (user) {
+            [comment setCreator:user];
+        }
+        
+        [commentsObjects addObject:comment];
+    }
+    
+    NSError *error;
+    if (![moc save:&error]) {
+        // Handle the error.
+        if(DEBUGDataAccess) NSLog(@"Error saving prayer");
+    } else {
+        if(DEBUGDataAccess) NSLog(@"New prayer added");
+    }
+    
+    return commentsObjects;
+}
+
+- (CDComment *)getCommentForID:(NSNumber *)uniqueId {
+    NSManagedObjectContext *moc = [JXDataAccess getDBContext];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"CDComment" inManagedObjectContext:moc]];
+    [request setPredicate:[NSPredicate predicateWithFormat:@"uniqueId == %@", uniqueId]];
+    
+    NSError *error;
+    NSMutableArray *mutableFetchResults = [[moc executeFetchRequest:request error:&error] mutableCopy];
+    return ([mutableFetchResults count]>0) ? [mutableFetchResults objectAtIndex:0] : nil;
+}
+
+- (void)removeCommentForID:(NSNumber *)commentId {
+    CDComment *prayer = [self getCommentForID:commentId];
+    
+    if (prayer) {
+        NSManagedObjectContext *moc = [JXDataAccess getDBContext];
+        [moc deleteObject:prayer];
+        
+        NSError *error;
+        if (![moc save:&error]) {
+            // Handle the error.
+            if(DEBUGDataAccess) NSLog(@"Error deleting comment");
+        } else {
+            if(DEBUGDataAccess) NSLog(@"Comment deleted");
+        }
+    }
+}
 
 
 @end
