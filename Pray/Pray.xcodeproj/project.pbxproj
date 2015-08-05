@@ -162,6 +162,8 @@
 		96A559641B5A6F4A0073A4FE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96A559631B5A6F4A0073A4FE /* QuartzCore.framework */; };
 		96A559671B5A70DD0073A4FE /* CDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A559661B5A70DD0073A4FE /* CDUser.m */; };
 		96EB6CDB1B6BFAEC00ADA3AB /* backButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96EB6CDA1B6BFAEC00ADA3AB /* backButton@2x.png */; };
+		96EB6CDE1B6CCD6A00ADA3AB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 96EB6CDD1B6CCD6A00ADA3AB /* Localizable.strings */; };
+		96EB6CE01B6D053700ADA3AB /* avatarEmpty@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96EB6CDF1B6D053700ADA3AB /* avatarEmpty@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -489,6 +491,8 @@
 		96A559651B5A70DD0073A4FE /* CDUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUser.h; sourceTree = "<group>"; };
 		96A559661B5A70DD0073A4FE /* CDUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUser.m; sourceTree = "<group>"; };
 		96EB6CDA1B6BFAEC00ADA3AB /* backButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backButton@2x.png"; sourceTree = "<group>"; };
+		96EB6CDD1B6CCD6A00ADA3AB /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		96EB6CDF1B6D053700ADA3AB /* avatarEmpty@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avatarEmpty@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -569,6 +573,7 @@
 		9634F3081B695CC1002EFD2B /* Prehome */ = {
 			isa = PBXGroup;
 			children = (
+				96EB6CDF1B6D053700ADA3AB /* avatarEmpty@2x.png */,
 				96EB6CDA1B6BFAEC00ADA3AB /* backButton@2x.png */,
 				9634F33E1B696F87002EFD2B /* backgroundWelcome@2x.jpg */,
 				9634F3391B696EAF002EFD2B /* facebookButton@2x.png */,
@@ -867,6 +872,7 @@
 			isa = PBXGroup;
 			children = (
 				96A557801B5A6C690073A4FE /* Info.plist */,
+				96EB6CDD1B6CCD6A00ADA3AB /* Localizable.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1312,7 +1318,9 @@
 				9634F33C1B696EAF002EFD2B /* facebookButton@2x.png in Resources */,
 				96EB6CDB1B6BFAEC00ADA3AB /* backButton@2x.png in Resources */,
 				9634F33F1B696F87002EFD2B /* backgroundWelcome@2x.jpg in Resources */,
+				96EB6CDE1B6CCD6A00ADA3AB /* Localizable.strings in Resources */,
 				96A557901B5A6C690073A4FE /* Images.xcassets in Resources */,
+				96EB6CE01B6D053700ADA3AB /* avatarEmpty@2x.png in Resources */,
 				9634F33D1B696EAF002EFD2B /* prayLogo@2x.png in Resources */,
 				967AD4781B65701C00001B26 /* SVProgressHUD.bundle in Resources */,
 			);

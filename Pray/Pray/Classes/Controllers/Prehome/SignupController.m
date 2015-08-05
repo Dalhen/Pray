@@ -75,19 +75,30 @@
 }
 
 - (void)setupLayout {
-    profileImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 44*sratio, 90*sratio, 90*sratio)];
-    [profileImage setImage:[UIImage imageNamed:@"addProfilePicture"]];
+    
+    UIImageView *backImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"backgroundWelcome.jpg"]];
+    [backImage setFrame:self.view.frame];
+    [backImage setContentMode:UIViewContentModeScaleAspectFill];
+    [self.view addSubview:backImage];
+    
+    mainScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 58*sratio, self.view.screenWidth, self.view.screenHeight - 58*sratio)];
+    [mainScroll setContentSize:CGSizeMake(self.view.screenWidth, 522*sratio)];
+    [mainScroll setDelegate:self];
+    [self.view addSubview:mainScroll];
+    
+    profileImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 90*sratio, 90*sratio)];
+    [profileImage setImage:[UIImage imageNamed:@"avatarEmpty"]];
     [profileImage setRoundedToDiameter:90*sratio];
     [profileImage setClipsToBounds:YES];
-    [self.view addSubview:profileImage];
+    [mainScroll addSubview:profileImage];
     [profileImage centerHorizontallyInSuperView];
     
     UIButton *profilePictureEditor = [UIButton buttonWithType:UIButtonTypeCustom];
     [profilePictureEditor setFrame:profileImage.frame];
     [profilePictureEditor addTarget:self action:@selector(takePhoto) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:profilePictureEditor];
+    [mainScroll addSubview:profilePictureEditor];
     
-    profileUsername = [[UITextField alloc] initWithFrame:CGRectMake(0, profileImage.bottom + 22*sratio, 280*sratio, 42*sratio)];
+    profileUsername = [[UITextField alloc] initWithFrame:CGRectMake(0, profileImage.bottom + 40*sratio, 280*sratio, 42*sratio)];
     [profileUsername setTextAlignment:NSTextAlignmentLeft];
     [profileUsername setFont:[FontService systemFont:13*sratio]];
     [profileUsername setTextColor:Colour_PrayBlue];
@@ -101,7 +112,7 @@
     [profileUsername setKeyboardType:UIKeyboardTypeEmailAddress];
     [profileUsername setAutocapitalizationType:UITextAutocapitalizationTypeNone];
     [profileUsername setAutocorrectionType:UITextAutocorrectionTypeNo];
-    [profileUsername.layer setCornerRadius:3.0f*sratio];
+    [profileUsername.layer setCornerRadius:5.0f*sratio];
     [profileUsername setDelegate:self];
     [mainScroll addSubview:profileUsername];
     [profileUsername centerHorizontallyInSuperView];
@@ -118,7 +129,7 @@
     [profilePassword setLeftViewMode:UITextFieldViewModeAlways];
     [profilePassword setReturnKeyType:UIReturnKeyNext];
     [profilePassword setSecureTextEntry:YES];
-    [profilePassword.layer setCornerRadius:3.0f*sratio];
+    [profilePassword.layer setCornerRadius:5.0f*sratio];
     [profilePassword setDelegate:self];
     [mainScroll addSubview:profilePassword];
     [profilePassword centerHorizontallyInSuperView];
@@ -137,9 +148,15 @@
     [profileEmail setKeyboardType:UIKeyboardTypeEmailAddress];
     [profileEmail setAutocapitalizationType:UITextAutocapitalizationTypeNone];
     [profileEmail setAutocorrectionType:UITextAutocorrectionTypeNo];
-    [profileEmail.layer setCornerRadius:3.0f*sratio];
+    [profileEmail.layer setCornerRadius:5.0f*sratio];
     [profileEmail setDelegate:self];
     [mainScroll addSubview:profileEmail];
+    [profileEmail centerHorizontallyInSuperView];
+    
+    UIView *nameBox = [[UIView alloc] initWithFrame:CGRectMake(profileEmail.left, profileEmail.bottom + 14*sratio, 280*sratio, 42*sratio)];
+    [nameBox setBackgroundColor:Colour_White];
+    [nameBox.layer setCornerRadius:3.0f*sratio];
+    [mainScroll addSubview:nameBox];
     
     profileFirstName = [[UITextField alloc] initWithFrame:CGRectMake(profileEmail.left, profileEmail.bottom + 14*sratio, 120*sratio, 42*sratio)];
     [profileFirstName setTextAlignment:NSTextAlignmentLeft];
@@ -152,7 +169,7 @@
     [profileFirstName setLeftView:padding1];
     [profileFirstName setLeftViewMode:UITextFieldViewModeAlways];
     [profileFirstName setReturnKeyType:UIReturnKeyNext];
-    [profileFirstName.layer setCornerRadius:3.0f*sratio];
+    [profileFirstName.layer setCornerRadius:5.0f*sratio];
     [profileFirstName setDelegate:self];
     [mainScroll addSubview:profileFirstName];
     
@@ -167,11 +184,15 @@
     [profileLastName setLeftView:padding2];
     [profileLastName setLeftViewMode:UITextFieldViewModeAlways];
     [profileLastName setReturnKeyType:UIReturnKeyNext];
-    [profileLastName.layer setCornerRadius:3.0f*sratio];
+    [profileLastName.layer setCornerRadius:5.0f*sratio];
     [profileLastName setDelegate:self];
     [mainScroll addSubview:profileLastName];
     
-    profileBlob = [[UITextView alloc] initWithFrame:CGRectMake(0, profileFirstName.bottom + 14*sratio, 280*sratio, 110*sratio)];
+    UIView *verticalSeparator = [[UIView alloc] initWithFrame:CGRectMake(profileFirstName.left + 120*sratio, profileFirstName.top + 8*sratio, 1, 28*sratio)];
+    [verticalSeparator setBackgroundColor:Colour_255RGB(183, 183, 183)];
+    [mainScroll addSubview:verticalSeparator];
+    
+    profileBlob = [[UITextView alloc] initWithFrame:CGRectMake(0, profileFirstName.bottom + 14*sratio, 280*sratio, 90*sratio)];
     [profileBlob setTextAlignment:NSTextAlignmentLeft];
     [profileBlob setFont:[FontService systemFont:13*sratio]];
     [profileBlob setTextColor:Colour_PrayBlue];
@@ -179,7 +200,7 @@
     [profileBlob setReturnKeyType:UIReturnKeyDone];
     [profileBlob setUserInteractionEnabled:YES];
     [profileBlob setSelectable:YES];
-    [profileBlob.layer setCornerRadius:3.0f*sratio];
+    [profileBlob.layer setCornerRadius:5.0f*sratio];
     [profileBlob setDelegate:self];
     [mainScroll addSubview:profileBlob];
     [profileBlob centerHorizontallyInSuperView];
@@ -188,6 +209,20 @@
     [blobAction setFrame:profileBlob.frame];
     [blobAction addTarget:self action:@selector(showBlobEditor) forControlEvents:UIControlEventTouchUpInside];
     [mainScroll addSubview:blobAction];
+    
+    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.screenHeight - 58*sratio, self.view.screenWidth, 58*sratio)];
+    [bottomView setBackgroundColor:Colour_255RGB(38, 41, 50)];
+    [self.view addSubview:bottomView];
+    
+    UIButton *saveButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [saveButton setFrame:CGRectMake(0, self.view.screenHeight - 70*sratio, 178*sratio, 42*sratio)];
+    [saveButton setTitleColor:Colour_White forState:UIControlStateNormal];
+    [saveButton.titleLabel setFont:[FontService systemFont:13*sratio]];
+    [saveButton.layer setCornerRadius:5.0f*sratio];
+    [saveButton setBackgroundColor:Colour_PrayBlue];
+    [saveButton setTitle:LocString(@"SIGN UP") forState:UIControlStateNormal];
+    [self.view addSubview:saveButton];
+    [saveButton centerHorizontallyInSuperView];
 }
 
 
@@ -195,14 +230,14 @@
 - (void)signupAccount {
     NSData *imageData = [self compressImage:selectedImage];
     
-    if (![profileFirstName.text isEqualToString:@""] &&
-        ![profileLastName.text isEqualToString:@""] &&
+    if (![profileUsername.text isEqualToString:@""] &&
         ![profilePassword.text isEqualToString:@""] &&
         ![profileEmail.text isEqualToString:@""] &&
-        ![profilePosition.text isEqualToString:@""]) {
+        ![profileFirstName.text isEqualToString:@""] &&
+        ![profileLastName.text isEqualToString:@""]) {
         
         if ([profilePassword.text length]>= 6) {
-            [NetworkService signupWithFirstName:profileFirstName.text lastName:profileLastName.text password:profilePassword.text linkedinID:linkedInID email:profileEmail.text position:profilePosition.text bio:profileBlob.text departmentID:[selectedDepartment objectForKey:@"id"] avatarURL:linkedProfileURL avatarImage:imageData];
+            [NetworkService signupWithUsername:profileUsername.text firstName:profileFirstName.text lastName:profileLastName.text password:profilePassword.text email:profileEmail.text bio:profileBlob.text avatarURL:nil avatarImage:imageData];
         }
         else {
             [[[UIAlertView alloc] initWithTitle:LocString(@"Incorrect Password") message:LocString(@"Please make sure your password is at least 6 characters before proceeding.") delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
@@ -299,6 +334,100 @@
     else return UIImageJPEGRepresentation(image, POSTImageQuality);
 }
 
+
+#pragma mark - UIScrollView delegates
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (scrollView.dragging) {
+        [profileUsername resignFirstResponder];
+        [profileFirstName resignFirstResponder];
+        [profileLastName resignFirstResponder];
+        [profileEmail resignFirstResponder];
+        [profilePassword resignFirstResponder];
+        [profileBlob resignFirstResponder];
+    }
+}
+
+
+#pragma mark - UITextField delegates
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    
+    [mainScroll setContentSize:CGSizeMake(self.view.screenWidth, self.view.screenHeight + 200*sratio)];
+    
+    CGPoint bottomOffset;
+    
+    if (textField == profileUsername) {
+        bottomOffset = CGPointMake(0, profileUsername.top);
+    }
+    else if (textField == profilePassword) {
+        bottomOffset = CGPointMake(0, profilePassword.top);
+    }
+    else if (textField == profileEmail) {
+        bottomOffset = CGPointMake(0, profileEmail.top);
+    }
+    else if (textField == profileFirstName) {
+        bottomOffset = CGPointMake(0, profileFirstName.top);
+    }
+    else if (textField == profileLastName) {
+        bottomOffset = CGPointMake(0, profileLastName.top);
+    }
+    
+    [mainScroll setContentOffset:bottomOffset animated:YES];
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if ([string isEqualToString:@"\n"]) {
+        if (textField == profileUsername) {
+            [profilePassword becomeFirstResponder];
+        }
+        if (textField == profilePassword) {
+            [profileEmail becomeFirstResponder];
+        }
+        else if (textField == profileEmail) {
+            [profileFirstName becomeFirstResponder];
+        }
+        else if (textField == profileFirstName) {
+            [profileLastName becomeFirstResponder];
+        }
+        else if (textField == profileLastName) {
+            [profileBlob becomeFirstResponder];
+        }
+        return NO;
+    }
+    
+    return YES;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    
+}
+
+
+#pragma mark - UITextView delegates
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    if ([text isEqualToString:@"\n"]) {
+        [profileBlob resignFirstResponder];
+        [mainScroll setContentSize:CGSizeMake(self.view.screenWidth, 590*sratio)];
+        CGPoint bottomOffset = CGPointMake(0, mainScroll.contentSize.height - mainScroll.bounds.size.height);
+        [mainScroll setContentOffset:bottomOffset animated:YES];
+        return NO;
+    }
+    
+    if ([[textView.text stringByReplacingCharactersInRange:range withString:text] length] > 170) {
+        return NO;
+    }
+    
+    return YES;
+}
+
+
+#pragma mark - Actions
+- (void)showBlobEditor {
+    [mainScroll setContentSize:CGSizeMake(self.view.screenWidth, 800*sratio)];
+    CGPoint bottomOffset = CGPointMake(0, mainScroll.contentSize.height - mainScroll.bounds.size.height);
+    [mainScroll setContentOffset:bottomOffset animated:YES];
+    
+    [profileBlob becomeFirstResponder];
+}
 
 
 - (void)didReceiveMemoryWarning {

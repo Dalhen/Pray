@@ -311,16 +311,14 @@
     [self checkAccessTokenAndCall:@"api/v1/auth/validateEmail" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
-- (void)signupWithFirstName:(NSString *)firstName
-                   lastName:(NSString *)lastName
-                   password:(NSString *)password
-                 linkedinID:(NSString *)linkedinID
-                      email:(NSString *)email
-                   position:(NSString *)position
-                        bio:(NSString *)bio
-               departmentID:(NSString *)departmentID
-                  avatarURL:(NSString *)avatarURL
-                avatarImage:(NSData *)avatarImage {
+- (void)signupWithUsername:(NSString *)username
+                 firstName:(NSString *)firstName
+                  lastName:(NSString *)lastName
+                  password:(NSString *)password
+                     email:(NSString *)email
+                       bio:(NSString *)bio
+                 avatarURL:(NSString *)avatarURL
+               avatarImage:(NSData *)avatarImage {
     
     void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
         if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
@@ -344,12 +342,11 @@
     };
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   username, @"username",
                                    firstName, @"first_name",
                                    lastName, @"last_name",
                                    password, @"password",
                                    email, @"email",
-                                   position, @"position",
-                                   departmentID, @"department_id",
                                    [UserService getOAuthToken], @"access_token", nil];
     
     NSMutableArray *avatarImageArray = [[NSMutableArray alloc] init];
@@ -364,15 +361,6 @@
     if (bio) {
         [params setObject:bio forKey:@"bio"];
     }
-    
-    if (bio) {
-        [params setObject:bio forKey:@"bio"];
-    }
-    
-    if (linkedinID) {
-        [params setObject:linkedinID forKey:@"linkedin_id"];
-    }
-    
     
     [self checkAccessTokenAndCall:@"api/v1/auth/register" isPost:YES includedImages:avatarImageArray parameters:params successBlock:successBlock failureBlock:failureBlock];
 }

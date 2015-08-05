@@ -95,7 +95,7 @@
 #pragma mark - Starting App
 - (void)launchApp {
     
-    if ([UserService isUserLoggedIn]) {
+    if (![UserService isUserLoggedIn]) {
         [self launchPushNotifications];
         [self displayMainView];
     }

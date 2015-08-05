@@ -39,16 +39,14 @@
 
 - (void)validateEmail:(NSString *)email;
 
-- (void)signupWithFirstName:(NSString *)firstName
-                   lastName:(NSString *)lastName
-                   password:(NSString *)password
-                 linkedinID:(NSString *)linkedinID
-                      email:(NSString *)email
-                   position:(NSString *)position
-                        bio:(NSString *)bio
-               departmentID:(NSString *)departmentID
-                  avatarURL:(NSString *)avatarURL
-                avatarImage:(NSData *)avatarImage;
+- (void)signupWithUsername:(NSString *)username
+                 firstName:(NSString *)firstName
+                  lastName:(NSString *)lastName
+                  password:(NSString *)password
+                     email:(NSString *)email
+                       bio:(NSString *)bio
+                 avatarURL:(NSString *)avatarURL
+               avatarImage:(NSData *)avatarImage;
 
 - (void)loginUserWithEmail:(NSString *)email password:(NSString *)password;
 
