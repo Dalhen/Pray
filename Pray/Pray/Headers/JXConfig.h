@@ -19,6 +19,8 @@
 #import "JXAppDelegate.h"
 
 #import "CDUser.h"
+#import "CDPrayer.h"
+#import "CDComments.h"
 
 #import "JXTools.h"
 #import "JXNetworkService.h"
@@ -54,7 +56,7 @@
 #import "CMLoggerCalls.h"
 #import "SVProgressHUD.h"
 #import "UIImageView+AFNetworking.h"
-
+#import "UIView+Utilities.h"
 
 //#import "JXConnectivityManager.h"
 //#import "JXNewsService.h"

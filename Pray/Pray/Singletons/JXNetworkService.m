@@ -568,6 +568,138 @@
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Feed
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+- (void)loadFeed {
+    void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
+        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
+        
+        NSInteger statusCode = [operation.response statusCode];
+        
+        //success
+        if (statusCode == 200) {
+            Notification_Post(JXNotification.FeedServices.LoadFeedSuccess, [responseObject objectForKey:@"data"]);
+        }
+        
+        //invalid
+        else {
+            Notification_Post(JXNotification.FeedServices.LoadFeedFailed, nil);
+        }
+    };
+    
+    void (^failureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
+        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
+        Notification_Post(JXNotification.FeedServices.LoadFeedFailed, nil);
+    };
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   [UserService getUserID], @"user_id",
+                                   [UserService getOAuthToken], @"access_token", nil];
+    
+    [self checkAccessTokenAndCall:@"api/v1/feed" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
+}
+
+- (void)deletePostWithID:(NSString *)postId {
+    void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
+        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
+        
+        NSInteger statusCode = [operation.response statusCode];
+        
+        //success
+        if (statusCode == 200) {
+            Notification_Post(JXNotification.FeedServices.DeletePostSuccess, nil);
+        }
+        
+        //invalid
+        else {
+            Notification_Post(JXNotification.FeedServices.DeletePostFailed, nil);
+        }
+    };
+    
+    void (^failureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
+        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
+        Notification_Post(JXNotification.FeedServices.DeletePostFailed, nil);
+    };
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   postId, @"post_id",
+                                   [UserService getUserID], @"user_id",
+                                   [UserService getOAuthToken], @"access_token", nil];
+    
+    [self checkAccessTokenAndCall:@"api/v1/post/delete" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
+}
+
+- (void)reportPostWithID:(NSString *)postId {
+    void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
+        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
+        
+        NSInteger statusCode = [operation.response statusCode];
+        
+        //success
+        if (statusCode == 200) {
+            Notification_Post(JXNotification.FeedServices.ReportPostSuccess, nil);
+        }
+        
+        //invalid
+        else {
+            Notification_Post(JXNotification.FeedServices.ReportPostFailed, nil);
+        }
+    };
+    
+    void (^failureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
+        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
+        Notification_Post(JXNotification.FeedServices.ReportPostFailed, nil);
+    };
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   postId, @"post_id",
+                                   [UserService getUserID], @"user_id",
+                                   [UserService getOAuthToken], @"access_token", nil];
+    
+    [self checkAccessTokenAndCall:@"api/v1/post/report" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Post
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+- (void)postPrayerWithImage:(NSData *)prayerImage andText:(NSString *)prayerText {
+    void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
+        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
+        
+        NSInteger statusCode = [operation.response statusCode];
+        
+        //success
+        if (statusCode == 200) {
+            Notification_Post(JXNotification.PostServices.PostPrayerSuccess, [responseObject objectForKey:@"data"]);
+        }
+        
+        //invalid
+        else {
+            Notification_Post(JXNotification.PostServices.PostPrayerFailed, nil);
+        }
+    };
+    
+    void (^failureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
+        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
+        Notification_Post(JXNotification.PostServices.PostPrayerFailed, nil);
+    };
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   prayerText, @"text",
+                                   [UserService getUserID], @"user_id",
+                                   [UserService getOAuthToken], @"access_token", nil];
+    
+    NSMutableArray *prayerImageArray = [[NSMutableArray alloc] init];
+    if (prayerImage) {
+        [prayerImageArray addObject:prayerImage];
+    }
+    
+    [self checkAccessTokenAndCall:@"api/v1/post" isPost:YES includedImages:prayerImageArray parameters:params successBlock:successBlock failureBlock:failureBlock];
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Cards
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)getUsersToMachWithDepartmentID:(NSString *)departmentID locationID:(NSString *)locationID {

@@ -17,6 +17,10 @@
 		9634F33C1B696EAF002EFD2B /* facebookButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9634F3391B696EAF002EFD2B /* facebookButton@2x.png */; };
 		9634F33D1B696EAF002EFD2B /* prayLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9634F33A1B696EAF002EFD2B /* prayLogo@2x.png */; };
 		9634F33F1B696F87002EFD2B /* backgroundWelcome@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9634F33E1B696F87002EFD2B /* backgroundWelcome@2x.jpg */; };
+		965B4DBB1B70DA43002E149F /* PrayerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 965B4DBA1B70DA43002E149F /* PrayerCell.m */; };
+		9676E8D11B70F5890059F9AB /* CDComments.m in Sources */ = {isa = PBXBuildFile; fileRef = 9676E8CC1B70F5890059F9AB /* CDComments.m */; };
+		9676E8D21B70F5890059F9AB /* CDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 9676E8CE1B70F5890059F9AB /* CDUser.m */; };
+		9676E8D31B70F5890059F9AB /* CDPrayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9676E8D01B70F5890059F9AB /* CDPrayer.m */; };
 		967AD3F61B6564F600001B26 /* BaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 967AD3F31B6564F600001B26 /* BaseView.m */; };
 		967AD3F71B6564F600001B26 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 967AD3F51B6564F600001B26 /* BaseViewController.m */; };
 		967AD45E1B65701C00001B26 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 967AD4041B65701C00001B26 /* AFHTTPRequestOperation.m */; };
@@ -160,7 +164,6 @@
 		96A559601B5A6F3D0073A4FE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96A5595F1B5A6F3D0073A4FE /* AudioToolbox.framework */; };
 		96A559621B5A6F440073A4FE /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96A559611B5A6F440073A4FE /* MobileCoreServices.framework */; };
 		96A559641B5A6F4A0073A4FE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96A559631B5A6F4A0073A4FE /* QuartzCore.framework */; };
-		96A559671B5A70DD0073A4FE /* CDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A559661B5A70DD0073A4FE /* CDUser.m */; };
 		96EB6CDB1B6BFAEC00ADA3AB /* backButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96EB6CDA1B6BFAEC00ADA3AB /* backButton@2x.png */; };
 		96EB6CDE1B6CCD6A00ADA3AB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 96EB6CDD1B6CCD6A00ADA3AB /* Localizable.strings */; };
 		96EB6CE01B6D053700ADA3AB /* avatarEmpty@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96EB6CDF1B6D053700ADA3AB /* avatarEmpty@2x.png */; };
@@ -199,6 +202,14 @@
 		9634F3391B696EAF002EFD2B /* facebookButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebookButton@2x.png"; sourceTree = "<group>"; };
 		9634F33A1B696EAF002EFD2B /* prayLogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "prayLogo@2x.png"; sourceTree = "<group>"; };
 		9634F33E1B696F87002EFD2B /* backgroundWelcome@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "backgroundWelcome@2x.jpg"; sourceTree = "<group>"; };
+		965B4DB91B70DA43002E149F /* PrayerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrayerCell.h; sourceTree = "<group>"; };
+		965B4DBA1B70DA43002E149F /* PrayerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrayerCell.m; sourceTree = "<group>"; };
+		9676E8CB1B70F5890059F9AB /* CDComments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDComments.h; sourceTree = "<group>"; };
+		9676E8CC1B70F5890059F9AB /* CDComments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDComments.m; sourceTree = "<group>"; };
+		9676E8CD1B70F5890059F9AB /* CDUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUser.h; sourceTree = "<group>"; };
+		9676E8CE1B70F5890059F9AB /* CDUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUser.m; sourceTree = "<group>"; };
+		9676E8CF1B70F5890059F9AB /* CDPrayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDPrayer.h; sourceTree = "<group>"; };
+		9676E8D01B70F5890059F9AB /* CDPrayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDPrayer.m; sourceTree = "<group>"; };
 		967AD3F21B6564F600001B26 /* BaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseView.h; sourceTree = "<group>"; };
 		967AD3F31B6564F600001B26 /* BaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseView.m; sourceTree = "<group>"; };
 		967AD3F41B6564F600001B26 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
@@ -488,8 +499,6 @@
 		96A5595F1B5A6F3D0073A4FE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		96A559611B5A6F440073A4FE /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		96A559631B5A6F4A0073A4FE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		96A559651B5A70DD0073A4FE /* CDUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUser.h; sourceTree = "<group>"; };
-		96A559661B5A70DD0073A4FE /* CDUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUser.m; sourceTree = "<group>"; };
 		96EB6CDA1B6BFAEC00ADA3AB /* backButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backButton@2x.png"; sourceTree = "<group>"; };
 		96EB6CDD1B6CCD6A00ADA3AB /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		96EB6CDF1B6D053700ADA3AB /* avatarEmpty@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avatarEmpty@2x.png"; sourceTree = "<group>"; };
@@ -669,6 +678,8 @@
 		967AD3F11B6564C700001B26 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				965B4DB91B70DA43002E149F /* PrayerCell.h */,
+				965B4DBA1B70DA43002E149F /* PrayerCell.m */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1204,8 +1215,12 @@
 		96A5592D1B5A6DAE0073A4FE /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				96A559651B5A70DD0073A4FE /* CDUser.h */,
-				96A559661B5A70DD0073A4FE /* CDUser.m */,
+				9676E8CB1B70F5890059F9AB /* CDComments.h */,
+				9676E8CC1B70F5890059F9AB /* CDComments.m */,
+				9676E8CD1B70F5890059F9AB /* CDUser.h */,
+				9676E8CE1B70F5890059F9AB /* CDUser.m */,
+				9676E8CF1B70F5890059F9AB /* CDPrayer.h */,
+				9676E8D01B70F5890059F9AB /* CDPrayer.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1366,16 +1381,19 @@
 				9634F3361B696074002EFD2B /* SignupController.m in Sources */,
 				967AD46E1B65701C00001B26 /* SDWebImageManager.m in Sources */,
 				967AD4631B65701C00001B26 /* AFURLConnectionOperation.m in Sources */,
+				965B4DBB1B70DA43002E149F /* PrayerCell.m in Sources */,
 				96A558D91B5A6D4F0073A4FE /* UIView+AnchorRotationContainer.m in Sources */,
 				96A558D01B5A6D4F0073A4FE /* UIImageView+Utilities.m in Sources */,
 				96A558E51B5A6D4F0073A4FE /* NSString+CMLogger.m in Sources */,
 				967AD4871B65701C00001B26 /* UIWebView+AFNetworking.m in Sources */,
+				9676E8D31B70F5890059F9AB /* CDPrayer.m in Sources */,
 				96A559351B5A6DAE0073A4FE /* JXManagedObject.m in Sources */,
 				967AD46F1B65701C00001B26 /* SDWebImagePrefetcher.m in Sources */,
 				96A558CA1B5A6D4F0073A4FE /* UIImage+Resize.m in Sources */,
 				967AD4621B65701C00001B26 /* AFSecurityPolicy.m in Sources */,
 				96A558E31B5A6D4F0073A4FE /* NSNumber+CMLogger.m in Sources */,
 				96A559311B5A6DAE0073A4FE /* CMSmartFetchedResultsController.m in Sources */,
+				9676E8D21B70F5890059F9AB /* CDUser.m in Sources */,
 				96A558E01B5A6D4F0073A4FE /* NSDate+CMLogger.m in Sources */,
 				967AD47B1B65701C00001B26 /* SWCellScrollView.m in Sources */,
 				967AD4801B65701C00001B26 /* AFNetworkActivityIndicatorManager.m in Sources */,
@@ -1409,6 +1427,7 @@
 				967AD4661B65701C00001B26 /* AFURLSessionManager.m in Sources */,
 				96A558C41B5A6D4F0073A4FE /* UIImage+Alpha.m in Sources */,
 				967AD3F61B6564F600001B26 /* BaseView.m in Sources */,
+				9676E8D11B70F5890059F9AB /* CDComments.m in Sources */,
 				96A558EC1B5A6D4F0073A4FE /* JXNetworkService.m in Sources */,
 				967AD4771B65701C00001B26 /* SevenSwitch.m in Sources */,
 				967AD4741B65701C00001B26 /* UIImageView+HighlightedWebCache.m in Sources */,
@@ -1424,7 +1443,6 @@
 				967AD4731B65701C00001B26 /* UIImage+WebP.m in Sources */,
 				96A558B81B5A6D4F0073A4FE /* NSMutableURLRequest+IgnoreSSL.m in Sources */,
 				96A558C61B5A6D4F0073A4FE /* UIImage+ColorAtPixel.m in Sources */,
-				96A559671B5A70DD0073A4FE /* CDUser.m in Sources */,
 				96A558D51B5A6D4F0073A4FE /* UINavigationController+Extensions.m in Sources */,
 				96A558ED1B5A6D4F0073A4FE /* JXUserService.m in Sources */,
 				96A559341B5A6DAE0073A4FE /* JXIndexedManagedObject.m in Sources */,
