@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
-#import "PKRevealController.h"
 #import "LeftMenuController.h"
+
+@class PKRevealController;
 
 @interface JXAppDelegate : UIResponder <UIApplicationDelegate> {
     
@@ -17,9 +18,10 @@
 }
 
 @property (strong, nonatomic) UIWindow *window;
-@property (nonatomic, strong) PKRevealController *revealController;
-@property (strong, nonatomic) LeftMenuController *leftMenuViewController;
 @property (nonatomic, strong) UINavigationController *navigationController;
+@property (nonatomic, strong, readwrite) PKRevealController *revealController;
+@property (strong, nonatomic) LeftMenuController *leftMenuViewController;
+
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;

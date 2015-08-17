@@ -249,6 +249,9 @@
 }
 
 - (void)signupAccountSuccess {
+    
+    [AppDelegate displayMainView];
+    
 //    LoginController *loginController = [[LoginController alloc] initWithEmail:profileEmail.text andPassword:profilePassword.text];
 //    [self.navigationController setViewControllers:@[[self.navigationController.viewControllers objectAtIndex:0], loginController] animated:YES];
 //    

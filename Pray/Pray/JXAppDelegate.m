@@ -10,6 +10,7 @@
 #import <Parse/Parse.h>
 #import "WelcomeController.h"
 #import "FeedController.h"
+#import "PKRevealController.h"
 
 #define ParseAppID @""
 #define ParseClientKEY @""
@@ -67,7 +68,6 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
 }
-
 
 - (void)setupParse {
     [Parse setApplicationId:ParseAppID clientKey:ParseClientKEY];

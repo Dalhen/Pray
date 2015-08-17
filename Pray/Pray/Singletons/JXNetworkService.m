@@ -11,7 +11,7 @@
 #import <CommonCrypto/CommonDigest.h>
 
 
-#define serverBase @"http://pray" //DEMO
+#define serverBase @"http://praydev.us.to" //DEMO
 //#define serverBase @"http://pray" //LIVE
 
 #define OAuthClientID @"pray-client"
