@@ -64,6 +64,18 @@
 		967AD4851B65701C00001B26 /* UIProgressView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 967AD4591B65701C00001B26 /* UIProgressView+AFNetworking.m */; };
 		967AD4861B65701C00001B26 /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 967AD45B1B65701C00001B26 /* UIRefreshControl+AFNetworking.m */; };
 		967AD4871B65701C00001B26 /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 967AD45D1B65701C00001B26 /* UIWebView+AFNetworking.m */; };
+		967F17331B8733680047607E /* CAAnimation+PKIdentifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 967F17161B8733680047607E /* CAAnimation+PKIdentifier.m */; };
+		967F17341B8733680047607E /* CALayer+PKConvenienceAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = 967F17181B8733680047607E /* CALayer+PKConvenienceAnimations.m */; };
+		967F17351B8733680047607E /* NSObject+PKBlocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 967F171A1B8733680047607E /* NSObject+PKBlocks.m */; };
+		967F17361B8733680047607E /* UIViewController+PKRevealController.m in Sources */ = {isa = PBXBuildFile; fileRef = 967F171C1B8733680047607E /* UIViewController+PKRevealController.m */; };
+		967F17371B8733680047607E /* PKRevealControllerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 967F171F1B8733680047607E /* PKRevealControllerView.m */; };
+		967F17381B8733680047607E /* PKAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 967F17241B8733680047607E /* PKAnimation.m */; };
+		967F17391B8733680047607E /* PKLayerAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 967F17261B8733680047607E /* PKLayerAnimator.m */; };
+		967F173A1B8733680047607E /* PKSequentialAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 967F17281B8733680047607E /* PKSequentialAnimation.m */; };
+		967F173B1B8733680047607E /* PKLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 967F172B1B8733680047607E /* PKLog.m */; };
+		967F173C1B8733680047607E /* PKRevealController.m in Sources */ = {isa = PBXBuildFile; fileRef = 967F172F1B8733680047607E /* PKRevealController.m */; };
+		967F17421B87337D0047607E /* libPKRevealController.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 967F173F1B8733680047607E /* libPKRevealController.a */; };
+		967F17441B8748120047607E /* menuIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 967F17431B8748120047607E /* menuIcon@2x.png */; };
 		96A557821B5A6C690073A4FE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A557811B5A6C690073A4FE /* main.m */; };
 		96A557851B5A6C690073A4FE /* JXAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A557841B5A6C690073A4FE /* JXAppDelegate.m */; };
 		96A557881B5A6C690073A4FE /* Pray.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 96A557861B5A6C690073A4FE /* Pray.xcdatamodeld */; };
@@ -177,36 +189,25 @@
 		96ACF7941B815C2D007BAE4A /* smallArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96ACF7931B815C2D007BAE4A /* smallArrow@2x.png */; };
 		96ACF7961B815DCB007BAE4A /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96ACF7951B815DCB007BAE4A /* Bolts.framework */; };
 		96ACF79A1B815E42007BAE4A /* SettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ACF7991B815E42007BAE4A /* SettingsController.m */; };
-		96ACF7BE1B8162AB007BAE4A /* CAAnimation+PKIdentifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ACF7A41B8162AB007BAE4A /* CAAnimation+PKIdentifier.m */; };
-		96ACF7BF1B8162AB007BAE4A /* CALayer+PKConvenienceAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ACF7A61B8162AB007BAE4A /* CALayer+PKConvenienceAnimations.m */; };
-		96ACF7C01B8162AB007BAE4A /* NSObject+PKBlocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ACF7A81B8162AB007BAE4A /* NSObject+PKBlocks.m */; };
-		96ACF7C11B8162AB007BAE4A /* UIViewController+PKRevealController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ACF7AA1B8162AB007BAE4A /* UIViewController+PKRevealController.m */; };
-		96ACF7C21B8162AB007BAE4A /* PKRevealControllerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ACF7AD1B8162AB007BAE4A /* PKRevealControllerView.m */; };
-		96ACF7C31B8162AB007BAE4A /* PKAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ACF7B21B8162AB007BAE4A /* PKAnimation.m */; };
-		96ACF7C41B8162AB007BAE4A /* PKLayerAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ACF7B41B8162AB007BAE4A /* PKLayerAnimator.m */; };
-		96ACF7C51B8162AB007BAE4A /* PKSequentialAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ACF7B61B8162AB007BAE4A /* PKSequentialAnimation.m */; };
-		96ACF7C61B8162AB007BAE4A /* PKLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ACF7B91B8162AB007BAE4A /* PKLog.m */; };
-		96ACF7C71B8162AB007BAE4A /* PKRevealController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ACF7BD1B8162AB007BAE4A /* PKRevealController.m */; };
-		96ACF7D11B816423007BAE4A /* libPKRevealController.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 96ACF7A01B816294007BAE4A /* libPKRevealController.a */; };
 		96EB6CDB1B6BFAEC00ADA3AB /* backButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96EB6CDA1B6BFAEC00ADA3AB /* backButton@2x.png */; };
 		96EB6CDE1B6CCD6A00ADA3AB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 96EB6CDD1B6CCD6A00ADA3AB /* Localizable.strings */; };
 		96EB6CE01B6D053700ADA3AB /* avatarEmpty@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96EB6CDF1B6D053700ADA3AB /* avatarEmpty@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		967F173E1B8733680047607E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 967F17301B8733680047607E /* PKRevealController.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F9621E7B1815246000469E41;
+			remoteInfo = PKRevealController;
+		};
 		96A557991B5A6C690073A4FE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 96A557741B5A6C690073A4FE /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 96A5577B1B5A6C690073A4FE;
 			remoteInfo = Pray;
-		};
-		96ACF79F1B816294007BAE4A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 96ACF79B1B816294007BAE4A /* PKRevealController.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F9621E7B1815246000469E41;
-			remoteInfo = PKRevealController;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -323,6 +324,32 @@
 		967AD45B1B65701C00001B26 /* UIRefreshControl+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIRefreshControl+AFNetworking.m"; sourceTree = "<group>"; };
 		967AD45C1B65701C00001B26 /* UIWebView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+AFNetworking.h"; sourceTree = "<group>"; };
 		967AD45D1B65701C00001B26 /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
+		967F17151B8733680047607E /* CAAnimation+PKIdentifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CAAnimation+PKIdentifier.h"; sourceTree = "<group>"; };
+		967F17161B8733680047607E /* CAAnimation+PKIdentifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CAAnimation+PKIdentifier.m"; sourceTree = "<group>"; };
+		967F17171B8733680047607E /* CALayer+PKConvenienceAnimations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+PKConvenienceAnimations.h"; sourceTree = "<group>"; };
+		967F17181B8733680047607E /* CALayer+PKConvenienceAnimations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+PKConvenienceAnimations.m"; sourceTree = "<group>"; };
+		967F17191B8733680047607E /* NSObject+PKBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+PKBlocks.h"; sourceTree = "<group>"; };
+		967F171A1B8733680047607E /* NSObject+PKBlocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+PKBlocks.m"; sourceTree = "<group>"; };
+		967F171B1B8733680047607E /* UIViewController+PKRevealController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+PKRevealController.h"; sourceTree = "<group>"; };
+		967F171C1B8733680047607E /* UIViewController+PKRevealController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+PKRevealController.m"; sourceTree = "<group>"; };
+		967F171E1B8733680047607E /* PKRevealControllerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKRevealControllerView.h; sourceTree = "<group>"; };
+		967F171F1B8733680047607E /* PKRevealControllerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKRevealControllerView.m; sourceTree = "<group>"; };
+		967F17221B8733680047607E /* PKAnimating.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKAnimating.h; sourceTree = "<group>"; };
+		967F17231B8733680047607E /* PKAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKAnimation.h; sourceTree = "<group>"; };
+		967F17241B8733680047607E /* PKAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKAnimation.m; sourceTree = "<group>"; };
+		967F17251B8733680047607E /* PKLayerAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKLayerAnimator.h; sourceTree = "<group>"; };
+		967F17261B8733680047607E /* PKLayerAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKLayerAnimator.m; sourceTree = "<group>"; };
+		967F17271B8733680047607E /* PKSequentialAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKSequentialAnimation.h; sourceTree = "<group>"; };
+		967F17281B8733680047607E /* PKSequentialAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKSequentialAnimation.m; sourceTree = "<group>"; };
+		967F172A1B8733680047607E /* PKLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKLog.h; sourceTree = "<group>"; };
+		967F172B1B8733680047607E /* PKLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKLog.m; sourceTree = "<group>"; };
+		967F172D1B8733680047607E /* PKRevealController-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PKRevealController-Prefix.pch"; sourceTree = "<group>"; };
+		967F172E1B8733680047607E /* PKRevealController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKRevealController.h; sourceTree = "<group>"; };
+		967F172F1B8733680047607E /* PKRevealController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKRevealController.m; sourceTree = "<group>"; };
+		967F17301B8733680047607E /* PKRevealController.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PKRevealController.xcodeproj; path = PKReveal/Source/PKRevealController.xcodeproj; sourceTree = "<group>"; };
+		967F17401B8733750047607E /* PKRevealController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PKRevealController.h; path = PKReveal/Headers/PKRevealController.h; sourceTree = "<group>"; };
+		967F17411B8733750047607E /* UIViewController+PKRevealController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIViewController+PKRevealController.h"; path = "PKReveal/Headers/UIViewController+PKRevealController.h"; sourceTree = "<group>"; };
+		967F17431B8748120047607E /* menuIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuIcon@2x.png"; sourceTree = "<group>"; };
 		96A5577C1B5A6C690073A4FE /* Pray.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pray.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		96A557801B5A6C690073A4FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		96A557811B5A6C690073A4FE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -538,31 +565,6 @@
 		96ACF7951B815DCB007BAE4A /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		96ACF7981B815E42007BAE4A /* SettingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsController.h; sourceTree = "<group>"; };
 		96ACF7991B815E42007BAE4A /* SettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsController.m; sourceTree = "<group>"; };
-		96ACF79B1B816294007BAE4A /* PKRevealController.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PKRevealController.xcodeproj; path = PKReveal/PKRevealController.xcodeproj; sourceTree = "<group>"; };
-		96ACF7A31B8162AB007BAE4A /* CAAnimation+PKIdentifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CAAnimation+PKIdentifier.h"; sourceTree = "<group>"; };
-		96ACF7A41B8162AB007BAE4A /* CAAnimation+PKIdentifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CAAnimation+PKIdentifier.m"; sourceTree = "<group>"; };
-		96ACF7A51B8162AB007BAE4A /* CALayer+PKConvenienceAnimations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+PKConvenienceAnimations.h"; sourceTree = "<group>"; };
-		96ACF7A61B8162AB007BAE4A /* CALayer+PKConvenienceAnimations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+PKConvenienceAnimations.m"; sourceTree = "<group>"; };
-		96ACF7A71B8162AB007BAE4A /* NSObject+PKBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+PKBlocks.h"; sourceTree = "<group>"; };
-		96ACF7A81B8162AB007BAE4A /* NSObject+PKBlocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+PKBlocks.m"; sourceTree = "<group>"; };
-		96ACF7A91B8162AB007BAE4A /* UIViewController+PKRevealController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+PKRevealController.h"; sourceTree = "<group>"; };
-		96ACF7AA1B8162AB007BAE4A /* UIViewController+PKRevealController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+PKRevealController.m"; sourceTree = "<group>"; };
-		96ACF7AC1B8162AB007BAE4A /* PKRevealControllerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKRevealControllerView.h; sourceTree = "<group>"; };
-		96ACF7AD1B8162AB007BAE4A /* PKRevealControllerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKRevealControllerView.m; sourceTree = "<group>"; };
-		96ACF7B01B8162AB007BAE4A /* PKAnimating.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKAnimating.h; sourceTree = "<group>"; };
-		96ACF7B11B8162AB007BAE4A /* PKAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKAnimation.h; sourceTree = "<group>"; };
-		96ACF7B21B8162AB007BAE4A /* PKAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKAnimation.m; sourceTree = "<group>"; };
-		96ACF7B31B8162AB007BAE4A /* PKLayerAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKLayerAnimator.h; sourceTree = "<group>"; };
-		96ACF7B41B8162AB007BAE4A /* PKLayerAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKLayerAnimator.m; sourceTree = "<group>"; };
-		96ACF7B51B8162AB007BAE4A /* PKSequentialAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKSequentialAnimation.h; sourceTree = "<group>"; };
-		96ACF7B61B8162AB007BAE4A /* PKSequentialAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKSequentialAnimation.m; sourceTree = "<group>"; };
-		96ACF7B81B8162AB007BAE4A /* PKLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKLog.h; sourceTree = "<group>"; };
-		96ACF7B91B8162AB007BAE4A /* PKLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKLog.m; sourceTree = "<group>"; };
-		96ACF7BB1B8162AB007BAE4A /* PKRevealController-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PKRevealController-Prefix.pch"; sourceTree = "<group>"; };
-		96ACF7BC1B8162AB007BAE4A /* PKRevealController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKRevealController.h; sourceTree = "<group>"; };
-		96ACF7BD1B8162AB007BAE4A /* PKRevealController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKRevealController.m; sourceTree = "<group>"; };
-		96ACF7D21B8164A6007BAE4A /* PKRevealController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PKRevealController.h; path = PKReveal/Headers/PKRevealController.h; sourceTree = "<group>"; };
-		96ACF7D31B8164A6007BAE4A /* UIViewController+PKRevealController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+PKRevealController.h"; path = "PKReveal/Headers/UIViewController+PKRevealController.h"; sourceTree = "<group>"; };
 		96EB6CDA1B6BFAEC00ADA3AB /* backButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backButton@2x.png"; sourceTree = "<group>"; };
 		96EB6CDD1B6CCD6A00ADA3AB /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		96EB6CDF1B6D053700ADA3AB /* avatarEmpty@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avatarEmpty@2x.png"; sourceTree = "<group>"; };
@@ -573,7 +575,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				96ACF7D11B816423007BAE4A /* libPKRevealController.a in Frameworks */,
+				967F17421B87337D0047607E /* libPKRevealController.a in Frameworks */,
 				96A559641B5A6F4A0073A4FE /* QuartzCore.framework in Frameworks */,
 				96A559621B5A6F440073A4FE /* MobileCoreServices.framework in Frameworks */,
 				96A559601B5A6F3D0073A4FE /* AudioToolbox.framework in Frameworks */,
@@ -691,10 +693,10 @@
 		967AD4011B65701C00001B26 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
-				96ACF7D21B8164A6007BAE4A /* PKRevealController.h */,
-				96ACF7D31B8164A6007BAE4A /* UIViewController+PKRevealController.h */,
-				96ACF7A11B8162AB007BAE4A /* PKRevealController */,
-				96ACF79B1B816294007BAE4A /* PKRevealController.xcodeproj */,
+				967F17401B8733750047607E /* PKRevealController.h */,
+				967F17411B8733750047607E /* UIViewController+PKRevealController.h */,
+				967F17131B8733680047607E /* PKRevealController */,
+				967F17301B8733680047607E /* PKRevealController.xcodeproj */,
 				96ACF7951B815DCB007BAE4A /* Bolts.framework */,
 				9634F3121B695F1D002EFD2B /* Parse.framework */,
 				967AD4021B65701C00001B26 /* AFNetworking */,
@@ -833,6 +835,92 @@
 				967AD45D1B65701C00001B26 /* UIWebView+AFNetworking.m */,
 			);
 			path = "UIKit+AFNetworking";
+			sourceTree = "<group>";
+		};
+		967F17131B8733680047607E /* PKRevealController */ = {
+			isa = PBXGroup;
+			children = (
+				967F17141B8733680047607E /* Categories */,
+				967F171D1B8733680047607E /* Classes */,
+				967F17201B8733680047607E /* Modules */,
+				967F172C1B8733680047607E /* Other Sources */,
+				967F172E1B8733680047607E /* PKRevealController.h */,
+				967F172F1B8733680047607E /* PKRevealController.m */,
+			);
+			name = PKRevealController;
+			path = PKReveal/Source/PKRevealController;
+			sourceTree = "<group>";
+		};
+		967F17141B8733680047607E /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				967F17151B8733680047607E /* CAAnimation+PKIdentifier.h */,
+				967F17161B8733680047607E /* CAAnimation+PKIdentifier.m */,
+				967F17171B8733680047607E /* CALayer+PKConvenienceAnimations.h */,
+				967F17181B8733680047607E /* CALayer+PKConvenienceAnimations.m */,
+				967F17191B8733680047607E /* NSObject+PKBlocks.h */,
+				967F171A1B8733680047607E /* NSObject+PKBlocks.m */,
+				967F171B1B8733680047607E /* UIViewController+PKRevealController.h */,
+				967F171C1B8733680047607E /* UIViewController+PKRevealController.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		967F171D1B8733680047607E /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				967F171E1B8733680047607E /* PKRevealControllerView.h */,
+				967F171F1B8733680047607E /* PKRevealControllerView.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		967F17201B8733680047607E /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				967F17211B8733680047607E /* PKLayerAnimator */,
+				967F17291B8733680047607E /* PKLog */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		967F17211B8733680047607E /* PKLayerAnimator */ = {
+			isa = PBXGroup;
+			children = (
+				967F17221B8733680047607E /* PKAnimating.h */,
+				967F17231B8733680047607E /* PKAnimation.h */,
+				967F17241B8733680047607E /* PKAnimation.m */,
+				967F17251B8733680047607E /* PKLayerAnimator.h */,
+				967F17261B8733680047607E /* PKLayerAnimator.m */,
+				967F17271B8733680047607E /* PKSequentialAnimation.h */,
+				967F17281B8733680047607E /* PKSequentialAnimation.m */,
+			);
+			path = PKLayerAnimator;
+			sourceTree = "<group>";
+		};
+		967F17291B8733680047607E /* PKLog */ = {
+			isa = PBXGroup;
+			children = (
+				967F172A1B8733680047607E /* PKLog.h */,
+				967F172B1B8733680047607E /* PKLog.m */,
+			);
+			path = PKLog;
+			sourceTree = "<group>";
+		};
+		967F172C1B8733680047607E /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				967F172D1B8733680047607E /* PKRevealController-Prefix.pch */,
+			);
+			path = "Other Sources";
+			sourceTree = "<group>";
+		};
+		967F17311B8733680047607E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				967F173F1B8733680047607E /* libPKRevealController.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		96A557731B5A6C690073A4FE = {
@@ -1269,6 +1357,7 @@
 		96ACF76D1B8156E1007BAE4A /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				967F17431B8748120047607E /* menuIcon@2x.png */,
 				96ACF7931B815C2D007BAE4A /* smallArrow@2x.png */,
 				96ACF76E1B8156E1007BAE4A /* feedOFF@2x.png */,
 				96ACF76F1B8156E1007BAE4A /* feedON@2x.png */,
@@ -1323,92 +1412,6 @@
 				96ACF7991B815E42007BAE4A /* SettingsController.m */,
 			);
 			path = Settings;
-			sourceTree = "<group>";
-		};
-		96ACF79C1B816294007BAE4A /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				96ACF7A01B816294007BAE4A /* libPKRevealController.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		96ACF7A11B8162AB007BAE4A /* PKRevealController */ = {
-			isa = PBXGroup;
-			children = (
-				96ACF7A21B8162AB007BAE4A /* Categories */,
-				96ACF7AB1B8162AB007BAE4A /* Classes */,
-				96ACF7AE1B8162AB007BAE4A /* Modules */,
-				96ACF7BA1B8162AB007BAE4A /* Other Sources */,
-				96ACF7BC1B8162AB007BAE4A /* PKRevealController.h */,
-				96ACF7BD1B8162AB007BAE4A /* PKRevealController.m */,
-			);
-			name = PKRevealController;
-			path = PKReveal/PKRevealController;
-			sourceTree = "<group>";
-		};
-		96ACF7A21B8162AB007BAE4A /* Categories */ = {
-			isa = PBXGroup;
-			children = (
-				96ACF7A31B8162AB007BAE4A /* CAAnimation+PKIdentifier.h */,
-				96ACF7A41B8162AB007BAE4A /* CAAnimation+PKIdentifier.m */,
-				96ACF7A51B8162AB007BAE4A /* CALayer+PKConvenienceAnimations.h */,
-				96ACF7A61B8162AB007BAE4A /* CALayer+PKConvenienceAnimations.m */,
-				96ACF7A71B8162AB007BAE4A /* NSObject+PKBlocks.h */,
-				96ACF7A81B8162AB007BAE4A /* NSObject+PKBlocks.m */,
-				96ACF7A91B8162AB007BAE4A /* UIViewController+PKRevealController.h */,
-				96ACF7AA1B8162AB007BAE4A /* UIViewController+PKRevealController.m */,
-			);
-			path = Categories;
-			sourceTree = "<group>";
-		};
-		96ACF7AB1B8162AB007BAE4A /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				96ACF7AC1B8162AB007BAE4A /* PKRevealControllerView.h */,
-				96ACF7AD1B8162AB007BAE4A /* PKRevealControllerView.m */,
-			);
-			path = Classes;
-			sourceTree = "<group>";
-		};
-		96ACF7AE1B8162AB007BAE4A /* Modules */ = {
-			isa = PBXGroup;
-			children = (
-				96ACF7AF1B8162AB007BAE4A /* PKLayerAnimator */,
-				96ACF7B71B8162AB007BAE4A /* PKLog */,
-			);
-			path = Modules;
-			sourceTree = "<group>";
-		};
-		96ACF7AF1B8162AB007BAE4A /* PKLayerAnimator */ = {
-			isa = PBXGroup;
-			children = (
-				96ACF7B01B8162AB007BAE4A /* PKAnimating.h */,
-				96ACF7B11B8162AB007BAE4A /* PKAnimation.h */,
-				96ACF7B21B8162AB007BAE4A /* PKAnimation.m */,
-				96ACF7B31B8162AB007BAE4A /* PKLayerAnimator.h */,
-				96ACF7B41B8162AB007BAE4A /* PKLayerAnimator.m */,
-				96ACF7B51B8162AB007BAE4A /* PKSequentialAnimation.h */,
-				96ACF7B61B8162AB007BAE4A /* PKSequentialAnimation.m */,
-			);
-			path = PKLayerAnimator;
-			sourceTree = "<group>";
-		};
-		96ACF7B71B8162AB007BAE4A /* PKLog */ = {
-			isa = PBXGroup;
-			children = (
-				96ACF7B81B8162AB007BAE4A /* PKLog.h */,
-				96ACF7B91B8162AB007BAE4A /* PKLog.m */,
-			);
-			path = PKLog;
-			sourceTree = "<group>";
-		};
-		96ACF7BA1B8162AB007BAE4A /* Other Sources */ = {
-			isa = PBXGroup;
-			children = (
-				96ACF7BB1B8162AB007BAE4A /* PKRevealController-Prefix.pch */,
-			);
-			path = "Other Sources";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1480,8 +1483,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 96ACF79C1B816294007BAE4A /* Products */;
-					ProjectRef = 96ACF79B1B816294007BAE4A /* PKRevealController.xcodeproj */;
+					ProductGroup = 967F17311B8733680047607E /* Products */;
+					ProjectRef = 967F17301B8733680047607E /* PKRevealController.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -1493,11 +1496,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		96ACF7A01B816294007BAE4A /* libPKRevealController.a */ = {
+		967F173F1B8733680047607E /* libPKRevealController.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libPKRevealController.a;
-			remoteRef = 96ACF79F1B816294007BAE4A /* PBXContainerItemProxy */;
+			remoteRef = 967F173E1B8733680047607E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1523,6 +1526,7 @@
 				96ACF77B1B8156E1007BAE4A /* profileON@2x.png in Resources */,
 				9634F33D1B696EAF002EFD2B /* prayLogo@2x.png in Resources */,
 				967AD4781B65701C00001B26 /* SVProgressHUD.bundle in Resources */,
+				967F17441B8748120047607E /* menuIcon@2x.png in Resources */,
 				96ACF7941B815C2D007BAE4A /* smallArrow@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1542,12 +1546,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				967AD4721B65701C00001B26 /* UIImage+MultiFormat.m in Sources */,
-				96ACF7C51B8162AB007BAE4A /* PKSequentialAnimation.m in Sources */,
+				967F173A1B8733680047607E /* PKSequentialAnimation.m in Sources */,
 				96A558C31B5A6D4F0073A4FE /* UIButton+Extensions.m in Sources */,
-				96ACF7BF1B8162AB007BAE4A /* CALayer+PKConvenienceAnimations.m in Sources */,
+				967F17341B8733680047607E /* CALayer+PKConvenienceAnimations.m in Sources */,
 				967AD4701B65701C00001B26 /* UIButton+WebCache.m in Sources */,
-				96ACF7C31B8162AB007BAE4A /* PKAnimation.m in Sources */,
-				96ACF7C21B8162AB007BAE4A /* PKRevealControllerView.m in Sources */,
+				967F17381B8733680047607E /* PKAnimation.m in Sources */,
+				967F17371B8733680047607E /* PKRevealControllerView.m in Sources */,
 				96A558B21B5A6D4F0073A4FE /* NSDate+Extensions.m in Sources */,
 				96A559321B5A6DAE0073A4FE /* JXDataAccess.m in Sources */,
 				96A558C51B5A6D4F0073A4FE /* UIImage+BlurredFrame.m in Sources */,
@@ -1589,7 +1593,7 @@
 				967AD4801B65701C00001B26 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				96A558E11B5A6D4F0073A4FE /* NSDictionary+CMLogger.m in Sources */,
 				96A558BA1B5A6D4F0073A4FE /* NSNumber+Extensions.m in Sources */,
-				96ACF7BE1B8162AB007BAE4A /* CAAnimation+PKIdentifier.m in Sources */,
+				967F17331B8733680047607E /* CAAnimation+PKIdentifier.m in Sources */,
 				96ACF79A1B815E42007BAE4A /* SettingsController.m in Sources */,
 				967AD4641B65701C00001B26 /* AFURLRequestSerialization.m in Sources */,
 				96A558BD1B5A6D4F0073A4FE /* NSPredicate+Extensions.m in Sources */,
@@ -1618,7 +1622,7 @@
 				96A559331B5A6DAE0073A4FE /* JXCoreDataManager.m in Sources */,
 				96A559361B5A6DAE0073A4FE /* NSSet+Context.m in Sources */,
 				967AD4661B65701C00001B26 /* AFURLSessionManager.m in Sources */,
-				96ACF7C61B8162AB007BAE4A /* PKLog.m in Sources */,
+				967F173B1B8733680047607E /* PKLog.m in Sources */,
 				96A558C41B5A6D4F0073A4FE /* UIImage+Alpha.m in Sources */,
 				967AD3F61B6564F600001B26 /* BaseView.m in Sources */,
 				9676E8D11B70F5890059F9AB /* CDComment.m in Sources */,
@@ -1635,7 +1639,7 @@
 				967AD4841B65701C00001B26 /* UIImageView+AFNetworking.m in Sources */,
 				96A558E61B5A6D4F0073A4FE /* NSThread+CMLogger.m in Sources */,
 				96ACF7661B815502007BAE4A /* LeftMenuCell.m in Sources */,
-				96ACF7C01B8162AB007BAE4A /* NSObject+PKBlocks.m in Sources */,
+				967F17351B8733680047607E /* NSObject+PKBlocks.m in Sources */,
 				967AD4731B65701C00001B26 /* UIImage+WebP.m in Sources */,
 				96A558B81B5A6D4F0073A4FE /* NSMutableURLRequest+IgnoreSSL.m in Sources */,
 				96A558C61B5A6D4F0073A4FE /* UIImage+ColorAtPixel.m in Sources */,
@@ -1650,7 +1654,7 @@
 				967AD47D1B65701C00001B26 /* SWTableViewCell.m in Sources */,
 				96A559371B5A6DAE0073A4FE /* JXRESTManagedObject.m in Sources */,
 				967AD4811B65701C00001B26 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
-				96ACF7C41B8162AB007BAE4A /* PKLayerAnimator.m in Sources */,
+				967F17391B8733680047607E /* PKLayerAnimator.m in Sources */,
 				96A558C21B5A6D4F0073A4FE /* UIButton+AppExtensions.m in Sources */,
 				96A558B91B5A6D4F0073A4FE /* NSNotificationCenter+Extensions.m in Sources */,
 				967AD46A1B65701C00001B26 /* SDWebImageCompat.m in Sources */,
@@ -1663,7 +1667,7 @@
 				96A558EB1B5A6D4F0073A4FE /* JXFontService.m in Sources */,
 				96A558CF1B5A6D4F0073A4FE /* UIImageView+Rounded.m in Sources */,
 				96A558E41B5A6D4F0073A4FE /* NSSet+CMLogger.m in Sources */,
-				96ACF7C11B8162AB007BAE4A /* UIViewController+PKRevealController.m in Sources */,
+				967F17361B8733680047607E /* UIViewController+PKRevealController.m in Sources */,
 				967AD4611B65701C00001B26 /* AFNetworkReachabilityManager.m in Sources */,
 				96A558CC1B5A6D4F0073A4FE /* UIImage+Tint.m in Sources */,
 				967AD4791B65701C00001B26 /* SVProgressHUD.m in Sources */,
@@ -1681,7 +1685,7 @@
 				967AD4601B65701C00001B26 /* AFHTTPSessionManager.m in Sources */,
 				96A557821B5A6C690073A4FE /* main.m in Sources */,
 				967AD46C1B65701C00001B26 /* SDWebImageDownloader.m in Sources */,
-				96ACF7C71B8162AB007BAE4A /* PKRevealController.m in Sources */,
+				967F173C1B8733680047607E /* PKRevealController.m in Sources */,
 				96A558DE1B5A6D4F0073A4FE /* UIViewController+NavigationTitle.m in Sources */,
 				967AD4861B65701C00001B26 /* UIRefreshControl+AFNetworking.m in Sources */,
 			);

@@ -18,10 +18,6 @@
 @implementation SignupController
 
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
-
 - (void)loadView {
     self.view = [[BaseView alloc] init];
     [self setupLayout];
@@ -221,6 +217,7 @@
     [saveButton.layer setCornerRadius:5.0f*sratio];
     [saveButton setBackgroundColor:Colour_PrayBlue];
     [saveButton setTitle:LocString(@"SIGN UP") forState:UIControlStateNormal];
+    [saveButton addTarget:self action:@selector(signupAccount) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:saveButton];
     [saveButton centerHorizontallyInSuperView];
 }

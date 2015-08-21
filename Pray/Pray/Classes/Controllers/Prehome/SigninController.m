@@ -16,10 +16,6 @@
 @implementation SigninController
 
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
-
 - (void)loadView {
     self.view = [[BaseView alloc] init];
     [self setupLayout];

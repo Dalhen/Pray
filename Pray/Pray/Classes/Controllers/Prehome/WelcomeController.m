@@ -18,13 +18,8 @@
 @implementation WelcomeController
 
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
-
 - (void)loadView {
     self.view = [[BaseView alloc] init];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [self setupLayout];
 }
 

@@ -27,9 +27,10 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
     [self setupParse];
     [self setupWindow];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [self launchApp];
     
     return YES;
@@ -95,7 +96,7 @@
 #pragma mark - Starting App
 - (void)launchApp {
     
-    if (![UserService isUserLoggedIn]) {
+    if ([UserService isUserLoggedIn]) {
         [self launchPushNotifications];
         [self displayMainView];
     }

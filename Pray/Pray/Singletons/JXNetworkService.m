@@ -326,7 +326,7 @@
         NSInteger statusCode = [operation.response statusCode];
         
         //success
-        if (statusCode == 200 && [[responseObject objectForKey:@"success"] isEqualToString:@"true"]) {
+        if (statusCode == 200) {
             Notification_Post(JXNotification.UserServices.RegistrationSuccess, responseObject);
         }
         
@@ -570,7 +570,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Feed
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-- (void)loadFeed {
+- (void)loadFeedForDiscover:(BOOL)discover {
     void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
         if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
         
@@ -594,9 +594,10 @@
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                    [UserService getUserID], @"user_id",
+                                   [NSString stringWithFormat:@"%i", discover], @"discover",
                                    [UserService getOAuthToken], @"access_token", nil];
     
-    [self checkAccessTokenAndCall:@"api/v1/feed" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
+    [self checkAccessTokenAndCall:@"api/v1/prayers" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
 - (void)deletePostWithID:(NSString *)postId {

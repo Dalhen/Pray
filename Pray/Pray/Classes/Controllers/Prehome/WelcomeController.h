@@ -8,7 +8,7 @@
 
 #import "BaseViewController.h"
 
-@interface WelcomeController : BaseViewController {
+@interface WelcomeController : UIViewController {
     
     UIImageView *logoImage;
     UILabel *titleLabel;
