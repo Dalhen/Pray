@@ -67,15 +67,22 @@ struct FeedServicesStruct {
     __unsafe_unretained NSString * const DeletePostFailed;
     __unsafe_unretained NSString * const ReportPostSuccess;
     __unsafe_unretained NSString * const ReportPostFailed;
-    __unsafe_unretained NSString * const DeleteCommentSuccess;
-    __unsafe_unretained NSString * const DeleteCommentFailed;
-    __unsafe_unretained NSString * const ReportCommentSuccess;
-    __unsafe_unretained NSString * const ReportCommentFailed;
 };
 
 struct PostServicesStruct {
     __unsafe_unretained NSString * const PostPrayerSuccess;
     __unsafe_unretained NSString * const PostPrayerFailed;
+};
+
+struct CommentsServicesStruct {
+    __unsafe_unretained NSString * const GetPostCommentsSuccess;
+    __unsafe_unretained NSString * const GetPostCommentsFailed;
+    __unsafe_unretained NSString * const PostCommentSuccess;
+    __unsafe_unretained NSString * const PostCommentFailed;
+    __unsafe_unretained NSString * const DeleteCommentSuccess;
+    __unsafe_unretained NSString * const DeleteCommentFailed;
+    __unsafe_unretained NSString * const ReportCommentSuccess;
+    __unsafe_unretained NSString * const ReportCommentFailed;
 };
 
 struct PushNotificationServicesStruct {
@@ -96,6 +103,7 @@ struct JXNotificationStruct {
     struct UserServicesStruct const UserServices;
     struct FeedServicesStruct const FeedServices;
     struct PostServicesStruct const PostServices;
+    struct CommentsServicesStruct const CommentsServices;
     struct PushNotificationServicesStruct const PushNotificationServices;
     struct ChatServicesStruct const ChatServices;
 };

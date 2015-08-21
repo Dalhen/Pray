@@ -713,18 +713,18 @@
         //success
         if (statusCode == 200) {
             //[DataAccess ]
-            Notification_Post(JXNotification.UserServices.GetUsersToMatchSuccess, [responseObject objectForKey:@"data"]);
+            Notification_Post(JXNotification.CommentsServices.GetPostCommentsSuccess, [responseObject objectForKey:@"data"]);
         }
         
         //invalid
         else {
-            Notification_Post(JXNotification.UserServices.GetUsersToMatchFailed, nil);
+            Notification_Post(JXNotification.CommentsServices.GetPostCommentsFailed, nil);
         }
     };
     
     void (^failureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
         if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
-        Notification_Post(JXNotification.UserServices.GetUsersToMatchFailed, nil);
+        Notification_Post(JXNotification.CommentsServices.GetPostCommentsFailed, nil);
     };
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -732,7 +732,38 @@
                                    [UserService getUserID], @"user_id",
                                    [UserService getOAuthToken], @"access_token", nil];
     
-    [self checkAccessTokenAndCall:@"api/v1/comments" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
+    [self checkAccessTokenAndCall:@"api/v1/prayers/comments" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
+}
+
+- (void)postCommentForPrayerID:(NSString *)prayerID {
+    void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
+        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
+        
+        NSInteger statusCode = [operation.response statusCode];
+        
+        //success
+        if (statusCode == 200) {
+            //[DataAccess ]
+            Notification_Post(JXNotification.CommentsServices.PostCommentSuccess, [responseObject objectForKey:@"data"]);
+        }
+        
+        //invalid
+        else {
+            Notification_Post(JXNotification.CommentsServices.PostCommentFailed, nil);
+        }
+    };
+    
+    void (^failureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
+        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
+        Notification_Post(JXNotification.CommentsServices.PostCommentFailed, nil);
+    };
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   prayerID, @"prayer_id",
+                                   [UserService getUserID], @"user_id",
+                                   [UserService getOAuthToken], @"access_token", nil];
+    
+    [self checkAccessTokenAndCall:@"api/v1/prayers/comment" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
 - (void)deleteCommentWithID:(NSString *)commentID {
@@ -743,18 +774,18 @@
         
         //success
         if (statusCode == 200) {
-            Notification_Post(JXNotification.FeedServices.DeleteCommentSuccess, nil);
+            Notification_Post(JXNotification.CommentsServices.DeleteCommentSuccess, nil);
         }
         
         //invalid
         else {
-            Notification_Post(JXNotification.FeedServices.DeleteCommentFailed, nil);
+            Notification_Post(JXNotification.CommentsServices.DeleteCommentFailed, nil);
         }
     };
     
     void (^failureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
         if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
-        Notification_Post(JXNotification.FeedServices.DeleteCommentFailed, nil);
+        Notification_Post(JXNotification.CommentsServices.DeleteCommentFailed, nil);
     };
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:

@@ -67,15 +67,22 @@ const struct JXNotificationStruct JXNotification = {
         .DeletePostFailed = @"com.pray.feedServices.DeletePostFailed",
         .ReportPostSuccess = @"com.pray.feedServices.ReportPostSuccess",
         .ReportPostFailed = @"com.pray.feedServices.ReportPostFailed",
-        .DeleteCommentSuccess = @"com.pray.feedServices.DeletePostSuccess",
-        .DeleteCommentFailed = @"com.pray.feedServices.DeleteCommentFailed",
-        .ReportCommentSuccess = @"com.pray.feedServices.ReportCommentSuccess",
-        .ReportCommentFailed = @"com.pray.feedServices.ReportCommentFailed",
     },
     
     .PostServices = {
         .PostPrayerSuccess = @"com.pray.postServices.PostPrayerSuccess",
         .PostPrayerFailed = @"com.pray.postServices.PostPrayerFailed",
+    },
+    
+    .CommentsServices = {
+        .GetPostCommentsSuccess = @"com.pray.commentsServices.GetPostCommentsSuccess",
+        .GetPostCommentsFailed = @"com.pray.commentsServices.GetPostCommentsFailed",
+        .PostCommentSuccess = @"com.pray.commentsServices.PostCommentSuccess",
+        .PostCommentFailed = @"com.pray.commentsServices.PostCommentFailed",
+        .DeleteCommentSuccess = @"com.pray.commentsServices.DeletePostSuccess",
+        .DeleteCommentFailed = @"com.pray.commentsServices.DeleteCommentFailed",
+        .ReportCommentSuccess = @"com.pray.commentsServices.ReportCommentSuccess",
+        .ReportCommentFailed = @"com.pray.commentsServices.ReportCommentFailed",
     },
     
     .PushNotificationServices = {

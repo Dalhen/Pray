@@ -378,10 +378,12 @@
 - (CDComment *)addCommentWithData:(NSDictionary *)commentData {
     NSManagedObjectContext *moc = [JXDataAccess getDBContext];
     
+    NSDictionary *userData = [[commentData objectForKey:@"user"] objectForKey:@"data"];
+    
     NSNumber *uniqueId = [NSNumber numberWithInt:[[commentData objectForKey:@"id"] intValue]];
-    NSString *commentText = [commentData objectForKey:@"comment"];
-    NSDate *creationDate = [NSDate dateFromUTCServer:[commentData objectForKey:@"created"]];
-    NSNumber *creatorId = [NSNumber numberWithInt:[[commentData objectForKey:@"creator_id"] intValue]];
+    NSString *commentText = [commentData objectForKey:@"body"];
+    NSDate *creationDate = [NSDate dateFromUTCServer:[commentData objectForKey:@"created_at"]];
+    NSNumber *creatorId = [NSNumber numberWithInt:[[userData objectForKey:@"id"] intValue]];
     NSString *timeAgo = [commentData objectForKey:@"time_ago"];
     
     CDComment *comment = [self getCommentForID:uniqueId];
@@ -395,7 +397,7 @@
     comment.timeAgo = validObject(timeAgo)? timeAgo : comment.timeAgo;
     comment.creationDate = validObject(creationDate)? creationDate : comment.creationDate;
     
-    CDUser *user = [self getUserForID:[NSNumber numberWithInt:[creatorId intValue]]];
+    CDUser *user = [self addUserWithData:userData];
     if (user) {
         [comment setCreator:user];
     }
@@ -416,10 +418,13 @@
     NSMutableArray *commentsObjects = [[NSMutableArray alloc] initWithCapacity:[commentsData count]];
     
     for (NSDictionary *commentData in commentsData) {
+        
+        NSDictionary *userData = [[commentData objectForKey:@"user"] objectForKey:@"data"];
+        
         NSNumber *uniqueId = [NSNumber numberWithInt:[[commentData objectForKey:@"id"] intValue]];
-        NSString *commentText = [commentData objectForKey:@"comment"];
-        NSDate *creationDate = [NSDate dateFromUTCServer:[commentData objectForKey:@"created"]];
-        NSNumber *creatorId = [NSNumber numberWithInt:[[commentData objectForKey:@"creator_id"] intValue]];
+        NSString *commentText = [commentData objectForKey:@"body"];
+        NSDate *creationDate = [NSDate dateFromUTCServer:[commentData objectForKey:@"created_at"]];
+        NSNumber *creatorId = [NSNumber numberWithInt:[[userData objectForKey:@"id"] intValue]];
         NSString *timeAgo = [commentData objectForKey:@"time_ago"];
         
         CDComment *comment = [self getCommentForID:uniqueId];
@@ -433,7 +438,7 @@
         comment.timeAgo = validObject(timeAgo)? timeAgo : comment.timeAgo;
         comment.creationDate = validObject(creationDate)? creationDate : comment.creationDate;
         
-        CDUser *user = [self getUserForID:[NSNumber numberWithInt:[creatorId intValue]]];
+        CDUser *user = [self addUserWithData:userData];
         if (user) {
             [comment setCreator:user];
         }

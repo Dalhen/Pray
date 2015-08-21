@@ -10,7 +10,7 @@
 #import "BaseView.h"
 #import "PKRevealController.h"
 #import "PrayerCreationController.h"
-
+#import "CommentsController.h"
 
 @interface FeedController ()
 
@@ -156,7 +156,7 @@
         [mainTable reloadData];
     }
     else {
-        [prayers addObjectsFromArray:[[notification object] objectForKey:@"posts"]];
+        [prayers addObjectsFromArray:notification.object];
         if ([refreshControl isRefreshing]) [refreshControl endRefreshing];
         [mainTable reloadData];
     }
@@ -246,6 +246,14 @@
 - (void)displaySearch {
     
 }
+
+
+#pragma mark - Comments
+- (void)displayCommentsForPrayer:(CDPrayer *)prayer {
+    CommentsController *commentsController = [[CommentsController alloc] initWithPrayer:prayer];
+    [self.navigationController pushViewController:commentsController animated:YES];
+}
+
 
 
 - (void)didReceiveMemoryWarning {

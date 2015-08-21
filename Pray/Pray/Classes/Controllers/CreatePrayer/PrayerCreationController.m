@@ -34,9 +34,8 @@
     [self setupLayout];
 }
 
-- (void)viewDidLoad {
+- (void)viewWillAppear:(BOOL)animated {
     [prayerText addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
-    [super viewDidLoad];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -158,7 +157,7 @@
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     [self dismissViewControllerAnimated:YES completion:^{
-        
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     }];
 }
 
@@ -168,6 +167,8 @@
     selectedImage = img;
     
     [self dismissViewControllerAnimated:YES completion:^{
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+        
         [UIView animateWithDuration:0.3 animations:^{
             imageMask.alpha = 1.0;
         }];

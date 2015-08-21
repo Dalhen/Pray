@@ -81,6 +81,9 @@
 		967F174A1B8778740047607E /* addImageButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 967F17491B8778740047607E /* addImageButton@2x.png */; };
 		96A394A01B878C6A00B3040E /* searchIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A3949F1B878C6A00B3040E /* searchIcon@2x.png */; };
 		96A394A31B878D6D00B3040E /* arrowDown@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A394A21B878D6D00B3040E /* arrowDown@2x.png */; };
+		96A394A71B87B95700B3040E /* CommentsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A394A61B87B95700B3040E /* CommentsController.m */; };
+		96A394AA1B87C4C200B3040E /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A394A91B87C4C200B3040E /* CommentCell.m */; };
+		96A394B21B87CC5000B3040E /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A394B11B87CC5000B3040E /* TTTAttributedLabel.m */; };
 		96A557821B5A6C690073A4FE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A557811B5A6C690073A4FE /* main.m */; };
 		96A557851B5A6C690073A4FE /* JXAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A557841B5A6C690073A4FE /* JXAppDelegate.m */; };
 		96A557881B5A6C690073A4FE /* Pray.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 96A557861B5A6C690073A4FE /* Pray.xcdatamodeld */; };
@@ -360,6 +363,12 @@
 		967F17491B8778740047607E /* addImageButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addImageButton@2x.png"; sourceTree = "<group>"; };
 		96A3949F1B878C6A00B3040E /* searchIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "searchIcon@2x.png"; sourceTree = "<group>"; };
 		96A394A21B878D6D00B3040E /* arrowDown@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrowDown@2x.png"; sourceTree = "<group>"; };
+		96A394A51B87B95700B3040E /* CommentsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsController.h; sourceTree = "<group>"; };
+		96A394A61B87B95700B3040E /* CommentsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsController.m; sourceTree = "<group>"; };
+		96A394A81B87C4C200B3040E /* CommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentCell.h; sourceTree = "<group>"; };
+		96A394A91B87C4C200B3040E /* CommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentCell.m; sourceTree = "<group>"; };
+		96A394B01B87CC5000B3040E /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
+		96A394B11B87CC5000B3040E /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
 		96A5577C1B5A6C690073A4FE /* Pray.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pray.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		96A557801B5A6C690073A4FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		96A557811B5A6C690073A4FE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -696,6 +705,8 @@
 			children = (
 				965B4DB91B70DA43002E149F /* PrayerCell.h */,
 				965B4DBA1B70DA43002E149F /* PrayerCell.m */,
+				96A394A81B87C4C200B3040E /* CommentCell.h */,
+				96A394A91B87C4C200B3040E /* CommentCell.m */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -715,6 +726,7 @@
 				967AD43B1B65701C00001B26 /* SVProgressHUD */,
 				967AD43F1B65701C00001B26 /* SWTableViewCell */,
 				967AD44C1B65701C00001B26 /* UIKit+AFNetworking */,
+				96A394AF1B87CC5000B3040E /* TTTAttributedLabel */,
 			);
 			path = ThirdParty;
 			sourceTree = "<group>";
@@ -933,6 +945,24 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		96A394A41B87B8C900B3040E /* Comments */ = {
+			isa = PBXGroup;
+			children = (
+				96A394A51B87B95700B3040E /* CommentsController.h */,
+				96A394A61B87B95700B3040E /* CommentsController.m */,
+			);
+			path = Comments;
+			sourceTree = "<group>";
+		};
+		96A394AF1B87CC5000B3040E /* TTTAttributedLabel */ = {
+			isa = PBXGroup;
+			children = (
+				96A394B01B87CC5000B3040E /* TTTAttributedLabel.h */,
+				96A394B11B87CC5000B3040E /* TTTAttributedLabel.m */,
+			);
+			path = TTTAttributedLabel;
+			sourceTree = "<group>";
+		};
 		96A557731B5A6C690073A4FE = {
 			isa = PBXGroup;
 			children = (
@@ -1119,6 +1149,7 @@
 				9634F3291B696074002EFD2B /* Prehome */,
 				9634F3231B696074002EFD2B /* Feed */,
 				96ACF7811B8157CB007BAE4A /* CreatePrayer */,
+				96A394A41B87B8C900B3040E /* Comments */,
 				9634F3261B696074002EFD2B /* Navigation */,
 				96ACF77E1B8157AE007BAE4A /* Profile */,
 				96ACF7831B8157FE007BAE4A /* Notifications */,
@@ -1658,6 +1689,7 @@
 				96A558BB1B5A6D4F0073A4FE /* NSObject+Extensions.m in Sources */,
 				967AD4841B65701C00001B26 /* UIImageView+AFNetworking.m in Sources */,
 				96A558E61B5A6D4F0073A4FE /* NSThread+CMLogger.m in Sources */,
+				96A394AA1B87C4C200B3040E /* CommentCell.m in Sources */,
 				96ACF7661B815502007BAE4A /* LeftMenuCell.m in Sources */,
 				967F17351B8733680047607E /* NSObject+PKBlocks.m in Sources */,
 				967AD4731B65701C00001B26 /* UIImage+WebP.m in Sources */,
@@ -1686,6 +1718,7 @@
 				96A558D31B5A6D4F0073A4FE /* UILabel+DynamicHeight.m in Sources */,
 				96A558EB1B5A6D4F0073A4FE /* JXFontService.m in Sources */,
 				96A558CF1B5A6D4F0073A4FE /* UIImageView+Rounded.m in Sources */,
+				96A394A71B87B95700B3040E /* CommentsController.m in Sources */,
 				96A558E41B5A6D4F0073A4FE /* NSSet+CMLogger.m in Sources */,
 				967F17361B8733680047607E /* UIViewController+PKRevealController.m in Sources */,
 				967AD4611B65701C00001B26 /* AFNetworkReachabilityManager.m in Sources */,
@@ -1706,6 +1739,7 @@
 				96A557821B5A6C690073A4FE /* main.m in Sources */,
 				967AD46C1B65701C00001B26 /* SDWebImageDownloader.m in Sources */,
 				967F173C1B8733680047607E /* PKRevealController.m in Sources */,
+				96A394B21B87CC5000B3040E /* TTTAttributedLabel.m in Sources */,
 				96A558DE1B5A6D4F0073A4FE /* UIViewController+NavigationTitle.m in Sources */,
 				967AD4861B65701C00001B26 /* UIRefreshControl+AFNetworking.m in Sources */,
 			);
