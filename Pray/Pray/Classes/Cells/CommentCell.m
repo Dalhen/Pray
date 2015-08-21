@@ -152,8 +152,7 @@
 
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithTransitInformation:(NSDictionary *)components {
     if ([components objectForKey:@"hashtag"]) {
-        [[[UIAlertView alloc] initWithTitle:LocString(@"Would you like to be able to use #hashtags in Grape?") message:@""
-                                   delegate:self cancelButtonTitle:@"No, I don't like that. And I don't like kittens either." otherButtonTitles:@"Yes, that'd be awesome!", nil] show];
+        
     }
 }
 

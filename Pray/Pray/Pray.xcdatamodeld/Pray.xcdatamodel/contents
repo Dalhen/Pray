@@ -4,6 +4,7 @@
         <attribute name="commentText" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="creationDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="creatorId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="tempIdentifier" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="timeAgo" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="uniqueId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <relationship name="creator" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDUser" inverseName="comments" inverseEntity="CDUser" syncable="YES"/>
@@ -45,7 +46,7 @@
         <relationship name="prayers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDPrayer" inverseName="creator" inverseEntity="CDPrayer" syncable="YES"/>
     </entity>
     <elements>
-        <element name="CDComment" positionX="-36" positionY="126" width="128" height="150"/>
+        <element name="CDComment" positionX="-36" positionY="126" width="128" height="165"/>
         <element name="CDPrayer" positionX="-54" positionY="72" width="128" height="270"/>
         <element name="CDUser" positionX="-54" positionY="-9" width="128" height="285"/>
     </elements>

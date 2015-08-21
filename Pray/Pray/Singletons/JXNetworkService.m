@@ -658,7 +658,7 @@
                                    [UserService getUserID], @"user_id",
                                    [UserService getOAuthToken], @"access_token", nil];
     
-    [self checkAccessTokenAndCall:@"api/v1/post/report" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
+    [self checkAccessTokenAndCall:@"api/v1/prayers/report" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
 
@@ -673,7 +673,8 @@
         
         //success
         if (statusCode == 200) {
-            Notification_Post(JXNotification.PostServices.PostPrayerSuccess, [responseObject objectForKey:@"data"]);
+            CDPrayer *prayer = [DataAccess addPrayerWithData:[responseObject objectForKey:@"data"]];
+            Notification_Post(JXNotification.PostServices.PostPrayerSuccess, prayer);
         }
         
         //invalid
@@ -697,7 +698,7 @@
         [prayerImageArray addObject:prayerImage];
     }
     
-    [self checkAccessTokenAndCall:@"api/v1/post" isPost:YES includedImages:prayerImageArray parameters:params successBlock:successBlock failureBlock:failureBlock];
+    [self checkAccessTokenAndCall:@"api/v1/prayers/create" isPost:YES includedImages:prayerImageArray parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
 
@@ -712,8 +713,9 @@
         
         //success
         if (statusCode == 200) {
-            //[DataAccess ]
-            Notification_Post(JXNotification.CommentsServices.GetPostCommentsSuccess, [responseObject objectForKey:@"data"]);
+            NSArray *comments = [DataAccess addCommentsWithData:[responseObject objectForKey:@"data"] toPrayer:[NSNumber numberWithInt:[prayerID intValue]]];
+            
+            Notification_Post(JXNotification.CommentsServices.GetPostCommentsSuccess, comments);
         }
         
         //invalid
@@ -735,7 +737,7 @@
     [self checkAccessTokenAndCall:@"api/v1/prayers/comments" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
-- (void)postCommentForPrayerID:(NSString *)prayerID {
+- (void)postCommentForPrayerID:(NSString *)prayerID andTempIdentifier:(NSString *)tempIdentifier {
     void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
         if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
         
@@ -743,8 +745,8 @@
         
         //success
         if (statusCode == 200) {
-            //[DataAccess ]
-            Notification_Post(JXNotification.CommentsServices.PostCommentSuccess, [responseObject objectForKey:@"data"]);
+            [DataAccess addCommentWithData:[responseObject objectForKey:@"data"] toPrayer:[NSNumber numberWithInt:[prayerID intValue]]];
+            Notification_Post(JXNotification.CommentsServices.PostCommentSuccess, tempIdentifier);
         }
         
         //invalid

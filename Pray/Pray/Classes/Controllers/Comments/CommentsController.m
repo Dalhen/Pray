@@ -7,6 +7,8 @@
 //
 
 #import "CommentsController.h"
+#import "NSString+Extensions.h"
+#import "CommentCell.h"
 
 @interface CommentsController ()
 
@@ -41,18 +43,18 @@
 }
 
 - (void)setupTableView {
-    mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 56*sratio, self.view.screenWidth, self.view.screenHeight - 56*sratio)];
-    [mainTable setBackgroundColor:Colour_PrayDarkBlue];
-    [mainTable setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    [mainTable setScrollsToTop:YES];
-    [mainTable setDelegate:self];
-    [mainTable setDataSource:self];
-    [self.view addSubview:mainTable];
+    commentsTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 56*sratio, self.view.screenWidth, self.view.screenHeight - 56*sratio)];
+    [commentsTable setBackgroundColor:Colour_PrayDarkBlue];
+    [commentsTable setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    [commentsTable setScrollsToTop:YES];
+    [commentsTable setDelegate:self];
+    [commentsTable setDataSource:self];
+    [self.view addSubview:commentsTable];
     
     refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refreshTriggered) forControlEvents:UIControlEventValueChanged];
     [refreshControl setTintColor:Colour_White];
-    [mainTable addSubview:refreshControl];
+    [commentsTable addSubview:refreshControl];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -161,12 +163,12 @@
     if (currentPage==0) {
         comments = [[NSMutableArray alloc] initWithArray:notification.object];
         if ([refreshControl isRefreshing]) [refreshControl endRefreshing];
-        [mainTable reloadData];
+        [commentsTable reloadData];
     }
     else {
         [comments addObjectsFromArray:notification.object];
         if ([refreshControl isRefreshing]) [refreshControl endRefreshing];
-        [mainTable reloadData];
+        [commentsTable reloadData];
     }
     
     [SVProgressHUD dismiss];
@@ -176,8 +178,38 @@
     
 }
 
+- (void)refreshComments {
+    comments = [[NSMutableArray alloc] initWithArray:[self sortComments:[DataAccess getCommentsForPrayer:currentPrayer.uniqueId]]];
+    [commentsTable reloadData];
+}
+
+- (NSArray *)sortComments:(NSArray *)commentsToSort {
+    return [commentsToSort sortedArrayUsingSelector:@selector(compareByID:)];
+}
+
 
 #pragma mark - Post comment connection delegates
+- (void)postComment {
+    if (([commentTextView.text length] > 0 && [commentTextView isFirstResponder]) ||
+        ![commentTextView.text isEqualToString:LocString(@"Write a comment")]) {
+        
+        [self setTouchRecognizer:NO];
+        
+        NSManagedObjectContext *moc = [JXDataAccess getDBContext];
+        CDComment *commentObject = (CDComment *)[NSEntityDescription insertNewObjectForEntityForName:@"CDComment" inManagedObjectContext:moc];
+        commentObject.timeAgo = @"Sending...";
+        commentObject.commentText = commentTextView.text;
+        commentObject.creatorId = [NSNumber numberWithInt:[[UserService getUserID] intValue]];
+        commentObject.tempIdentifier = [NSString randomAlphaStringWithLength:5 andNumeric:YES];
+        [sendingStack addObject:commentObject];
+        [comments addObject:commentObject];
+        
+        [commentsTable reloadData];
+        
+        [NetworkService postCommentForPrayerID:[currentPrayer.uniqueId stringValue] andTempIdentifier:commentObject.tempIdentifier];
+    }
+}
+
 - (void)postCommentSuccess:(NSNotification *)notification {
     
     NSString *commentTempId = notification.object;
@@ -194,20 +226,15 @@
     [commentTextView resignFirstResponder];
     
     [commentTextView setText:LocString(@"Write a comment")];
-    [addCommentView setBackgroundColor:Colour_GreenGrape];
-    [commentTextView setBackgroundColor:Colour_GreenGrape];
+    [addCommentView setBackgroundColor:Colour_PrayBlue];
+    [commentTextView setBackgroundColor:Colour_PrayBlue];
     [commentTextView setTextColor:Colour_White];
     previousCommentHeight = 42;
     
     [self refreshComments];
     
-    //    if (commentsTable.contentSize.height > self.view.screenHeight - 58 - 64) {
-    //        CGPoint bottomOffset = CGPointMake(0, commentsTable.contentSize.height - commentsTable.bounds.size.height);
-    //        [commentsTable setContentOffset:bottomOffset animated:YES];
-    //    }
-    
     [addCommentView setOrigin:CGPointMake(0, self.view.screenHeight-122)];
-    [commentsTable setHeight:self.view.screenHeight - detailsBar.height - 58 - 68];
+    [commentsTable setHeight:self.view.screenHeight - 58 - 68];
 }
 
 - (void)postCommentFailed:(NSNotification *)notification {
@@ -222,14 +249,14 @@
     comments = [[NSMutableArray alloc] initWithArray:tempComments];
     
     [commentsTable reloadData];
-    [SVProgressHUD showErrorWithStatus:LocString([ErrorService getMessageForWarningCode:124])];
+    [SVProgressHUD showErrorWithStatus:LocString(@"We couldn't post your comment. Please check your connection and try again.")];
 }
 
 
 #pragma mark - Utilities
 - (float)heightToFitCommentText:(NSString *)text {
     UITextView *ghostField = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, commentTextWidth, 0)];
-    [ghostField setFont:[FontService commentDescriptionFont]];
+    [ghostField setFont:[FontService systemFont:13*sratio]];
     [ghostField setText:text];
     [ghostField sizeToFit];
     
@@ -302,8 +329,8 @@
     
     if ([textView.text isEqualToString:@""]) {
         [textView setText:LocString(@"Write a comment")];
-        [addCommentView setBackgroundColor:Colour_GreenGrape];
-        [commentTextView setBackgroundColor:Colour_GreenGrape];
+        [addCommentView setBackgroundColor:Colour_PrayBlue];
+        [commentTextView setBackgroundColor:Colour_PrayBlue];
         [commentTextView setTextColor:Colour_White];
     }
     
@@ -337,7 +364,7 @@
     
     [self setTouchRecognizer:NO];
     
-    [commentsTable setHeight:self.view.screenHeight - detailsBar.height - 58 - 68];
+    [commentsTable setHeight:self.view.screenHeight - 58 - 68];
 }
 
 

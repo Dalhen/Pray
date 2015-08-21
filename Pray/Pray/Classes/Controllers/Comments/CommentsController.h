@@ -26,7 +26,13 @@
     UIView *addCommentView;
     UITextView *commentTextView;
     UIButton *sendCommentButton;
+    UIButton *cancelCommentButton;
+    CGFloat previousCommentHeight;
+    
+    NSMutableArray *sendingStack;
 }
+
+- (id)initWithPrayer:(CDPrayer *)prayer;
 
 
 @end

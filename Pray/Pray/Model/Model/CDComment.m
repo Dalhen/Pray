@@ -18,7 +18,16 @@
 @dynamic creationDate;
 @dynamic creatorId;
 @dynamic timeAgo;
+@dynamic tempIdentifier;
 @dynamic creator;
 @dynamic prayer;
+
+- (NSComparisonResult)compareByDate:(CDComment *)other {
+    return [self.creationDate compare:other.creationDate];
+}
+
+- (NSComparisonResult)compareByID:(CDComment *)other {
+    return [self.uniqueId compare:other.uniqueId];
+}
 
 @end

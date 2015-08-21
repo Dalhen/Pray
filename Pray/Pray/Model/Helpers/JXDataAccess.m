@@ -375,7 +375,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Comment
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-- (CDComment *)addCommentWithData:(NSDictionary *)commentData {
+- (CDComment *)addCommentWithData:(NSDictionary *)commentData toPrayer:(NSNumber *)prayerId {
     NSManagedObjectContext *moc = [JXDataAccess getDBContext];
     
     NSDictionary *userData = [[commentData objectForKey:@"user"] objectForKey:@"data"];
@@ -402,6 +402,11 @@
         [comment setCreator:user];
     }
     
+    CDPrayer *prayer = [self getPrayerForID:prayerId];
+    if (prayer) {
+        [prayer addCommentsObject:comment];
+    }
+    
     NSError *error;
     if (![moc save:&error]) {
         // Handle the error.
@@ -413,7 +418,7 @@
     return comment;
 }
 
-- (NSArray *)addComments:(NSArray *)commentsData {
+- (NSArray *)addCommentsWithData:(NSArray *)commentsData toPrayer:(NSNumber *)prayerId {
     NSManagedObjectContext *moc = [JXDataAccess getDBContext];
     NSMutableArray *commentsObjects = [[NSMutableArray alloc] initWithCapacity:[commentsData count]];
     
@@ -446,6 +451,11 @@
         [commentsObjects addObject:comment];
     }
     
+    CDPrayer *prayer = [self getPrayerForID:prayerId];
+    if (prayer) {
+        [prayer addComments:[NSSet setWithArray:commentsObjects]];
+    }
+    
     NSError *error;
     if (![moc save:&error]) {
         // Handle the error.
@@ -467,6 +477,14 @@
     NSError *error;
     NSMutableArray *mutableFetchResults = [[moc executeFetchRequest:request error:&error] mutableCopy];
     return ([mutableFetchResults count]>0) ? [mutableFetchResults objectAtIndex:0] : nil;
+}
+
+- (NSArray *)getCommentsForPrayer:(NSNumber *)uniqueId {
+    CDPrayer *prayer = [self getPrayerForID:uniqueId];
+    if (prayer) {
+        return [prayer.comments allObjects];
+    }
+    else return nil;
 }
 
 - (void)removeCommentForID:(NSNumber *)commentId {

@@ -53,11 +53,13 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Comment
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-- (CDComment *)addCommentWithData:(NSDictionary *)commentData;
+- (CDComment *)addCommentWithData:(NSDictionary *)commentData toPrayer:(NSNumber *)prayerId;
 
-- (NSArray *)addComments:(NSArray *)commentsData;
+- (NSArray *)addCommentsWithData:(NSArray *)commentsData toPrayer:(NSNumber *)prayerId;
 
 - (CDComment *)getCommentForID:(NSNumber *)uniqueId;
+
+- (NSArray *)getCommentsForPrayer:(NSNumber *)uniqueId;
 
 - (void)removeCommentForID:(NSNumber *)commentId;
 

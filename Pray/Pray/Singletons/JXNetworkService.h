@@ -86,6 +86,9 @@
 #pragma mark - Comments
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)loadCommentsForPrayerID:(NSString *)prayerID;
+
+- (void)postCommentForPrayerID:(NSString *)prayerID andTempIdentifier:(NSString *)tempIdentifier;
+
 - (void)deleteCommentWithID:(NSString *)commentID;
 
 

@@ -14,6 +14,7 @@
 + (NSString *)randomLastName;
 + (NSString *)randomTitle;
 + (NSString *)randomWord;
++ (NSString *)randomAlphaStringWithLength:(int)len andNumeric:(BOOL)isNumeric;
 + (NSString *)lipsumWithParagraphs:(NSUInteger)numberOfParagraphs;
 + (NSString *)shortLipsum;
 + (NSString *)mediumLipsum;

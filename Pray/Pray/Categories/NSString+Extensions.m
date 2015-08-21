@@ -1028,6 +1028,18 @@
     return [NSString stringWithFormat:@"%@ %@ %@", firstWord, secondWord, [self randomThirdWord]];
 }
 
++ (NSString *)randomAlphaStringWithLength:(int)len andNumeric:(BOOL)isNumeric {
+    
+    NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    NSMutableString *randomString = [NSMutableString stringWithCapacity: len];
+    
+    for (int i=0; i<len; i++) {
+        [randomString appendFormat: @"%C", [letters characterAtIndex: arc4random_uniform((int)[letters length])]];
+    }
+    
+    return randomString;
+}
+
 #pragma mark - random title generator
 + (NSString *)randomFirstWord
 {

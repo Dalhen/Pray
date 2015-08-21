@@ -18,7 +18,11 @@
 @property (nonatomic, retain) NSDate * creationDate;
 @property (nonatomic, retain) NSNumber * creatorId;
 @property (nonatomic, retain) NSString * timeAgo;
+@property (nonatomic, retain) NSString * tempIdentifier;
 @property (nonatomic, retain) CDUser *creator;
 @property (nonatomic, retain) CDPrayer *prayer;
+
+- (NSComparisonResult)compareByDate:(CDComment *)other;
+- (NSComparisonResult)compareByID:(CDComment *)other;
 
 @end
