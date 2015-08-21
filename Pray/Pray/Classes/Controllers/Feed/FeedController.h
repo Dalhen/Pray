@@ -20,6 +20,8 @@
     NSInteger currentPage;
     NSInteger maxMomentPerPage;
     NSInteger maxPagesCount;
+    
+    UIButton *addPrayerButton;
 }
 
 @end

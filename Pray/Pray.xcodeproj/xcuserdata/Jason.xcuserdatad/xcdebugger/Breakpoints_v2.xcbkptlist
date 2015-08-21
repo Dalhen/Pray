@@ -30,11 +30,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pray/Classes/Controllers/Feed/FeedController.m"
-            timestampString = "461851949.790954"
+            timestampString = "461870017.424677"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "132"
-            endingLineNumber = "132"
+            startingLineNumber = "148"
+            endingLineNumber = "148"
             landmarkName = "-loadFeedSuccess:"
             landmarkType = "5">
          </BreakpointContent>
@@ -196,6 +196,38 @@
             startingLineNumber = "592"
             endingLineNumber = "592"
             landmarkName = "-loadFeedForDiscover:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pray/Classes/Controllers/CreatePrayer/PrayerCreationController.m"
+            timestampString = "461868887.591071"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
+            landmarkName = "-setupLayout"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pray/Classes/Controllers/CreatePrayer/PrayerCreationController.m"
+            timestampString = "461868921.755756"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "-loadView"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

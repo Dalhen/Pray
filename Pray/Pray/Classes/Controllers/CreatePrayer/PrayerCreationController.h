@@ -8,6 +8,15 @@
 
 #import "BaseViewController.h"
 
-@interface PrayerCreationController : BaseViewController
+@interface PrayerCreationController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, UITextViewDelegate> {
+    
+    UIImageView *prayerImage;
+    UIView *imageMask;
+    UIImage *selectedImage;
+    UITextView *prayerText;
+    UIButton *addImageButton;
+    
+    BOOL typeStarted;
+}
 
 @end

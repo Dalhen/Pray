@@ -9,6 +9,8 @@
 #import "FeedController.h"
 #import "BaseView.h"
 #import "PKRevealController.h"
+#import "PrayerCreationController.h"
+
 
 @interface FeedController ()
 
@@ -35,6 +37,7 @@
     
     [self setupHeader];
     [self setupTableView];
+    [self setupAddPrayerButton];
     [self loadFeed];
 }
 
@@ -46,22 +49,22 @@
     [menuButton addTarget:self action:@selector(showLeftMenu) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:menuButton];
     
-//    UIButton *feedSelector = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [feedSelector setFrame:CGRectMake(0, disclaimer1.bottom - 6*sratio, self.view.screenWidth/2, 43*sratio)];
-//    [feedSelector setImage:[UIImage imageNamed:@"arrowDown"] forState:UIControlStateNormal];
-//    [feedSelector setTitle:LocString(@"DEPARTMENT") forState:UIControlStateNormal];
-//    [feedSelector setTitleColor:Colour_255RGB(144, 144, 144) forState:UIControlStateNormal];
-//    [feedSelector.titleLabel setFont:[FontService systemFont:11*sratio]];
-//    [feedSelector setImageEdgeInsets:UIEdgeInsetsMake(0, 130*sratio, 0, 0)];
-//    [feedSelector setTitleEdgeInsets:UIEdgeInsetsMake(0, 4*sratio, 0, 0)];
-//    [feedSelector addTarget:self action:@selector(displayDepartmentSelectorPanel) forControlEvents:UIControlEventTouchUpInside];
-//    [self.view addSubview:feedSelector];
+    UIButton *feedSelector = [UIButton buttonWithType:UIButtonTypeCustom];
+    [feedSelector setFrame:CGRectMake((self.view.screenWidth - 200*sratio)/2, 16*sratio, 200*sratio, 38*sratio)];
+    [feedSelector setImage:[UIImage imageNamed:@"arrowDown"] forState:UIControlStateNormal];
+    [feedSelector setTitle:LocString(@"Discover") forState:UIControlStateNormal];
+    [feedSelector setTitleColor:Colour_White forState:UIControlStateNormal];
+    [feedSelector.titleLabel setFont:[FontService systemFont:16*sratio]];
+    [feedSelector setImageEdgeInsets:UIEdgeInsetsMake(4*sratio, 140*sratio, 0, 0)];
+    [feedSelector setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 10*sratio)];
+    [feedSelector addTarget:self action:@selector(changeFeedType:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:feedSelector];
     
-//    UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [searchButton setFrame:CGRectMake(self.view.screenWidth/2, disclaimer1.bottom - 6*sratio, self.view.screenWidth/2, 43*sratio)];
-//    [searchButton setImage:[UIImage imageNamed:@"arrowDown"] forState:UIControlStateNormal];
-//    [searchButton addTarget:self action:@selector(displayLocationSelectorPanel) forControlEvents:UIControlEventTouchUpInside];
-//    [self.view addSubview:searchButton];
+    UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [searchButton setFrame:CGRectMake(self.view.screenWidth - 60*sratio, 14*sratio, 40*sratio, 40*sratio)];
+    [searchButton setImage:[UIImage imageNamed:@"searchIcon"] forState:UIControlStateNormal];
+    [searchButton addTarget:self action:@selector(displaySearch) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:searchButton];
 }
 
 - (void)setupTableView {
@@ -77,6 +80,15 @@
     [refreshControl addTarget:self action:@selector(refreshTriggered) forControlEvents:UIControlEventValueChanged];
     [refreshControl setTintColor:Colour_White];
     [mainTable addSubview:refreshControl];
+}
+
+- (void)setupAddPrayerButton {
+    addPrayerButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [addPrayerButton setFrame:
+     CGRectMake((self.view.screenWidth - 128*sratio)/2, self.view.screenHeight*sratio - 56*sratio - 96*sratio, 128*sratio, 39*sratio)];
+    [addPrayerButton setImage:[UIImage imageNamed:@"addPrayerButton"] forState:UIControlStateNormal];
+    [addPrayerButton addTarget:self action:@selector(addPrayer) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:addPrayerButton];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -124,6 +136,10 @@
 
 
 #pragma mark - Loading data
+- (void)refreshTriggered {
+    [self loadFeed];
+}
+
 - (void)loadFeed {
     [NetworkService loadFeedForDiscover:YES];
 }
@@ -154,6 +170,12 @@
     refreshing = NO;
     [SVProgressHUD dismiss];
     if ([refreshControl isRefreshing]) [refreshControl endRefreshing];
+}
+
+
+#pragma mark - Feed Type
+- (void)changeFeedType:(id)sender {
+    
 }
 
 
@@ -212,6 +234,18 @@
     
 }
 
+
+#pragma mark - AddPrayer
+- (void)addPrayer {
+    PrayerCreationController *prayerController = [[PrayerCreationController alloc] init];
+    [self.navigationController presentViewController:prayerController animated:YES completion:nil];
+}
+
+
+#pragma mark - Search
+- (void)displaySearch {
+    
+}
 
 
 - (void)didReceiveMemoryWarning {
