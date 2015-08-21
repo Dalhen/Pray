@@ -131,11 +131,11 @@
 - (void)loadFeedSuccess:(NSNotification *)notification {
     refreshing = NO;
     
-    maxMomentPerPage = [[notification.object objectForKey:@"page_size"] intValue];
-    maxPagesCount = [[notification.object objectForKey:@"page_count"] intValue];
+    //maxMomentPerPage = [[notification.object objectForKey:@"page_size"] intValue];
+    //maxPagesCount = [[notification.object objectForKey:@"page_count"] intValue];
     
-    if (currentPage==1) {
-        prayers = [[NSMutableArray alloc] initWithArray:[[notification object] objectForKey:@"posts"]];
+    if (currentPage==0) {
+        prayers = [[NSMutableArray alloc] initWithArray:notification.object];
         if ([refreshControl isRefreshing]) [refreshControl endRefreshing];
         [mainTable reloadData];
     }

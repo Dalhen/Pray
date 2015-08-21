@@ -154,9 +154,9 @@
     NSString *facebookId = [userObject objectForKey:@"fb_id"];
     NSString *firstname = [userObject objectForKey:@"first_name"];
     NSString *lastname = [userObject objectForKey:@"last_name"];
-    NSString *followersCount = [userObject objectForKey:@"followers_count"];
-    NSString *followingCount = [userObject objectForKey:@"following_count"];
-    NSString *prayersCount = [userObject objectForKey:@"prayers_count"];
+    NSString *followersCount = [[userObject objectForKey:@"followers_count"] stringValue];
+    NSString *followingCount = [[userObject objectForKey:@"following_count"] stringValue];
+    NSString *prayersCount = [[userObject objectForKey:@"prayers_count"] stringValue];
     //NSDate *dateOfBirth = [NSDate dateFromUTCServer:[userObject objectForKey:@"dob"]];
     
     CDUser *user = [self getUserForID:userId];
@@ -208,19 +208,21 @@
 - (CDPrayer *)addPrayerWithData:(NSDictionary *)prayerData {
     NSManagedObjectContext *moc = [JXDataAccess getDBContext];
     
+    NSDictionary *userData = [[prayerData objectForKey:@"user"] objectForKey:@"data"];
+    
     NSNumber *uniqueId = [NSNumber numberWithInt:[[prayerData objectForKey:@"id"] intValue]];
-    NSNumber *creatorId = [NSNumber numberWithInt:[[prayerData objectForKey:@"creator_id"] intValue]];
+    NSNumber *creatorId = [NSNumber numberWithInt:[[userData objectForKey:@"id"] intValue]];
     NSNumber *categoryId = [NSNumber numberWithInt:[[prayerData objectForKey:@"category_id"] intValue]];
-    NSString *prayerText = [prayerData objectForKey:@"message"];
-    NSString *imageURL = [prayerData objectForKey:@"image_url"];
-    NSString *latitude = [prayerData objectForKey:@"lat"];
-    NSString *longitude = [prayerData objectForKey:@"lon"];
-    NSString *locationName = [prayerData objectForKey:@"location_name"];
-    NSString *commentsCount = [prayerData objectForKey:@"comments_count"];
-    NSString *likesCount = [prayerData objectForKey:@"likes_count"];
+    NSString *prayerText = [prayerData objectForKey:@"body"];
+    NSString *imageURL = [prayerData objectForKey:@"image"];
+    NSString *latitude = [prayerData objectForKey:@"latitude"];
+    NSString *longitude = [prayerData objectForKey:@"longitude"];
+    NSString *locationName = [prayerData objectForKey:@"location"];
+    NSString *commentsCount = [[prayerData objectForKey:@"comments"] stringValue];
+    NSString *likesCount = [[prayerData objectForKey:@"likes"] stringValue];
     NSString *timeAgo = [prayerData objectForKey:@"time_ago"];
-    NSNumber *isLiked = [NSNumber numberWithInt:[[prayerData objectForKey:@"is_liked"] intValue]];
-    NSDate *creationDate = [NSDate dateFromUTCServer:[prayerData objectForKey:@"created"]];
+    NSNumber *isLiked = [NSNumber numberWithInt:[[prayerData objectForKey:@"liked"] intValue]];
+    NSDate *creationDate = [NSDate dateFromUTCServer:[prayerData objectForKey:@"created_at"]];
     
     CDPrayer *prayer = [self getPrayerForID:uniqueId];
     if (!prayer) {
@@ -241,7 +243,8 @@
     prayer.isLiked = validObject(isLiked)? isLiked : prayer.isLiked;
     prayer.creationDate = validObject(creationDate)? creationDate : prayer.creationDate;
     
-    CDUser *user = [self getUserForID:[NSNumber numberWithInt:[creatorId intValue]]];
+    CDUser *user = [self addUserWithData:userData];
+    
     if (user) {
         [prayer setCreator:user];
     }
@@ -262,19 +265,22 @@
     NSMutableArray *prayersObjects = [[NSMutableArray alloc] initWithCapacity:[prayersData count]];
     
     for (NSDictionary *prayerData in prayersData) {
+        
+        NSDictionary *userData = [[prayerData objectForKey:@"user"] objectForKey:@"data"];
+        
         NSNumber *uniqueId = [NSNumber numberWithInt:[[prayerData objectForKey:@"id"] intValue]];
-        NSNumber *creatorId = [NSNumber numberWithInt:[[prayerData objectForKey:@"creator_id"] intValue]];
+        NSNumber *creatorId = [NSNumber numberWithInt:[[userData objectForKey:@"id"] intValue]];
         NSNumber *categoryId = [NSNumber numberWithInt:[[prayerData objectForKey:@"category_id"] intValue]];
-        NSString *prayerText = [prayerData objectForKey:@"message"];
-        NSString *imageURL = [prayerData objectForKey:@"image_url"];
-        NSString *latitude = [prayerData objectForKey:@"lat"];
-        NSString *longitude = [prayerData objectForKey:@"lon"];
-        NSString *locationName = [prayerData objectForKey:@"location_name"];
-        NSString *commentsCount = [prayerData objectForKey:@"comments_count"];
-        NSString *likesCount = [prayerData objectForKey:@"likes_count"];
+        NSString *prayerText = [prayerData objectForKey:@"body"];
+        NSString *imageURL = [prayerData objectForKey:@"image"];
+        NSString *latitude = [prayerData objectForKey:@"latitude"];
+        NSString *longitude = [prayerData objectForKey:@"longitude"];
+        NSString *locationName = [prayerData objectForKey:@"location"];
+        NSString *commentsCount = [[prayerData objectForKey:@"comments"] stringValue];
+        NSString *likesCount = [[prayerData objectForKey:@"likes"] stringValue];
         NSString *timeAgo = [prayerData objectForKey:@"time_ago"];
-        NSNumber *isLiked = [NSNumber numberWithInt:[[prayerData objectForKey:@"is_liked"] intValue]];
-        NSDate *creationDate = [NSDate dateFromUTCServer:[prayerData objectForKey:@"created"]];
+        NSNumber *isLiked = [NSNumber numberWithInt:[[prayerData objectForKey:@"liked"] intValue]];
+        NSDate *creationDate = [NSDate dateFromUTCServer:[prayerData objectForKey:@"created_at"]];
         
         CDPrayer *prayer = [self getPrayerForID:uniqueId];
         if (!prayer) {
@@ -295,7 +301,8 @@
         prayer.isLiked = validObject(isLiked)? isLiked : prayer.isLiked;
         prayer.creationDate = validObject(creationDate)? creationDate : prayer.creationDate;
         
-        CDUser *user = [self getUserForID:[NSNumber numberWithInt:[creatorId intValue]]];
+        CDUser *user = [self addUserWithData:userData];
+        
         if (user) {
             [prayer setCreator:user];
         }

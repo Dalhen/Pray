@@ -578,7 +578,8 @@
         
         //success
         if (statusCode == 200) {
-            Notification_Post(JXNotification.FeedServices.LoadFeedSuccess, [responseObject objectForKey:@"data"]);
+            NSArray *prayers = [DataAccess addPrayers:[responseObject objectForKey:@"data"]];
+            Notification_Post(JXNotification.FeedServices.LoadFeedSuccess, prayers);
         }
         
         //invalid
