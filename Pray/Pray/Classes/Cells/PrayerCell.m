@@ -30,6 +30,7 @@
 
 - (void)setupLayout {
     imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.screenWidth, 264*sratio)];
+    [imageView setBackgroundColor:Colour_PrayBlue];
     [imageView setContentMode:UIViewContentModeScaleAspectFill];
     [self.contentView addSubview:imageView];
     
