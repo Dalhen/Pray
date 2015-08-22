@@ -38,7 +38,7 @@
     [self setupHeader];
     [self setupTableView];
     [self setupAddPrayerButton];
-    [self loadFeed];
+    [self loadFeedAnimated:YES];
 }
 
 - (void)setupHeader {
@@ -142,10 +142,13 @@
 
 #pragma mark - Loading data
 - (void)refreshTriggered {
-    [self loadFeed];
+    [self loadFeedAnimated:NO];
 }
 
-- (void)loadFeed {
+- (void)loadFeedAnimated:(BOOL)animated {
+    if (animated) {
+        [SVProgressHUD showWithStatus:LocString(@"Loading") maskType:SVProgressHUDMaskTypeGradient];
+    }
     [NetworkService loadFeedForDiscover:YES];
 }
 
@@ -198,6 +201,7 @@
     
     if(!cell) {
         cell = [[PrayerCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"PrayerCell"];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.delegate = self;
     }
     
@@ -207,8 +211,11 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    CDPrayer *prayer = [prayers objectAtIndex:indexPath.row];
+    CommentsController *commentsController = [[CommentsController alloc] initWithPrayer:prayer];
+    [self.navigationController pushViewController:commentsController animated:YES];
 }
 
 

@@ -30,7 +30,7 @@
 
 - (void)loadView {
     self.view = [[UIView alloc] init];
-    [self.view setBackgroundColor:Colour_255RGB(27, 29, 35)];
+    [self.view setBackgroundColor:Colour_255RGB(244, 244, 244)];
     [self.navigationController setNavigationBarHidden:YES];
     
     [self setupHeader];
@@ -60,8 +60,9 @@
 
 - (void)setupTableView {
     commentsTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 56*sratio, self.view.screenWidth, self.view.screenHeight - 56*sratio)];
-    [commentsTable setBackgroundColor:Colour_255RGB(27, 29, 35)];
-    [commentsTable setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    [commentsTable setBackgroundColor:Colour_255RGB(244, 244, 244)];
+    [commentsTable setSeparatorColor:Colour_255RGB(244, 244, 244)];
+    [commentsTable setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
     [commentsTable setScrollsToTop:YES];
     [commentsTable setDelegate:self];
     [commentsTable setDataSource:self];
@@ -113,6 +114,8 @@
 - (void)registerForEvents {
     Notification_Observe(JXNotification.CommentsServices.GetPostCommentsSuccess, loadCommentsSuccess:);
     Notification_Observe(JXNotification.CommentsServices.GetPostCommentsFailed, loadCommentsFailed);
+    Notification_Observe(JXNotification.CommentsServices.PostCommentSuccess, postCommentSuccess:);
+    Notification_Observe(JXNotification.CommentsServices.PostCommentFailed, postCommentFailed:);
     Notification_Observe(JXNotification.CommentsServices.DeleteCommentSuccess, deleteCommentSuccess);
     Notification_Observe(JXNotification.CommentsServices.DeleteCommentFailed, deleteCommentFailed);
     Notification_Observe(JXNotification.FeedServices.ReportPostSuccess, reportPostSuccess);
@@ -125,6 +128,8 @@
 - (void)unRegisterForEvents {
     Notification_Remove(JXNotification.CommentsServices.GetPostCommentsSuccess);
     Notification_Remove(JXNotification.CommentsServices.GetPostCommentsFailed);
+    Notification_Remove(JXNotification.CommentsServices.PostCommentSuccess);
+    Notification_Remove(JXNotification.CommentsServices.PostCommentFailed);
     Notification_Remove(JXNotification.CommentsServices.DeleteCommentSuccess);
     Notification_Remove(JXNotification.CommentsServices.DeleteCommentFailed);
     Notification_Remove(JXNotification.FeedServices.ReportPostSuccess);
@@ -221,7 +226,7 @@
         
         [commentsTable reloadData];
         
-        [NetworkService postCommentForPrayerID:[currentPrayer.uniqueId stringValue] andTempIdentifier:commentObject.tempIdentifier];
+        [NetworkService postComment:commentTextView.text forPrayerID:[currentPrayer.uniqueId stringValue] andTempIdentifier:commentObject.tempIdentifier];
     }
 }
 
@@ -395,7 +400,7 @@
         [textLabel setTextAlignment:NSTextAlignmentCenter];
         [textLabel setFont:[FontService systemFont:13*sratio]];
         [textLabel setTextColor:Colour_255RGB(93, 98, 113)];
-        [textLabel setText:LocString(@"Be the first to comment on this post!")];
+        [textLabel setText:LocString(@"Be the first to comment on this prayer!")];
         [disclaimerView addSubview:textLabel];
         
         return disclaimerView;
@@ -420,7 +425,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 24 + [self heightToFitCommentText:[(CDComment *)[comments objectAtIndex:indexPath.row] commentText]];
+    return 24*sratio + [self heightToFitCommentText:[(CDComment *)[comments objectAtIndex:indexPath.row] commentText]];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {

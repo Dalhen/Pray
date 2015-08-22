@@ -91,7 +91,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)loadCommentsForPrayerID:(NSString *)prayerID;
 
-- (void)postCommentForPrayerID:(NSString *)prayerID andTempIdentifier:(NSString *)tempIdentifier;
+- (void)postComment:(NSString *)comment forPrayerID:(NSString *)prayerID andTempIdentifier:(NSString *)tempIdentifier;
 
 - (void)deleteCommentWithID:(NSString *)commentID;
 

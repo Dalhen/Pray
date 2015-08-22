@@ -797,7 +797,7 @@
     [self checkAccessTokenAndCall:@"api/v1/prayers/comments" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
-- (void)postCommentForPrayerID:(NSString *)prayerID andTempIdentifier:(NSString *)tempIdentifier {
+- (void)postComment:(NSString *)comment forPrayerID:(NSString *)prayerID andTempIdentifier:(NSString *)tempIdentifier {
     void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
         if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
         
@@ -821,6 +821,7 @@
     };
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   comment, @"body",
                                    prayerID, @"prayer_id",
                                    [UserService getUserID], @"user_id",
                                    [UserService getOAuthToken], @"access_token", nil];

@@ -10,7 +10,7 @@
 #import "TTTAttributedLabel.h"
 
 #define commentTextWidth 252*sratio
-#define commentTextMinimumHeight 16*sratio
+#define commentTextMinimumHeight 40*sratio
 
 @class CommentCell;
 
