@@ -110,22 +110,6 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pray/Singletons/JXNetworkService.m"
-            timestampString = "461854909.711158"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "592"
-            endingLineNumber = "592"
-            landmarkName = "-loadFeedForDiscover:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Pray/Singletons/JXNetworkService.m"
             timestampString = "461890768.122948"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"

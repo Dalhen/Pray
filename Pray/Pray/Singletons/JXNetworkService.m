@@ -77,12 +77,12 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - OAuth
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-- (void)checkAccessTokenAndCall:(NSString *)urlToGet isPost:(BOOL)isPost includedImages:(NSArray *)images parameters:(NSMutableDictionary *)params successBlock:(void (^)(AFHTTPRequestOperation *operation, id responseObject))successBlock failureBlock:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock {
+- (void)checkAccessTokenAndCall:(NSString *)urlToGet isPost:(BOOL)isPost includedImages:(NSArray *)images imagesKey:(NSString *)imagesKey parameters:(NSMutableDictionary *)params successBlock:(void (^)(AFHTTPRequestOperation *operation, id responseObject))successBlock failureBlock:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock {
     
     if (![UserService isOAuthExpired]) {
         if (isPost) {
             if ([images count]>0) {
-                [self formPost:urlToGet images:images parameters:params successBlock:successBlock failureBlock:failureBlock];
+                [self formPost:urlToGet images:images imagesKey:imagesKey parameters:params successBlock:successBlock failureBlock:failureBlock];
             }
             else {
                 [self post:urlToGet parameters:params successBlock:successBlock failureBlock:failureBlock];
@@ -106,7 +106,7 @@
                 [params setObject:[UserService getOAuthToken] forKey:@"access_token"];
                 if (isPost) {
                     if ([images count]>0) {
-                        [self formPost:urlToGet images:images parameters:params successBlock:successBlock failureBlock:failureBlock];
+                        [self formPost:urlToGet images:images imagesKey:imagesKey parameters:params successBlock:successBlock failureBlock:failureBlock];
                     }
                     else {
                         [self post:urlToGet parameters:params successBlock:successBlock failureBlock:failureBlock];
@@ -163,7 +163,7 @@
                                    OAuthClientSecret, @"client_secret",
                                    OAuthGrantType, @"grant_type", nil];
     
-    [self checkAccessTokenAndCall:@"oauth/access_token" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
+    [self checkAccessTokenAndCall:@"oauth/access_token" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
 
@@ -225,16 +225,16 @@
     [operation start];
 }
 
-- (void)formPost:(NSString *)urlToGet images:(NSArray *)imagesFiles parameters:(NSMutableDictionary *)parameters successBlock:(void (^)(AFHTTPRequestOperation *operation, id responseObject))successBlock failureBlock:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock {
+- (void)formPost:(NSString *)urlToGet images:(NSArray *)imagesFiles imagesKey:(NSString *)imagesKey parameters:(NSMutableDictionary *)parameters successBlock:(void (^)(AFHTTPRequestOperation *operation, id responseObject))successBlock failureBlock:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock {
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     //manager.securityPolicy.allowInvalidCertificates = YES;
     
     [manager POST:[NSString stringWithFormat:@"%@/%@", serverBase, urlToGet] parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-#warning CHANGE HERE name:@"image" by @"avatar_image"
+
         for (NSInteger i = 0; i<[imagesFiles count]; i++) {
             NSData *imageData = [imagesFiles objectAtIndex:i];
-            [formData appendPartWithFileData:imageData name:@"image"
+            [formData appendPartWithFileData:imageData name:imagesKey
                                     fileName:[NSString stringWithFormat:@"photo%li.jpg", (long)i]
                                     mimeType:@"image/jpeg"];
         }
@@ -279,7 +279,7 @@
                                    deviceToken, @"device_id",
                                    [UserService getOAuthToken], @"access_token", nil];
     
-    [self checkAccessTokenAndCall:@"api/v1/user/device" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
+    [self checkAccessTokenAndCall:@"api/v1/user/device" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
 - (void)validateEmail:(NSString *)email {
@@ -308,7 +308,7 @@
                                    email, @"email",
                                    [UserService getOAuthToken], @"access_token", nil];
     
-    [self checkAccessTokenAndCall:@"api/v1/auth/validateEmail" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
+    [self checkAccessTokenAndCall:@"api/v1/auth/validateEmail" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
 - (void)signupWithUsername:(NSString *)username
@@ -362,7 +362,7 @@
         [params setObject:bio forKey:@"bio"];
     }
     
-    [self checkAccessTokenAndCall:@"api/v1/auth/register" isPost:YES includedImages:avatarImageArray parameters:params successBlock:successBlock failureBlock:failureBlock];
+    [self checkAccessTokenAndCall:@"api/v1/auth/register" isPost:YES includedImages:avatarImageArray imagesKey:@"avatar_image" parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
 - (void)loginUserWithEmail:(NSString *)email password:(NSString *)password {
@@ -392,7 +392,7 @@
                                    password, @"password",
                                    [UserService getOAuthToken], @"access_token", nil];
     
-    [self checkAccessTokenAndCall:@"api/v1/auth/login" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
+    [self checkAccessTokenAndCall:@"api/v1/auth/login" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
 - (void)loginUserWithLinkedIn:(NSString *)linkedInID {
@@ -422,7 +422,7 @@
                                    
                                    [UserService getOAuthToken], @"access_token", nil];
     
-    [self checkAccessTokenAndCall:@"api/v1/auth/loginLinkedIn" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
+    [self checkAccessTokenAndCall:@"api/v1/auth/loginLinkedIn" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
 - (void)updateLocationWithCityName:(NSString *)cityName
@@ -457,7 +457,7 @@
                                    [UserService getUserID], @"user_id",
                                    [UserService getOAuthToken], @"access_token", nil];
     
-    [self checkAccessTokenAndCall:@"api/v1/user/location" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
+    [self checkAccessTokenAndCall:@"api/v1/user/location" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
 - (void)resetPasswordForEmailAddress:(NSString *)email {
@@ -486,7 +486,7 @@
                                    email, @"email",
                                    [UserService getOAuthToken], @"access_token", nil];
     
-    [self checkAccessTokenAndCall:@"api/v1/auth/password/sendReset" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
+    [self checkAccessTokenAndCall:@"api/v1/auth/password/sendReset" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
 - (void)updateProfileWithFirstname:(NSString *)firstName
@@ -563,7 +563,7 @@
         [avatarImageArray addObject:avatarImage];
     }
     
-    [self checkAccessTokenAndCall:@"api/v1/user/update" isPost:YES includedImages:avatarImageArray parameters:params successBlock:successBlock failureBlock:failureBlock];
+    [self checkAccessTokenAndCall:@"api/v1/user/update" isPost:YES includedImages:avatarImageArray imagesKey:@"avatar_image" parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
 
@@ -598,7 +598,7 @@
                                    [NSString stringWithFormat:@"%i", discover], @"discover",
                                    [UserService getOAuthToken], @"access_token", nil];
     
-    [self checkAccessTokenAndCall:@"api/v1/prayers" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
+    [self checkAccessTokenAndCall:@"api/v1/prayers" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
 - (void)deletePostWithID:(NSString *)postId {
@@ -628,7 +628,7 @@
                                    [UserService getUserID], @"user_id",
                                    [UserService getOAuthToken], @"access_token", nil];
     
-    [self checkAccessTokenAndCall:@"api/v1/post/delete" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
+    [self checkAccessTokenAndCall:@"api/v1/post/delete" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
 - (void)reportPostWithID:(NSString *)postId {
@@ -658,7 +658,7 @@
                                    [UserService getUserID], @"user_id",
                                    [UserService getOAuthToken], @"access_token", nil];
     
-    [self checkAccessTokenAndCall:@"api/v1/prayers/report" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
+    [self checkAccessTokenAndCall:@"api/v1/prayers/report" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
 - (void)likePostWithID:(NSString *)postId {
@@ -688,7 +688,7 @@
                                    [UserService getUserID], @"user_id",
                                    [UserService getOAuthToken], @"access_token", nil];
     
-    [self checkAccessTokenAndCall:@"api/v1/prayers/like" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
+    [self checkAccessTokenAndCall:@"api/v1/prayers/like" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
 - (void)unlikePostWithID:(NSString *)postId {
@@ -718,7 +718,7 @@
                                    [UserService getUserID], @"user_id",
                                    [UserService getOAuthToken], @"access_token", nil];
     
-    [self checkAccessTokenAndCall:@"api/v1/prayers/unlike" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
+    [self checkAccessTokenAndCall:@"api/v1/prayers/unlike" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
 
@@ -758,7 +758,7 @@
         [prayerImageArray addObject:prayerImage];
     }
     
-    [self checkAccessTokenAndCall:@"api/v1/prayers/create" isPost:YES includedImages:prayerImageArray parameters:params successBlock:successBlock failureBlock:failureBlock];
+    [self checkAccessTokenAndCall:@"api/v1/prayers/create" isPost:YES includedImages:prayerImageArray imagesKey:@"image" parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
 
@@ -794,7 +794,7 @@
                                    [UserService getUserID], @"user_id",
                                    [UserService getOAuthToken], @"access_token", nil];
     
-    [self checkAccessTokenAndCall:@"api/v1/prayers/comments" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
+    [self checkAccessTokenAndCall:@"api/v1/prayers/comments" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
 - (void)postCommentForPrayerID:(NSString *)prayerID andTempIdentifier:(NSString *)tempIdentifier {
@@ -825,7 +825,7 @@
                                    [UserService getUserID], @"user_id",
                                    [UserService getOAuthToken], @"access_token", nil];
     
-    [self checkAccessTokenAndCall:@"api/v1/prayers/comment" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
+    [self checkAccessTokenAndCall:@"api/v1/prayers/comment" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
 - (void)deleteCommentWithID:(NSString *)commentID {
@@ -855,7 +855,7 @@
                                    [UserService getUserID], @"user_id",
                                    [UserService getOAuthToken], @"access_token", nil];
     
-    [self checkAccessTokenAndCall:@"api/v1/comment/delete" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
+    [self checkAccessTokenAndCall:@"api/v1/comment/delete" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
 
