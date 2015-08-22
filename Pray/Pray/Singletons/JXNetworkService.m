@@ -661,6 +661,66 @@
     [self checkAccessTokenAndCall:@"api/v1/prayers/report" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
+- (void)likePostWithID:(NSString *)postId {
+    void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
+        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
+        
+        NSInteger statusCode = [operation.response statusCode];
+        
+        //success
+        if (statusCode == 200) {
+            Notification_Post(JXNotification.FeedServices.LikePostSuccess, nil);
+        }
+        
+        //invalid
+        else {
+            Notification_Post(JXNotification.FeedServices.LikePostFailed, nil);
+        }
+    };
+    
+    void (^failureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
+        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
+        Notification_Post(JXNotification.FeedServices.LikePostFailed, nil);
+    };
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   postId, @"post_id",
+                                   [UserService getUserID], @"user_id",
+                                   [UserService getOAuthToken], @"access_token", nil];
+    
+    [self checkAccessTokenAndCall:@"api/v1/prayers/like" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
+}
+
+- (void)unlikePostWithID:(NSString *)postId {
+    void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
+        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
+        
+        NSInteger statusCode = [operation.response statusCode];
+        
+        //success
+        if (statusCode == 200) {
+            Notification_Post(JXNotification.FeedServices.UnLikePostSuccess, nil);
+        }
+        
+        //invalid
+        else {
+            Notification_Post(JXNotification.FeedServices.UnLikePostFailed, nil);
+        }
+    };
+    
+    void (^failureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
+        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
+        Notification_Post(JXNotification.FeedServices.UnLikePostFailed, nil);
+    };
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   postId, @"post_id",
+                                   [UserService getUserID], @"user_id",
+                                   [UserService getOAuthToken], @"access_token", nil];
+    
+    [self checkAccessTokenAndCall:@"api/v1/prayers/unlike" isPost:YES includedImages:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Post

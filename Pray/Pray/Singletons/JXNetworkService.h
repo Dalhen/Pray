@@ -75,6 +75,10 @@
 
 - (void)reportPostWithID:(NSString *)postId;
 
+- (void)likePostWithID:(NSString *)postId;
+
+- (void)unlikePostWithID:(NSString *)postId;
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Post

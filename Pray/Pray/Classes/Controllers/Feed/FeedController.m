@@ -122,6 +122,11 @@
     Notification_Observe(JXNotification.FeedServices.DeletePostFailed, deletePostFailed);
     Notification_Observe(JXNotification.FeedServices.ReportPostSuccess, reportPostSuccess);
     Notification_Observe(JXNotification.FeedServices.ReportPostFailed, reportPostFailed);
+    
+    Notification_Observe(JXNotification.FeedServices.LikePostSuccess, likePostSuccess);
+    Notification_Observe(JXNotification.FeedServices.LikePostFailed, likePostFailed);
+    Notification_Observe(JXNotification.FeedServices.UnLikePostSuccess, unlikePostSuccess);
+    Notification_Observe(JXNotification.FeedServices.UnLikePostFailed, unlikePostFailed);
 }
 
 - (void)unRegisterForEvents {
@@ -207,6 +212,44 @@
 }
 
 
+#pragma mark - Like Post
+- (void)likeButtonClickedForCell:(PrayerCell *)cell {
+    
+    CDPrayer *prayer = [prayers objectAtIndex:[[mainTable indexPathForCell:cell] row]];
+    
+    if (prayer.isLiked.boolValue == YES) {
+        [NetworkService unlikePostWithID:[prayer.uniqueId stringValue]];
+    }
+    else {
+        [NetworkService likePostWithID:[prayer.uniqueId stringValue]];
+    }
+}
+
+- (void)likePostSuccess {
+    
+}
+
+- (void)likePostFailed {
+    
+}
+
+- (void)unlikePostSuccess {
+    
+}
+
+- (void)unlikePostFailed {
+    
+}
+
+
+#pragma mark - Comments
+- (void)commentButtonClickedForCell:(PrayerCell *)cell {
+    CDPrayer *prayer = [prayers objectAtIndex:[[mainTable indexPathForCell:cell] row]];
+    CommentsController *commentsController = [[CommentsController alloc] initWithPrayer:prayer];
+    [self.navigationController pushViewController:commentsController animated:YES];
+}
+
+
 #pragma mark - Delete post
 - (void)deletePost {
     
@@ -245,13 +288,6 @@
 #pragma mark - Search
 - (void)displaySearch {
     
-}
-
-
-#pragma mark - Comments
-- (void)displayCommentsForPrayer:(CDPrayer *)prayer {
-    CommentsController *commentsController = [[CommentsController alloc] initWithPrayer:prayer];
-    [self.navigationController pushViewController:commentsController animated:YES];
 }
 
 

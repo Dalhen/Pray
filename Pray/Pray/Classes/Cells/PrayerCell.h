@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class PrayerCell;
+
 @protocol PrayerCellDelegate <NSObject>
 
-- (void)likeButtonClicked;
-- (void)commentButtonClicked;
+- (void)likeButtonClickedForCell:(PrayerCell *)cell;
+- (void)commentButtonClickedForCell:(PrayerCell *)cell;
 
 @end
 
@@ -29,6 +31,7 @@
     UIImageView *likesIcon;
     UIButton *likeButton;
     UIButton *commentButton;
+    UIView *blackMask;
     
     CDPrayer *prayer;
 }

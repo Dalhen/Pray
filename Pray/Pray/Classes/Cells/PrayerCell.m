@@ -8,6 +8,8 @@
 
 #import "PrayerCell.h"
 #import "UIImageView+Rounded.h"
+#import "UIImageView+WebCache.h"
+
 
 @implementation PrayerCell
 @synthesize delegate;
@@ -30,11 +32,11 @@
 
 - (void)setupLayout {
     imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.screenWidth, 264*sratio)];
-    [imageView setBackgroundColor:Colour_PrayBlue];
+    [imageView setBackgroundColor:Colour_PrayDarkBlue];
     [imageView setContentMode:UIViewContentModeScaleAspectFill];
     [self.contentView addSubview:imageView];
     
-    UIView *blackMask = [[UIView alloc] initWithFrame:imageView.frame];
+    blackMask = [[UIView alloc] initWithFrame:imageView.frame];
     [blackMask setBackgroundColor:Colour_BlackAlpha(0.3)];
     [self.contentView addSubview:blackMask];
     
@@ -43,7 +45,7 @@
     [userAvatar setContentMode:UIViewContentModeScaleAspectFill];
     [self.contentView addSubview:userAvatar];
     
-    username = [[UILabel alloc] initWithFrame:CGRectMake(imageView.right + 10*sratio, 12*sratio, 250*sratio, 20*sratio)];
+    username = [[UILabel alloc] initWithFrame:CGRectMake(userAvatar.right + 10*sratio, 12*sratio, 250*sratio, 20*sratio)];
     username.font = [FontService systemFont:14*sratio];
     username.textColor = Colour_White;
     username.textAlignment = NSTextAlignmentLeft;
@@ -61,6 +63,7 @@
     textView.minimumScaleFactor = (14*sratio)/(50*sratio);
     textView.font = [FontService systemFont:50*sratio];
     textView.textColor = Colour_White;
+    [textView setTextAlignment:NSTextAlignmentCenter];
     [self.contentView addSubview:textView];
     
     likesIcon = [[UIImageView alloc] initWithFrame:CGRectMake(18*sratio, 226*sratio, 22*sratio, 20*sratio)];
@@ -95,14 +98,28 @@
     
     prayer = prayerObject;
     
+    if (prayer.imageURL != nil && ![prayer.imageURL isEqualToString:@""]) {
+        [imageView sd_setImageWithURL:[NSURL URLWithString:prayer.imageURL]];
+    }
+    
+    NSLog(@"Creator: %@", prayer.creator);
+    if (prayer.creator.avatar != nil && ![prayer.creator.avatar isEqualToString:@""]) {
+        [userAvatar sd_setImageWithURL:[NSURL URLWithString:prayer.creator.avatar]];
+    }
+    
+    [username setText:[NSString stringWithFormat:@"%@ %@", prayer.creator.firstname, prayer.creator.lastname]];
+    [timeAgo setText:prayer.timeAgo];
+    [textView setText:prayer.prayerText];
+    
     [likesIcon setImage:[UIImage imageNamed:(prayer.isLiked.boolValue)? @"likeIconON" : @"likeIconOFF"]];
     
+    [likesCount setText:prayer.likesCount];
     [likesCount sizeToFit];
     [likesCount setHeight:20*sratio];
     [likesCount setLeft:likesIcon.right + 6*sratio];
-    
     [commentsIcon setLeft:likesCount.right + 24*sratio];
 
+    [commentsCount setText:prayer.commentsCount];
     [commentsCount sizeToFit];
     [commentsCount setHeight:20*sratio];
     [commentsCount setLeft:commentsIcon.right + 6*sratio];
@@ -114,11 +131,22 @@
 
 - (void)likeButtonClicked {
     [likesIcon setImage:[UIImage imageNamed:(prayer.isLiked.boolValue)? @"likeIconOFF" : @"likeIconON"]];
-    [delegate likeButtonClicked];
+    
+    if (prayer.isLiked.boolValue == NO) {
+        [likesCount setText:[NSString stringWithFormat:@"%d",[likesCount.text intValue]+1]];
+        [SVProgressHUD showSuccessWithStatus:LocString(@"Liked!")];
+        [DataAccess add1LikeToPrayer:prayer];
+    }
+    else {
+        [likesCount setText:[NSString stringWithFormat:@"%d",[likesCount.text intValue]-1]];
+        [DataAccess remove1LikeToPrayer:prayer];
+    }
+    
+    [delegate likeButtonClickedForCell:self];
 }
 
 - (void)commentButtonClicked {
-    [delegate commentButtonClicked];
+    [delegate commentButtonClickedForCell:self];
 }
 
 

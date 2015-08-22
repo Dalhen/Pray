@@ -371,6 +371,39 @@
     }
 }
 
+- (void)add1LikeToPrayer:(CDPrayer *)prayer {
+    
+    [prayer setIsLiked:[NSNumber numberWithInt:1]];
+    [prayer setLikesCount:[NSString stringWithFormat:@"%d",[prayer.likesCount intValue]+1]];
+    
+    if (prayer) {
+        NSManagedObjectContext *moc = [JXDataAccess getDBContext];
+        NSError *error;
+        if (![moc save:&error]) {
+            // Handle the error.
+            if(DEBUGDataAccess) NSLog(@"Error adding +1 like to prayer");
+        } else {
+            if(DEBUGDataAccess) NSLog(@"+1 like added to prayer");
+        }
+    }
+}
+
+- (void)remove1LikeToPrayer:(CDPrayer *)prayer {
+    [prayer setIsLiked:[NSNumber numberWithInt:0]];
+    [prayer setLikesCount:[NSString stringWithFormat:@"%d",[prayer.likesCount intValue]-1]];
+    
+    if (prayer) {
+        NSManagedObjectContext *moc = [JXDataAccess getDBContext];
+        NSError *error;
+        if (![moc save:&error]) {
+            // Handle the error.
+            if(DEBUGDataAccess) NSLog(@"Error setting -1 like to prayer");
+        } else {
+            if(DEBUGDataAccess) NSLog(@"-1 like to prayer");
+        }
+    }
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Comment
