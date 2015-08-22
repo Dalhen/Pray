@@ -76,21 +76,21 @@
 
 - (void)setupCommentBar {
     addCommentView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.screenHeight-58, self.view.screenWidth, 58)];
-    [addCommentView setBackgroundColor:Colour_White];
+    [addCommentView setBackgroundColor:Colour_PrayBlue];
     [self.view addSubview:addCommentView];
     
     commentTextView = [[UITextView alloc] initWithFrame:CGRectMake(8, 10, self.view.screenWidth - 58, 42)];
-    commentTextView.backgroundColor = Colour_White;
+    commentTextView.backgroundColor = Colour_PrayBlue;
     commentTextView.delegate = self;
     [commentTextView setFont:[FontService systemFont:14*sratio]];
-    [commentTextView setTextColor:Colour_PrayDarkBlue];
+    [commentTextView setTextColor:Colour_White];
     [commentTextView setText:LocString(@"Write a comment")];
     [commentTextView setReturnKeyType:UIReturnKeyDefault];
     [addCommentView addSubview:commentTextView];
     
     sendCommentButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [sendCommentButton setBackgroundColor:Colour_White];
-    [sendCommentButton setFrame:CGRectMake(self.view.width - 58, 0, 58, 58)];
+    [sendCommentButton setFrame:CGRectMake(self.view.screenWidth - 58, 0, 58, 58)];
     [sendCommentButton setImage:[UIImage imageNamed:@"paperPlane"] forState:UIControlStateNormal];
     [sendCommentButton addTarget:self action:@selector(postComment) forControlEvents:UIControlEventTouchUpInside];
     [addCommentView addSubview:sendCommentButton];
@@ -253,7 +253,11 @@
     
     [self refreshComments];
     
-    [addCommentView setOrigin:CGPointMake(0, self.view.screenHeight-122)];
+    [addCommentView setHeight:58];
+    [commentTextView setTop:10];
+    [commentTextView setHeight:42];
+    [addCommentView setTop:self.view.screenHeight - 58];
+    
     [commentsTable setHeight:self.view.screenHeight - 58 - 68];
 }
 
@@ -304,8 +308,8 @@
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
-    [addCommentView setBackgroundColor:Colour_255RGB(247, 247, 247)];
-    [commentTextView setBackgroundColor:Colour_255RGB(247, 247, 247)];
+    [addCommentView setBackgroundColor:Colour_White];
+    [commentTextView setBackgroundColor:Colour_White];
     [commentTextView setTextColor:Colour_DarkGray];
     [self setTouchRecognizer:YES];
 }
@@ -345,6 +349,9 @@
     
     [UIView animateWithDuration:0.3 animations:^{
         [sendCommentButton setFrame:CGRectMake(self.view.screenWidth - 58, 0, 58, 58)];
+        [addCommentView setBackgroundColor:Colour_PrayBlue];
+        [commentTextView setBackgroundColor:Colour_PrayBlue];
+        [commentTextView setTextColor:Colour_White];
     }];
     
     if ([textView.text isEqualToString:@""]) {
@@ -380,7 +387,7 @@
     [addCommentView setHeight:58];
     [commentTextView setTop:10];
     [commentTextView setHeight:42];
-    [addCommentView setTop:self.view.screenHeight - 120];
+    [addCommentView setTop:self.view.screenHeight - 58];
     
     [self setTouchRecognizer:NO];
     
