@@ -146,6 +146,10 @@
     if (indexPath.row == 0) {
         [AppDelegate updateFrontViewControllerWithController:controller andFocus:YES];
     }
+    else {
+        LeftMenuCell *cell = (LeftMenuCell *)[mainTable cellForRowAtIndexPath:indexPath];
+        [cell setSelected:NO animated:YES];
+    }
 }
 
 

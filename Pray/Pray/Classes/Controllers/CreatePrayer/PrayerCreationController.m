@@ -35,13 +35,30 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [self registerForEvents];
     [prayerText addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    [self unRegisterForEvents];
     [prayerText removeObserver:self forKeyPath:@"contentSize"];
 }
 
+
+#pragma mark - Events registration
+- (void)registerForEvents {
+    Notification_Observe(JXNotification.PostServices.PostPrayerSuccess, postPrayerSuccess);
+    Notification_Observe(JXNotification.PostServices.PostPrayerFailed, postPrayerFailed);
+}
+
+- (void)unRegisterForEvents {
+    Notification_Remove(JXNotification.PostServices.PostPrayerSuccess);
+    Notification_Remove(JXNotification.PostServices.PostPrayerFailed);
+    Notification_RemoveObserver;
+}
+
+
+#pragma mark - Layout + TextView listeners
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     UITextView *tv = object;
     CGFloat topCorrect = ([tv bounds].size.height - [tv contentSize].height * [tv zoomScale])/2.0;
@@ -173,6 +190,8 @@
             imageMask.alpha = 1.0;
         }];
         
+        [addImageButton setTitle:LocString(@"Change background image") forState:UIControlStateNormal];
+        
         [prayerText becomeFirstResponder];
     }];
 }
@@ -210,7 +229,19 @@
 #pragma mark - Post Prayer
 - (void)postPrayer {
     NSData *imageData = [self compressImage:selectedImage];
+    [SVProgressHUD showWithStatus:LocString(@"Sharing your prayer...") maskType:SVProgressHUDMaskTypeGradient];
     [NetworkService postPrayerWithImage:imageData andText:prayerText.text];
+}
+
+- (void)postPrayerSuccess {
+    [SVProgressHUD showSuccessWithStatus:LocString(@"Your prayer has been shared.")];
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+}
+
+- (void)postPrayerFailed {
+    [SVProgressHUD showErrorWithStatus:LocString(@"Your prayer couldn't be shared. Please check your connection and try again.")];
 }
 
 

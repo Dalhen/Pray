@@ -32,8 +32,9 @@
 
 - (void)setupLayout {
     imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.screenWidth, 264*sratio)];
-    [imageView setBackgroundColor:Colour_PrayDarkBlue];
+    [imageView setBackgroundColor:Colour_255RGB(80, 92, 109)];
     [imageView setContentMode:UIViewContentModeScaleAspectFill];
+    [imageView setClipsToBounds:YES];
     [self.contentView addSubview:imageView];
     
     blackMask = [[UIView alloc] initWithFrame:imageView.frame];
@@ -57,7 +58,7 @@
     timeAgo.textAlignment = NSTextAlignmentLeft;
     [self.contentView addSubview:timeAgo];
     
-    textView = [[UILabel alloc] initWithFrame:CGRectMake((self.screenWidth-190*sratio)/2, 64*sratio, 190*sratio, 140*sratio)];
+    textView = [[UILabel alloc] initWithFrame:CGRectMake((self.screenWidth-280*sratio)/2, 64*sratio, 280*sratio, 140*sratio)];
     textView.numberOfLines = 8;
     textView.adjustsFontSizeToFitWidth = YES;
     textView.minimumScaleFactor = (14*sratio)/(50*sratio);

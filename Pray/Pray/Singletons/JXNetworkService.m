@@ -231,10 +231,10 @@
     //manager.securityPolicy.allowInvalidCertificates = YES;
     
     [manager POST:[NSString stringWithFormat:@"%@/%@", serverBase, urlToGet] parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-        
+#warning CHANGE HERE name:@"image" by @"avatar_image"
         for (NSInteger i = 0; i<[imagesFiles count]; i++) {
             NSData *imageData = [imagesFiles objectAtIndex:i];
-            [formData appendPartWithFileData:imageData name:@"avatar_image"
+            [formData appendPartWithFileData:imageData name:@"image"
                                     fileName:[NSString stringWithFormat:@"photo%li.jpg", (long)i]
                                     mimeType:@"image/jpeg"];
         }
@@ -749,7 +749,7 @@
     };
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   prayerText, @"text",
+                                   prayerText, @"body",
                                    [UserService getUserID], @"user_id",
                                    [UserService getOAuthToken], @"access_token", nil];
     

@@ -125,29 +125,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Pray/Classes/Controllers/CreatePrayer/PrayerCreationController.m"
-            timestampString = "461875314.952811"
+            filePath = "Pray/Singletons/JXNetworkService.m"
+            timestampString = "461890768.122948"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42"
-            landmarkName = "-viewWillDisappear:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Pray/Classes/Controllers/CreatePrayer/PrayerCreationController.m"
-            timestampString = "461875330.935324"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "38"
-            endingLineNumber = "38"
-            landmarkName = "-viewWillAppear:"
+            startingLineNumber = "386"
+            endingLineNumber = "386"
+            landmarkName = "-loginUserWithEmail:password:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -158,12 +142,44 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pray/Singletons/JXNetworkService.m"
-            timestampString = "461890768.122948"
+            timestampString = "461933659.248886"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "386"
-            endingLineNumber = "386"
-            landmarkName = "-loginUserWithEmail:password:"
+            startingLineNumber = "732"
+            endingLineNumber = "732"
+            landmarkName = "-postPrayerWithImage:andText:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pray/Singletons/JXNetworkService.m"
+            timestampString = "461933660.04631"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "747"
+            endingLineNumber = "747"
+            landmarkName = "-postPrayerWithImage:andText:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pray/Singletons/JXNetworkService.m"
+            timestampString = "461933662.684157"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "761"
+            endingLineNumber = "761"
+            landmarkName = "-postPrayerWithImage:andText:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
