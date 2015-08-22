@@ -23,22 +23,26 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
-        [self.contentView setBackgroundColor:Colour_255RGB(51, 58, 68)];
+        [self.contentView setBackgroundColor:Colour_PrayDarkBlue];
         [self setSelectionStyle:UITableViewCellSelectionStyleNone];
         
-        iconView = [[UIImageView alloc] initWithFrame:CGRectMake(28, 14, 28, 28)];
+        iconView = [[UIImageView alloc] initWithFrame:CGRectMake(32*sratio, 23*sratio, 24*sratio, 24*sratio)];
         [iconView setContentMode:UIViewContentModeScaleAspectFit];
         [self.contentView addSubview:iconView];
         
-        title = [[UILabel alloc] initWithFrame:CGRectMake(iconView.right + kCellPadding, 16, 160, 23)];
+        title = [[UILabel alloc] initWithFrame:CGRectMake(iconView.right + 8*sratio, 23*sratio, 160*sratio, 24*sratio)];
         [title setBackgroundColor:Colour_Clear];
-        [title setFont:[FontService systemFont:15*sratio]];
+        [title setFont:[FontService systemFont:12*sratio]];
         [title setTextColor:Colour_White];
         [self.contentView addSubview:title];
         
         UIImageView *accessoryArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"smallArrow.png"]];
-        [accessoryArrow setFrame:CGRectMake(218, 24, 5, 11)];
+        [accessoryArrow setFrame:CGRectMake(200*sratio, 30*sratio, 5*sratio, 11*sratio)];
         [self.contentView addSubview:accessoryArrow];
+        
+        UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(36*sratio, 69*sratio, self.screenWidth - 36*sratio, 1)];
+        [separator setBackgroundColor:Colour_255RGB(83, 84, 90)];
+        [self.contentView addSubview:separator];
     }
     
     return self;
@@ -51,7 +55,7 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-    [title setTextColor:selected ? Colour_White : Colour_PrayBlue];
+    [title setTextColor:selected ? Colour_PrayBlue : Colour_White];
     [iconView setImage:[UIImage imageNamed:selected ? iconON : iconOFF]];
 }
 

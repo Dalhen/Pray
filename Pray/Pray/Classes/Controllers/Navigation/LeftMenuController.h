@@ -14,6 +14,6 @@
     int selectedLine;
 }
 
-@property(nonatomic, strong) UITableView *tableView;
+@property(nonatomic, strong) UITableView *mainTable;
 
 @end

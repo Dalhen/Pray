@@ -21,6 +21,7 @@
 @end
 
 @implementation LeftMenuController
+@synthesize mainTable;
 
 
 - (id)init {
@@ -34,24 +35,37 @@
 
 - (void)loadView {
     self.view = [[BaseView alloc] init];
+    [self.view setBackgroundColor:Colour_PrayDarkBlue];
     selectedLine = 0;
+    [self setupLayout];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    //[self.revealController setMinimumWidth:220.0 maximumWidth:244.0 forViewController:self];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)viewDidAppear:(BOOL)animated {
+    LeftMenuCell *cell = (LeftMenuCell *)[mainTable cellForRowAtIndexPath:[NSIndexPath indexPathForRow:selectedLine inSection:0]];
+    [cell setSelected:YES animated:YES];
+}
+
+
+#pragma mark - Layout
+- (void)setupLayout {
+    mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 50*sratio, self.view.screenWidth, self.view.screenHeight - 50*sratio)];
+    [mainTable setBackgroundColor:Colour_Clear];
+    [mainTable setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    [mainTable setDataSource:self];
+    [mainTable setDelegate:self];
+    [self.view addSubview:mainTable];
 }
 
 
 #pragma mark - Table view data source
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 54;
+    return 70*sratio;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -113,25 +127,33 @@
             controller = [[FeedController alloc] init];
             break;
             
-        case 1:
-            controller = [[NotificationsController alloc] init];
-            break;
-            
-        case 2:
-            controller = [[ProfileController alloc] init];
-            break;
-            
-        case 3:
-            controller = [[SettingsController alloc] init];
-            break;
+//        case 1:
+//            controller = [[NotificationsController alloc] init];
+//            break;
+//            
+//        case 2:
+//            controller = [[ProfileController alloc] init];
+//            break;
+//            
+//        case 3:
+//            controller = [[SettingsController alloc] init];
+//            break;
             
         default:
             break;
     }
     
-    [AppDelegate updateFrontViewControllerWithController:controller andFocus:YES];
+    if (indexPath.row == 0) {
+        [AppDelegate updateFrontViewControllerWithController:controller andFocus:YES];
+    }
 }
 
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
 
 
 @end

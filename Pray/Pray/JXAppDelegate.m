@@ -134,6 +134,7 @@
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller];
     if (!ISIOS6()) navController.navigationBar.barTintColor = Colour_PrayDarkBlue;
     [self.revealController setFrontViewController:navController];
+    [self.revealController resignPresentationModeEntirely:YES animated:YES completion:nil];
 }
 
 
