@@ -8,7 +8,7 @@
 
 #import "CommentsController.h"
 #import "NSString+Extensions.h"
-#import "CommentCell.h"
+
 
 @interface CommentsController ()
 
@@ -30,21 +30,37 @@
 
 - (void)loadView {
     self.view = [[UIView alloc] init];
-    [self.view setBackgroundColor:Colour_PrayDarkBlue];
+    [self.view setBackgroundColor:Colour_255RGB(27, 29, 35)];
     [self.navigationController setNavigationBarHidden:YES];
     
     [self setupHeader];
     [self setupTableView];
+    [self setupCommentBar];
     [self loadComments];
 }
 
 - (void)setupHeader {
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.screenWidth, 56*sratio)];
+    [headerView setBackgroundColor:Colour_PrayDarkBlue];
+    [self.view addSubview:headerView];
     
+    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backButton setFrame:CGRectMake(0*sratio, 14*sratio, 40*sratio, 40*sratio)];
+    [backButton setImage:[UIImage imageNamed:@"backButton"] forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(goBack) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:backButton];
+    
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(76*sratio, 20*sratio, 162*sratio, 26*sratio)];
+    titleLabel.text = LocString(@"Comments");
+    titleLabel.font = [FontService systemFont:14*sratio];
+    titleLabel.textColor = Colour_White;
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:titleLabel];
 }
 
 - (void)setupTableView {
     commentsTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 56*sratio, self.view.screenWidth, self.view.screenHeight - 56*sratio)];
-    [commentsTable setBackgroundColor:Colour_PrayDarkBlue];
+    [commentsTable setBackgroundColor:Colour_255RGB(27, 29, 35)];
     [commentsTable setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [commentsTable setScrollsToTop:YES];
     [commentsTable setDelegate:self];
@@ -57,6 +73,28 @@
     [commentsTable addSubview:refreshControl];
 }
 
+- (void)setupCommentBar {
+    addCommentView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.screenHeight-58, self.view.screenWidth, 58)];
+    [addCommentView setBackgroundColor:Colour_White];
+    [self.view addSubview:addCommentView];
+    
+    commentTextView = [[UITextView alloc] initWithFrame:CGRectMake(8, 10, self.view.screenWidth - 58, 42)];
+    commentTextView.backgroundColor = Colour_White;
+    commentTextView.delegate = self;
+    [commentTextView setFont:[FontService systemFont:14*sratio]];
+    [commentTextView setTextColor:Colour_PrayDarkBlue];
+    [commentTextView setText:LocString(@"Write a comment")];
+    [commentTextView setReturnKeyType:UIReturnKeyDefault];
+    [addCommentView addSubview:commentTextView];
+    
+    sendCommentButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [sendCommentButton setBackgroundColor:Colour_White];
+    [sendCommentButton setFrame:CGRectMake(self.view.width - 58, 0, 58, 58)];
+    [sendCommentButton setImage:[UIImage imageNamed:@"paperPlane"] forState:UIControlStateNormal];
+    [sendCommentButton addTarget:self action:@selector(postComment) forControlEvents:UIControlEventTouchUpInside];
+    [addCommentView addSubview:sendCommentButton];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [self registerForEvents];
     [self.navigationController setNavigationBarHidden:YES];
@@ -64,6 +102,10 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [self unRegisterForEvents];
+}
+
+- (void)goBack {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
@@ -115,33 +157,6 @@
     CGSize keyBoardSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
     keyboardSize = keyBoardSize;
     [commentsTable setHeight:addCommentView.top - 120];
-}
-
-
-#pragma mark - Layout
-- (void)setupCommentBar {
-    addCommentView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height-114, 320, 50)];
-    [addCommentView setBackgroundColor:Colour_255RGB(241, 241, 241)];
-    [self.view addSubview:addCommentView];
-    
-    commentTextView = [[UITextView alloc] initWithFrame:CGRectMake(8, 8, 233, 34)];
-    commentTextView.backgroundColor = Colour_White;
-    [commentTextView.layer setCornerRadius:3.0f];
-    commentTextView.delegate = self;
-    [commentTextView setFont:[FontService systemFont:13*sratio]];
-    [commentTextView setTextColor:Colour_255RGB(220, 220, 220)];
-    [commentTextView setReturnKeyType:UIReturnKeyDefault];
-    [commentTextView setText:LocString(@"Write a comment...")];
-    [addCommentView addSubview:commentTextView];
-    
-    sendCommentButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [sendCommentButton setFrame:CGRectMake(commentTextView.right + 8, 8, 65, 34)];
-    [sendCommentButton setBackgroundColor:Colour_PrayBlue];
-    [sendCommentButton.layer setCornerRadius:3.0f];
-    [sendCommentButton setTitle:LocString(@"Send") forState:UIControlStateNormal];
-    [sendCommentButton.titleLabel setFont:[FontService systemFont:13*sratio]];
-    [sendCommentButton addTarget:self action:@selector(sendComment) forControlEvents:UIControlEventTouchUpInside];
-    [addCommentView addSubview:sendCommentButton];
 }
 
 
@@ -365,6 +380,71 @@
     [self setTouchRecognizer:NO];
     
     [commentsTable setHeight:self.view.screenHeight - 58 - 68];
+}
+
+
+#pragma mark - CommentsTableView delegate & datasource
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if ([comments count]>0) {
+        return [[UIView alloc] initWithFrame:CGRectZero];
+    }
+    else {
+        UIView *disclaimerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.screenWidth, 44)];
+        
+        UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 22, disclaimerView.width, 22)];
+        [textLabel setTextAlignment:NSTextAlignmentCenter];
+        [textLabel setFont:[FontService systemFont:13*sratio]];
+        [textLabel setTextColor:Colour_255RGB(93, 98, 113)];
+        [textLabel setText:LocString(@"Be the first to comment on this post!")];
+        [disclaimerView addSubview:textLabel];
+        
+        return disclaimerView;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if ([comments count]>0) {
+        return 0;
+    }
+    else {
+        return 44;
+    }
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return nil;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 24 + [self heightToFitCommentText:[(CDComment *)[comments objectAtIndex:indexPath.row] commentText]];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 0.01f;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [comments count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    CommentCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([CommentCell class])];
+    
+    if(!cell) {
+        cell = [[CommentCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                  reuseIdentifier:NSStringFromClass([CommentCell class])];
+        cell.delegate = self;
+    }
+    
+    CDComment *comment = [comments objectAtIndex:indexPath.row];
+    [cell updateWithComment:comment];
+    
+    return cell;
 }
 
 

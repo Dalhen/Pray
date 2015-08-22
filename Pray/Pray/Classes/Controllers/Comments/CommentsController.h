@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CommentCell.h"
 
-@interface CommentsController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextViewDelegate> {
+@interface CommentsController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextViewDelegate, CommentCellDelegate> {
     
     CDPrayer *currentPrayer;
     
