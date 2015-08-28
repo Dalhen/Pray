@@ -80,6 +80,7 @@
 		967F17481B8767B90047607E /* backButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 967F17471B8767B90047607E /* backButton@2x.png */; };
 		967F174A1B8778740047607E /* addImageButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 967F17491B8778740047607E /* addImageButton@2x.png */; };
 		96A00CDA1B90E027000E824B /* NotificationsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A00CD91B90E027000E824B /* NotificationsCell.m */; };
+		96A00CDE1B90F83A000E824B /* SearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A00CDD1B90F83A000E824B /* SearchController.m */; };
 		96A394A01B878C6A00B3040E /* searchIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A3949F1B878C6A00B3040E /* searchIcon@2x.png */; };
 		96A394A31B878D6D00B3040E /* arrowDown@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A394A21B878D6D00B3040E /* arrowDown@2x.png */; };
 		96A394A71B87B95700B3040E /* CommentsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A394A61B87B95700B3040E /* CommentsController.m */; };
@@ -368,6 +369,8 @@
 		967F17491B8778740047607E /* addImageButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addImageButton@2x.png"; sourceTree = "<group>"; };
 		96A00CD81B90E027000E824B /* NotificationsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationsCell.h; sourceTree = "<group>"; };
 		96A00CD91B90E027000E824B /* NotificationsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationsCell.m; sourceTree = "<group>"; };
+		96A00CDC1B90F83A000E824B /* SearchController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchController.h; sourceTree = "<group>"; };
+		96A00CDD1B90F83A000E824B /* SearchController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchController.m; sourceTree = "<group>"; };
 		96A3949F1B878C6A00B3040E /* searchIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "searchIcon@2x.png"; sourceTree = "<group>"; };
 		96A394A21B878D6D00B3040E /* arrowDown@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrowDown@2x.png"; sourceTree = "<group>"; };
 		96A394A51B87B95700B3040E /* CommentsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsController.h; sourceTree = "<group>"; };
@@ -1454,6 +1457,8 @@
 		96ACF77F1B8157AE007BAE4A /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				96A00CDC1B90F83A000E824B /* SearchController.h */,
+				96A00CDD1B90F83A000E824B /* SearchController.m */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -1768,6 +1773,7 @@
 				967AD4601B65701C00001B26 /* AFHTTPSessionManager.m in Sources */,
 				96A557821B5A6C690073A4FE /* main.m in Sources */,
 				967AD46C1B65701C00001B26 /* SDWebImageDownloader.m in Sources */,
+				96A00CDE1B90F83A000E824B /* SearchController.m in Sources */,
 				967F173C1B8733680047607E /* PKRevealController.m in Sources */,
 				96A394B21B87CC5000B3040E /* TTTAttributedLabel.m in Sources */,
 				96A558DE1B5A6D4F0073A4FE /* UIViewController+NavigationTitle.m in Sources */,
