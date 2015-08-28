@@ -103,9 +103,11 @@
         [imageView sd_setImageWithURL:[NSURL URLWithString:prayer.imageURL]];
     }
     
-    NSLog(@"Creator: %@", prayer.creator);
     if (prayer.creator.avatar != nil && ![prayer.creator.avatar isEqualToString:@""]) {
         [userAvatar sd_setImageWithURL:[NSURL URLWithString:prayer.creator.avatar]];
+    }
+    else {
+        
     }
     
     [username setText:[NSString stringWithFormat:@"%@ %@", prayer.creator.firstname, prayer.creator.lastname]];

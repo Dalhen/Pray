@@ -723,6 +723,72 @@
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Users
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+- (void)loadPrayersForUser:(NSString *)userId {
+    void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
+        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
+        
+        NSInteger statusCode = [operation.response statusCode];
+        
+        //success
+        if (statusCode == 200) {
+            NSArray *prayers = [DataAccess addPrayers:[responseObject objectForKey:@"data"]];
+            Notification_Post(JXNotification.UserServices.GetPrayersForUserSuccess, prayers);
+        }
+        
+        //invalid
+        else {
+            Notification_Post(JXNotification.UserServices.GetPrayersForUserFailed, nil);
+        }
+    };
+    
+    void (^failureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
+        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
+        Notification_Post(JXNotification.UserServices.GetPrayersForUserFailed, nil);
+    };
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   userId, @"user_id",
+                                   [UserService getUserID], @"visitor_id",
+                                   [UserService getOAuthToken], @"access_token", nil];
+    
+    [self checkAccessTokenAndCall:@"api/v1/prayers/user" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
+}
+
+- (void)viewUserInfoForID:(NSString *)userId {
+    void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
+        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
+        
+        NSInteger statusCode = [operation.response statusCode];
+        
+        //success
+        if (statusCode == 200) {
+            NSArray *prayers = [DataAccess addPrayers:[responseObject objectForKey:@"data"]];
+            Notification_Post(JXNotification.UserServices.ViewUserInfoSuccess, prayers);
+        }
+        
+        //invalid
+        else {
+            Notification_Post(JXNotification.UserServices.ViewUserInfoFailed, nil);
+        }
+    };
+    
+    void (^failureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
+        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
+        Notification_Post(JXNotification.UserServices.ViewUserInfoFailed, nil);
+    };
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   userId, @"user_id",
+                                   [UserService getUserID], @"visitor_id",
+                                   [UserService getOAuthToken], @"access_token", nil];
+    
+    [self checkAccessTokenAndCall:@"api/v1/user" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Post
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)postPrayerWithImage:(NSData *)prayerImage andText:(NSString *)prayerText {

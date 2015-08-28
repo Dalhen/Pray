@@ -79,6 +79,7 @@
 		967F17461B8762920047607E /* addPrayerButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 967F17451B8762920047607E /* addPrayerButton@2x.png */; };
 		967F17481B8767B90047607E /* backButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 967F17471B8767B90047607E /* backButton@2x.png */; };
 		967F174A1B8778740047607E /* addImageButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 967F17491B8778740047607E /* addImageButton@2x.png */; };
+		96A00CDA1B90E027000E824B /* NotificationsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A00CD91B90E027000E824B /* NotificationsCell.m */; };
 		96A394A01B878C6A00B3040E /* searchIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A3949F1B878C6A00B3040E /* searchIcon@2x.png */; };
 		96A394A31B878D6D00B3040E /* arrowDown@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A394A21B878D6D00B3040E /* arrowDown@2x.png */; };
 		96A394A71B87B95700B3040E /* CommentsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A394A61B87B95700B3040E /* CommentsController.m */; };
@@ -365,6 +366,8 @@
 		967F17451B8762920047607E /* addPrayerButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addPrayerButton@2x.png"; sourceTree = "<group>"; };
 		967F17471B8767B90047607E /* backButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backButton@2x.png"; sourceTree = "<group>"; };
 		967F17491B8778740047607E /* addImageButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addImageButton@2x.png"; sourceTree = "<group>"; };
+		96A00CD81B90E027000E824B /* NotificationsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationsCell.h; sourceTree = "<group>"; };
+		96A00CD91B90E027000E824B /* NotificationsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationsCell.m; sourceTree = "<group>"; };
 		96A3949F1B878C6A00B3040E /* searchIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "searchIcon@2x.png"; sourceTree = "<group>"; };
 		96A394A21B878D6D00B3040E /* arrowDown@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrowDown@2x.png"; sourceTree = "<group>"; };
 		96A394A51B87B95700B3040E /* CommentsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsController.h; sourceTree = "<group>"; };
@@ -716,6 +719,8 @@
 				965B4DBA1B70DA43002E149F /* PrayerCell.m */,
 				96A394A81B87C4C200B3040E /* CommentCell.h */,
 				96A394A91B87C4C200B3040E /* CommentCell.m */,
+				96A00CD81B90E027000E824B /* NotificationsCell.h */,
+				96A00CD91B90E027000E824B /* NotificationsCell.m */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1625,6 +1630,7 @@
 				96A558C31B5A6D4F0073A4FE /* UIButton+Extensions.m in Sources */,
 				967F17341B8733680047607E /* CALayer+PKConvenienceAnimations.m in Sources */,
 				967AD4701B65701C00001B26 /* UIButton+WebCache.m in Sources */,
+				96A00CDA1B90E027000E824B /* NotificationsCell.m in Sources */,
 				967F17381B8733680047607E /* PKAnimation.m in Sources */,
 				967F17371B8733680047607E /* PKRevealControllerView.m in Sources */,
 				96A558B21B5A6D4F0073A4FE /* NSDate+Extensions.m in Sources */,
@@ -1918,6 +1924,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Paul Dupuy (G225D6SKDG)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -1937,6 +1944,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Religion America Inc. (E888NAK43S)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",

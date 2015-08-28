@@ -8,6 +8,7 @@
 
 #import "NotificationsController.h"
 #import "PKRevealController.h"
+#import "NotificationsCell.h"
 
 
 @interface NotificationsController ()
@@ -23,8 +24,17 @@
     [self.view setBackgroundColor:Colour_PrayDarkBlue];
     [self.navigationController setNavigationBarHidden:YES];
     
+    [self setupHeader];
     [self setupTableView];
     [self loadNotifications];
+}
+
+- (void)setupHeader {
+    UIButton *menuButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [menuButton setFrame:CGRectMake(10*sratio, 14*sratio, 40*sratio, 40*sratio)];
+    [menuButton setImage:[UIImage imageNamed:@"menuIcon"] forState:UIControlStateNormal];
+    [menuButton addTarget:self action:@selector(showLeftMenu) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:menuButton];
 }
 
 - (void)setupTableView {
@@ -67,8 +77,8 @@
 
 #pragma mark - Events registration
 - (void)registerForEvents {
-    Notification_Observe(JXNotification.NotificationsServices.GetNotificationsSuccess, getNotificationsSuccess:);
-    Notification_Observe(JXNotification.NotificationsServices.GetNotificationsFailed, getNotificationsFailed);
+    Notification_Observe(JXNotification.NotificationsServices.GetNotificationsSuccess, loadNotificationsSuccess:);
+    Notification_Observe(JXNotification.NotificationsServices.GetNotificationsFailed, loadNotificationsFailed);
 }
 
 - (void)unRegisterForEvents {
@@ -87,36 +97,39 @@
     
 }
 
+- (void)loadNotificationsSuccess:(NSNotification *)notification {
+    notifications = [[NSArray alloc] initWithArray:notification.object];
+}
+
+- (void)loadNotificationsFailed {
+    
+}
+
 
 #pragma mark - UITableView dataSource & delegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 264*sratio;
+    return 66*sratio;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return prayers.count;
+    return notifications.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    PrayerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PrayerCell"];
+    NotificationsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NotificationsCell"];
     
     if(!cell) {
-        cell = [[PrayerCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"PrayerCell"];
+        cell = [[NotificationsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"NotificationsCell"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.delegate = self;
     }
     
-    [cell updateWithPrayerObject:[prayers objectAtIndex:indexPath.row]];
+    [cell updateWithNotification:[notifications objectAtIndex:indexPath.row]];
     
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    CDPrayer *prayer = [prayers objectAtIndex:indexPath.row];
-    CommentsController *commentsController = [[CommentsController alloc] initWithPrayer:prayer];
-    [self.navigationController pushViewController:commentsController animated:YES];
 }
 
 

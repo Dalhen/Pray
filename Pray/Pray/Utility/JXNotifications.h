@@ -58,6 +58,9 @@ struct UserServicesStruct {
     
     __unsafe_unretained NSString * const FacebookLoginSuccess;
     __unsafe_unretained NSString * const FacebookLoginFailed;
+    
+    __unsafe_unretained NSString * const GetPrayersForUserSuccess;
+    __unsafe_unretained NSString * const GetPrayersForUserFailed;
 };
 
 struct FeedServicesStruct {

@@ -23,8 +23,6 @@ const struct JXNotificationStruct JXNotification = {
         .RegistrationFailed = @"com.pray.userServices.RegistrationFailed",
         .LoginSuccess = @"com.pray.userServices.LoginSuccess",
         .LoginFailed = @"com.pray.userServices.LoginFailed",
-        .ViewUserInfoSuccess = @"com.pray.userServices.ViewUserInfoSuccess",
-        .ViewUserInfoFailed = @"com.pray.userServices.ViewUserInfoFailed",
         .UpdateUserDetailsSuccess = @"com.pray.userServices.UpdateUserDetailsSuccess",
         .UpdateUserDetailsFailed = @"com.pray.userServices.UpdateUserDetailsFailed",
         .UpdateLocationSuccess = @"com.pray.userServices.UpdateLocationSuccess",
@@ -58,6 +56,11 @@ const struct JXNotificationStruct JXNotification = {
         
         .FacebookLoginSuccess = @"com.pray.userServices.FacebookLoginSuccess",
         .FacebookLoginFailed = @"com.pray.userServices.FacebookLoginFailed",
+       
+        .GetPrayersForUserSuccess = @"com.pray.userServices.GetPrayersForUserSuccess",
+        .GetPrayersForUserFailed= @"com.pray.userServices.GetPrayersForUserFailed",
+        .ViewUserInfoSuccess = @"com.pray.userServices.ViewUserInfoSuccess",
+        .ViewUserInfoFailed = @"com.pray.userServices.ViewUserInfoFailed",
     },
     
     .FeedServices = {

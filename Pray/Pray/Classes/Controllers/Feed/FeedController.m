@@ -7,10 +7,10 @@
 //
 
 #import "FeedController.h"
-#import "BaseView.h"
 #import "PKRevealController.h"
 #import "PrayerCreationController.h"
 #import "CommentsController.h"
+
 
 @interface FeedController ()
 

@@ -7,7 +7,31 @@
 //
 
 #import "BaseViewController.h"
+#import "PrayerCell.h"
 
-@interface ProfileController : BaseViewController
+
+@interface ProfileController : UIViewController <PrayerCellDelegate, UITableViewDataSource, UITableViewDelegate> {
+    
+    CDUser *currentUser;
+    
+    UIImageView *userAvatar;
+    UILabel *usernameLabel;
+    UILabel *userDescription;
+    
+    UILabel *userPrayers;
+    UILabel *userFollowers;
+    UILabel *userFollowing;
+    
+    UITableView *mainTable;
+    UIRefreshControl *refreshControl;
+    BOOL refreshing;
+    
+    NSMutableArray *prayers;
+    NSInteger currentPage;
+    NSInteger maxMomentPerPage;
+    NSInteger maxPagesCount;
+}
+
+- (id)initWithUser:(CDUser *)aUser;
 
 @end
