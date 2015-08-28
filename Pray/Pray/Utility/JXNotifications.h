@@ -73,6 +73,11 @@ struct FeedServicesStruct {
     __unsafe_unretained NSString * const UnLikePostFailed;
 };
 
+struct NotificationsServicesStruct {
+    __unsafe_unretained NSString * const GetNotificationsSuccess;
+    __unsafe_unretained NSString * const GetNotificationsFailed;
+};
+
 struct PostServicesStruct {
     __unsafe_unretained NSString * const PostPrayerSuccess;
     __unsafe_unretained NSString * const PostPrayerFailed;
@@ -110,6 +115,7 @@ struct JXNotificationStruct {
     struct CommentsServicesStruct const CommentsServices;
     struct PushNotificationServicesStruct const PushNotificationServices;
     struct ChatServicesStruct const ChatServices;
+    struct NotificationsServicesStruct const NotificationsServices;
 };
 
 extern const struct JXNotificationStruct JXNotification;

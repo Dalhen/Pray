@@ -78,6 +78,11 @@ const struct JXNotificationStruct JXNotification = {
         .PostPrayerFailed = @"com.pray.postServices.PostPrayerFailed",
     },
     
+    .NotificationsServices = {
+        .GetNotificationsSuccess = @"com.pray.notificationsServices.GetNotificationsSuccess",
+        .GetNotificationsFailed = @"com.pray.notificationsServices.GetNotificationsFailed",
+    },
+    
     .CommentsServices = {
         .GetPostCommentsSuccess = @"com.pray.commentsServices.GetPostCommentsSuccess",
         .GetPostCommentsFailed = @"com.pray.commentsServices.GetPostCommentsFailed",

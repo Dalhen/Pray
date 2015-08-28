@@ -8,6 +8,13 @@
 
 #import "BaseViewController.h"
 
-@interface NotificationsController : BaseViewController
+@interface NotificationsController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
+    
+    UITableView *mainTable;
+    UIRefreshControl *refreshControl;
+    BOOL refreshing;
+    
+    NSArray *notifications;
+}
 
 @end

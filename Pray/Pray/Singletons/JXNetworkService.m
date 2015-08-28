@@ -861,6 +861,40 @@
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Notifications
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+- (void)loadNotifications {
+    void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
+        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
+        
+        NSInteger statusCode = [operation.response statusCode];
+        
+        //success
+        if (statusCode == 200) {
+            NSArray *prayers = [DataAccess addPrayers:[responseObject objectForKey:@"data"]];
+            Notification_Post(JXNotification.FeedServices.LoadFeedSuccess, prayers);
+        }
+        
+        //invalid
+        else {
+            Notification_Post(JXNotification.FeedServices.LoadFeedFailed, nil);
+        }
+    };
+    
+    void (^failureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
+        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
+        Notification_Post(JXNotification.FeedServices.LoadFeedFailed, nil);
+    };
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   [UserService getUserID], @"user_id",
+                                   [UserService getOAuthToken], @"access_token", nil];
+    
+    [self checkAccessTokenAndCall:@"api/v1/prayers" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Helpers
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (NSString *)validString:(NSString *)string {
