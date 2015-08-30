@@ -94,6 +94,7 @@ const struct JXNotificationStruct JXNotification = {
         .DeleteCommentSuccess = @"com.pray.commentsServices.DeletePostSuccess",
         .DeleteCommentFailed = @"com.pray.commentsServices.DeleteCommentFailed",
         .ReportCommentSuccess = @"com.pray.commentsServices.ReportCommentSuccess",
+       
         .ReportCommentFailed = @"com.pray.commentsServices.ReportCommentFailed",
     },
     
@@ -108,6 +109,11 @@ const struct JXNotificationStruct JXNotification = {
         .GetMessagesSuccess = @"com.pray.chatServices.GetMessagesSuccess",
         .GetMessagesFailed = @"com.pray.chatServices.GetMessagesFailed",
         .RefreshChatNow = @"com.pray.chatServices.RefreshChatNow",
+    },
+    
+    .SettingsServices = {
+        .GetSettingsSuccess = @"com.pray.settingsServices.GetSettingsSuccess",
+        .GetSettingsFailed = @"com.pray.settingsServices.GetSettingsFailed",
     },
 };
 

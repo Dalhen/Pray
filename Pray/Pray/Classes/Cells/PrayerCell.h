@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SWTableViewCell.h"
 
 @class PrayerCell;
 
@@ -18,7 +19,7 @@
 @end
 
 
-@interface PrayerCell : UITableViewCell {
+@interface PrayerCell : SWTableViewCell {
     
     UIImageView *imageView;
     UILabel *textView;
@@ -36,7 +37,7 @@
     CDPrayer *prayer;
 }
 
-@property(nonatomic, assign) id <PrayerCellDelegate> delegate;
+@property(nonatomic, assign) id <PrayerCellDelegate, SWTableViewCellDelegate> delegate;
 
 - (void)updateWithPrayerObject:(CDPrayer *)prayerObject;
 

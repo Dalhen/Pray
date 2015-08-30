@@ -110,6 +110,11 @@ struct ChatServicesStruct {
     __unsafe_unretained NSString * const RefreshChatNow;
 };
 
+struct SettingsServicesStruct {
+    __unsafe_unretained NSString * const GetSettingsSuccess;
+    __unsafe_unretained NSString * const GetSettingsFailed;
+};
+
 
 struct JXNotificationStruct {
     struct UserServicesStruct const UserServices;
@@ -119,6 +124,7 @@ struct JXNotificationStruct {
     struct PushNotificationServicesStruct const PushNotificationServices;
     struct ChatServicesStruct const ChatServices;
     struct NotificationsServicesStruct const NotificationsServices;
+    struct SettingsServicesStruct const SettingsServices;
 };
 
 extern const struct JXNotificationStruct JXNotification;

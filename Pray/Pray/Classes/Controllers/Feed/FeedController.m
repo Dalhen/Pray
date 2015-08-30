@@ -202,6 +202,8 @@
     if(!cell) {
         cell = [[PrayerCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"PrayerCell"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.leftUtilityButtons = nil;
+        cell.rightUtilityButtons = [self cellRightButtonsForCurrentGroupCell];
         cell.delegate = self;
     }
     
@@ -216,6 +218,63 @@
     CDPrayer *prayer = [prayers objectAtIndex:indexPath.row];
     CommentsController *commentsController = [[CommentsController alloc] initWithPrayer:prayer];
     [self.navigationController pushViewController:commentsController animated:YES];
+}
+
+
+- (NSArray *)cellRightButtonsForCurrentGroupCell {
+    NSMutableArray *rightUtilityButtons = [NSMutableArray new];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:Colour_255RGB(47, 31, 112) title:@"Leave"];
+    if ([UserService isCurrentGroupAdmin]) {
+        [rightUtilityButtons sw_addUtilityButtonWithColor:Colour_255RGB(235, 60, 86) title:@"Delete"];
+    }
+    return rightUtilityButtons;
+}
+
+- (NSArray *)cellRightButtonsForArchivedGroupCell {
+    NSMutableArray *rightUtilityButtons = [NSMutableArray new];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:Colour_255RGB(255, 47, 46) title:@"Delete"];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:Colour_255RGB(255, 255, 255) title:@"Report"];
+    return rightUtilityButtons;
+}
+
+
+#pragma mark - SWTableViewCell Delegates
+// click event on right utility button
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index {
+    
+    currentlyEditedCell = cell;
+    switch (index) {
+        case 0: {
+            reportPostAlert = [[UIAlertView alloc] initWithTitle:LocString(@"Report a prayer") message:LocString(@"Are you sure you want to report this prayer?") delegate:self cancelButtonTitle:LocString(@"No") otherButtonTitles:LocString(@"Yes, report it!"), nil];
+            [reportPostAlert show];
+        }
+            break;
+            
+        case 1: {
+            deletePostAlert = [[UIAlertView alloc] initWithTitle:LocString(@"Deleting prayer?") message:LocString(@"Are you sure you want to delete your prayer? This action cannot be undone.") delegate:self cancelButtonTitle:LocString(@"No") otherButtonTitles:LocString(@"Yes, delete it!"), nil];
+            [deletePostAlert show];
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+
+// utility button open/close event
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell scrollingToState:(SWCellState)state {
+    
+}
+
+// prevent multiple cells from showing utilty buttons simultaneously
+- (BOOL)swipeableTableViewCellShouldHideUtilityButtonsOnSwipe:(SWTableViewCell *)cell {
+    return YES;
+}
+
+// prevent cell(s) from displaying left/right utility buttons
+- (BOOL)swipeableTableViewCell:(SWTableViewCell *)cell canSwipeToState:(SWCellState)state {
+#warning Check if ADMIN?
+    return YES;
 }
 
 

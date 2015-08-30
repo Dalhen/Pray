@@ -9,7 +9,7 @@
 #import "BaseViewController.h"
 #import "PrayerCell.h"
 
-@interface FeedController : UIViewController <UITableViewDataSource, UITableViewDelegate, PrayerCellDelegate> {
+@interface FeedController : UIViewController <UITableViewDataSource, UITableViewDelegate, PrayerCellDelegate, SWTableViewCellDelegate> {
  
     UITableView *mainTable;
     UIRefreshControl *refreshControl;
@@ -22,6 +22,10 @@
     NSInteger maxPagesCount;
     
     UIButton *addPrayerButton;
+    
+    SWTableViewCell *currentlyEditedCell;
+    UIAlertView *deletePostAlert;
+    UIAlertView *reportPostAlert;
 }
 
 @end

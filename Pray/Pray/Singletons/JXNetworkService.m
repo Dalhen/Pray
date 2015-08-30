@@ -624,11 +624,11 @@
     };
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   postId, @"post_id",
+                                   postId, @"prayer_id",
                                    [UserService getUserID], @"user_id",
                                    [UserService getOAuthToken], @"access_token", nil];
     
-    [self checkAccessTokenAndCall:@"api/v1/post/delete" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
+    [self checkAccessTokenAndCall:@"api/v1/prayers/delete" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
 - (void)reportPostWithID:(NSString *)postId {
@@ -764,8 +764,8 @@
         
         //success
         if (statusCode == 200) {
-            NSArray *prayers = [DataAccess addPrayers:[responseObject objectForKey:@"data"]];
-            Notification_Post(JXNotification.UserServices.ViewUserInfoSuccess, prayers);
+            CDUser *user = [DataAccess addUserWithData:[responseObject objectForKey:@"data"]];
+            Notification_Post(JXNotification.UserServices.ViewUserInfoSuccess, user);
         }
         
         //invalid
@@ -957,6 +957,40 @@
                                    [UserService getOAuthToken], @"access_token", nil];
     
     [self checkAccessTokenAndCall:@"api/v1/prayers" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Settings
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+- (void)getSettings {
+    void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
+        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
+        
+        NSInteger statusCode = [operation.response statusCode];
+        
+        //success
+        if (statusCode == 200) {
+            NSArray *prayers = [DataAccess addPrayers:[responseObject objectForKey:@"data"]];
+            Notification_Post(JXNotification.SettingsServices.GetSettingsSuccess, prayers);
+        }
+        
+        //invalid
+        else {
+            Notification_Post(JXNotification.SettingsServices.GetSettingsFailed, nil);
+        }
+    };
+    
+    void (^failureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
+        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
+        Notification_Post(JXNotification.SettingsServices.GetSettingsFailed, nil);
+    };
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   [UserService getUserID], @"user_id",
+                                   [UserService getOAuthToken], @"access_token", nil];
+    
+    [self checkAccessTokenAndCall:@"api/v1/settings" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
 

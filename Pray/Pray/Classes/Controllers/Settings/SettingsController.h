@@ -8,7 +8,7 @@
 
 #import "BaseViewController.h"
 
-@interface SettingsController : BaseViewController {
+@interface SettingsController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
     
     UITableView *mainTable;
 }

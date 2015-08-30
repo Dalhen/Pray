@@ -80,77 +80,34 @@
 
 #pragma mark - Events registration
 - (void)registerForEvents {
-    Notification_Observe(JXNotification.FeedServices.LoadFeedSuccess, loadFeedSuccess:);
-    Notification_Observe(JXNotification.FeedServices.LoadFeedFailed, loadFeedFailed);
-    Notification_Observe(JXNotification.FeedServices.DeletePostSuccess, deletePostSuccess);
-    Notification_Observe(JXNotification.FeedServices.DeletePostFailed, deletePostFailed);
-    Notification_Observe(JXNotification.FeedServices.ReportPostSuccess, reportPostSuccess);
-    Notification_Observe(JXNotification.FeedServices.ReportPostFailed, reportPostFailed);
-    
-    Notification_Observe(JXNotification.FeedServices.LikePostSuccess, likePostSuccess);
-    Notification_Observe(JXNotification.FeedServices.LikePostFailed, likePostFailed);
-    Notification_Observe(JXNotification.FeedServices.UnLikePostSuccess, unlikePostSuccess);
-    Notification_Observe(JXNotification.FeedServices.UnLikePostFailed, unlikePostFailed);
+    Notification_Observe(JXNotification.SettingsServices.GetSettingsSuccess, loadSettingsSuccess:);
+    Notification_Observe(JXNotification.SettingsServices.GetSettingsFailed, loadSettingsFailed);
 }
 
 - (void)unRegisterForEvents {
-    Notification_Remove(JXNotification.FeedServices.LoadFeedSuccess);
-    Notification_Remove(JXNotification.FeedServices.LoadFeedFailed);
-    Notification_Remove(JXNotification.FeedServices.DeletePostSuccess);
-    Notification_Remove(JXNotification.FeedServices.DeletePostFailed);
-    Notification_Remove(JXNotification.FeedServices.ReportPostSuccess);
-    Notification_Remove(JXNotification.FeedServices.ReportPostFailed);
+    Notification_Remove(JXNotification.SettingsServices.GetSettingsSuccess);
+    Notification_Remove(JXNotification.SettingsServices.GetSettingsFailed);
     Notification_RemoveObserver;
 }
 
 
-//#pragma mark - Loading data
-//- (void)refreshTriggered {
-//    [self loadFeedAnimated:NO];
-//}
-//
-//- (void)loadFeedAnimated:(BOOL)animated {
-//    if (animated) {
-//        [SVProgressHUD showWithStatus:LocString(@"Loading") maskType:SVProgressHUDMaskTypeGradient];
-//    }
-//    [NetworkService loadFeedForDiscover:YES];
-//}
-//
-//- (void)loadFeedSuccess:(NSNotification *)notification {
-//    refreshing = NO;
-//    
-//    //maxMomentPerPage = [[notification.object objectForKey:@"page_size"] intValue];
-//    //maxPagesCount = [[notification.object objectForKey:@"page_count"] intValue];
-//    
-//    if (currentPage==0) {
-//        prayers = [[NSMutableArray alloc] initWithArray:notification.object];
-//        if ([refreshControl isRefreshing]) [refreshControl endRefreshing];
-//        [mainTable reloadData];
-//    }
-//    else {
-//        [prayers addObjectsFromArray:notification.object];
-//        if ([refreshControl isRefreshing]) [refreshControl endRefreshing];
-//        [mainTable reloadData];
-//    }
-//    
-//    [SVProgressHUD dismiss];
-//    
-//    //[mainTable setHidden:([prayers count]==0)];
-//}
-//
-//- (void)loadFeedFailed {
-//    refreshing = NO;
-//    [SVProgressHUD dismiss];
-//    if ([refreshControl isRefreshing]) [refreshControl endRefreshing];
-//}
-//
-//
-//#pragma mark - Feed Type
-//- (void)changeFeedType:(id)sender {
-//    
-//}
-//
-//
+#pragma mark - Loading data
+- (void)loadSettings {
+    [SVProgressHUD showWithStatus:LocString(@"Loading") maskType:SVProgressHUDMaskTypeGradient];
+    [NetworkService getSettings];
+}
+
+- (void)loadSettingsSuccess:(NSNotification *)notification {
+    [SVProgressHUD dismiss];
+    [mainTable reloadData];
+}
+
+- (void)loadSettingsFailed {
+    [SVProgressHUD dismiss];
+}
+
+
+
 //#pragma mark - UITableView dataSource & delegate
 //- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 //    return 264*sratio;
