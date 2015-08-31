@@ -56,9 +56,15 @@
 
 #pragma mark - Data
 - (void)loadWithUserData:(NSDictionary *)userData {
-    [userAvatar sd_setImageWithURL:[NSURL URLWithString:[userData objectForKey:@"avatar"]]];
-    [usernameLabel setText:[userData objectForKey:@"first_name"]];
     
+    if ([userData objectForKey:@"avatar"] != nil && ![[userData objectForKey:@"avatar"] isEqualToString:@""]) {
+        [userAvatar sd_setImageWithURL:[NSURL URLWithString:[userData objectForKey:@"avatar"]] placeholderImage:[UIImage imageNamed:@"emptyProfile"]];
+    }
+    else {
+        [userAvatar setImage:[UIImage imageNamed:@"emptyProfile"]];
+    }
+    
+    [usernameLabel setText:[userData objectForKey:@"first_name"]];
     [followButton setBackgroundColor:([[userData objectForKey:@"following"] boolValue]==YES) ? Colour_PrayDarkBlue : Colour_PrayBlue];
 }
 

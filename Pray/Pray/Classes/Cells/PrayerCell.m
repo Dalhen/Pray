@@ -92,6 +92,10 @@
     commentButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [commentButton addTarget:self action:@selector(commentButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:commentButton];
+    
+    UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, 263*sratio, self.screenWidth, 1)];
+    [separator setBackgroundColor:Colour_PrayDarkBlue];
+    [self.contentView addSubview:separator];
 }
 
 
@@ -104,10 +108,10 @@
     }
     
     if (prayer.creator.avatar != nil && ![prayer.creator.avatar isEqualToString:@""]) {
-        [userAvatar sd_setImageWithURL:[NSURL URLWithString:prayer.creator.avatar]];
+        [userAvatar sd_setImageWithURL:[NSURL URLWithString:prayer.creator.avatar] placeholderImage:[UIImage imageNamed:@"emptyProfile"]];
     }
     else {
-        
+        [userAvatar setImage:[UIImage imageNamed:@"emptyProfile"]];
     }
     
     [username setText:[NSString stringWithFormat:@"%@ %@", prayer.creator.firstname, prayer.creator.lastname]];

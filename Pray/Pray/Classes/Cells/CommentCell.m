@@ -76,7 +76,12 @@
 
 #pragma mark - Data update
 - (void)updateWithComment:(CDComment *)aComment {
-    [iconImageView sd_setImageWithURL:[NSURL URLWithString:aComment.creator.avatar]];
+    if (aComment.creator.avatar != nil && ![aComment.creator.avatar isEqualToString:@""]) {
+        [iconImageView sd_setImageWithURL:[NSURL URLWithString:aComment.creator.avatar] placeholderImage:[UIImage imageNamed:@"emptyProfile"]];
+    }
+    else {
+        [iconImageView setImage:[UIImage imageNamed:@"emptyProfile"]];
+    }
     
     [usernameLabel setText:[[DataAccess getUserForID:aComment.creatorId] firstname]];
     [usernameLabel sizeToFit];

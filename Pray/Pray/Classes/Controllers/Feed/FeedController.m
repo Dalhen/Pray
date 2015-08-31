@@ -25,6 +25,7 @@
     self = [super init];
     
     if (self) {
+        showDiscover = YES;
         prayers = [[NSMutableArray alloc] init];
     }
     
@@ -150,14 +151,18 @@
     if (animated) {
         [SVProgressHUD showWithStatus:LocString(@"Loading") maskType:SVProgressHUDMaskTypeGradient];
     }
-    [NetworkService loadFeedForDiscover:YES];
+    [NetworkService loadFeedForDiscover:showDiscover];
+}
+
+- (void)loadNextPrayers {
+    CDPrayer *lastPrayer = [prayers lastObject];
+    [NetworkService loadMorePrayersWithLastID:[lastPrayer.uniqueId stringValue] forDiscover:showDiscover];
 }
 
 - (void)loadFeedSuccess:(NSNotification *)notification {
     refreshing = NO;
-    
-    //maxMomentPerPage = [[notification.object objectForKey:@"page_size"] intValue];
     //maxPagesCount = [[notification.object objectForKey:@"page_count"] intValue];
+    maxMomentPerPage = [notification.object count];
     
     if (currentPage==0) {
         prayers = [[NSMutableArray alloc] initWithArray:notification.object];
@@ -296,6 +301,22 @@
             [SVProgressHUD showWithStatus:LocString(@"Deleting your post...") maskType:SVProgressHUDMaskTypeGradient];
             [NetworkService deletePostWithID:[prayers objectAtIndex:[[mainTable indexPathForCell:currentlyEditedCell] row]]];
         }
+    }
+}
+
+
+#pragma mark - UIScrollView delegates
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    //Data reload system
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[prayers count]-1 inSection:0];
+    if ([mainTable.indexPathsForVisibleRows containsObject:indexPath]
+        && [prayers count]>=maxMomentPerPage
+        && !refreshing)
+        //&& currentPage < maxPagesCount
+    {
+        currentPage +=1;
+        [self loadNextPrayers];
     }
 }
 

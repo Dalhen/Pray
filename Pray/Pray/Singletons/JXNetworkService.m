@@ -601,6 +601,38 @@
     [self checkAccessTokenAndCall:@"api/v1/prayers" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
+- (void)loadMorePrayersWithLastID:(NSString *)lastPrayerId forDiscover:(BOOL)discover {
+    void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
+        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
+        
+        NSInteger statusCode = [operation.response statusCode];
+        
+        //success
+        if (statusCode == 200) {
+            NSArray *prayers = [DataAccess addPrayers:[responseObject objectForKey:@"data"]];
+            Notification_Post(JXNotification.FeedServices.LoadFeedSuccess, prayers);
+        }
+        
+        //invalid
+        else {
+            Notification_Post(JXNotification.FeedServices.LoadFeedFailed, nil);
+        }
+    };
+    
+    void (^failureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
+        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
+        Notification_Post(JXNotification.FeedServices.LoadFeedFailed, nil);
+    };
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   [UserService getUserID], @"user_id",
+                                   lastPrayerId, @"prayer_id",
+                                   [NSString stringWithFormat:@"%i", discover], @"discover",
+                                   [UserService getOAuthToken], @"access_token", nil];
+    
+    [self checkAccessTokenAndCall:@"api/v1/prayers/more" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
+}
+
 - (void)deletePostWithID:(NSString *)postId {
     void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
         if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);

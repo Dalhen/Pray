@@ -48,14 +48,16 @@
     [self.contentView addSubview:timeAgo];
     
     UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, 65*sratio, self.screenWidth, 1)];
+    [separator setBackgroundColor:Colour_Pink];
+    [self.contentView addSubview:separator];
 }
 
 - (void)updateWithNotification:(NSDictionary *)notification {
     if ([notification objectForKey:@"avatar"] != nil && ![[notification objectForKey:@"avatar"] isEqualToString:@""]) {
-        [userAvatar sd_setImageWithURL:[NSURL URLWithString:[notification objectForKey:@"avatar"]]];
+        [userAvatar sd_setImageWithURL:[NSURL URLWithString:[notification objectForKey:@"avatar"]] placeholderImage:[UIImage imageNamed:@"emptyProfile"]];
     }
     else {
-        
+        [userAvatar setImage:[UIImage imageNamed:@"emptyProfile"]];
     }
     
     [textLabel setText:[notification objectForKey:@"body"]];

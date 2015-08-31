@@ -71,6 +71,8 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)loadFeedForDiscover:(BOOL)discover;
 
+- (void)loadMorePrayersWithLastID:(NSString *)lastPrayerId forDiscover:(BOOL)discover;
+
 - (void)deletePostWithID:(NSString *)postId;
 
 - (void)reportPostWithID:(NSString *)postId;

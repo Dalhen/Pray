@@ -14,6 +14,7 @@
     UITableView *mainTable;
     UIRefreshControl *refreshControl;
     BOOL refreshing;
+    BOOL showDiscover;
     
     NSMutableArray *prayers;
     
