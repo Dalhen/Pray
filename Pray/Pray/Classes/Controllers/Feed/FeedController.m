@@ -10,6 +10,7 @@
 #import "PKRevealController.h"
 #import "PrayerCreationController.h"
 #import "CommentsController.h"
+#import "SearchController.h"
 
 
 @interface FeedController ()
@@ -203,10 +204,10 @@
         cell = [[PrayerCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"PrayerCell"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.leftUtilityButtons = nil;
-        cell.rightUtilityButtons = [self cellRightButtonsForCurrentGroupCell];
         cell.delegate = self;
     }
     
+    cell.rightUtilityButtons = [self cellRightButtonsForCurrentGroupCellAndPrayer:[prayers objectAtIndex:indexPath.row]];
     [cell updateWithPrayerObject:[prayers objectAtIndex:indexPath.row]];
     
     return cell;
@@ -221,19 +222,16 @@
 }
 
 
-- (NSArray *)cellRightButtonsForCurrentGroupCell {
+- (NSArray *)cellRightButtonsForCurrentGroupCellAndPrayer:(CDPrayer *)prayer {
     NSMutableArray *rightUtilityButtons = [NSMutableArray new];
-    [rightUtilityButtons sw_addUtilityButtonWithColor:Colour_255RGB(47, 31, 112) title:@"Leave"];
-    if ([UserService isCurrentGroupAdmin]) {
-        [rightUtilityButtons sw_addUtilityButtonWithColor:Colour_255RGB(235, 60, 86) title:@"Delete"];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:Colour_255RGB(40, 155, 229) title:@"Report"];
+    
+    NSLog(@"UserID: %@", [UserService getUserID]);
+    NSLog(@"CreatorID: %@", prayer.creatorId);
+    
+    if ([[prayer.creatorId stringValue] isEqualToString:[UserService getUserID]]) {
+        [rightUtilityButtons sw_addUtilityButtonWithColor:Colour_255RGB(254, 74, 68) title:@"Delete"];
     }
-    return rightUtilityButtons;
-}
-
-- (NSArray *)cellRightButtonsForArchivedGroupCell {
-    NSMutableArray *rightUtilityButtons = [NSMutableArray new];
-    [rightUtilityButtons sw_addUtilityButtonWithColor:Colour_255RGB(255, 47, 46) title:@"Delete"];
-    [rightUtilityButtons sw_addUtilityButtonWithColor:Colour_255RGB(255, 255, 255) title:@"Report"];
     return rightUtilityButtons;
 }
 
@@ -273,8 +271,32 @@
 
 // prevent cell(s) from displaying left/right utility buttons
 - (BOOL)swipeableTableViewCell:(SWTableViewCell *)cell canSwipeToState:(SWCellState)state {
-#warning Check if ADMIN?
     return YES;
+}
+
+
+#pragma mark - SWTableViewCell Actions
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    [(SWTableViewCell *)currentlyEditedCell hideUtilityButtonsAnimated:YES];
+    
+    if (buttonIndex == 1) {
+        if (alertView == reportPostAlert) {
+            [SVProgressHUD showWithStatus:LocString(@"Reporting post...") maskType:SVProgressHUDMaskTypeGradient];
+            [NetworkService reportPostWithID:[prayers objectAtIndex:[[mainTable indexPathForCell:currentlyEditedCell] row]]];
+        }
+        else if (alertView == deletePostAlert) {
+            NSInteger row = [[mainTable indexPathForCell:currentlyEditedCell] row];
+            [prayers removeObjectAtIndex:row];
+//            [mainTable reloadData];
+            [mainTable beginUpdates];
+            [mainTable deleteRowsAtIndexPaths:@[[mainTable indexPathForCell:currentlyEditedCell]] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [mainTable endUpdates];
+            
+            [SVProgressHUD showWithStatus:LocString(@"Deleting your post...") maskType:SVProgressHUDMaskTypeGradient];
+            [NetworkService deletePostWithID:[prayers objectAtIndex:[[mainTable indexPathForCell:currentlyEditedCell] row]]];
+        }
+    }
 }
 
 
@@ -316,27 +338,19 @@
 }
 
 
-#pragma mark - Delete post
-- (void)deletePost {
-    
-}
-
+#pragma mark - Delete post delegate
 - (void)deletePostSuccess {
-    
+    [SVProgressHUD showSuccessWithStatus:LocString(@"Your prayer has been deleted.")];
 }
 
 - (void)deletePostFailed {
-    
+    [SVProgressHUD showSuccessWithStatus:LocString(@"We couldn't delete your prayer at this time. Please check your internet connection and try again.")];
 }
 
 
-#pragma mark - Report post
-- (void)reportPost {
-    
-}
-
+#pragma mark - Report post delegate
 - (void)reportPostSuccess {
-    
+    [SVProgressHUD showSuccessWithStatus:LocString(@"This prayer has been reported. We will look at it closely and take any necessary action.")];
 }
 
 - (void)reportPostFailed {
@@ -353,7 +367,8 @@
 
 #pragma mark - Search
 - (void)displaySearch {
-    
+    SearchController *searchController = [[SearchController alloc] init];
+    [self presentViewController:searchController animated:YES completion:nil];
 }
 
 
@@ -362,7 +377,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 
 
 @end

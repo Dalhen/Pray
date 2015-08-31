@@ -45,17 +45,13 @@
 
 #pragma mark - Events registration
 - (void)registerForEvents {
-    Notification_Observe(JXNotification.UserServices.RegistrationSuccess, signupAccountSuccess);
+    Notification_Observe(JXNotification.UserServices.RegistrationSuccess, signupAccountSuccess:);
     Notification_Observe(JXNotification.UserServices.RegistrationFailed, signupAccountFailed);
-    Notification_Observe(JXNotification.UserServices.UpdateUserDetailsSuccess, updateUserProfileSuccess);
-    Notification_Observe(JXNotification.UserServices.UpdateUserDetailsFailed, updateUserProfileFailed);
 }
 
 - (void)unRegisterForEvents {
     Notification_Remove(JXNotification.UserServices.RegistrationSuccess);
     Notification_Remove(JXNotification.UserServices.RegistrationFailed);
-    Notification_Remove(JXNotification.UserServices.UpdateUserDetailsSuccess);
-    Notification_Remove(JXNotification.UserServices.UpdateUserDetailsFailed);
     Notification_RemoveObserver;
 }
 
@@ -245,7 +241,17 @@
     }
 }
 
-- (void)signupAccountSuccess {
+- (void)signupAccountSuccess:(NSNotification *)notification {
+    
+    NSDictionary *data = [notification object];
+    [UserService setUserWithUsername:[self validString:[data objectForKey:@"email"]]
+                              userID:[self validString:[data objectForKey:@"id"]]
+                           firstname:[self validString:[data objectForKey:@"first_name"]]
+                            lastname:[self validString:[data objectForKey:@"last_name"]]
+                            fullname:[self validString:[data objectForKey:@"full_name"]]
+                                 bio:[self validString:[data objectForKey:@"bio"]]
+                                city:[self validString:[data objectForKey:@"city"]]
+                          profileURL:[self validString:[data objectForKey:@"avatar"]]];
     
     [AppDelegate displayMainView];
     
@@ -257,6 +263,10 @@
 
 - (void)signupAccountFailed {
     [[[UIAlertView alloc] initWithTitle:LocString(@"Account creation") message:LocString(@"We couldn't create your account. Please check your internet connection and try again.") delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+}
+
+- (NSString *)validString:(NSString *)string {
+    return (string && ![string isKindOfClass:[NSNull class]])? string : @"";
 }
 
 

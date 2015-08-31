@@ -1920,7 +1920,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c061cf86-6d6e-4483-9b8d-6d84c529b99e";
+				PROVISIONING_PROFILE = "66c6117f-86b3-4077-8721-0461c27b8d97";
 			};
 			name = Debug;
 		};
@@ -1942,7 +1942,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "79dc345f-a790-413d-b8bf-f13fe2994216";
+				PROVISIONING_PROFILE = "ee188744-eef1-4286-abd5-1167b92c56bc";
 			};
 			name = Release;
 		};
