@@ -8,13 +8,28 @@
 
 #import <UIKit/UIKit.h>
 
+@class UserCell;
+
+@protocol UserCellDelegate <NSObject>
+
+- (void)followUserForCell:(UserCell *)cell;
+- (void)unfollowUserForCell:(UserCell *)cell;
+
+@end
+
+
 @interface UserCell : UITableViewCell {
     
     UIImageView *userAvatar;
+    UILabel *fullNameLabel;
     UILabel *usernameLabel;
     UIButton *followButton;
+    
+    CDUser *currentUser;
 }
 
-- (void)loadWithUserData:(NSDictionary *)userData;
+@property(nonatomic, assign) id <UserCellDelegate> delegate;
+
+- (void)updateWithUserObject:(CDUser *)userObject;
 
 @end

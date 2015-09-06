@@ -59,8 +59,14 @@ const struct JXNotificationStruct JXNotification = {
        
         .GetPrayersForUserSuccess = @"com.pray.userServices.GetPrayersForUserSuccess",
         .GetPrayersForUserFailed= @"com.pray.userServices.GetPrayersForUserFailed",
+        .GetMorePrayersForUserSuccess = @"com.pray.userServices.GetMorePrayersForUserSuccess",
+        .GetMorePrayersForUserFailed= @"com.pray.userServices.GetMorePrayersForUserFailed",
         .ViewUserInfoSuccess = @"com.pray.userServices.ViewUserInfoSuccess",
         .ViewUserInfoFailed = @"com.pray.userServices.ViewUserInfoFailed",
+        .FollowUserSuccess = @"com.pray.userServices.FollowUserSuccess",
+        .FollowUserFailed = @"com.pray.userServices.FollowUserFailed",
+        .UnFollowUserSuccess = @"com.pray.userServices.UnFollowUserSuccess",
+        .UnFollowUserFailed = @"com.pray.userServices.UnFollowUserFailed",
     },
     
     .FeedServices = {
@@ -74,6 +80,8 @@ const struct JXNotificationStruct JXNotification = {
         .LikePostFailed = @"com.pray.feedServices.LikePostFailed",
         .UnLikePostSuccess = @"com.pray.feedServices.UnLikePostSuccess",
         .UnLikePostFailed = @"com.pray.feedServices.UnLikePostFailed",
+        .SearchSuccess = @"com.pray.feedServices.SearchSuccess",
+        .SearchFailed = @"com.pray.feedServices.SearchFailed",
     },
     
     .PostServices = {

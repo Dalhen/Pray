@@ -39,6 +39,7 @@
     
     [self setupHeader];
     [self setupTableView];
+    [self setupSwitchMenu];
     [self setupAddPrayerButton];
     [self loadFeedAnimated:YES];
 }
@@ -59,7 +60,7 @@
     [feedSelector.titleLabel setFont:[FontService systemFont:16*sratio]];
     [feedSelector setImageEdgeInsets:UIEdgeInsetsMake(4*sratio, 140*sratio, 0, 0)];
     [feedSelector setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 10*sratio)];
-    [feedSelector addTarget:self action:@selector(changeFeedType:) forControlEvents:UIControlEventTouchUpInside];
+    [feedSelector addTarget:self action:@selector(switchMenuClicked) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:feedSelector];
     
     UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -67,6 +68,33 @@
     [searchButton setImage:[UIImage imageNamed:@"searchIcon"] forState:UIControlStateNormal];
     [searchButton addTarget:self action:@selector(displaySearch) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:searchButton];
+}
+
+- (void)setupSwitchMenu {
+    switchMenu = [[UIView alloc] initWithFrame:CGRectMake(0, 56*sratio, self.view.screenWidth, 0)];
+    [switchMenu setBackgroundColor:Colour_255RGB(46, 48, 56)];
+    [switchMenu setClipsToBounds:YES];
+    [self.view addSubview:switchMenu];
+    
+    feedButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [feedButton setFrame:CGRectMake(0, 0, self.view.screenWidth/2, 54*sratio)];
+    [feedButton setTitle:LocString(@"Feed") forState:UIControlStateNormal];
+    [feedButton setTitleColor:Colour_255RGB(111, 116, 132) forState:UIControlStateNormal];
+    [feedButton setTitleColor:Colour_White forState:UIControlStateSelected];
+    [feedButton.titleLabel setFont:[FontService systemFont:16*sratio]];
+    [feedButton addTarget:self action:@selector(displayFeed) forControlEvents:UIControlEventTouchUpInside];
+    [feedButton setSelected:YES];
+    [switchMenu addSubview:feedButton];
+    
+    followingButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [followingButton setFrame:CGRectMake(self.view.screenWidth/2, 0, self.view.screenWidth/2, 54*sratio)];
+    [followingButton setTitle:LocString(@"Following") forState:UIControlStateNormal];
+    [followingButton setTitleColor:Colour_255RGB(111, 116, 132) forState:UIControlStateNormal];
+    [followingButton setTitleColor:Colour_White forState:UIControlStateSelected];
+    [followingButton.titleLabel setFont:[FontService systemFont:16*sratio]];
+    [followingButton addTarget:self action:@selector(displayFollowing) forControlEvents:UIControlEventTouchUpInside];
+    [followingButton setSelected:NO];
+    [switchMenu addSubview:followingButton];
 }
 
 - (void)setupTableView {
@@ -138,7 +166,53 @@
     Notification_Remove(JXNotification.FeedServices.DeletePostFailed);
     Notification_Remove(JXNotification.FeedServices.ReportPostSuccess);
     Notification_Remove(JXNotification.FeedServices.ReportPostFailed);
+    Notification_Remove(JXNotification.FeedServices.LikePostSuccess);
+    Notification_Remove(JXNotification.FeedServices.LikePostFailed);
+    Notification_Remove(JXNotification.FeedServices.UnLikePostSuccess);
+    Notification_Remove(JXNotification.FeedServices.UnLikePostFailed);
+    
     Notification_RemoveObserver;
+}
+
+
+#pragma mark - SwitchMenu
+- (void)switchMenuClicked {
+    if (!displayingSwitchMenu) {
+        [self displaySwitchMenu];
+    }
+    else {
+        [self hideSwitchMenu];
+    }
+}
+
+- (void)displaySwitchMenu {
+    displayingSwitchMenu = YES;
+    [UIView animateWithDuration:0.2 animations:^{
+        [switchMenu setHeight:54*sratio];
+    }];
+}
+
+- (void)hideSwitchMenu {
+    displayingSwitchMenu = NO;
+    [UIView animateWithDuration:0.2 animations:^{
+        [switchMenu setHeight:0];
+    }];
+}
+
+- (void)displayFeed {
+    [feedButton setSelected:YES];
+    [followingButton setSelected:NO];
+    showDiscover = YES;
+    [self hideSwitchMenu];
+    [self loadFeedAnimated:YES];
+}
+
+- (void)displayFollowing {
+    [feedButton setSelected:NO];
+    [followingButton setSelected:YES];
+    showDiscover = NO;
+    [self hideSwitchMenu];
+    [self loadFeedAnimated:YES];
 }
 
 
@@ -187,15 +261,9 @@
 }
 
 
-#pragma mark - Feed Type
-- (void)changeFeedType:(id)sender {
-    
-}
-
-
 #pragma mark - UITableView dataSource & delegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 264*sratio;
+    return prayerCellHeight;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -225,7 +293,6 @@
     CommentsController *commentsController = [[CommentsController alloc] initWithPrayer:prayer];
     [self.navigationController pushViewController:commentsController animated:YES];
 }
-
 
 - (NSArray *)cellRightButtonsForCurrentGroupCellAndPrayer:(CDPrayer *)prayer {
     NSMutableArray *rightUtilityButtons = [NSMutableArray new];
@@ -291,15 +358,15 @@
             [NetworkService reportPostWithID:[prayers objectAtIndex:[[mainTable indexPathForCell:currentlyEditedCell] row]]];
         }
         else if (alertView == deletePostAlert) {
+            [SVProgressHUD showWithStatus:LocString(@"Deleting your post...") maskType:SVProgressHUDMaskTypeGradient];
+            [NetworkService deletePostWithID:[prayers objectAtIndex:[[mainTable indexPathForCell:currentlyEditedCell] row]]];
+            
             NSInteger row = [[mainTable indexPathForCell:currentlyEditedCell] row];
             [prayers removeObjectAtIndex:row];
-//            [mainTable reloadData];
+            //            [mainTable reloadData];
             [mainTable beginUpdates];
             [mainTable deleteRowsAtIndexPaths:@[[mainTable indexPathForCell:currentlyEditedCell]] withRowAnimation:UITableViewRowAnimationAutomatic];
             [mainTable endUpdates];
-            
-            [SVProgressHUD showWithStatus:LocString(@"Deleting your post...") maskType:SVProgressHUDMaskTypeGradient];
-            [NetworkService deletePostWithID:[prayers objectAtIndex:[[mainTable indexPathForCell:currentlyEditedCell] row]]];
         }
     }
 }
@@ -307,6 +374,10 @@
 
 #pragma mark - UIScrollView delegates
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    if (displayingSwitchMenu) {
+        [self hideSwitchMenu];
+    }
     
     //Data reload system
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[prayers count]-1 inSection:0];

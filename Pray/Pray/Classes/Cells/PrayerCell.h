@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "SWTableViewCell.h"
 
+#define prayerCellHeight 320*sratio
+
 @class PrayerCell;
 
 @protocol PrayerCellDelegate <NSObject>

@@ -43,6 +43,13 @@
     [menuButton setImage:[UIImage imageNamed:@"menuIcon"] forState:UIControlStateNormal];
     [menuButton addTarget:self action:@selector(showLeftMenu) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:menuButton];
+    
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(76*sratio, 20*sratio, 162*sratio, 26*sratio)];
+    titleLabel.text = LocString(@"Settings");
+    titleLabel.font = [FontService systemFont:14*sratio];
+    titleLabel.textColor = Colour_White;
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:titleLabel];
 }
 
 - (void)setupTableView {

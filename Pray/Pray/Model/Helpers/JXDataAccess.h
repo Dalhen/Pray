@@ -33,6 +33,8 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (CDUser *)addUserWithData:(NSDictionary *)userObject;
 
+- (NSArray *)addUsers:(NSArray *)usersData;
+
 - (CDUser *)getUserForID:(NSNumber *)uniqueId;
 
 

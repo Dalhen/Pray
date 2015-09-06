@@ -46,8 +46,8 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    LeftMenuCell *cell = (LeftMenuCell *)[mainTable cellForRowAtIndexPath:[NSIndexPath indexPathForRow:selectedLine inSection:0]];
-    [cell setSelected:YES animated:YES];
+//    LeftMenuCell *cell = (LeftMenuCell *)[mainTable cellForRowAtIndexPath:[NSIndexPath indexPathForRow:selectedLine inSection:0]];
+//    [cell setSelected:YES animated:YES];
 }
 
 
@@ -91,14 +91,14 @@
             break;
             
         case 1:
-            [cell.title setText:LocString(@"Notitications")];
-            [cell setIconsSetWithOffImage:@"notificationsOFF" andOnImage:@"notificationsON"];
+            [cell.title setText:LocString(@"Profile")];
+            [cell setIconsSetWithOffImage:@"profileOFF" andOnImage:@"profileON"];
             [cell.accessoryButton setHidden:YES];
             break;
             
         case 2:
-            [cell.title setText:LocString(@"Profile")];
-            [cell setIconsSetWithOffImage:@"profileOFF" andOnImage:@"profileON"];
+            [cell.title setText:LocString(@"Notitications")];
+            [cell setIconsSetWithOffImage:@"notificationsOFF" andOnImage:@"notificationsON"];
             [cell.accessoryButton setHidden:YES];
             break;
             
@@ -127,29 +127,31 @@
             controller = [[FeedController alloc] init];
             break;
             
-//        case 1:
-//            controller = [[NotificationsController alloc] init];
-//            break;
-//            
-//        case 2:
-//            controller = [[ProfileController alloc] init];
-//            break;
-//            
-//        case 3:
-//            controller = [[SettingsController alloc] init];
-//            break;
+        case 1:
+            controller = [[ProfileController alloc] initWithUser:[DataAccess getUserForID:[UserService getUserIDNumber]]];
+            break;
+            
+        case 2:
+            controller = [[NotificationsController alloc] init];
+            break;
+            
+        case 3:
+            controller = [[SettingsController alloc] init];
+            break;
             
         default:
             break;
     }
     
-    if (indexPath.row == 0) {
-        [AppDelegate updateFrontViewControllerWithController:controller andFocus:YES];
-    }
-    else {
-        LeftMenuCell *cell = (LeftMenuCell *)[mainTable cellForRowAtIndexPath:indexPath];
-        [cell setSelected:NO animated:YES];
-    }
+    [AppDelegate updateFrontViewControllerWithController:controller andFocus:YES];
+    
+//    if (indexPath.row == 0) {
+//        
+//    }
+//    else {
+//        LeftMenuCell *cell = (LeftMenuCell *)[mainTable cellForRowAtIndexPath:indexPath];
+//        [cell setSelected:NO animated:YES];
+//    }
 }
 
 

@@ -11,7 +11,7 @@
 #import "UIImageView+WebCache.h"
 
 @implementation UserCell
-
+@synthesize delegate;
 
 
 #pragma mark - Init
@@ -38,34 +38,58 @@
     [userAvatar setContentMode:UIViewContentModeScaleAspectFill];
     [self.contentView addSubview:userAvatar];
     
-    usernameLabel = [[UILabel alloc] initWithFrame:CGRectMake(userAvatar.right + 8*sratio, 6*sratio, 214*sratio, 58*sratio)];
-    usernameLabel.font = [FontService systemFont:13*sratio];
+    fullNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(userAvatar.right + 8*sratio, 6*sratio, 164*sratio, 58*sratio)];
+    fullNameLabel.font = [FontService systemFont:13*sratio];
+    fullNameLabel.textColor = Colour_White;
+    fullNameLabel.textAlignment = NSTextAlignmentLeft;
+    [self.contentView addSubview:fullNameLabel];
+    
+    usernameLabel = [[UILabel alloc] initWithFrame:CGRectMake(userAvatar.right + 8*sratio, fullNameLabel.bottom, 164*sratio, 16*sratio)];
+    usernameLabel.font = [FontService systemFont:8.5*sratio];
     usernameLabel.textColor = Colour_White;
     usernameLabel.textAlignment = NSTextAlignmentLeft;
     [self.contentView addSubview:usernameLabel];
     
     followButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [followButton setFrame:CGRectMake(272*sratio, 20*sratio, 88*sratio, 36*sratio)];
+    [followButton setFrame:CGRectMake(230*sratio, 18*sratio, 74*sratio, 32*sratio)];
     [followButton setBackgroundColor:Colour_PrayDarkBlue];
     [followButton.titleLabel setFont:[FontService systemFont:13*sratio]];
     [followButton setTitleColor:Colour_White forState:UIControlStateNormal];
+    [followButton addTarget:self action:@selector(followClicked:) forControlEvents:UIControlEventTouchUpInside];
     [followButton setHidden:YES];
     [self addSubview:followButton];
 }
 
 
 #pragma mark - Data
-- (void)loadWithUserData:(NSDictionary *)userData {
+- (void)updateWithUserObject:(CDUser *)userObject {
     
-    if ([userData objectForKey:@"avatar"] != nil && ![[userData objectForKey:@"avatar"] isEqualToString:@""]) {
-        [userAvatar sd_setImageWithURL:[NSURL URLWithString:[userData objectForKey:@"avatar"]] placeholderImage:[UIImage imageNamed:@"emptyProfile"]];
+    if (userObject.avatar != nil && ![userObject.avatar isEqualToString:@""]) {
+        [userAvatar sd_setImageWithURL:[NSURL URLWithString:userObject.avatar] placeholderImage:[UIImage imageNamed:@"emptyProfile"]];
     }
     else {
         [userAvatar setImage:[UIImage imageNamed:@"emptyProfile"]];
     }
     
-    [usernameLabel setText:[userData objectForKey:@"first_name"]];
-    [followButton setBackgroundColor:([[userData objectForKey:@"following"] boolValue]==YES) ? Colour_PrayDarkBlue : Colour_PrayBlue];
+    [fullNameLabel setText:userObject.firstname];
+    [usernameLabel setText:[NSString stringWithFormat:@"@%@", userObject.username]];
+    [followButton setBackgroundColor:([userObject.isFollowed boolValue]==YES) ? Colour_PrayDarkBlue : Colour_PrayBlue];
+}
+
+
+#pragma mark - Follow delegate
+- (void)followClicked:(id)sender {
+    //Follow user
+    if (followButton.backgroundColor == Colour_PrayDarkBlue) {
+        [followButton setBackgroundColor:Colour_PrayBlue];
+        [delegate followUserForCell:self];
+    }
+    
+    //UnFollow user
+    else {
+        [followButton setBackgroundColor:Colour_PrayDarkBlue];
+        [delegate unfollowUserForCell:self];
+    }
 }
 
 

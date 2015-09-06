@@ -7,14 +7,26 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PrayerCell.h"
+#import "UserCell.h"
 
-@interface SearchController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
+
+@interface SearchController : UIViewController <UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, PrayerCellDelegate, SWTableViewCellDelegate, UserCellDelegate> {
+    
+    UISegmentedControl *segmentControl;
+    BOOL isSearchingPeople;
+    UISearchBar *search;
     
     UITableView *mainTable;
     UIRefreshControl *refreshControl;
     BOOL refreshing;
     
-    NSArray *results;
+    NSArray *searchResults;
+    
+    CGSize keyboardSize;
+    
+    SWTableViewCell *currentlyEditedCell;
+    UIAlertView *reportPostAlert;
 }
 
 @end

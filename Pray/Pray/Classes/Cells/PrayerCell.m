@@ -31,7 +31,7 @@
 }
 
 - (void)setupLayout {
-    imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.screenWidth, 264*sratio)];
+    imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.screenWidth, prayerCellHeight)];
     [imageView setBackgroundColor:Colour_255RGB(80, 92, 109)];
     [imageView setContentMode:UIViewContentModeScaleAspectFill];
     [imageView setClipsToBounds:YES];
@@ -58,7 +58,7 @@
     timeAgo.textAlignment = NSTextAlignmentLeft;
     [self.contentView addSubview:timeAgo];
     
-    textView = [[UILabel alloc] initWithFrame:CGRectMake((self.screenWidth-280*sratio)/2, 64*sratio, 280*sratio, 140*sratio)];
+    textView = [[UILabel alloc] initWithFrame:CGRectMake((self.screenWidth-280*sratio)/2, 64*sratio, 280*sratio, 200*sratio)];
     textView.numberOfLines = 8;
     textView.adjustsFontSizeToFitWidth = YES;
     textView.minimumScaleFactor = (14*sratio)/(50*sratio);
@@ -67,20 +67,20 @@
     [textView setTextAlignment:NSTextAlignmentCenter];
     [self.contentView addSubview:textView];
     
-    likesIcon = [[UIImageView alloc] initWithFrame:CGRectMake(18*sratio, 226*sratio, 22*sratio, 20*sratio)];
+    likesIcon = [[UIImageView alloc] initWithFrame:CGRectMake(18*sratio, prayerCellHeight - 38*sratio, 22*sratio, 20*sratio)];
     likesIcon.image = [UIImage imageNamed:@"likeIconOFF"];
     [self.contentView addSubview:likesIcon];
     
-    likesCount = [[UILabel alloc] initWithFrame:CGRectMake(likesIcon.right + 6*sratio, 226*sratio, 0, 20*sratio)];
+    likesCount = [[UILabel alloc] initWithFrame:CGRectMake(likesIcon.right + 6*sratio, prayerCellHeight - 38*sratio, 0, 20*sratio)];
     likesCount.font = [FontService systemFont:13*sratio];
     likesCount.textColor = Colour_White;
     [self.contentView addSubview:likesCount];
     
-    commentsIcon = [[UIImageView alloc] initWithFrame:CGRectMake(0, 226*sratio, 22*sratio, 21*sratio)];
+    commentsIcon = [[UIImageView alloc] initWithFrame:CGRectMake(0, prayerCellHeight - 38*sratio, 22*sratio, 21*sratio)];
     commentsIcon.image = [UIImage imageNamed:@"commentsIcon"];
     [self.contentView addSubview:commentsIcon];
     
-    commentsCount = [[UILabel alloc] initWithFrame:CGRectMake(commentsIcon.right, 226*sratio, 0, 20*sratio)];
+    commentsCount = [[UILabel alloc] initWithFrame:CGRectMake(commentsIcon.right, prayerCellHeight - 38*sratio, 0, 20*sratio)];
     commentsCount.font = [FontService systemFont:13*sratio];
     commentsCount.textColor = Colour_White;
     [self.contentView addSubview:commentsCount];
@@ -93,7 +93,7 @@
     [commentButton addTarget:self action:@selector(commentButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:commentButton];
     
-    UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, 263*sratio, self.screenWidth, 1)];
+    UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, prayerCellHeight-1, self.screenWidth, 1)];
     [separator setBackgroundColor:Colour_PrayDarkBlue];
     [self.contentView addSubview:separator];
 }
@@ -131,8 +131,8 @@
     [commentsCount setHeight:20*sratio];
     [commentsCount setLeft:commentsIcon.right + 6*sratio];
     
-    likeButton.frame = CGRectMake(likesIcon.left - 10*sratio, 216*sratio, 10*sratio + likesIcon.width + 6*sratio + likesCount.width + 10*sratio, 42*sratio);
-    commentButton.frame = CGRectMake(commentsIcon.left - 10*sratio, 216*sratio, 10*sratio + commentsIcon.width + 6*sratio + commentsCount.width + 10*sratio, 42*sratio);
+    likeButton.frame = CGRectMake(likesIcon.left - 10*sratio, prayerCellHeight - 48*sratio, 10*sratio + likesIcon.width + 6*sratio + likesCount.width + 10*sratio, 42*sratio);
+    commentButton.frame = CGRectMake(commentsIcon.left - 10*sratio, prayerCellHeight - 48*sratio, 10*sratio + commentsIcon.width + 6*sratio + commentsCount.width + 10*sratio, 42*sratio);
 }
 
 

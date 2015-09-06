@@ -11,10 +11,14 @@
 
 @interface FeedController : UIViewController <UITableViewDataSource, UITableViewDelegate, PrayerCellDelegate, SWTableViewCellDelegate> {
  
+    UIView *switchMenu;
+    UIButton *feedButton;
+    UIButton *followingButton;
     UITableView *mainTable;
     UIRefreshControl *refreshControl;
     BOOL refreshing;
     BOOL showDiscover;
+    BOOL displayingSwitchMenu;
     
     NSMutableArray *prayers;
     

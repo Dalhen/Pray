@@ -12,8 +12,8 @@
 #import "FeedController.h"
 #import "PKRevealController.h"
 
-#define ParseAppID @""
-#define ParseClientKEY @""
+#define ParseAppID @"EqAODz0M3ylafH0njkPSXuZVC3AJC0CuXHHa0MvY"
+#define ParseClientKEY @"qZdatXWjpE1mdfLhoLhiEuyKAlzRTutxZU5Mm5w2"
 
 @interface JXAppDelegate ()
 

@@ -168,6 +168,10 @@
     return [NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"userID"]];
 }
 
+- (NSNumber *)getUserIDNumber {
+    return [NSNumber numberWithInt:[[NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"userID"]] intValue]];
+}
+
 - (NSString *)getFirstname {
     return [[NSUserDefaults standardUserDefaults] objectForKey:@"firstname"];
 }

@@ -148,15 +148,15 @@
     
     NSNumber *userId = [NSNumber numberWithInt:[[userObject objectForKey:@"id"] intValue]];
     NSString *avatarUrl = [userObject objectForKey:@"avatar"];
-    NSString *bio = [userObject objectForKey:@"additional_info"];
+    NSString *bio = [userObject objectForKey:@"bio"];
     NSString *username = [userObject objectForKey:@"username"];
     NSString *email = [userObject objectForKey:@"email"];
-    NSString *facebookId = [userObject objectForKey:@"fb_id"];
     NSString *firstname = [userObject objectForKey:@"first_name"];
     NSString *lastname = [userObject objectForKey:@"last_name"];
-    NSString *followersCount = [[userObject objectForKey:@"followers_count"] stringValue];
-    NSString *followingCount = [[userObject objectForKey:@"following_count"] stringValue];
-    NSString *prayersCount = [[userObject objectForKey:@"prayers_count"] stringValue];
+    NSString *followersCount = [[userObject objectForKey:@"followers"] stringValue];
+    NSString *followingCount = [[userObject objectForKey:@"following"] stringValue];
+    NSString *prayersCount = [[userObject objectForKey:@"posts"] stringValue];
+    NSNumber *isFollowed = [NSNumber numberWithInt:[[userObject objectForKey:@"isFollowed"] intValue]];
     //NSDate *dateOfBirth = [NSDate dateFromUTCServer:[userObject objectForKey:@"dob"]];
     
     CDUser *user = [self getUserForID:userId];
@@ -173,9 +173,11 @@
     user.firstname = validObject(firstname)? firstname : user.firstname;
     user.lastname = validObject(lastname)? lastname : user.lastname;
     user.username = validObject(username)? username : user.username;
-
+    
     user.followersCount = validObject(followersCount)? followersCount : user.followersCount;
     user.followingCount = validObject(followingCount)? followingCount : user.followingCount;
+    user.prayersCount = validObject(prayersCount)? prayersCount : user.prayersCount;
+    user.isFollowed = validObject(isFollowed)? isFollowed : user.isFollowed;
     
     
     NSError *error;
@@ -187,6 +189,59 @@
     }
     
     return user;
+}
+
+- (NSArray *)addUsers:(NSArray *)usersData {
+    NSManagedObjectContext *moc = [JXDataAccess getDBContext];
+    NSMutableArray *usersObjects = [[NSMutableArray alloc] initWithCapacity:[usersData count]];
+    
+    for (NSDictionary *userObject in usersData) {
+        
+        NSNumber *userId = [NSNumber numberWithInt:[[userObject objectForKey:@"id"] intValue]];
+        NSString *avatarUrl = [userObject objectForKey:@"avatar"];
+        NSString *bio = [userObject objectForKey:@"bio"];
+        NSString *username = [userObject objectForKey:@"username"];
+        NSString *email = [userObject objectForKey:@"email"];
+        NSString *firstname = [userObject objectForKey:@"first_name"];
+        NSString *lastname = [userObject objectForKey:@"last_name"];
+        NSString *followersCount = [[userObject objectForKey:@"followers"] stringValue];
+        NSString *followingCount = [[userObject objectForKey:@"following"] stringValue];
+        NSString *prayersCount = [[userObject objectForKey:@"posts"] stringValue];
+        NSNumber *isFollowed = [NSNumber numberWithInt:[[userObject objectForKey:@"isFollowed"] intValue]];
+        //NSDate *dateOfBirth = [NSDate dateFromUTCServer:[userObject objectForKey:@"dob"]];
+        
+        CDUser *user = [self getUserForID:userId];
+        if (!user) {
+            user = (CDUser *)[NSEntityDescription insertNewObjectForEntityForName:@"CDUser" inManagedObjectContext:moc];
+        }
+        
+        user.uniqueId = validObject(userId)? userId : user.uniqueId;
+        user.avatar = validObject(avatarUrl)? avatarUrl : user.avatar;
+        user.bio = validObject(bio)? bio : user.bio;
+        user.username = validObject(username)? username : user.username;
+        user.email = validObject(email)? email : user.email;
+        user.username = validObject(username)? username : user.username;
+        user.firstname = validObject(firstname)? firstname : user.firstname;
+        user.lastname = validObject(lastname)? lastname : user.lastname;
+        user.username = validObject(username)? username : user.username;
+        
+        user.followersCount = validObject(followersCount)? followersCount : user.followersCount;
+        user.followingCount = validObject(followingCount)? followingCount : user.followingCount;
+        user.prayersCount = validObject(prayersCount)? prayersCount : user.prayersCount;
+        user.isFollowed = validObject(isFollowed)? isFollowed : user.isFollowed;
+        
+        [usersObjects addObject:user];
+    }
+    
+    NSError *error;
+    if (![moc save:&error]) {
+        // Handle the error.
+        if(DEBUGDataAccess) NSLog(@"Error saving users");
+    } else {
+        if(DEBUGDataAccess) NSLog(@"New users added");
+    }
+    
+    return usersObjects;
 }
 
 - (CDUser *)getUserForID:(NSNumber *)uniqueId {

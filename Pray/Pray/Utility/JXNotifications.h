@@ -61,6 +61,13 @@ struct UserServicesStruct {
     
     __unsafe_unretained NSString * const GetPrayersForUserSuccess;
     __unsafe_unretained NSString * const GetPrayersForUserFailed;
+    __unsafe_unretained NSString * const GetMorePrayersForUserSuccess;
+    __unsafe_unretained NSString * const GetMorePrayersForUserFailed;
+    
+    __unsafe_unretained NSString * const FollowUserSuccess;
+    __unsafe_unretained NSString * const FollowUserFailed;
+    __unsafe_unretained NSString * const UnFollowUserSuccess;
+    __unsafe_unretained NSString * const UnFollowUserFailed;
 };
 
 struct FeedServicesStruct {
@@ -74,6 +81,8 @@ struct FeedServicesStruct {
     __unsafe_unretained NSString * const LikePostFailed;
     __unsafe_unretained NSString * const UnLikePostSuccess;
     __unsafe_unretained NSString * const UnLikePostFailed;
+    __unsafe_unretained NSString * const SearchSuccess;
+    __unsafe_unretained NSString * const SearchFailed;
 };
 
 struct NotificationsServicesStruct {

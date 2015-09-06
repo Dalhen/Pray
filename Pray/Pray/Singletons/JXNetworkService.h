@@ -81,13 +81,23 @@
 
 - (void)unlikePostWithID:(NSString *)postId;
 
+- (void)searchForPrayersWithText:(NSString *)searchText;
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Users
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)loadPrayersForUser:(NSString *)userId;
 
+- (void)loadMorePrayersForUser:(NSString *)userId withLastID:(NSString *)lastPrayerId;
+
 - (void)viewUserInfoForID:(NSString *)userId;
+
+- (void)searchForUsersWithText:(NSString *)searchText;
+
+- (void)followUserForID:(NSString *)userId;
+
+- (void)unfollowUserForID:(NSString *)userId;
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////

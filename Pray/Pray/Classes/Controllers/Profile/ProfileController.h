@@ -10,7 +10,7 @@
 #import "PrayerCell.h"
 
 
-@interface ProfileController : UIViewController <PrayerCellDelegate, UITableViewDataSource, UITableViewDelegate> {
+@interface ProfileController : UIViewController <PrayerCellDelegate, UITableViewDataSource, UITableViewDelegate, SWTableViewCellDelegate> {
     
     CDUser *currentUser;
     
@@ -22,6 +22,8 @@
     UILabel *userFollowers;
     UILabel *userFollowing;
     
+    UIView *profileHeader;
+    
     UITableView *mainTable;
     UIRefreshControl *refreshControl;
     BOOL refreshing;
@@ -30,6 +32,10 @@
     NSInteger currentPage;
     NSInteger maxMomentPerPage;
     NSInteger maxPagesCount;
+    
+    SWTableViewCell *currentlyEditedCell;
+    UIAlertView *deletePostAlert;
+    UIAlertView *reportPostAlert;
 }
 
 - (id)initWithUser:(CDUser *)aUser;

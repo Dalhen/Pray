@@ -22,6 +22,7 @@
 @dynamic firstname;
 @dynamic followersCount;
 @dynamic followingCount;
+@dynamic isFollowed;
 @dynamic gender;
 @dynamic lastname;
 @dynamic prayersCount;

@@ -40,6 +40,7 @@
 - (NSString *)getUsername;
 - (NSString *)getPassword;
 - (NSString *)getUserID;
+- (NSNumber *)getUserIDNumber;
 - (NSString *)getFirstname;
 - (NSString *)getLastname;
 - (NSString *)getFullname;

@@ -50,89 +50,104 @@
     [menuButton setImage:[UIImage imageNamed:@"menuIcon"] forState:UIControlStateNormal];
     [menuButton addTarget:self action:@selector(showLeftMenu) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:menuButton];
+    
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(76*sratio, 20*sratio, 162*sratio, 26*sratio)];
+    titleLabel.text = LocString(@"Profile");
+    titleLabel.font = [FontService systemFont:14*sratio];
+    titleLabel.textColor = Colour_White;
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:titleLabel];
 }
 
 - (void)setupProfileHeader {
-    userAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(0, 16*sratio, 38*sratio, 38*sratio)];
-    [userAvatar setRoundedToDiameter:38*sratio];
+    
+    profileHeader = [[UIView alloc] initWithFrame:CGRectMake(0, 54*sratio, self.view.screenWidth, 150*sratio)];
+    [self.view addSubview:profileHeader];
+    
+    userAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(0, 16*sratio, 48*sratio, 48*sratio)];
+    [userAvatar setRoundedToDiameter:48*sratio];
     [userAvatar setContentMode:UIViewContentModeScaleAspectFill];
-    [self.view addSubview:userAvatar];
+    [userAvatar setBackgroundColor:Colour_White];
+    [profileHeader addSubview:userAvatar];
     [userAvatar centerHorizontallyInSuperView];
     
-    usernameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, userAvatar.bottom + 10*sratio, self.view.screenWidth, 26*sratio)];
+    usernameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, userAvatar.bottom + 4*sratio, self.view.screenWidth, 26*sratio)];
     [usernameLabel setBackgroundColor:Colour_Clear];
-    [usernameLabel setFont:[FontService systemFont:14*sratio]];
-    [usernameLabel setTextColor:Colour_PrayBlue];
+    [usernameLabel setFont:[FontService systemFontBold:14*sratio]];
+    [usernameLabel setTextColor:Colour_White];
     [usernameLabel setTextAlignment:NSTextAlignmentCenter];
-    [self.view addSubview:usernameLabel];
+    [profileHeader addSubview:usernameLabel];
     [userAvatar centerHorizontallyInSuperView];
     
-    userDescription = [[UILabel alloc] initWithFrame:CGRectMake(0, usernameLabel.bottom, 290*sratio, 48*sratio)];
-    userDescription.font = [FontService systemFont:12*sratio];
-    userDescription.textColor = Colour_255RGB(140, 146, 164);
+    userDescription = [[UILabel alloc] initWithFrame:CGRectMake(0, usernameLabel.bottom, 290*sratio, 42*sratio)];
+    [userDescription setFont:[FontService systemFont:12*sratio]];
+    [userDescription setTextColor:Colour_255RGB(140, 146, 164)];
     [userDescription setNumberOfLines:3];
     userDescription.textAlignment = NSTextAlignmentCenter;
-    [self.view addSubview:userDescription];
+    [profileHeader addSubview:userDescription];
     [userDescription centerHorizontallyInSuperView];
     
     
     //Stat 1
-    userPrayers = [[UILabel alloc] initWithFrame:CGRectMake(0, 144*sratio, self.view.screenWidth/3, 18*sratio)];
+    userPrayers = [[UILabel alloc] initWithFrame:CGRectMake(0, 144*sratio, self.view.screenWidth/3, 15*sratio)];
     [userPrayers setTextColor:Colour_PrayBlue];
     [userPrayers setFont:[FontService systemFontBold:12*sratio]];
     [userPrayers setTextAlignment:NSTextAlignmentCenter];
-    [userPrayers setText:LocString(@"Unknown")];
-    [self.view addSubview:userPrayers];
+    [userPrayers setText:LocString(@"0")];
+    [profileHeader addSubview:userPrayers];
     
-    UILabel *prayersTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, userPrayers.bottom, self.view.screenWidth/3, 16)];
+    UILabel *prayersTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, userPrayers.bottom, self.view.screenWidth/3, 16*sratio)];
     [prayersTitle setTextColor:Colour_255RGB(125, 131, 144)];
     [prayersTitle setTextAlignment:NSTextAlignmentCenter];
     [prayersTitle setText:LocString(@"prayers")];
-    [self.view addSubview:prayersTitle];
+    [prayersTitle setFont:[FontService systemFont:12*sratio]];
+    [profileHeader addSubview:prayersTitle];
     
     //Stat 2
-    userFollowers = [[UILabel alloc] initWithFrame:CGRectMake(self.view.screenWidth/3, 144*sratio, self.view.screenWidth/3, 18*sratio)];
+    userFollowers = [[UILabel alloc] initWithFrame:CGRectMake(self.view.screenWidth/3, 144*sratio, self.view.screenWidth/3, 15*sratio)];
     [userFollowers setTextColor:Colour_PrayBlue];
     [userFollowers setFont:[FontService systemFontBold:12*sratio]];
     [userFollowers setTextAlignment:NSTextAlignmentCenter];
-    [userFollowers setText:LocString(@"Unknown")];
-    [self.view addSubview:userFollowers];
+    [userFollowers setText:LocString(@"0")];
+    [profileHeader addSubview:userFollowers];
     
-    UILabel *followersTitle = [[UILabel alloc] initWithFrame:CGRectMake(userFollowers.left, userFollowers.bottom, self.view.screenWidth/3, 16)];
+    UILabel *followersTitle = [[UILabel alloc] initWithFrame:CGRectMake(userFollowers.left, userFollowers.bottom, self.view.screenWidth/3, 16*sratio)];
     [followersTitle setTextColor:Colour_255RGB(125, 131, 144)];
     [followersTitle setTextAlignment:NSTextAlignmentCenter];
     [followersTitle setText:LocString(@"followers")];
-    [self.view addSubview:followersTitle];
+    [followersTitle setFont:[FontService systemFont:12*sratio]];
+    [profileHeader addSubview:followersTitle];
     
     //Stat 3
-    userFollowing = [[UILabel alloc] initWithFrame:CGRectMake(self.view.screenWidth*2/3, 144*sratio, self.view.screenWidth/3, 18*sratio)];
+    userFollowing = [[UILabel alloc] initWithFrame:CGRectMake(self.view.screenWidth*2/3, 144*sratio, self.view.screenWidth/3, 15*sratio)];
     [userFollowing setTextColor:Colour_PrayBlue];
     [userFollowing setFont:[FontService systemFontBold:12*sratio]];
     [userFollowing setTextAlignment:NSTextAlignmentCenter];
-    [userFollowing setText:LocString(@"Unknown")];
-    [self.view addSubview:userFollowing];
+    [userFollowing setText:LocString(@"0")];
+    [profileHeader addSubview:userFollowing];
     
-    UILabel *followingTitle = [[UILabel alloc] initWithFrame:CGRectMake(userFollowing.left, userPrayers.bottom, self.view.screenWidth/3, 16)];
+    UILabel *followingTitle = [[UILabel alloc] initWithFrame:CGRectMake(userFollowing.left, userPrayers.bottom, self.view.screenWidth/3, 16*sratio)];
     [followingTitle setTextColor:Colour_255RGB(125, 131, 144)];
     [followingTitle setTextAlignment:NSTextAlignmentCenter];
     [followingTitle setText:LocString(@"following")];
-    [self.view addSubview:followingTitle];
+    [followingTitle setFont:[FontService systemFont:12*sratio]];
+    [profileHeader addSubview:followingTitle];
     
     UIView *horizSeparator = [[UIView alloc] initWithFrame:CGRectMake(0, 136*sratio, self.view.screenWidth, 1)];
     [horizSeparator setBackgroundColor:Colour_255RGB(59, 63, 75)];
-    [self.view addSubview:horizSeparator];
+    [profileHeader addSubview:horizSeparator];
     
     UIView *verticalSeparator1 = [[UIView alloc] initWithFrame:CGRectMake(self.view.screenWidth/3, 150*sratio, 1, 22*sratio)];
     [verticalSeparator1 setBackgroundColor:Colour_255RGB(59, 63, 75)];
-    [self.view addSubview:verticalSeparator1];
+    [profileHeader addSubview:verticalSeparator1];
     
     UIView *verticalSeparator2 = [[UIView alloc] initWithFrame:CGRectMake(self.view.screenWidth*2/3, 150*sratio, 1, 22*sratio)];
     [verticalSeparator2 setBackgroundColor:Colour_255RGB(59, 63, 75)];
-    [self.view addSubview:verticalSeparator2];
+    [profileHeader addSubview:verticalSeparator2];
 }
 
 - (void)setupTableView {
-    mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 186*sratio, self.view.screenWidth, self.view.screenHeight - 186*sratio)];
+    mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, profileHeader.bottom*sratio, self.view.screenWidth, self.view.screenHeight - profileHeader.bottom)];
     [mainTable setBackgroundColor:Colour_PrayDarkBlue];
     [mainTable setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [mainTable setScrollsToTop:YES];
@@ -195,6 +210,11 @@
     Notification_Remove(JXNotification.FeedServices.DeletePostFailed);
     Notification_Remove(JXNotification.FeedServices.ReportPostSuccess);
     Notification_Remove(JXNotification.FeedServices.ReportPostFailed);
+    
+    Notification_Remove(JXNotification.FeedServices.LikePostSuccess);
+    Notification_Remove(JXNotification.FeedServices.LikePostFailed);
+    Notification_Remove(JXNotification.FeedServices.UnLikePostSuccess);
+    Notification_Remove(JXNotification.FeedServices.UnLikePostFailed);
     Notification_RemoveObserver;
 }
 
@@ -205,6 +225,8 @@
 }
 
 - (void)loadUserInfoSuccess:(NSNotification *)notification {
+    [SVProgressHUD dismiss];
+    
     currentUser = notification.object;
     
     //Avatar
@@ -219,11 +241,11 @@
     [usernameLabel setText:(([currentUser.firstname isEqualToString:@""]||currentUser.firstname==nil)? @"Unkown" : currentUser.firstname)];
     
     //Description
-    [userDescription setText:(([currentUser.bio isEqualToString:@""]||currentUser.bio==nil)? @"Unkown" : currentUser.bio)];
+    [userDescription setText:(([currentUser.bio isEqualToString:@""]||currentUser.bio==nil)? @"No bio." : currentUser.bio)];
 }
 
 - (void)loadUserInfoFailed {
-    
+    [SVProgressHUD showErrorWithStatus:LocString(@"We couldn't load the information about the profile. Please check your connection and try again.")];
 }
 
 
@@ -236,14 +258,19 @@
     if (animated) {
         [SVProgressHUD showWithStatus:LocString(@"Loading") maskType:SVProgressHUDMaskTypeGradient];
     }
-    [NetworkService loadFeedForDiscover:YES];
+    [NetworkService loadPrayersForUser:[currentUser.uniqueId stringValue]];
+}
+
+- (void)loadNextPrayers {
+    CDPrayer *lastPrayer = [prayers lastObject];
+    [NetworkService loadMorePrayersForUser:[currentUser.uniqueId stringValue] withLastID:[lastPrayer.uniqueId stringValue]];
 }
 
 - (void)loadPrayersForUserSuccess:(NSNotification *)notification {
     refreshing = NO;
     
-    //maxMomentPerPage = [[notification.object objectForKey:@"page_size"] intValue];
     //maxPagesCount = [[notification.object objectForKey:@"page_count"] intValue];
+    maxMomentPerPage = [notification.object count];
     
     if (currentPage==0) {
         prayers = [[NSMutableArray alloc] initWithArray:notification.object];
@@ -270,7 +297,7 @@
 
 #pragma mark - UITableView dataSource & delegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 264*sratio;
+    return prayerCellHeight;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -283,9 +310,11 @@
     if(!cell) {
         cell = [[PrayerCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"PrayerCell"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.leftUtilityButtons = nil;
         cell.delegate = self;
     }
     
+    cell.rightUtilityButtons = [self cellRightButtonsForCurrentGroupCellAndPrayer:[prayers objectAtIndex:indexPath.row]];
     [cell updateWithPrayerObject:[prayers objectAtIndex:indexPath.row]];
     
     return cell;
@@ -297,6 +326,99 @@
     CDPrayer *prayer = [prayers objectAtIndex:indexPath.row];
     CommentsController *commentsController = [[CommentsController alloc] initWithPrayer:prayer];
     [self.navigationController pushViewController:commentsController animated:YES];
+}
+
+- (NSArray *)cellRightButtonsForCurrentGroupCellAndPrayer:(CDPrayer *)prayer {
+    NSMutableArray *rightUtilityButtons = [NSMutableArray new];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:Colour_255RGB(40, 155, 229) title:@"Report"];
+    
+    NSLog(@"UserID: %@", [UserService getUserID]);
+    NSLog(@"CreatorID: %@", prayer.creatorId);
+    
+    if ([[prayer.creatorId stringValue] isEqualToString:[UserService getUserID]]) {
+        [rightUtilityButtons sw_addUtilityButtonWithColor:Colour_255RGB(254, 74, 68) title:@"Delete"];
+    }
+    return rightUtilityButtons;
+}
+
+
+#pragma mark - SWTableViewCell Delegates
+// click event on right utility button
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index {
+    
+    currentlyEditedCell = cell;
+    switch (index) {
+        case 0: {
+            reportPostAlert = [[UIAlertView alloc] initWithTitle:LocString(@"Report a prayer") message:LocString(@"Are you sure you want to report this prayer?") delegate:self cancelButtonTitle:LocString(@"No") otherButtonTitles:LocString(@"Yes, report it!"), nil];
+            [reportPostAlert show];
+        }
+            break;
+            
+        case 1: {
+            deletePostAlert = [[UIAlertView alloc] initWithTitle:LocString(@"Deleting prayer?") message:LocString(@"Are you sure you want to delete your prayer? This action cannot be undone.") delegate:self cancelButtonTitle:LocString(@"No") otherButtonTitles:LocString(@"Yes, delete it!"), nil];
+            [deletePostAlert show];
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+
+// utility button open/close event
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell scrollingToState:(SWCellState)state {
+    
+}
+
+// prevent multiple cells from showing utilty buttons simultaneously
+- (BOOL)swipeableTableViewCellShouldHideUtilityButtonsOnSwipe:(SWTableViewCell *)cell {
+    return YES;
+}
+
+// prevent cell(s) from displaying left/right utility buttons
+- (BOOL)swipeableTableViewCell:(SWTableViewCell *)cell canSwipeToState:(SWCellState)state {
+    return YES;
+}
+
+
+#pragma mark - SWTableViewCell Actions
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    [(SWTableViewCell *)currentlyEditedCell hideUtilityButtonsAnimated:YES];
+    
+    if (buttonIndex == 1) {
+        if (alertView == reportPostAlert) {
+            [SVProgressHUD showWithStatus:LocString(@"Reporting post...") maskType:SVProgressHUDMaskTypeGradient];
+            [NetworkService reportPostWithID:[prayers objectAtIndex:[[mainTable indexPathForCell:currentlyEditedCell] row]]];
+        }
+        else if (alertView == deletePostAlert) {
+            [SVProgressHUD showWithStatus:LocString(@"Deleting your post...") maskType:SVProgressHUDMaskTypeGradient];
+            [NetworkService deletePostWithID:[prayers objectAtIndex:[[mainTable indexPathForCell:currentlyEditedCell] row]]];
+            
+            NSInteger row = [[mainTable indexPathForCell:currentlyEditedCell] row];
+            [prayers removeObjectAtIndex:row];
+            //            [mainTable reloadData];
+            [mainTable beginUpdates];
+            [mainTable deleteRowsAtIndexPaths:@[[mainTable indexPathForCell:currentlyEditedCell]] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [mainTable endUpdates];
+        }
+    }
+}
+
+
+#pragma mark - UIScrollView delegates
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    //Data reload system
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[prayers count]-1 inSection:0];
+    if ([mainTable.indexPathsForVisibleRows containsObject:indexPath]
+        && [prayers count]>=maxMomentPerPage
+        && !refreshing)
+        //&& currentPage < maxPagesCount
+    {
+        currentPage +=1;
+        [self loadNextPrayers];
+    }
 }
 
 
@@ -338,27 +460,19 @@
 }
 
 
-#pragma mark - Delete post
-- (void)deletePost {
-    
-}
-
+#pragma mark - Delete post delegate
 - (void)deletePostSuccess {
-    
+    [SVProgressHUD showSuccessWithStatus:LocString(@"Your prayer has been deleted.")];
 }
 
 - (void)deletePostFailed {
-    
+    [SVProgressHUD showSuccessWithStatus:LocString(@"We couldn't delete your prayer at this time. Please check your internet connection and try again.")];
 }
 
 
-#pragma mark - Report post
-- (void)reportPost {
-    
-}
-
+#pragma mark - Report post delegate
 - (void)reportPostSuccess {
-    
+    [SVProgressHUD showSuccessWithStatus:LocString(@"This prayer has been reported. We will look at it closely and take any necessary action.")];
 }
 
 - (void)reportPostFailed {

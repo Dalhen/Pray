@@ -22,6 +22,7 @@
 @property (nonatomic, retain) NSString * firstname;
 @property (nonatomic, retain) NSString * followersCount;
 @property (nonatomic, retain) NSString * followingCount;
+@property (nonatomic, retain) NSNumber * isFollowed;
 @property (nonatomic, retain) NSString * gender;
 @property (nonatomic, retain) NSString * lastname;
 @property (nonatomic, retain) NSString * prayersCount;
