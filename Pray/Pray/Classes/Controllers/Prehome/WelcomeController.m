@@ -11,6 +11,9 @@
 #import "SignupController.h"
 #import "BaseView.h"
 
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+
 @interface WelcomeController ()
 
 @end
@@ -105,28 +108,83 @@
 
 #pragma mark - Events registration
 - (void)registerForEvents {
-    Notification_Observe(JXNotification.UserServices.FacebookLoginSuccess, facebookLoginSuccess);
-    Notification_Observe(JXNotification.UserServices.FacebookLoginFailed, facebookLoginFailed);
+    Notification_Observe(JXNotification.UserServices.RegistrationSuccess, signupAccountSuccess:);
+    Notification_Observe(JXNotification.UserServices.RegistrationFailed, signupAccountFailed);
 }
 
 - (void)unRegisterForEvents {
-    Notification_Remove(JXNotification.UserServices.FacebookLoginSuccess);
-    Notification_Remove(JXNotification.UserServices.FacebookLoginFailed);
+    Notification_Remove(JXNotification.UserServices.RegistrationSuccess);
+    Notification_Remove(JXNotification.UserServices.RegistrationFailed);
     Notification_RemoveObserver;
 }
 
 
 #pragma mark - Facebook Login
 - (void)facebookConnect {
-    
+    FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
+    [login
+     logInWithReadPermissions: @[@"public_profile", @"email"]
+     handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+         if (error) {
+             NSLog(@"Process error");
+             [self facebookLoginFailed];
+         } else if (result.isCancelled) {
+             NSLog(@"Cancelled");
+         } else {
+             NSLog(@"Logged in");
+             if ([FBSDKAccessToken currentAccessToken])
+             {
+                 [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:@{@"fields": @"id, name, link, first_name, last_name, picture.type(large), email, birthday, bio, location, friends, hometown"}]
+                  startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+                      if (!error)
+                      {
+                          [self facebookLoginSuccessWithUserObject:result];
+                      }
+                      else
+                      {
+                          NSLog(@"Error %@",error);
+                      }
+                  }];
+             }
+         }
+     }];
 }
 
-- (void)facebookLoginSuccess {
-    
+- (void)facebookLoginSuccessWithUserObject:(NSDictionary *)userObject {
+//    [NetworkService signupWithUsername:[NSString stringWithFormat:@"%@%@", [userObject objectForKey:@"first_name"], [userObject objectForKey:@"last_name"]]
+//                             firstName:[userObject objectForKey:@"first_name"]
+//                              lastName:[userObject objectForKey:@"last_name"]
+//                              password:@""
+//                                 email:[userObject objectForKey:@"email"]
+//                                   bio:[userObject objectForKey:@"bio"]
+//                             avatarURL:[userObject objectForKey:@"picture"] avatarImage:nil];
 }
 
 - (void)facebookLoginFailed {
     
+}
+
+- (void)signupAccountSuccess:(NSNotification *)notification {
+    
+    NSDictionary *data = [notification object];
+    [UserService setUserWithUsername:[self validString:[data objectForKey:@"email"]]
+                              userID:[self validString:[data objectForKey:@"id"]]
+                           firstname:[self validString:[data objectForKey:@"first_name"]]
+                            lastname:[self validString:[data objectForKey:@"last_name"]]
+                            fullname:[self validString:[data objectForKey:@"full_name"]]
+                                 bio:[self validString:[data objectForKey:@"bio"]]
+                                city:[self validString:[data objectForKey:@"city"]]
+                          profileURL:[self validString:[data objectForKey:@"avatar"]]];
+    
+    [AppDelegate displayMainView];
+}
+
+- (void)signupAccountFailed {
+    [[[UIAlertView alloc] initWithTitle:LocString(@"Account creation") message:LocString(@"We couldn't create your account. Please check your internet connection and try again.") delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+}
+
+- (NSString *)validString:(NSString *)string {
+    return (string && ![string isKindOfClass:[NSNull class]])? string : @"";
 }
 
 

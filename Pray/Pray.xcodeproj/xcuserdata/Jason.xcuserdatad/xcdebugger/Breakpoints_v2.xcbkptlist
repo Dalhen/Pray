@@ -174,11 +174,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pray/Classes/Controllers/Profile/ProfileController.m"
-            timestampString = "463156842.367193"
+            timestampString = "463250452.070826"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "282"
-            endingLineNumber = "282"
+            startingLineNumber = "292"
+            endingLineNumber = "292"
             landmarkName = "-loadPrayersForUserFailed"
             landmarkType = "5">
          </BreakpointContent>

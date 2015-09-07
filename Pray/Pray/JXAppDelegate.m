@@ -12,6 +12,9 @@
 #import "FeedController.h"
 #import "PKRevealController.h"
 
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+
 #define ParseAppID @"EqAODz0M3ylafH0njkPSXuZVC3AJC0CuXHHa0MvY"
 #define ParseClientKEY @"qZdatXWjpE1mdfLhoLhiEuyKAlzRTutxZU5Mm5w2"
 
@@ -33,7 +36,8 @@
     [self setupWindow];
     [self launchApp];
     
-    return YES;
+    return [[FBSDKApplicationDelegate sharedInstance] application:application
+                                    didFinishLaunchingWithOptions:launchOptions];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -62,6 +66,15 @@
     [self saveContext];
 }
 
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+    return [[FBSDKApplicationDelegate sharedInstance] application:application
+                                                          openURL:url
+                                                sourceApplication:sourceApplication
+                                                       annotation:annotation];
+}
 
 
 #pragma mark - Setup

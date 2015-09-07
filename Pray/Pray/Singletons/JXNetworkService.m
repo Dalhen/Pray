@@ -862,7 +862,7 @@
             CDUser *user = [DataAccess addUserWithData:[responseObject objectForKey:@"data"]];
             Notification_Post(JXNotification.UserServices.ViewUserInfoSuccess, user);
         }
-        
+          
         //invalid
         else {
             Notification_Post(JXNotification.UserServices.ViewUserInfoFailed, nil);

@@ -49,13 +49,13 @@
 
 #pragma mark - Events registration
 - (void)registerForEvents {
-    Notification_Observe(JXNotification.UserServices.UpdateUserDetailsSuccess, updateUserDetailsSuccess:);
-    Notification_Observe(JXNotification.UserServices.UpdateUserDetailsFailed, updateUserDetailsFailed);
+//    Notification_Observe(JXNotification.UserServices.UpdateUserDetailsSuccess, updateUserDetailsSuccess:);
+//    Notification_Observe(JXNotification.UserServices.UpdateUserDetailsFailed, updateUserDetailsFailed);
 }
 
 - (void)unRegisterForEvents {
-    Notification_Remove(JXNotification.UserServices.UpdateUserDetailsSuccess);
-    Notification_Remove(JXNotification.UserServices.UpdateUserDetailsFailed);
+//    Notification_Remove(JXNotification.UserServices.UpdateUserDetailsSuccess);
+//    Notification_Remove(JXNotification.UserServices.UpdateUserDetailsFailed);
     Notification_RemoveObserver;
 }
 
@@ -111,7 +111,7 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
-    [cell loadWithUserData:[users objectAtIndex:indexPath.row]];
+    [cell updateWithUserObject:[users objectAtIndex:indexPath.row]];
     
     return cell;
 }
@@ -119,16 +119,15 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    [SVProgressHUD showWithStatus:LocString(@"Loading...") maskType:SVProgressHUDMaskTypeGradient];
-    [NetworkService viewUserInfoForID:[users objectAtIndex:indexPath.row]];
+    CDUser *user = [users objectAtIndex:indexPath.row];
+    ProfileController *profileController = [[ProfileController alloc] initWithUser:user];
+    [self.navigationController pushViewController:profileController animated:YES];
 }
 
 
 #pragma mark - Loading profile
 - (void)updateUserDetailsSuccess:(NSNotification *)notification {
-    [SVProgressHUD dismiss];
-    ProfileController *profileController = [[ProfileController alloc] initWithUser:notification.object];
-    [self.navigationController pushViewController:profileController animated:YES];
+    
 }
 
 - (void)updateUserDetailsFailed {

@@ -18,6 +18,9 @@
 		9634F33F1B696F87002EFD2B /* backgroundWelcome@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9634F33E1B696F87002EFD2B /* backgroundWelcome@2x.jpg */; };
 		965B4DBB1B70DA43002E149F /* PrayerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 965B4DBA1B70DA43002E149F /* PrayerCell.m */; };
 		967148211B94AF6300DB0166 /* emptyProfile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 967148201B94AF6300DB0166 /* emptyProfile@2x.png */; };
+		9674A3C41B9CA936005EA23B /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9674A3C11B9CA936005EA23B /* FBSDKCoreKit.framework */; };
+		9674A3C51B9CA937005EA23B /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9674A3C21B9CA936005EA23B /* FBSDKLoginKit.framework */; };
+		9674A3C61B9CA937005EA23B /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9674A3C31B9CA936005EA23B /* FBSDKShareKit.framework */; };
 		9676E8D11B70F5890059F9AB /* CDComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 9676E8CC1B70F5890059F9AB /* CDComment.m */; };
 		9676E8D21B70F5890059F9AB /* CDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 9676E8CE1B70F5890059F9AB /* CDUser.m */; };
 		9676E8D31B70F5890059F9AB /* CDPrayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9676E8D01B70F5890059F9AB /* CDPrayer.m */; };
@@ -246,6 +249,9 @@
 		965B4DB91B70DA43002E149F /* PrayerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrayerCell.h; sourceTree = "<group>"; };
 		965B4DBA1B70DA43002E149F /* PrayerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrayerCell.m; sourceTree = "<group>"; };
 		967148201B94AF6300DB0166 /* emptyProfile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emptyProfile@2x.png"; sourceTree = "<group>"; };
+		9674A3C11B9CA936005EA23B /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		9674A3C21B9CA936005EA23B /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		9674A3C31B9CA936005EA23B /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = FacebookSDK/FBSDKShareKit.framework; sourceTree = "<group>"; };
 		9676E8CB1B70F5890059F9AB /* CDComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDComment.h; sourceTree = "<group>"; };
 		9676E8CC1B70F5890059F9AB /* CDComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDComment.m; sourceTree = "<group>"; };
 		9676E8CD1B70F5890059F9AB /* CDUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUser.h; sourceTree = "<group>"; };
@@ -620,15 +626,18 @@
 				96A559641B5A6F4A0073A4FE /* QuartzCore.framework in Frameworks */,
 				96A559621B5A6F440073A4FE /* MobileCoreServices.framework in Frameworks */,
 				96A559601B5A6F3D0073A4FE /* AudioToolbox.framework in Frameworks */,
+				9674A3C61B9CA937005EA23B /* FBSDKShareKit.framework in Frameworks */,
 				96A5595E1B5A6F350073A4FE /* StoreKit.framework in Frameworks */,
 				96A5595C1B5A6F2E0073A4FE /* OpenGLES.framework in Frameworks */,
 				96A5595A1B5A6F280073A4FE /* CoreTelephony.framework in Frameworks */,
+				9674A3C51B9CA937005EA23B /* FBSDKLoginKit.framework in Frameworks */,
 				96A559581B5A6F230073A4FE /* AVFoundation.framework in Frameworks */,
 				96A559561B5A6F1F0073A4FE /* AssetsLibrary.framework in Frameworks */,
 				96A559541B5A6F1A0073A4FE /* libz.dylib in Frameworks */,
 				96A559521B5A6F140073A4FE /* libsqlite3.dylib in Frameworks */,
 				96A559501B5A6F0B0073A4FE /* MapKit.framework in Frameworks */,
 				96A5594E1B5A6F050073A4FE /* CFNetwork.framework in Frameworks */,
+				9674A3C41B9CA936005EA23B /* FBSDKCoreKit.framework in Frameworks */,
 				96A5594C1B5A6EFC0073A4FE /* SystemConfiguration.framework in Frameworks */,
 				96A5594A1B5A6EF60073A4FE /* Security.framework in Frameworks */,
 				96ACF7961B815DCB007BAE4A /* Bolts.framework in Frameworks */,
@@ -741,6 +750,9 @@
 		967AD4011B65701C00001B26 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				9674A3C11B9CA936005EA23B /* FBSDKCoreKit.framework */,
+				9674A3C21B9CA936005EA23B /* FBSDKLoginKit.framework */,
+				9674A3C31B9CA936005EA23B /* FBSDKShareKit.framework */,
 				967F17401B8733750047607E /* PKRevealController.h */,
 				967F17411B8733750047607E /* UIViewController+PKRevealController.h */,
 				967F17131B8733680047607E /* PKRevealController */,
@@ -1917,6 +1929,7 @@
 					/Users/Jason/Documents/NeverEatAlone/NeverEatAlone/NeverEatAlone,
 					"/Users/Jason/Desktop/parse-library-1.7.5",
 					"$(PROJECT_DIR)/Pray/ThirdParty",
+					"$(PROJECT_DIR)/Pray/ThirdParty/FacebookSDK",
 				);
 				GCC_PREFIX_HEADER = "Pray/Headers/Pray-Prefix.pch";
 				INFOPLIST_FILE = Pray/Info.plist;
@@ -1939,6 +1952,7 @@
 					/Users/Jason/Documents/NeverEatAlone/NeverEatAlone/NeverEatAlone,
 					"/Users/Jason/Desktop/parse-library-1.7.5",
 					"$(PROJECT_DIR)/Pray/ThirdParty",
+					"$(PROJECT_DIR)/Pray/ThirdParty/FacebookSDK",
 				);
 				GCC_PREFIX_HEADER = "Pray/Headers/Pray-Prefix.pch";
 				INFOPLIST_FILE = Pray/Info.plist;
