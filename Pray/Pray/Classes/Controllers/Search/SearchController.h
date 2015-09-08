@@ -11,11 +11,12 @@
 #import "UserCell.h"
 
 
-@interface SearchController : UIViewController <UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, PrayerCellDelegate, SWTableViewCellDelegate, UserCellDelegate> {
+@interface SearchController : UIViewController <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, PrayerCellDelegate, SWTableViewCellDelegate, UserCellDelegate> {
     
     UISegmentedControl *segmentControl;
     BOOL isSearchingPeople;
-    UISearchBar *search;
+    //UISearchBar *search;
+    UITextField *search;
     
     UITableView *mainTable;
     UIRefreshControl *refreshControl;

@@ -49,22 +49,38 @@
     [self.view addSubview:backButton];
     
     segmentControl = [[UISegmentedControl alloc] initWithItems:@[@"People", @"Prayers"]];
-    [segmentControl setFrame:CGRectMake(0, 24*sratio, 200*sratio, 26*sratio)];
-    [segmentControl setTintColor:Colour_255RGB(157, 160, 171)];
+    [segmentControl setFrame:CGRectMake((self.view.screenWidth - 200*sratio)/2, 24*sratio, 200*sratio, 26*sratio)];
+    [segmentControl setTintColor:Colour_White];//Colour_255RGB(157, 160, 171)];
+    //[segmentControl setBackgroundColor:Colour_255RGB(157, 160, 171)];
     [segmentControl addTarget:self action:@selector(selectorChanged:) forControlEvents:UIControlEventValueChanged];
     [segmentControl setSelectedSegmentIndex:0];
     [self.view addSubview:segmentControl];
-    [segmentControl centerHorizontallyInSuperView];
 }
 
 - (void)setupSearchBar {
-    search = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 56*sratio, self.view.screenWidth, 50*sratio)];
+//    search = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 56*sratio, self.view.screenWidth, 50*sratio)];
+//    [search setBackgroundColor:Colour_255RGB(157, 160, 171)];
+//    [search setTintColor:Colour_255RGB(157, 160, 171)];
+//    [search setPlaceholder:LocString(@"Search...")];
+//    [search setDelegate:self];
+//    [self.view addSubview:search];
+    
+    
+    UIView *searchBar = [[UIView alloc] initWithFrame:CGRectMake(0, 56*sratio, self.view.screenWidth, 50*sratio)];
+    [searchBar setBackgroundColor:Colour_255RGB(157, 160, 171)];
+    [self.view addSubview:searchBar];
+    
+    search = [[UITextField alloc] initWithFrame:CGRectMake(20*sratio, 56*sratio, self.view.screenWidth - 40*sratio, 50*sratio)];
+    [search setBackgroundColor:Colour_255RGB(157, 160, 171)];
+    [search setPlaceholder:LocString(@"Search...")];
     [search setDelegate:self];
     [self.view addSubview:search];
+    
+    [search becomeFirstResponder];
 }
 
 - (void)setupTableView {
-    mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 56*sratio, self.view.screenWidth, self.view.screenHeight - 56*sratio)];
+    mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, search.bottom, self.view.screenWidth, self.view.screenHeight - search.bottom)];
     [mainTable setBackgroundColor:Colour_PrayDarkBlue];
     [mainTable setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [mainTable setScrollsToTop:YES];
@@ -80,6 +96,10 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [self unRegisterForEvents];
+}
+
+- (void)goBack {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
@@ -162,28 +182,48 @@
 }
 
 
-#pragma mark - SearchBar delegate
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    if (searchText.length>2) {
-        [self updateSearch];
-    }
-}
-
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-    [search resignFirstResponder];
-}
-
-- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+#pragma mark - UITextField delegate
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
     
 }
 
-- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
+- (void)textFieldDidEndEditing:(UITextField *)textField {
     [search resignFirstResponder];
 }
 
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    [search resignFirstResponder];
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSString * textViewText = [[textField text] stringByReplacingCharactersInRange:range withString:string];
+    
+    if (textViewText.length>2) {
+        [self updateSearch];
+    }
+    
+    return YES;
 }
+
+
+//#pragma mark - SearchBar delegate
+//- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+//    if (searchText.length>2) {
+//        [self updateSearch];
+//    }
+//}
+//
+//- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+//    [search resignFirstResponder];
+//}
+//
+//- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+//    
+//}
+//
+//- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
+//    [search resignFirstResponder];
+//}
+//
+//- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+//    [search resignFirstResponder];
+//}
 
 
 #pragma mark - Search Delegate

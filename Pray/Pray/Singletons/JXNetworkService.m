@@ -778,7 +778,7 @@
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                    [UserService getUserID], @"user_id",
-                                   searchText, @"searchString",
+                                   searchText, @"q",
                                    [UserService getOAuthToken], @"access_token", nil];
     
     [self checkAccessTokenAndCall:@"api/v1/prayers/search" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
@@ -907,10 +907,10 @@
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                    [UserService getUserID], @"user_id",
-                                   searchText, @"searchString",
+                                   searchText, @"q",
                                    [UserService getOAuthToken], @"access_token", nil];
     
-    [self checkAccessTokenAndCall:@"api/v1/users/search" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
+    [self checkAccessTokenAndCall:@"api/v1/user/search" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
 - (void)followUserForID:(NSString *)userId {
@@ -977,7 +977,12 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Post
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-- (void)postPrayerWithImage:(NSData *)prayerImage andText:(NSString *)prayerText {
+- (void)postPrayerWithImage:(NSData *)prayerImage
+                       text:(NSString *)prayerText
+                   latitude:(NSString *)latitude
+                  longitude:(NSString *)longitude
+            andLocationName:(NSString *)locationName {
+    
     void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
         if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
         
@@ -1002,6 +1007,9 @@
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                    prayerText, @"body",
+                                   latitude, @"latitude",
+                                   longitude, @"longitude",
+                                   locationName, @"location",
                                    [UserService getUserID], @"user_id",
                                    [UserService getOAuthToken], @"access_token", nil];
     

@@ -132,6 +132,78 @@
 }
 
 
+#pragma mark - Location management
+- (void)checkLocation {
+    if (!locationManager) {
+        locationManager = [[CLLocationManager alloc] init];
+        locationManager.delegate = self;
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        locationManager.distanceFilter = 500;
+    }
+    
+    CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
+    
+    //DENIED
+    if (status == kCLAuthorizationStatusDenied) {
+        [SVProgressHUD dismiss];
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LocString(@"Location disabled!") message:LocString(@"Pray needs your location to share it with your prayers. Please turn location services back on in your phone settings. To do so, go to Settings > Privacy > Location Services.") delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        [alert show];
+    }
+    
+    //NOT DETERMINED
+    else if (status == kCLAuthorizationStatusNotDetermined) {
+        [self startLocationManager];
+    }
+    
+    //ACCEPTED
+    else {
+        [self startLocationManager];
+    }
+}
+
+- (void)startLocationManager {
+    if ([locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+        [locationManager requestWhenInUseAuthorization];
+    }
+    
+    [locationManager startUpdatingLocation];
+}
+
+
+#pragma mark - LocationManager & MapKit Delegates
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
+    if (!userLocated) {
+        userLocated = YES;
+        CLLocation *location = [[CLLocation alloc] initWithLatitude:newLocation.coordinate.latitude longitude:newLocation.coordinate.longitude];
+        [self updateLocationNameFromLocation:location];
+    }
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+    [SVProgressHUD dismiss];
+    
+    if (error.domain == kCLErrorDomain && error.code == kCLErrorDenied) {
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LocString(@"Location disabled!") message:LocString(@"Pray needs your location to share it with your prayers. Please turn location services back on in your phone settings. To do so, go to Settings > Privacy > Location Services.") delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        [alert show];
+    }
+}
+
+
+#pragma mark - Location name & Google API
+- (void)updateLocationNameFromLocation:(CLLocation *)location {
+    CLGeocoder * geoCoder = [[CLGeocoder alloc] init];
+    [geoCoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+        if ([placemarks count]>0) {
+            CLPlacemark *placemark = [placemarks objectAtIndex:0];
+            currentCityName = [placemark.addressDictionary objectForKey:@"City"];
+            currentLocation = placemark.location;
+        }
+    }];
+}
+
+
 #pragma mark UIImagePicker delegates & Camera
 - (void)takePhoto {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:LocString(@"Select Photo Source")
@@ -230,7 +302,16 @@
 - (void)postPrayer {
     NSData *imageData = [self compressImage:selectedImage];
     [SVProgressHUD showWithStatus:LocString(@"Sharing your prayer...") maskType:SVProgressHUDMaskTypeGradient];
-    [NetworkService postPrayerWithImage:imageData andText:prayerText.text];
+    
+    
+    NSString *currentLatitude = [NSString stringWithFormat:@"%3.6f", currentLocation.coordinate.latitude];
+    NSString *currentLongitude = [NSString stringWithFormat:@"%3.6f", currentLocation.coordinate.longitude];
+    
+    [NetworkService postPrayerWithImage:imageData
+                                   text:prayerText.text
+                               latitude:currentLatitude? currentLatitude : @""
+                              longitude:currentLongitude? currentLongitude : @""
+                        andLocationName:currentCityName? currentCityName : @""];
 }
 
 - (void)postPrayerSuccess {

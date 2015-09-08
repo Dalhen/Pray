@@ -7,8 +7,9 @@
 //
 
 #import "BaseViewController.h"
+#import <MapKit/MapKit.h>
 
-@interface PrayerCreationController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, UITextViewDelegate> {
+@interface PrayerCreationController : UIViewController <CLLocationManagerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, UITextViewDelegate> {
     
     UIImageView *prayerImage;
     UIView *imageMask;
@@ -17,6 +18,11 @@
     UIButton *addImageButton;
     
     BOOL typeStarted;
+    
+    BOOL userLocated;
+    CLLocationManager *locationManager;
+    CLLocation *currentLocation;
+    NSString *currentCityName;
 }
 
 @end
