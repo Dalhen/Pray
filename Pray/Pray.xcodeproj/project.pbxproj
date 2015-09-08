@@ -1960,7 +1960,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ee188744-eef1-4286-abd5-1167b92c56bc";
+				PROVISIONING_PROFILE = "b89dde1b-b098-4410-8980-48007c2f79cd";
 			};
 			name = Release;
 		};
