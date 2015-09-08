@@ -8,8 +8,9 @@
 
 #import "BaseViewController.h"
 #import "PrayerCell.h"
+#import "PrayerCreationController.h"
 
-@interface FeedController : UIViewController <UITableViewDataSource, UITableViewDelegate, PrayerCellDelegate, SWTableViewCellDelegate> {
+@interface FeedController : UIViewController <UITableViewDataSource, UITableViewDelegate, PrayerCellDelegate, SWTableViewCellDelegate, PrayerCreationDelegate> {
  
     UIView *switchMenu;
     UIButton *feedButton;

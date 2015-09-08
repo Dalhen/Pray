@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>99CA59E1-C825-46DA-8F8A-0AF88191E1F9</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>Pray</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>80C6EEE0AFDB49D60DFA244A32DAA354876C2F23</key>
 		<string>https://bitbucket.org/JasonTech/pray.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Pray/Pray.xcodeproj/project.xcworkspace</string>
+	<string>Pray/Pray.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>80C6EEE0AFDB49D60DFA244A32DAA354876C2F23</key>

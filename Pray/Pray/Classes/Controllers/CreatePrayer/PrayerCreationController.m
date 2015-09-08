@@ -13,6 +13,7 @@
 @end
 
 @implementation PrayerCreationController
+@synthesize delegate;
 
 
 - (id)init {
@@ -317,7 +318,9 @@
 - (void)postPrayerSuccess {
     [SVProgressHUD showSuccessWithStatus:LocString(@"Your prayer has been shared.")];
     [self dismissViewControllerAnimated:YES completion:^{
-        
+        if ([delegate respondsToSelector:@selector(refreshTriggered)]) {
+            [delegate refreshTriggered];
+        }
     }];
 }
 

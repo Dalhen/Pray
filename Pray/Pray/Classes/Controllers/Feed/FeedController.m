@@ -8,7 +8,6 @@
 
 #import "FeedController.h"
 #import "PKRevealController.h"
-#import "PrayerCreationController.h"
 #import "CommentsController.h"
 #import "SearchController.h"
 
@@ -114,8 +113,7 @@
 
 - (void)setupAddPrayerButton {
     addPrayerButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [addPrayerButton setFrame:
-     CGRectMake((self.view.screenWidth - 128*sratio)/2, self.view.screenHeight*sratio - 56*sratio - 96*sratio, 128*sratio, 39*sratio)];
+    [addPrayerButton setFrame:CGRectMake((self.view.screenWidth - 128*sratio)/2, self.view.screenHeight - 60*sratio, 128*sratio, 39*sratio)];
     [addPrayerButton setImage:[UIImage imageNamed:@"addPrayerButton"] forState:UIControlStateNormal];
     [addPrayerButton addTarget:self action:@selector(addPrayer) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:addPrayerButton];
@@ -453,6 +451,7 @@
 #pragma mark - AddPrayer
 - (void)addPrayer {
     PrayerCreationController *prayerController = [[PrayerCreationController alloc] init];
+    [prayerController setDelegate:self];
     [self.navigationController presentViewController:prayerController animated:YES completion:nil];
 }
 

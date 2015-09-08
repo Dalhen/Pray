@@ -9,6 +9,12 @@
 #import "BaseViewController.h"
 #import <MapKit/MapKit.h>
 
+@protocol PrayerCreationDelegate <NSObject>
+
+- (void)refreshTriggered;
+
+@end
+
 @interface PrayerCreationController : UIViewController <CLLocationManagerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, UITextViewDelegate> {
     
     UIImageView *prayerImage;
@@ -24,5 +30,7 @@
     CLLocation *currentLocation;
     NSString *currentCityName;
 }
+
+@property(nonatomic, assign) id <PrayerCreationDelegate> delegate;
 
 @end
