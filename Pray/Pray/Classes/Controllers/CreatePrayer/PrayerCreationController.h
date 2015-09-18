@@ -15,7 +15,9 @@
 
 @end
 
-@interface PrayerCreationController : UIViewController <CLLocationManagerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, UITextViewDelegate> {
+@interface PrayerCreationController : UIViewController <CLLocationManagerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, UITextViewDelegate, UITableViewDelegate, UITableViewDataSource> {
+    
+    UITableView *tagsTable;
     
     UIImageView *prayerImage;
     UIView *imageMask;
@@ -29,6 +31,20 @@
     CLLocationManager *locationManager;
     CLLocation *currentLocation;
     NSString *currentCityName;
+    
+    //Tagging
+    BOOL removedSpaceCharacter;
+    BOOL removedArobaseCharacter;
+    BOOL addedSpaceCharacter;
+    BOOL addedArobaseCharacter;
+    BOOL isTagging;
+    
+    BOOL searchingForMentions;
+    NSArray *mentions;
+    NSMutableArray *mentionsAdded;
+    NSInteger mentionIndex;
+    NSInteger mentionTotal;
+    NSString *currentMention;
 }
 
 @property(nonatomic, assign) id <PrayerCreationDelegate> delegate;

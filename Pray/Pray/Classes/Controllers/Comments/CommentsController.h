@@ -31,6 +31,20 @@
     CGFloat previousCommentHeight;
     
     NSMutableArray *sendingStack;
+    
+    //Tagging
+    BOOL removedSpaceCharacter;
+    BOOL removedArobaseCharacter;
+    BOOL addedSpaceCharacter;
+    BOOL addedArobaseCharacter;
+    BOOL isTagging;
+    
+    BOOL searchingForMentions;
+    NSArray *mentions;
+    NSMutableArray *mentionsAdded;
+    NSInteger mentionIndex;
+    NSInteger mentionTotal;
+    NSString *currentMention;
 }
 
 - (id)initWithPrayer:(CDPrayer *)prayer;

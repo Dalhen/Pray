@@ -48,11 +48,15 @@
 
 #pragma mark - Events registration
 - (void)registerForEvents {
+    Notification_Observe(JXNotification.UserServices.AutocompleteSuccess, searchForMentionUsersSuccess:);
+    Notification_Observe(JXNotification.UserServices.AutocompleteFailed, searchForMentionUsersFailed);
     Notification_Observe(JXNotification.PostServices.PostPrayerSuccess, postPrayerSuccess);
     Notification_Observe(JXNotification.PostServices.PostPrayerFailed, postPrayerFailed);
 }
 
 - (void)unRegisterForEvents {
+    Notification_Remove(JXNotification.UserServices.AutocompleteSuccess);
+    Notification_Remove(JXNotification.UserServices.AutocompleteFailed);
     Notification_Remove(JXNotification.PostServices.PostPrayerSuccess);
     Notification_Remove(JXNotification.PostServices.PostPrayerFailed);
     Notification_RemoveObserver;
@@ -279,12 +283,25 @@
 }
 
 
+#pragma mark - Tagging (Autocomplete)
+- (void)autocompleteSuccess:(NSNotification *)notification {
+    mentions = [[NSArray alloc] initWithArray:notification.object];
+    [tagsTable reloadData];
+    [tagsTable setContentOffset:CGPointZero animated:YES];
+}
+
+
 #pragma mark - UITextView delegates
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
 //    if ([text isEqualToString:@"\n"]) {
 //        [prayerText resignFirstResponder];
 //        return NO;
 //    }
+    
+    addedSpaceCharacter = ([text isEqualToString:@" "])? YES : NO;
+    addedArobaseCharacter = ([text isEqualToString:@"@"])? YES : NO;
+    removedSpaceCharacter = ([[textView.text substringWithRange:range] isEqualToString:@" "])? YES : NO;
+    removedArobaseCharacter = ([[textView.text substringWithRange:range] isEqualToString:@"@"])? YES : NO;
     
     if ([[textView.text stringByReplacingCharactersInRange:range withString:text] length] > 220) {
         return NO;
@@ -298,18 +315,152 @@
     return YES;
 }
 
+- (void)textViewDidChange:(UITextView *)textView {
+    //Mentions
+    NSRange selectedRange = textView.selectedRange;
+    
+    UITextPosition *beginning = textView.beginningOfDocument;
+    UITextPosition *start = [textView positionFromPosition:beginning offset:selectedRange.location];
+    UITextPosition *end = [textView positionFromPosition:start offset:selectedRange.length];
+    
+    UITextRange* textRange = [textView.tokenizer rangeEnclosingPosition:end withGranularity:UITextGranularityWord inDirection:UITextLayoutDirectionLeft];
+    
+    //NSLog(@"Word that is currently being edited is : %@", [textView textInRange:textRange]);
+    
+    
+    UITextPosition* selectionStart = textRange.start;
+    UITextPosition* selectionEnd = textRange.end;
+    
+    const NSInteger location = [textView offsetFromPosition:beginning toPosition:selectionStart];
+    const NSInteger length = [textView offsetFromPosition:selectionStart toPosition:selectionEnd];
+    
+    //Started typing a second letter after an @ or removed a letter in a word
+    if (location>0 && !removedSpaceCharacter) {
+        NSString *startingCharacter = [textView.text substringWithRange:NSMakeRange(location-1, 1)];
+        
+        //New tag or tag edition
+        if ([startingCharacter isEqualToString:@"@"]) {
+            isTagging = YES;
+            
+            if ((location > 1 && [[textView.text substringWithRange:NSMakeRange(location-2, 1)] isEqualToString:@" "]) || location == 1) {
+                
+                NSRegularExpression *mentionsExpression = [NSRegularExpression regularExpressionWithPattern:@"(@\\w+)" options:NO error:nil];
+                NSArray *mentionsMatches = [mentionsExpression matchesInString:textView.text options:0 range:NSMakeRange(0, [textView.text length])];
+                
+                NSInteger mIndex = 0;
+                for (NSTextCheckingResult *mentionMatch in mentionsMatches) {
+                    NSRange mentionMatchRange = [mentionMatch rangeAtIndex:0];
+                    if (mentionMatchRange.location == location-1 && mentionMatchRange.length == length+1) {
+                        mIndex = [mentionsMatches indexOfObject:mentionMatch];
+                    }
+                }
+                
+                [self mentionStartedWithText:[textView textInRange:textRange] mentionIndex:mIndex andMentionTotal:[mentionsMatches count]];
+            }
+        }
+    }
+    else {
+        if (addedArobaseCharacter) {
+            isTagging = YES;
+        }
+        else if (isTagging) {
+            isTagging = NO;
+            
+            if (addedSpaceCharacter) {
+                [self mentionEnded];
+            }
+            else {
+                [self mentionRemoved];
+            }
+        }
+    }
+}
+
+
+#pragma mark - Mentions
+- (void)mentionStartedWithText:(NSString *)text mentionIndex:(NSInteger)index andMentionTotal:(NSInteger)total {
+    searchingForMentions = YES;
+    currentMention = text;
+    mentionIndex = index;
+    mentionTotal = total;
+    
+    [NetworkService autocompleteForTag:text];
+}
+
+- (void)mentionRemoved {
+    if (searchingForMentions) {
+        if ([mentionsAdded count]>mentionIndex) {
+            [mentionsAdded removeObjectAtIndex:mentionIndex];
+        }
+    }
+    
+    searchingForMentions = NO;
+    [tagsTable reloadData];
+}
+
+- (void)mentionEnded {
+    if (searchingForMentions) {
+        //editing existing mention
+        if (mentionTotal == [mentionsAdded count]) {
+            [mentionsAdded replaceObjectAtIndex:mentionIndex withObject:@{@"userObject":currentMention, @"mentionIndex":[NSNumber numberWithInteger:mentionIndex]}];
+        }
+        //adding fake mention
+        else if (mentionTotal > [mentionsAdded count]) {
+            [mentionsAdded insertObject:@{@"userObject":currentMention, @"mentionIndex":[NSNumber numberWithInteger:mentionIndex]} atIndex:mentionIndex];
+        }
+    }
+    
+    searchingForMentions = NO;
+    [tagsTable reloadData];
+}
+
+- (void)searchForMentionUsersSuccess:(NSNotification *)notification {
+    mentions = [[NSArray alloc] initWithArray:notification.object];
+    [tagsTable reloadData];
+    [tagsTable setContentOffset:CGPointZero animated:YES];
+}
+
+- (void)searchForMentionUsersFailed {
+    
+}
+
+
 
 #pragma mark - Post Prayer
 - (void)postPrayer {
     NSData *imageData = [self compressImage:selectedImage];
     [SVProgressHUD showWithStatus:LocString(@"Sharing your prayer...") maskType:SVProgressHUDMaskTypeGradient];
     
+    searchingForMentions = NO;
+    
+    NSMutableArray *finalMentions = [[NSMutableArray alloc] initWithCapacity:[mentionsAdded count]];
+    for (NSDictionary *mentionObject in mentionsAdded) {
+        //User mention
+        if ([[mentionObject objectForKey:@"userObject"] isKindOfClass:[NSDictionary class]]) {
+            
+            NSDictionary *userObject = [mentionObject objectForKey:@"userObject"];
+            NSString *unfilteredString = [NSString stringWithFormat:@"%@%@", [[userObject objectForKey:@"first_name"] capitalizedString], [[[userObject objectForKey:@"last_name"] substringToIndex:1] capitalizedString]];
+            NSCharacterSet *notAllowedChars = [[NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"] invertedSet];
+            NSString *filteredString = [[unfilteredString componentsSeparatedByCharactersInSet:notAllowedChars] componentsJoinedByString:@""];
+            
+            NSString *mentionString = [NSString stringWithFormat:@"@%@|%@", filteredString, [userObject objectForKey:@"id"]];
+            [finalMentions addObject:mentionString];
+        }
+        //Text mention
+        else {
+            NSString *unfilteredString = [[mentionObject objectForKey:@"userObject"] capitalizedString];
+            NSCharacterSet *notAllowedChars = [[NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"] invertedSet];
+            NSString *filteredString = [[unfilteredString componentsSeparatedByCharactersInSet:notAllowedChars] componentsJoinedByString:@""];
+            NSString *mentionString = [NSString stringWithFormat:@"@%@|%@", filteredString, @"0"];
+            [finalMentions addObject:mentionString];
+        }
+    }
     
     NSString *currentLatitude = [NSString stringWithFormat:@"%3.6f", currentLocation.coordinate.latitude];
     NSString *currentLongitude = [NSString stringWithFormat:@"%3.6f", currentLocation.coordinate.longitude];
     
     [NetworkService postPrayerWithImage:imageData
-                                   text:prayerText.text
+                                   text:prayerText.text withMentionString:[finalMentions componentsJoinedByString:@","]
                                latitude:currentLatitude? currentLatitude : @""
                               longitude:currentLongitude? currentLongitude : @""
                         andLocationName:currentCityName? currentCityName : @""];

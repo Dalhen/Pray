@@ -120,6 +120,8 @@
     Notification_Observe(JXNotification.CommentsServices.DeleteCommentFailed, deleteCommentFailed);
     Notification_Observe(JXNotification.FeedServices.ReportPostSuccess, reportPostSuccess);
     Notification_Observe(JXNotification.FeedServices.ReportPostFailed, reportPostFailed);
+    Notification_Observe(JXNotification.UserServices.AutocompleteSuccess, searchForMentionUsersSuccess:);
+    Notification_Observe(JXNotification.UserServices.AutocompleteFailed, searchForMentionUsersFailed);
     
     Notification_Observe(UIKeyboardWillShowNotification, keyboardWillShow:);
     Notification_Observe(UIKeyboardWillHideNotification, keyboardWillHide:);
@@ -134,6 +136,9 @@
     Notification_Remove(JXNotification.CommentsServices.DeleteCommentFailed);
     Notification_Remove(JXNotification.FeedServices.ReportPostSuccess);
     Notification_Remove(JXNotification.FeedServices.ReportPostFailed);
+    
+    Notification_Remove(JXNotification.UserServices.AutocompleteSuccess);
+    Notification_Remove(JXNotification.UserServices.AutocompleteFailed);
     
     Notification_Remove(UIKeyboardWillShowNotification);
     Notification_Remove(UIKeyboardWillHideNotification);
@@ -208,10 +213,20 @@
 }
 
 
+#pragma mark - Tagging (Autocomplete)
+- (void)autocompleteSuccess:(NSNotification *)notification {
+    mentions = [[NSArray alloc] initWithArray:notification.object];
+    [commentsTable reloadData];
+    [commentsTable setContentOffset:CGPointZero animated:YES];
+}
+
+
 #pragma mark - Post comment connection delegates
 - (void)postComment {
     if (([commentTextView.text length] > 0 && [commentTextView isFirstResponder]) ||
         ![commentTextView.text isEqualToString:LocString(@"Write a comment")]) {
+        
+        searchingForMentions = NO;
         
         [self setTouchRecognizer:NO];
         
@@ -226,7 +241,17 @@
         
         [commentsTable reloadData];
         
-        [NetworkService postComment:commentTextView.text forPrayerID:[currentPrayer.uniqueId stringValue] andTempIdentifier:commentObject.tempIdentifier];
+        NSMutableArray *finalMentions = [[NSMutableArray alloc] initWithCapacity:[mentionsAdded count]];
+        for (NSDictionary *mentionObject in mentionsAdded) {
+            //User mention
+            if ([[mentionObject objectForKey:@"userObject"] isKindOfClass:[NSDictionary class]]) {
+                NSDictionary *userObject = [mentionObject objectForKey:@"userObject"];
+                NSString *mentionString = [userObject objectForKey:@"id"];
+                [finalMentions addObject:mentionString];
+            }
+        }
+        
+        [NetworkService postComment:commentTextView.text withMentionString:[finalMentions componentsJoinedByString:@","] forPrayerID:[currentPrayer.uniqueId stringValue] andTempIdentifier:commentObject.tempIdentifier];
     }
 }
 
@@ -307,6 +332,15 @@
     return YES;
 }
 
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    addedSpaceCharacter = ([text isEqualToString:@" "])? YES : NO;
+    addedArobaseCharacter = ([text isEqualToString:@"@"])? YES : NO;
+    removedSpaceCharacter = ([[textView.text substringWithRange:range] isEqualToString:@" "])? YES : NO;
+    removedArobaseCharacter = ([[textView.text substringWithRange:range] isEqualToString:@"@"])? YES : NO;
+    
+    return YES;
+}
+
 - (void)textViewDidBeginEditing:(UITextView *)textView {
     [addCommentView setBackgroundColor:Colour_White];
     [commentTextView setBackgroundColor:Colour_White];
@@ -315,6 +349,7 @@
 }
 
 - (void)textViewDidChange:(UITextView *)textView {
+    
     float numLines = textView.contentSize.height/textView.font.lineHeight;
     
     if (numLines == 1) {
@@ -342,6 +377,67 @@
     if (commentsTable.contentSize.height > self.view.screenHeight - 58 - 64) {
         CGPoint bottomOffset = CGPointMake(0, commentsTable.contentSize.height - commentsTable.bounds.size.height);
         [commentsTable setContentOffset:bottomOffset animated:YES];
+    }
+    
+    //Mentions
+    NSRange selectedRange = textView.selectedRange;
+    
+    UITextPosition *beginning = textView.beginningOfDocument;
+    UITextPosition *start = [textView positionFromPosition:beginning offset:selectedRange.location];
+    UITextPosition *end = [textView positionFromPosition:start offset:selectedRange.length];
+    
+    UITextRange* textRange = [textView.tokenizer rangeEnclosingPosition:end withGranularity:UITextGranularityWord inDirection:UITextLayoutDirectionLeft];
+    
+    //NSLog(@"Word that is currently being edited is : %@", [textView textInRange:textRange]);
+    
+    
+    UITextPosition* selectionStart = textRange.start;
+    UITextPosition* selectionEnd = textRange.end;
+    
+    const NSInteger location = [textView offsetFromPosition:beginning toPosition:selectionStart];
+    const NSInteger length = [textView offsetFromPosition:selectionStart toPosition:selectionEnd];
+    
+    //Started typing a second letter after an @ or removed a letter in a word
+    if (location>0 && !removedSpaceCharacter) {
+        NSString *startingCharacter = [textView.text substringWithRange:NSMakeRange(location-1, 1)];
+        
+        //New tag or tag edition
+        if ([startingCharacter isEqualToString:@"@"]) {
+            isTagging = YES;
+            
+            if ((location > 1 && [[textView.text substringWithRange:NSMakeRange(location-2, 1)] isEqualToString:@" "]) || location == 1) {
+                
+                NSRegularExpression *mentionsExpression = [NSRegularExpression regularExpressionWithPattern:@"(@\\w+)" options:NO error:nil];
+                NSArray *mentionsMatches = [mentionsExpression matchesInString:textView.text options:0 range:NSMakeRange(0, [textView.text length])];
+                
+                NSInteger mIndex = 0;
+                for (NSTextCheckingResult *mentionMatch in mentionsMatches) {
+                    NSRange mentionMatchRange = [mentionMatch rangeAtIndex:0];
+                    if (mentionMatchRange.location == location-1 && mentionMatchRange.length == length+1) {
+                        mIndex = [mentionsMatches indexOfObject:mentionMatch];
+                    }
+                }
+                
+                [cancelCommentButton setHidden:YES];
+                [self mentionStartedWithText:[textView textInRange:textRange] mentionIndex:mIndex andMentionTotal:[mentionsMatches count]];
+            }
+        }
+    }
+    else {
+        if (addedArobaseCharacter) {
+            isTagging = YES;
+        }
+        else if (isTagging) {
+            isTagging = NO;
+            
+            if (addedSpaceCharacter) {
+                [self mentionEnded];
+            }
+            else {
+                [self mentionRemoved];
+            }
+            [cancelCommentButton setHidden:NO];
+        }
     }
 }
 
@@ -392,6 +488,54 @@
     [self setTouchRecognizer:NO];
     
     [commentsTable setHeight:self.view.screenHeight - 58 - 68];
+}
+
+
+#pragma mark - Mentions
+- (void)mentionStartedWithText:(NSString *)text mentionIndex:(NSInteger)index andMentionTotal:(NSInteger)total {
+    searchingForMentions = YES;
+    currentMention = text;
+    mentionIndex = index;
+    mentionTotal = total;
+    
+    [NetworkService autocompleteForTag:text];
+}
+
+- (void)mentionRemoved {
+    if (searchingForMentions) {
+        if ([mentionsAdded count]>mentionIndex) {
+            [mentionsAdded removeObjectAtIndex:mentionIndex];
+        }
+    }
+    
+    searchingForMentions = NO;
+    [commentsTable reloadData];
+}
+
+- (void)mentionEnded {
+    if (searchingForMentions) {
+        //editing existing mention
+        if (mentionTotal == [mentionsAdded count]) {
+            [mentionsAdded replaceObjectAtIndex:mentionIndex withObject:@{@"userObject":currentMention, @"mentionIndex":[NSNumber numberWithInteger:mentionIndex]}];
+        }
+        //adding fake mention
+        else if (mentionTotal > [mentionsAdded count]) {
+            [mentionsAdded insertObject:@{@"userObject":currentMention, @"mentionIndex":[NSNumber numberWithInteger:mentionIndex]} atIndex:mentionIndex];
+        }
+    }
+    
+    searchingForMentions = NO;
+    [commentsTable reloadData];
+}
+
+- (void)searchForMentionUsersSuccess:(NSNotification *)notification {
+    mentions = [[NSArray alloc] initWithArray:notification.object];
+    [commentsTable reloadData];
+    [commentsTable setContentOffset:CGPointZero animated:YES];
+}
+
+- (void)searchForMentionUsersFailed {
+    
 }
 
 

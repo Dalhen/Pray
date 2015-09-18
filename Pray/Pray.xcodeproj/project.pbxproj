@@ -212,6 +212,7 @@
 		96EB6CDB1B6BFAEC00ADA3AB /* backButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96EB6CDA1B6BFAEC00ADA3AB /* backButton@2x.png */; };
 		96EB6CDE1B6CCD6A00ADA3AB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 96EB6CDD1B6CCD6A00ADA3AB /* Localizable.strings */; };
 		96EB6CE01B6D053700ADA3AB /* avatarEmpty@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96EB6CDF1B6D053700ADA3AB /* avatarEmpty@2x.png */; };
+		FC67F6B61BAC562B00B2318E /* MentionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FC67F6B51BAC562B00B2318E /* MentionCell.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -615,6 +616,8 @@
 		96EB6CDA1B6BFAEC00ADA3AB /* backButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backButton@2x.png"; sourceTree = "<group>"; };
 		96EB6CDD1B6CCD6A00ADA3AB /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		96EB6CDF1B6D053700ADA3AB /* avatarEmpty@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avatarEmpty@2x.png"; sourceTree = "<group>"; };
+		FC67F6B41BAC562B00B2318E /* MentionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MentionCell.h; sourceTree = "<group>"; };
+		FC67F6B51BAC562B00B2318E /* MentionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MentionCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -735,6 +738,8 @@
 		967AD3F11B6564C700001B26 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				FC67F6B41BAC562B00B2318E /* MentionCell.h */,
+				FC67F6B51BAC562B00B2318E /* MentionCell.m */,
 				965B4DB91B70DA43002E149F /* PrayerCell.h */,
 				965B4DBA1B70DA43002E149F /* PrayerCell.m */,
 				96A394A81B87C4C200B3040E /* CommentCell.h */,
@@ -1670,6 +1675,7 @@
 				967F17341B8733680047607E /* CALayer+PKConvenienceAnimations.m in Sources */,
 				967AD4701B65701C00001B26 /* UIButton+WebCache.m in Sources */,
 				96A00CDA1B90E027000E824B /* NotificationsCell.m in Sources */,
+				FC67F6B61BAC562B00B2318E /* MentionCell.m in Sources */,
 				967F17381B8733680047607E /* PKAnimation.m in Sources */,
 				967F17371B8733680047607E /* PKRevealControllerView.m in Sources */,
 				96A558B21B5A6D4F0073A4FE /* NSDate+Extensions.m in Sources */,

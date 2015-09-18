@@ -68,6 +68,9 @@ struct UserServicesStruct {
     __unsafe_unretained NSString * const FollowUserFailed;
     __unsafe_unretained NSString * const UnFollowUserSuccess;
     __unsafe_unretained NSString * const UnFollowUserFailed;
+    
+    __unsafe_unretained NSString * const AutocompleteSuccess;
+    __unsafe_unretained NSString * const AutocompleteFailed;
 };
 
 struct FeedServicesStruct {

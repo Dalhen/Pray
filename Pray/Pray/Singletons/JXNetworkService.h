@@ -99,12 +99,15 @@
 
 - (void)unfollowUserForID:(NSString *)userId;
 
+- (void)autocompleteForTag:(NSString *)searchText;
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Post
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)postPrayerWithImage:(NSData *)prayerImage
                        text:(NSString *)prayerText
+          withMentionString:(NSString *)mentionString
                    latitude:(NSString *)latitude
                   longitude:(NSString *)longitude
             andLocationName:(NSString *)locationName;
@@ -115,7 +118,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)loadCommentsForPrayerID:(NSString *)prayerID;
 
-- (void)postComment:(NSString *)comment forPrayerID:(NSString *)prayerID andTempIdentifier:(NSString *)tempIdentifier;
+- (void)postComment:(NSString *)comment withMentionString:(NSString *)mentionString forPrayerID:(NSString *)prayerID andTempIdentifier:(NSString *)tempIdentifier;
 
 - (void)deleteCommentWithID:(NSString *)commentID;
 

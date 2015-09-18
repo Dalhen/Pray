@@ -973,12 +973,44 @@
     [self checkAccessTokenAndCall:@"api/v1/user/unfollow" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
+- (void)autocompleteForTag:(NSString *)searchText {
+    void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
+        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
+        
+        NSInteger statusCode = [operation.response statusCode];
+        
+        //success
+        if (statusCode == 200) {
+            CDUser *user = [DataAccess addUserWithData:[responseObject objectForKey:@"data"]];
+            Notification_Post(JXNotification.UserServices.AutocompleteSuccess, user);
+        }
+        
+        //invalid
+        else {
+            Notification_Post(JXNotification.UserServices.AutocompleteFailed, nil);
+        }
+    };
+    
+    void (^failureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
+        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
+        Notification_Post(JXNotification.UserServices.AutocompleteFailed, nil);
+    };
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   [UserService getUserID], @"user_id",
+                                   searchText, @"q",
+                                   [UserService getOAuthToken], @"access_token", nil];
+    
+    [self checkAccessTokenAndCall:@"api/v1/user/autocomplete" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Post
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)postPrayerWithImage:(NSData *)prayerImage
                        text:(NSString *)prayerText
+          withMentionString:(NSString *)mentionString
                    latitude:(NSString *)latitude
                   longitude:(NSString *)longitude
             andLocationName:(NSString *)locationName {
@@ -1057,7 +1089,7 @@
     [self checkAccessTokenAndCall:@"api/v1/prayers/comments" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
-- (void)postComment:(NSString *)comment forPrayerID:(NSString *)prayerID andTempIdentifier:(NSString *)tempIdentifier {
+- (void)postComment:(NSString *)comment withMentionString:(NSString *)mentionString forPrayerID:(NSString *)prayerID andTempIdentifier:(NSString *)tempIdentifier {
     void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
         if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
         
@@ -1083,6 +1115,7 @@
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                    comment, @"body",
                                    prayerID, @"prayer_id",
+                                   mentionString, @"tagged",
                                    [UserService getUserID], @"user_id",
                                    [UserService getOAuthToken], @"access_token", nil];
     
