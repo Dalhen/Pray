@@ -45,8 +45,14 @@
     NSInteger mentionIndex;
     NSInteger mentionTotal;
     NSString *currentMention;
+    
+    //Praying for
+    CDUser *currentUser;
 }
 
 @property(nonatomic, assign) id <PrayerCreationDelegate> delegate;
+
+
+- (id)initWithUser:(CDUser *)user;
 
 @end

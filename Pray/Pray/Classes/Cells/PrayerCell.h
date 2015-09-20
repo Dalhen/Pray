@@ -17,6 +17,7 @@
 
 - (void)likeButtonClickedForCell:(PrayerCell *)cell;
 - (void)commentButtonClickedForCell:(PrayerCell *)cell;
+- (void)showUserForCell:(PrayerCell *)cell;
 
 @end
 
@@ -35,10 +36,9 @@
     UIButton *likeButton;
     UIButton *commentButton;
     UIView *blackMask;
-    
-    CDPrayer *prayer;
 }
 
+@property(nonatomic, strong) CDPrayer *prayer;
 @property(nonatomic, assign) id <PrayerCellDelegate, SWTableViewCellDelegate> delegate;
 
 - (void)updateWithPrayerObject:(CDPrayer *)prayerObject;

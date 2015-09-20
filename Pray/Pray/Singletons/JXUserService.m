@@ -89,6 +89,7 @@
 }
 
 - (void)setUserWithUsername:(NSString *)username
+                      email:(NSString *)email
                      userID:(NSString *)userID
                   firstname:(NSString *)firstname
                    lastname:(NSString *)lastname
@@ -98,6 +99,7 @@
                  profileURL:(NSString *)profileURL {
     
     [[NSUserDefaults standardUserDefaults] setObject:username forKey:@"username"];
+    [[NSUserDefaults standardUserDefaults] setObject:email forKey:@"email"];
     [[NSUserDefaults standardUserDefaults] setObject:userID forKey:@"userID"];
     [[NSUserDefaults standardUserDefaults] setObject:firstname forKey:@"firstname"];
     [[NSUserDefaults standardUserDefaults] setObject:lastname forKey:@"lastname"];
@@ -110,6 +112,11 @@
 
 - (void)setUsername:(NSString *)username {
     [[NSUserDefaults standardUserDefaults] setObject:username forKey:@"username"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)setEmail:(NSString *)email {
+    [[NSUserDefaults standardUserDefaults] setObject:email forKey:@"email"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -162,6 +169,10 @@
 
 - (NSString *)getUsername {
     return [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
+}
+
+- (NSString *)getEmail {
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"email"];
 }
 
 - (NSString *)getUserID {
@@ -223,18 +234,13 @@
 
 - (void)logoutUser {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"username"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"email"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"userID"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"firstname"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"lastname"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"fullname"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"companyName"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"companyID"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"position"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"departmentName"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"departmentID"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"bio"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"city"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"linkedinID"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"avatarURL"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }

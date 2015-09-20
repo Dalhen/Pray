@@ -26,6 +26,17 @@
     return self;
 }
 
+- (id)initWithUser:(CDUser *)user {
+    self = [super init];
+    
+    if (self) {
+        currentUser = user;
+        typeStarted = NO;
+    }
+    
+    return self;
+}
+
 - (void)loadView {
     self.view = [[UIView alloc] init];
     [self.view setBackgroundColor:Colour_PrayDarkBlue];

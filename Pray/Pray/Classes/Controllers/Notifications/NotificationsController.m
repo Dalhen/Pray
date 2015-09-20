@@ -45,6 +45,14 @@
 }
 
 - (void)setupTableView {
+    
+    noDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(20*sratio, 260*sratio, self.view.screenWidth - 40*sratio, 40*sratio)];
+    [noDataLabel setTextColor:Colour_255RGB(140, 146, 164)];
+    [noDataLabel setFont:[FontService systemFont:14*sratio]];
+    [noDataLabel setText:LocString(@"No notifications yet.")];
+    [noDataLabel setTextAlignment:NSTextAlignmentCenter];
+    [self.view addSubview:noDataLabel];
+    
     mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 56*sratio, self.view.screenWidth, self.view.screenHeight - 56*sratio)];
     [mainTable setBackgroundColor:Colour_PrayDarkBlue];
     [mainTable setSeparatorStyle:UITableViewCellSeparatorStyleNone];
@@ -101,15 +109,30 @@
 }
 
 - (void)loadNotifications {
-    
+    [SVProgressHUD showWithStatus:LocString(@"Loading...") maskType:SVProgressHUDMaskTypeNone];
+    [NetworkService loadNotifications];
 }
 
 - (void)loadNotificationsSuccess:(NSNotification *)notification {
+    [SVProgressHUD dismiss];
     notifications = [[NSArray alloc] initWithArray:notification.object];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        if ([notifications count]>0) {
+            [mainTable setAlpha:1];
+            [noDataLabel setAlpha:0];
+        }
+        else {
+            [mainTable setAlpha:0];
+            [noDataLabel setAlpha:1];
+        }
+    }];
+    
+    [mainTable reloadData];
 }
 
 - (void)loadNotificationsFailed {
-    
+    [SVProgressHUD showErrorWithStatus:LocString(@"We couldn't load the latest notifications for now. Please check your internet connection and try again.")];
 }
 
 

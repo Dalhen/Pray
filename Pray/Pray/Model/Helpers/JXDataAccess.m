@@ -256,6 +256,42 @@
     return ([mutableFetchResults count]>0) ? [mutableFetchResults objectAtIndex:0] : nil;
 }
 
+- (void)followUser:(NSNumber *)userId {
+    CDUser *user = [self getUserForID:userId];
+    
+    if (user) {
+        NSManagedObjectContext *moc = [JXDataAccess getDBContext];
+        
+        user.isFollowed = [NSNumber numberWithBool:YES];
+        
+        NSError *error;
+        if (![moc save:&error]) {
+            // Handle the error.
+            if(DEBUGDataAccess) NSLog(@"Error following user");
+        } else {
+            if(DEBUGDataAccess) NSLog(@"User followed");
+        }
+    }
+}
+
+- (void)unfollowUser:(NSNumber *)userId {
+    CDUser *user = [self getUserForID:userId];
+    
+    if (user) {
+        NSManagedObjectContext *moc = [JXDataAccess getDBContext];
+        
+        user.isFollowed = [NSNumber numberWithBool:NO];
+        
+        NSError *error;
+        if (![moc save:&error]) {
+            // Handle the error.
+            if(DEBUGDataAccess) NSLog(@"Error unfollowing user");
+        } else {
+            if(DEBUGDataAccess) NSLog(@"User unfollowed");
+        }
+    }
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Prayer

@@ -167,7 +167,8 @@
 - (void)signupAccountSuccess:(NSNotification *)notification {
     
     NSDictionary *data = [notification object];
-    [UserService setUserWithUsername:[self validString:[data objectForKey:@"email"]]
+    [UserService setUserWithUsername:[self validString:[data objectForKey:@"username"]]
+                               email:[self validString:[data objectForKey:@"email"]]
                               userID:[self validString:[data objectForKey:@"id"]]
                            firstname:[self validString:[data objectForKey:@"first_name"]]
                             lastname:[self validString:[data objectForKey:@"last_name"]]

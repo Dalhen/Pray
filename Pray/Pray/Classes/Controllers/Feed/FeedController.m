@@ -10,7 +10,7 @@
 #import "PKRevealController.h"
 #import "CommentsController.h"
 #import "SearchController.h"
-
+#import "ProfileController.h"
 
 @interface FeedController ()
 
@@ -462,6 +462,14 @@
     [self presentViewController:searchController animated:YES completion:nil];
 }
 
+
+#pragma mark - UserProfile
+- (void)showUserForCell:(PrayerCell *)cell {
+    if (cell.prayer.creator) {
+        ProfileController *profileController = [[ProfileController alloc] initWithUser:cell.prayer.creator];
+        [self.navigationController pushViewController:profileController animated:YES];
+    }
+}
 
 
 - (void)didReceiveMemoryWarning {

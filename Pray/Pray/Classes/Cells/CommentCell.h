@@ -16,7 +16,7 @@
 
 @protocol CommentCellDelegate <NSObject>
 
-- (void)showUserProfileForCommentCell:(CommentCell *)cell;
+- (void)showUserForCell:(CommentCell *)cell;
 - (float)heightToFitCommentText:(NSString *)text;
 
 @end

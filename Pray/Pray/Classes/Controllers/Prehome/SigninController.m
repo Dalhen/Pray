@@ -78,7 +78,7 @@
     [emailField setTextAlignment:NSTextAlignmentLeft];
     [emailField setFont:[FontService systemFont:13*sratio]];
     [emailField setTextColor:Colour_PrayBlue];
-    [emailField setPlaceholder:LocString(@"Username")];
+    [emailField setPlaceholder:LocString(@"Your email")];
     [emailField setBackgroundColor:Colour_White];
     UIView *padding1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 14*sratio, 40*sratio)];
     [padding1 setBackgroundColor:Colour_Clear];
@@ -141,7 +141,8 @@
     [SVProgressHUD dismiss];
     
     NSDictionary *data = [notification object];
-    [UserService setUserWithUsername:[self validString:[data objectForKey:@"email"]]
+    [UserService setUserWithUsername:[self validString:[data objectForKey:@"username"]]
+                               email:[self validString:[data objectForKey:@"email"]]
                               userID:[self validString:[data objectForKey:@"id"]]
                            firstname:[self validString:[data objectForKey:@"first_name"]]
                             lastname:[self validString:[data objectForKey:@"last_name"]]

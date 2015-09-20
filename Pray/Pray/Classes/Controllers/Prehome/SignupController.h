@@ -25,6 +25,11 @@
     UITableView *panelTable;
     
     UIImage *selectedImage;
+    
+    BOOL isProfileEditing;
 }
+
+- (id)initForSignup;
+- (id)initForProfileEditing;
 
 @end

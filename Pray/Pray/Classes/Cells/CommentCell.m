@@ -52,11 +52,10 @@
     [iconImageView setContentMode:UIViewContentModeScaleAspectFill];
     [self addSubview:iconImageView];
     
-    UIButton *profileButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [profileButton setFrame:CGRectMake(kPadding, kSmallPadding+4, 38, 38)];
-    [profileButton setBackgroundColor:Colour_Clear];
-    [profileButton addTarget:self action:@selector(showUserProfile) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:profileButton];
+    UIButton *userAction = [UIButton buttonWithType:UIButtonTypeCustom];
+    [userAction setFrame:iconImageView.frame];
+    [userAction addTarget:self action:@selector(showUser) forControlEvents:UIControlEventTouchUpInside];
+    [self.contentView addSubview:userAction];
     
     usernameLabel = [[UILabel alloc] initWithFrame:CGRectMake(iconImageView.right + kSmallPadding*2, 10, 252, 18)];
     [usernameLabel setBackgroundColor:Colour_Clear];
@@ -167,9 +166,9 @@
 }
 
 
-#pragma mark - Actions
-- (void)showUserProfile {
-    [delegate showUserProfileForCommentCell:self];
+#pragma mark - Display user profile
+- (void)showUser {
+    [delegate showUserForCell:self];
 }
 
 

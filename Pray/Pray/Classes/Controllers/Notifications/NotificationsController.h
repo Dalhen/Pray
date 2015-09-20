@@ -15,6 +15,7 @@
     BOOL refreshing;
     
     NSArray *notifications;
+    UILabel *noDataLabel;
 }
 
 @end

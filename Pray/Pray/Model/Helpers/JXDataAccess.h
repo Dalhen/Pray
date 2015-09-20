@@ -37,6 +37,10 @@
 
 - (CDUser *)getUserForID:(NSNumber *)uniqueId;
 
+- (void)followUser:(NSNumber *)userId;
+
+- (void)unfollowUser:(NSNumber *)userId;
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Prayer

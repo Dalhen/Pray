@@ -29,6 +29,7 @@
 #pragma mark - UserData
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)setUserWithUsername:(NSString *)username
+                      email:(NSString *)email
                      userID:(NSString *)userID
                   firstname:(NSString *)firstname
                    lastname:(NSString *)lastname
@@ -38,6 +39,7 @@
                  profileURL:(NSString *)profileURL;
 
 - (NSString *)getUsername;
+- (NSString *)getEmail;
 - (NSString *)getPassword;
 - (NSString *)getUserID;
 - (NSNumber *)getUserIDNumber;
@@ -55,6 +57,7 @@
 - (NSString *)getAvatarURL;
 
 - (void)setUsername:(NSString *)username;
+- (void)setEmail:(NSString *)email;
 - (void)setPassword:(NSString *)password;
 - (void)setCity:(NSString *)city;
 - (void)setBio:(NSString *)bio;

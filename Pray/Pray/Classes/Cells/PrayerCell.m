@@ -12,6 +12,7 @@
 
 
 @implementation PrayerCell
+@synthesize prayer;
 @synthesize delegate;
 
 
@@ -45,6 +46,11 @@
     [userAvatar setRoundedToDiameter:38*sratio];
     [userAvatar setContentMode:UIViewContentModeScaleAspectFill];
     [self.contentView addSubview:userAvatar];
+    
+    UIButton *userAction = [UIButton buttonWithType:UIButtonTypeCustom];
+    [userAction setFrame:userAvatar.frame];
+    [userAction addTarget:self action:@selector(showUser) forControlEvents:UIControlEventTouchUpInside];
+    [self.contentView addSubview:userAction];
     
     username = [[UILabel alloc] initWithFrame:CGRectMake(userAvatar.right + 10*sratio, 12*sratio, 250*sratio, 20*sratio)];
     username.font = [FontService systemFont:14*sratio];
@@ -156,6 +162,10 @@
     [delegate commentButtonClickedForCell:self];
 }
 
+#pragma mark - Display user profile
+- (void)showUser {
+    [delegate showUserForCell:self];
+}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

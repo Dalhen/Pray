@@ -56,14 +56,13 @@
 
 - (void)resetPasswordForEmailAddress:(NSString *)email;
 
-- (void)updateProfileWithFirstname:(NSString *)firstName
-                          lastName:(NSString *)lastName
-                          password:(NSString *)password
-                          position:(NSString *)position
-                      departmentID:(NSString *)departmentID
-                    departmentName:(NSString *)departmentName
-                       avatarImage:(NSData *)avatarImage
-                               bio:(NSString *)bio;
+- (void)updateProfileWithUsername:(NSString *)username
+                        firstName:(NSString *)firstName
+                         lastName:(NSString *)lastName
+                         password:(NSString *)password
+                            email:(NSString *)email
+                              bio:(NSString *)bio
+                      avatarImage:(NSData *)avatarImage;
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////

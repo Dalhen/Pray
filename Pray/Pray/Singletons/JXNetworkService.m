@@ -489,14 +489,13 @@
     [self checkAccessTokenAndCall:@"api/v1/auth/password/sendReset" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
-- (void)updateProfileWithFirstname:(NSString *)firstName
-                          lastName:(NSString *)lastName
-                          password:(NSString *)password
-                          position:(NSString *)position
-                      departmentID:(NSString *)departmentID
-                    departmentName:(NSString *)departmentName
-                       avatarImage:(NSData *)avatarImage
-                               bio:(NSString *)bio {
+- (void)updateProfileWithUsername:(NSString *)username
+                        firstName:(NSString *)firstName
+                         lastName:(NSString *)lastName
+                         password:(NSString *)password
+                            email:(NSString *)email
+                              bio:(NSString *)bio
+                      avatarImage:(NSData *)avatarImage {
     
     void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
         if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
@@ -505,16 +504,7 @@
         
         //success
         if (statusCode == 200) {
-            [UserService setFirstName:firstName];
-            [UserService setLastName:lastName];
-            if (password)[UserService setPassword:password];
-            [UserService setPosition:position];
-            [UserService setDepartmentID:departmentID];
-            [UserService setDepartmentName:departmentName];
-            [UserService setAvatarURL:[self validString:[[responseObject objectForKey:@"data"] objectForKey:@"avatar"]]];
-            [UserService setBio:bio];
-            
-            Notification_Post(JXNotification.UserServices.UpdateUserDetailsSuccess, nil);
+            Notification_Post(JXNotification.UserServices.UpdateUserDetailsSuccess, [responseObject objectForKey:@"data"]);
         }
         
         //invalid
@@ -529,40 +519,22 @@
     };
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   [UserService getUsername], @"email",
+                                   username, @"username",
+                                   firstName, @"first_name",
+                                   lastName, @"last_name",
+                                   password, @"password",
                                    [UserService getUserID], @"user_id",
                                    [UserService getOAuthToken], @"access_token", nil];
-    
-    if (firstName) {
-        [params setObject:firstName forKey:@"first_name"];
-    }
-    
-    if (lastName) {
-        [params setObject:lastName forKey:@"last_name"];
-    }
-    
-    if (position) {
-        [params setObject:position forKey:@"position"];
-    }
-    
-    if (bio) {
-        [params setObject:bio forKey:@"bio"];
-    }
-    
-    if (departmentID) {
-        [params setObject:departmentID forKey:@"department_id"];
-    }
-    else [params setObject:[UserService getDepartmentID] forKey:@"department_id"];
-    
-    if (password) {
-        [params setObject:avatarImage forKey:@"password"];
-    }
     
     NSMutableArray *avatarImageArray = [[NSMutableArray alloc] init];
     if (avatarImage) {
         [avatarImageArray addObject:avatarImage];
     }
     
+    if (bio) {
+        [params setObject:bio forKey:@"bio"];
+    }
+
     [self checkAccessTokenAndCall:@"api/v1/user/update" isPost:YES includedImages:avatarImageArray imagesKey:@"avatar_image" parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
@@ -921,6 +893,7 @@
         
         //success
         if (statusCode == 200) {
+            [DataAccess followUser:[NSNumber numberWithInt:[userId intValue]]];
             Notification_Post(JXNotification.UserServices.FollowUserSuccess, nil);
         }
         
@@ -951,6 +924,7 @@
         
         //success
         if (statusCode == 200) {
+            [DataAccess unfollowUser:[NSNumber numberWithInt:[userId intValue]]];
             Notification_Post(JXNotification.UserServices.UnFollowUserSuccess, nil);
         }
         
@@ -1198,26 +1172,26 @@
         
         //success
         if (statusCode == 200) {
-            NSArray *prayers = [DataAccess addPrayers:[responseObject objectForKey:@"data"]];
-            Notification_Post(JXNotification.FeedServices.LoadFeedSuccess, prayers);
+            NSArray *notifications = [DataAccess addPrayers:[responseObject objectForKey:@"data"]];
+            Notification_Post(JXNotification.NotificationsServices.GetNotificationsSuccess, notifications);
         }
         
         //invalid
         else {
-            Notification_Post(JXNotification.FeedServices.LoadFeedFailed, nil);
+            Notification_Post(JXNotification.NotificationsServices.GetNotificationsFailed, nil);
         }
     };
     
     void (^failureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
         if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
-        Notification_Post(JXNotification.FeedServices.LoadFeedFailed, nil);
+        Notification_Post(JXNotification.NotificationsServices.GetNotificationsFailed, nil);
     };
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                    [UserService getUserID], @"user_id",
                                    [UserService getOAuthToken], @"access_token", nil];
     
-    [self checkAccessTokenAndCall:@"api/v1/prayers" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
+    [self checkAccessTokenAndCall:@"api/v1/notifications" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
 

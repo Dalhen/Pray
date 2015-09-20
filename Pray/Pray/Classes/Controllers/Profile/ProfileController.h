@@ -36,6 +36,8 @@
     SWTableViewCell *currentlyEditedCell;
     UIAlertView *deletePostAlert;
     UIAlertView *reportPostAlert;
+    
+    UIButton *followButton;
 }
 
 - (id)initWithUser:(CDUser *)aUser;

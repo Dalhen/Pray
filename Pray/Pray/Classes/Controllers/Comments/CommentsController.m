@@ -8,7 +8,7 @@
 
 #import "CommentsController.h"
 #import "NSString+Extensions.h"
-
+#import "ProfileController.h"
 
 @interface CommentsController ()
 
@@ -601,6 +601,18 @@
     [cell updateWithComment:comment];
     
     return cell;
+}
+
+
+#pragma mark - UserProfile
+- (void)showUserForCell:(CommentCell *)cell {
+    
+    CDComment *comment = [comments objectAtIndex:[[commentsTable indexPathForCell:cell] row]];
+    
+    if (comment.creator) {
+        ProfileController *profileController = [[ProfileController alloc] initWithUser:comment.creator];
+        [self.navigationController pushViewController:profileController animated:YES];
+    }
 }
 
 
