@@ -14,6 +14,6 @@
     UILabel *name;
 }
 
-- (void)setDetailsWithData:(NSDictionary *)data;
+- (void)setDetailsWithUserObject:(CDUser *)userObject;
 
 @end

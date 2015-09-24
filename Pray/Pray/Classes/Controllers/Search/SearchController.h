@@ -28,6 +28,8 @@
     
     SWTableViewCell *currentlyEditedCell;
     UIAlertView *reportPostAlert;
+    
+    NSString *modifiedText;
 }
 
 @end

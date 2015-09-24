@@ -8,6 +8,7 @@
 
 #import "SearchController.h"
 #import "CommentsController.h"
+#import "ProfileController.h"
 
 @interface SearchController ()
 
@@ -73,6 +74,8 @@
     search = [[UITextField alloc] initWithFrame:CGRectMake(20*sratio, 56*sratio, self.view.screenWidth - 40*sratio, 50*sratio)];
     [search setBackgroundColor:Colour_255RGB(157, 160, 171)];
     [search setPlaceholder:LocString(@"Search...")];
+    [search setTextColor:Colour_White];
+    search.returnKeyType = UIReturnKeySearch;
     [search setDelegate:self];
     [self.view addSubview:search];
     
@@ -118,10 +121,10 @@
     Notification_Observe(JXNotification.FeedServices.UnLikePostSuccess, unlikePostSuccess);
     Notification_Observe(JXNotification.FeedServices.UnLikePostFailed, unlikePostFailed);
     
-    Notification_Observe(JXNotification.UserServices.FollowUserSuccess, followUserSuccess);
-    Notification_Observe(JXNotification.UserServices.FollowUserFailed, followUserFailed);
-    Notification_Observe(JXNotification.UserServices.UnFollowUserSuccess, unfollowUserSuccess);
-    Notification_Observe(JXNotification.UserServices.UnFollowUserFailed, unfollowUserFailed);
+//    Notification_Observe(JXNotification.UserServices.FollowUserSuccess, followUserSuccess);
+//    Notification_Observe(JXNotification.UserServices.FollowUserFailed, followUserFailed);
+//    Notification_Observe(JXNotification.UserServices.UnFollowUserSuccess, unfollowUserSuccess);
+//    Notification_Observe(JXNotification.UserServices.UnFollowUserFailed, unfollowUserFailed);
     
     Notification_Observe(UIKeyboardWillShowNotification, keyboardWillShow:);
     Notification_Observe(UIKeyboardWillHideNotification, keyboardWillHide:);
@@ -141,10 +144,10 @@
     Notification_Remove(JXNotification.FeedServices.UnLikePostSuccess);
     Notification_Remove(JXNotification.FeedServices.UnLikePostFailed);
     
-    Notification_Remove(JXNotification.UserServices.FollowUserSuccess);
-    Notification_Remove(JXNotification.UserServices.FollowUserFailed);
-    Notification_Remove(JXNotification.UserServices.UnFollowUserSuccess);
-    Notification_Remove(JXNotification.UserServices.UnFollowUserFailed);
+//    Notification_Remove(JXNotification.UserServices.FollowUserSuccess);
+//    Notification_Remove(JXNotification.UserServices.FollowUserFailed);
+//    Notification_Remove(JXNotification.UserServices.UnFollowUserSuccess);
+//    Notification_Remove(JXNotification.UserServices.UnFollowUserFailed);
     
     Notification_Remove(UIKeyboardWillShowNotification);
     Notification_Remove(UIKeyboardWillHideNotification);
@@ -192,10 +195,14 @@
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    NSString * textViewText = [[textField text] stringByReplacingCharactersInRange:range withString:string];
+    modifiedText = [[textField text] stringByReplacingCharactersInRange:range withString:string];
     
-    if (textViewText.length>2) {
+    if (modifiedText.length>2) {
         [self updateSearch];
+    }
+    
+    if ([string isEqualToString:@"\n"]) {
+        [textField resignFirstResponder];
     }
     
     return YES;
@@ -229,10 +236,10 @@
 #pragma mark - Search Delegate
 - (void)updateSearch {
     if (isSearchingPeople) {
-        [NetworkService searchForUsersWithText:search.text];
+        [NetworkService searchForUsersWithText:modifiedText];
     }
     else {
-        [NetworkService searchForPrayersWithText:search.text];
+        [NetworkService searchForPrayersWithText:modifiedText];
     }
 }
 
@@ -296,11 +303,12 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (isSearchingPeople) {
-        
+        ProfileController *profileController = [[ProfileController alloc] initWithUser:[searchResults objectAtIndex:indexPath.row]];
+        [self.navigationController pushViewController:profileController animated:YES];
     }
     else {
         CDPrayer *prayer = [searchResults objectAtIndex:indexPath.row];
-        CommentsController *commentsController = [[CommentsController alloc] initWithPrayer:prayer];
+        CommentsController *commentsController = [[CommentsController alloc] initWithPrayer:prayer andDisplayCommentsOnly:YES];
         [self.navigationController pushViewController:commentsController animated:YES];
     }
 }
@@ -359,7 +367,7 @@
     }
 }
 
-
+    
 #pragma mark - Like Post
 - (void)likeButtonClickedForCell:(PrayerCell *)cell {
     
@@ -393,7 +401,7 @@
 #pragma mark - Comments
 - (void)commentButtonClickedForCell:(PrayerCell *)cell {
     CDPrayer *prayer = [searchResults objectAtIndex:[[mainTable indexPathForCell:cell] row]];
-    CommentsController *commentsController = [[CommentsController alloc] initWithPrayer:prayer];
+    CommentsController *commentsController = [[CommentsController alloc] initWithPrayer:prayer andDisplayCommentsOnly:YES];
     [self.navigationController pushViewController:commentsController animated:YES];
 }
 
@@ -420,19 +428,11 @@
 
 #pragma mark - UserCell delegate
 - (void)followUserForCell:(UserCell *)cell {
-    
-}
-
-- (void)followUserSuccess {
-    
-}
-
-- (void)followUserFailed {
-    
+    [NetworkService followUserForID:[cell.currentUser.uniqueId stringValue]];
 }
 
 - (void)unfollowUserForCell:(UserCell *)cell {
-    
+    [NetworkService unfollowUserForID:[cell.currentUser.uniqueId stringValue]];
 }
 
 - (void)unfollowUserSuccess {
@@ -442,6 +442,22 @@
 - (void)unfollowUserFailed {
     
 }
+
+
+#pragma mark - Show user profile
+- (void)showUserForCell:(UITableViewCell *)cell {
+    if ([cell isKindOfClass:[UserCell class]]) {
+        UserCell *userCell = (UserCell *)cell;
+        ProfileController *profileController = [[ProfileController alloc] initWithUser:userCell.currentUser];
+        [self.navigationController pushViewController:profileController animated:YES];
+    }
+    else if  ([cell isKindOfClass:[PrayerCell class]]) {
+        PrayerCell *prayerCell = (PrayerCell *)cell;
+        ProfileController *profileController = [[ProfileController alloc] initWithUser:prayerCell.prayer.creator];
+        [self.navigationController pushViewController:profileController animated:YES];
+    }
+}
+
 
 
 - (void)didReceiveMemoryWarning {

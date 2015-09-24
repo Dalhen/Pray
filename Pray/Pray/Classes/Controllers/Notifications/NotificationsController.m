@@ -160,6 +160,32 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    NSDictionary *notification = [notifications objectAtIndex:indexPath.row];
+    
+    switch ([[notification objectForKey:@"type"] intValue]) {
+            
+            //Comment a prayer
+        case 1:
+            
+            break;
+            
+            //Like a prayer
+        case 2:
+            
+            break;
+            
+            //Tags in a prayer
+        case 3:
+            break;
+            
+            //Tags in a comment
+        case 4:
+            break;
+            
+        default:
+            break;
+    }
 }
 
 

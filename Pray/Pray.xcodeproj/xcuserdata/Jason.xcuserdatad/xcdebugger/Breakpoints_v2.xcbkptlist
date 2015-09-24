@@ -125,22 +125,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Pray/Classes/Controllers/Comments/CommentsController.m"
-            timestampString = "461937757.753801"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "320"
-            endingLineNumber = "320"
-            landmarkName = "-textViewShouldBeginEditing:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Pray/Singletons/JXNetworkService.m"
             timestampString = "462721364.405864"
             startingColumnNumber = "9223372036854775807"
@@ -174,11 +158,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pray/Classes/Controllers/Profile/ProfileController.m"
-            timestampString = "464435509.524237"
+            timestampString = "464461226.537165"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "347"
-            endingLineNumber = "347"
+            startingLineNumber = "363"
+            endingLineNumber = "363"
             landmarkName = "-loadPrayersForUserFailed"
             landmarkType = "5">
          </BreakpointContent>
@@ -189,13 +173,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Pray/Singletons/JXNetworkService.m"
-            timestampString = "464435552.132473"
+            filePath = "Pray/Classes/Cells/NotificationsCell.m"
+            timestampString = "464486943.344333"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "933"
-            endingLineNumber = "933"
-            landmarkName = "-unfollowUserForID:"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
+            landmarkName = "-updateWithNotification:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -205,13 +189,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Pray/Singletons/JXNetworkService.m"
-            timestampString = "464435557.249747"
+            filePath = "Pray/Classes/Controllers/Comments/CommentsController.m"
+            timestampString = "464652998.027588"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "926"
-            endingLineNumber = "926"
-            landmarkName = "-unfollowUserForID:"
+            startingLineNumber = "260"
+            endingLineNumber = "260"
+            landmarkName = "-postComment"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -221,13 +205,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Pray/Singletons/JXNetworkService.m"
-            timestampString = "464435558.932788"
+            filePath = "Pray/Classes/Controllers/Comments/CommentsController.m"
+            timestampString = "464652998.027588"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "938"
-            endingLineNumber = "938"
-            landmarkName = "-unfollowUserForID:"
+            startingLineNumber = "250"
+            endingLineNumber = "250"
+            landmarkName = "-postComment"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -237,13 +221,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Pray/Classes/Controllers/Profile/ProfileController.m"
-            timestampString = "464435728.028789"
+            filePath = "Pray/Classes/Controllers/Comments/CommentsController.m"
+            timestampString = "464652998.027588"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "180"
-            endingLineNumber = "180"
-            landmarkName = "-setupProfileHeader"
+            startingLineNumber = "787"
+            endingLineNumber = "787"
+            landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

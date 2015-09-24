@@ -193,7 +193,7 @@
     //App was in the foreground
     else {
         NSDictionary *notificationInfo = [userInfo objectForKey:@"cdata"];
-        switch ([[notificationInfo objectForKey:@"notification_type"] intValue]) {
+        switch ([[notificationInfo objectForKey:@"type"] intValue]) {
                 
 //                //New message
 //            case 1:
@@ -228,21 +228,21 @@
 - (void)launchedFromNotification:(NSDictionary *)notification {
     switch ([[notification objectForKey:@"notification_type"] intValue]) {
             
-            //New message
+            //Comment a prayer
         case 1:
             
             break;
             
-            //New match confirmed
+            //Like a prayer
         case 2:
             
             break;
             
-            //New match cancelled
+            //Tags in a prayer
         case 3:
             break;
             
-            //Match updated
+            //Tags in a comment
         case 4:
             break;
             

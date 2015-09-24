@@ -17,7 +17,7 @@
 
 - (void)likeButtonClickedForCell:(PrayerCell *)cell;
 - (void)commentButtonClickedForCell:(PrayerCell *)cell;
-- (void)showUserForCell:(PrayerCell *)cell;
+- (void)showUserForCell:(UITableViewCell *)cell;
 
 @end
 

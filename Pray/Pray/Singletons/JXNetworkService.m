@@ -522,13 +522,16 @@
                                    username, @"username",
                                    firstName, @"first_name",
                                    lastName, @"last_name",
-                                   password, @"password",
                                    [UserService getUserID], @"user_id",
                                    [UserService getOAuthToken], @"access_token", nil];
     
     NSMutableArray *avatarImageArray = [[NSMutableArray alloc] init];
     if (avatarImage) {
         [avatarImageArray addObject:avatarImage];
+    }
+    
+    if (password && ![password isEqualToString:@""]) {
+        [params setObject:password forKey:@"password"];
     }
     
     if (bio) {
@@ -955,8 +958,8 @@
         
         //success
         if (statusCode == 200) {
-            CDUser *user = [DataAccess addUserWithData:[responseObject objectForKey:@"data"]];
-            Notification_Post(JXNotification.UserServices.AutocompleteSuccess, user);
+            NSArray *users = [DataAccess addUsers:[responseObject objectForKey:@"data"]];
+            Notification_Post(JXNotification.UserServices.AutocompleteSuccess, users);
         }
         
         //invalid
@@ -1130,40 +1133,6 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Notifications
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-- (void)searchFor {
-    void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
-        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
-        
-        NSInteger statusCode = [operation.response statusCode];
-        
-        //success
-        if (statusCode == 200) {
-            NSArray *prayers = [DataAccess addPrayers:[responseObject objectForKey:@"data"]];
-            Notification_Post(JXNotification.FeedServices.LoadFeedSuccess, prayers);
-        }
-        
-        //invalid
-        else {
-            Notification_Post(JXNotification.FeedServices.LoadFeedFailed, nil);
-        }
-    };
-    
-    void (^failureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
-        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
-        Notification_Post(JXNotification.FeedServices.LoadFeedFailed, nil);
-    };
-    
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   [UserService getUserID], @"user_id",
-                                   [UserService getOAuthToken], @"access_token", nil];
-    
-    [self checkAccessTokenAndCall:@"api/v1/prayers" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
-}
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark - Notifications
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)loadNotifications {
     void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
         if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
@@ -1172,7 +1141,7 @@
         
         //success
         if (statusCode == 200) {
-            NSArray *notifications = [DataAccess addPrayers:[responseObject objectForKey:@"data"]];
+            NSArray *notifications = [responseObject objectForKey:@"data"];
             Notification_Post(JXNotification.NotificationsServices.GetNotificationsSuccess, notifications);
         }
         

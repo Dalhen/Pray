@@ -70,7 +70,7 @@
     
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightButton setFrame:CGRectMake(256*sratio, 18*sratio, 52*sratio, 30*sratio)];
-    [rightButton setBackgroundColor:Colour_PrayBlue];//Colour_255RGB(140, 146, 164)];
+    [rightButton setBackgroundColor:Colour_255RGB(140, 146, 164)];
     [rightButton setTitleColor:Colour_White forState:UIControlStateNormal];
     [rightButton.titleLabel setFont:[FontService systemFont:13*sratio]];
     [rightButton.layer setCornerRadius:5.0f];
@@ -297,6 +297,22 @@
     [userPrayers setText:currentUser.prayersCount];
     [userFollowers setText:currentUser.followersCount];
     [userFollowing setText:currentUser.followingCount];
+    
+    //Follow - Unfollow
+    if (currentUser.isFollowed.boolValue) {
+        [followButton setTitle:LocString(@"Following") forState:UIControlStateNormal];
+        [followButton setBackgroundColor:Colour_255RGB(21, 24, 32)];
+        [followButton setTitleColor:Colour_White forState:UIControlStateNormal];
+        [followButton removeTarget:self action:@selector(followUser) forControlEvents:UIControlEventTouchUpInside];
+        [followButton addTarget:self action:@selector(unfollowUser) forControlEvents:UIControlEventTouchUpInside];
+    }
+    else {
+        [followButton setTitle:LocString(@"Follow") forState:UIControlStateNormal];
+        [followButton setBackgroundColor:Colour_White];
+        [followButton setTitleColor:Colour_PrayBlue forState:UIControlStateNormal];
+        [followButton removeTarget:self action:@selector(unfollowUser) forControlEvents:UIControlEventTouchUpInside];
+        [followButton addTarget:self action:@selector(followUser) forControlEvents:UIControlEventTouchUpInside];
+    }
 }
 
 - (void)loadUserInfoFailed {
@@ -379,7 +395,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     CDPrayer *prayer = [prayers objectAtIndex:indexPath.row];
-    CommentsController *commentsController = [[CommentsController alloc] initWithPrayer:prayer];
+    CommentsController *commentsController = [[CommentsController alloc] initWithPrayer:prayer andDisplayCommentsOnly:YES];
     [self.navigationController pushViewController:commentsController animated:YES];
 }
 
@@ -510,7 +526,7 @@
 #pragma mark - Comments
 - (void)commentButtonClickedForCell:(PrayerCell *)cell {
     CDPrayer *prayer = [prayers objectAtIndex:[[mainTable indexPathForCell:cell] row]];
-    CommentsController *commentsController = [[CommentsController alloc] initWithPrayer:prayer];
+    CommentsController *commentsController = [[CommentsController alloc] initWithPrayer:prayer andDisplayCommentsOnly:YES];
     [self.navigationController pushViewController:commentsController animated:YES];
 }
 
@@ -548,18 +564,20 @@
 
 - (void)followUser {
     [followButton setTitle:LocString(@"Following") forState:UIControlStateNormal];
-    [followButton addTarget:self action:@selector(unfollowUser) forControlEvents:UIControlEventTouchUpInside];
     [followButton setBackgroundColor:Colour_255RGB(21, 24, 32)];
     [followButton setTitleColor:Colour_White forState:UIControlStateNormal];
+    [followButton removeTarget:self action:@selector(followUser) forControlEvents:UIControlEventTouchUpInside];
+    [followButton addTarget:self action:@selector(unfollowUser) forControlEvents:UIControlEventTouchUpInside];
     
     [NetworkService followUserForID:[currentUser.uniqueId stringValue]];
 }
 
 - (void)unfollowUser {
     [followButton setTitle:LocString(@"Follow") forState:UIControlStateNormal];
-    [followButton addTarget:self action:@selector(followUser) forControlEvents:UIControlEventTouchUpInside];
     [followButton setBackgroundColor:Colour_White];
     [followButton setTitleColor:Colour_PrayBlue forState:UIControlStateNormal];
+    [followButton removeTarget:self action:@selector(unfollowUser) forControlEvents:UIControlEventTouchUpInside];
+    [followButton addTarget:self action:@selector(followUser) forControlEvents:UIControlEventTouchUpInside];
     
     [NetworkService unfollowUserForID:[currentUser.uniqueId stringValue]];
 }

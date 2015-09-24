@@ -212,7 +212,7 @@
 		96EB6CDB1B6BFAEC00ADA3AB /* backButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96EB6CDA1B6BFAEC00ADA3AB /* backButton@2x.png */; };
 		96EB6CDE1B6CCD6A00ADA3AB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 96EB6CDD1B6CCD6A00ADA3AB /* Localizable.strings */; };
 		96EB6CE01B6D053700ADA3AB /* avatarEmpty@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96EB6CDF1B6D053700ADA3AB /* avatarEmpty@2x.png */; };
-		FC67F6B61BAC562B00B2318E /* MentionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FC67F6B51BAC562B00B2318E /* MentionCell.m */; settings = {ASSET_TAGS = (); }; };
+		FC67F6B61BAC562B00B2318E /* MentionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FC67F6B51BAC562B00B2318E /* MentionCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */

@@ -14,6 +14,7 @@
 
 - (void)followUserForCell:(UserCell *)cell;
 - (void)unfollowUserForCell:(UserCell *)cell;
+- (void)showUserForCell:(UITableViewCell *)cell;
 
 @end
 
@@ -24,10 +25,9 @@
     UILabel *fullNameLabel;
     UILabel *usernameLabel;
     UIButton *followButton;
-    
-    CDUser *currentUser;
 }
 
+@property(nonatomic, strong) CDUser *currentUser;
 @property(nonatomic, assign) id <UserCellDelegate> delegate;
 
 - (void)updateWithUserObject:(CDUser *)userObject;

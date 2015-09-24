@@ -125,25 +125,23 @@
     }
     
     //Mentions
-    /*
      NSRegularExpression *mentionsExpression = [NSRegularExpression regularExpressionWithPattern:@"(@\\w+)" options:NO error:nil];
      NSArray *mentionsMatches = [mentionsExpression matchesInString:stringWithTags options:0 range:NSMakeRange(0, [stringWithTags length])];
      
      
      for (NSTextCheckingResult *mentionMatch in mentionsMatches) {
      NSRange mentionMatchRange = [mentionMatch rangeAtIndex:0];
-     [attString addAttribute:NSForegroundColorAttributeName value:Colour_GreenGrape range:mentionMatchRange];
+     [attString addAttribute:NSForegroundColorAttributeName value:Colour_PrayBlue range:mentionMatchRange];
      
      //        NSString *mentionString = [stringWithTags substringWithRange:mentionMatchRange];
      //        NSRange linkRange = [stringWithTags rangeOfString:mentionString];
      //        NSString* user = [mentionString substringFromIndex:1];
      //        NSString* linkURLString = [NSString stringWithFormat:@"http://www.google.com"];
      NSArray *keys = [[NSArray alloc] initWithObjects:(id)kCTForegroundColorAttributeName, (id)kCTUnderlineStyleAttributeName, nil];
-     NSArray *objects = [[NSArray alloc] initWithObjects:Colour_GreenGrape, [NSNumber numberWithInt:kCTUnderlineStyleNone], nil];
+     NSArray *objects = [[NSArray alloc] initWithObjects:Colour_PrayBlue, [NSNumber numberWithInt:kCTUnderlineStyleNone], nil];
      NSDictionary *linkAttributes = [[NSDictionary alloc] initWithObjects:objects forKeys:keys];
      [descriptionText addLinkWithTextCheckingResult:mentionMatch attributes:linkAttributes];
      }
-     */
     
     return attString;
 }

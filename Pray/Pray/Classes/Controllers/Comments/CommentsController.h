@@ -32,6 +32,8 @@
     
     NSMutableArray *sendingStack;
     
+    BOOL displayCommentsOnly;
+    
     //Tagging
     BOOL removedSpaceCharacter;
     BOOL removedArobaseCharacter;
@@ -45,9 +47,14 @@
     NSInteger mentionIndex;
     NSInteger mentionTotal;
     NSString *currentMention;
+    
+    //PrayerView
+    UIImageView *likesIcon;
+    UILabel *likesCount;
+    UILabel *commentsCount;
 }
 
-- (id)initWithPrayer:(CDPrayer *)prayer;
+- (id)initWithPrayer:(CDPrayer *)prayer andDisplayCommentsOnly:(BOOL)display;
 
 
 @end

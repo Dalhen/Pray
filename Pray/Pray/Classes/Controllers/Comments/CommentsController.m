@@ -9,6 +9,9 @@
 #import "CommentsController.h"
 #import "NSString+Extensions.h"
 #import "ProfileController.h"
+#import "UIImageView+Rounded.h"
+#import "UIImageView+WebCache.h"
+#import "MentionCell.h"
 
 @interface CommentsController ()
 
@@ -17,12 +20,15 @@
 @implementation CommentsController
 
 
-- (id)initWithPrayer:(CDPrayer *)prayer {
+- (id)initWithPrayer:(CDPrayer *)prayer andDisplayCommentsOnly:(BOOL)display {
     self = [super init];
     
     if (self) {
         currentPrayer = prayer;
         comments = [[NSMutableArray alloc] init];
+        mentionsAdded = [[NSMutableArray alloc] init];
+        sendingStack = [[NSMutableArray alloc] init];
+        displayCommentsOnly = display;
     }
     
     return self;
@@ -244,9 +250,9 @@
         NSMutableArray *finalMentions = [[NSMutableArray alloc] initWithCapacity:[mentionsAdded count]];
         for (NSDictionary *mentionObject in mentionsAdded) {
             //User mention
-            if ([[mentionObject objectForKey:@"userObject"] isKindOfClass:[NSDictionary class]]) {
-                NSDictionary *userObject = [mentionObject objectForKey:@"userObject"];
-                NSString *mentionString = [userObject objectForKey:@"id"];
+            if ([[mentionObject objectForKey:@"userObject"] isKindOfClass:[CDUser class]]) {
+                CDUser *userObject = [mentionObject objectForKey:@"userObject"];
+                NSString *mentionString = [userObject.uniqueId stringValue];
                 [finalMentions addObject:mentionString];
             }
         }
@@ -541,29 +547,153 @@
 
 #pragma mark - CommentsTableView delegate & datasource
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    if ([comments count]>0) {
+    
+    //Mentions
+    if (searchingForMentions) {
         return [[UIView alloc] initWithFrame:CGRectZero];
     }
+    
+    //Standard
     else {
-        UIView *disclaimerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.screenWidth, 44)];
+        //Comments Only
+        if (displayCommentsOnly) {
+            if ([comments count]>0) {
+                return [[UIView alloc] initWithFrame:CGRectZero];
+            }
+            else {
+                UIView *disclaimerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.screenWidth, 44)];
+                
+                UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 22, disclaimerView.width, 22)];
+                [textLabel setTextAlignment:NSTextAlignmentCenter];
+                [textLabel setFont:[FontService systemFont:13*sratio]];
+                [textLabel setTextColor:Colour_255RGB(93, 98, 113)];
+                [textLabel setText:LocString(@"Be the first to comment on this prayer!")];
+                [disclaimerView addSubview:textLabel];
+                
+                return disclaimerView;
+            }
+        }
         
-        UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 22, disclaimerView.width, 22)];
-        [textLabel setTextAlignment:NSTextAlignmentCenter];
-        [textLabel setFont:[FontService systemFont:13*sratio]];
-        [textLabel setTextColor:Colour_255RGB(93, 98, 113)];
-        [textLabel setText:LocString(@"Be the first to comment on this prayer!")];
-        [disclaimerView addSubview:textLabel];
-        
-        return disclaimerView;
+        //Full moment + comments
+        else {
+            UIView *prayerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.screenWidth, 320*sratio)];
+            
+            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.screenWidth, prayerCellHeight)];
+            [imageView setBackgroundColor:Colour_255RGB(80, 92, 109)];
+            [imageView setContentMode:UIViewContentModeScaleAspectFill];
+            [imageView setClipsToBounds:YES];
+            [prayerView addSubview:imageView];
+            
+            if (currentPrayer.imageURL != nil && ![currentPrayer.imageURL isEqualToString:@""]) {
+                [imageView sd_setImageWithURL:[NSURL URLWithString:currentPrayer.imageURL]];
+            }
+            
+            UIView *blackMask = [[UIView alloc] initWithFrame:imageView.frame];
+            [blackMask setBackgroundColor:Colour_BlackAlpha(0.3)];
+            [prayerView addSubview:blackMask];
+            
+            UIImageView *userAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(12*sratio, 8*sratio, 38*sratio, 38*sratio)];
+            [userAvatar setRoundedToDiameter:38*sratio];
+            [userAvatar setContentMode:UIViewContentModeScaleAspectFill];
+            [prayerView addSubview:userAvatar];
+            
+            if (currentPrayer.creator.avatar != nil && ![currentPrayer.creator.avatar isEqualToString:@""]) {
+                [userAvatar sd_setImageWithURL:[NSURL URLWithString:currentPrayer.creator.avatar] placeholderImage:[UIImage imageNamed:@"emptyProfile"]];
+            }
+            else {
+                [userAvatar setImage:[UIImage imageNamed:@"emptyProfile"]];
+            }
+            
+            UIButton *userAction = [UIButton buttonWithType:UIButtonTypeCustom];
+            [userAction setFrame:userAvatar.frame];
+            [userAction addTarget:self action:@selector(showUserFromPrayer) forControlEvents:UIControlEventTouchUpInside];
+            [prayerView addSubview:userAction];
+            
+            UILabel *username = [[UILabel alloc] initWithFrame:CGRectMake(userAvatar.right + 10*sratio, 12*sratio, 250*sratio, 20*sratio)];
+            username.font = [FontService systemFont:14*sratio];
+            username.textColor = Colour_White;
+            username.textAlignment = NSTextAlignmentLeft;
+            [username setText:[NSString stringWithFormat:@"%@ %@", currentPrayer.creator.firstname, currentPrayer.creator.lastname]];
+            [prayerView addSubview:username];
+            
+            UILabel *timeAgo = [[UILabel alloc] initWithFrame:CGRectMake(username.left, username.bottom, 250*sratio,12*sratio)];
+            timeAgo.font = [FontService systemFont:9*sratio];
+            timeAgo.textColor = Colour_White;
+            timeAgo.textAlignment = NSTextAlignmentLeft;
+            [timeAgo setText:currentPrayer.timeAgo];
+            [prayerView addSubview:timeAgo];
+            
+            UILabel *textView = [[UILabel alloc] initWithFrame:CGRectMake((self.view.screenWidth-280*sratio)/2, 64*sratio, 280*sratio, 200*sratio)];
+            textView.numberOfLines = 8;
+            textView.adjustsFontSizeToFitWidth = YES;
+            textView.minimumScaleFactor = (14*sratio)/(50*sratio);
+            textView.font = [FontService systemFont:50*sratio];
+            textView.textColor = Colour_White;
+            [textView setTextAlignment:NSTextAlignmentCenter];
+            [textView setText:currentPrayer.prayerText];
+            [prayerView addSubview:textView];
+            
+            likesIcon = [[UIImageView alloc] initWithFrame:CGRectMake(18*sratio, prayerCellHeight - 38*sratio, 22*sratio, 20*sratio)];
+            likesIcon.image = [UIImage imageNamed:@"likeIconOFF"];
+            [likesIcon setImage:[UIImage imageNamed:(currentPrayer.isLiked.boolValue)? @"likeIconON" : @"likeIconOFF"]];
+            [prayerView addSubview:likesIcon];
+            
+            likesCount = [[UILabel alloc] initWithFrame:CGRectMake(likesIcon.right + 6*sratio, prayerCellHeight - 38*sratio, 0, 20*sratio)];
+            likesCount.font = [FontService systemFont:13*sratio];
+            likesCount.textColor = Colour_White;
+            [prayerView addSubview:likesCount];
+            
+            UIImageView *commentsIcon = [[UIImageView alloc] initWithFrame:CGRectMake(0, prayerCellHeight - 38*sratio, 22*sratio, 21*sratio)];
+            commentsIcon.image = [UIImage imageNamed:@"commentsIcon"];
+            [prayerView addSubview:commentsIcon];
+            
+            commentsCount = [[UILabel alloc] initWithFrame:CGRectMake(commentsIcon.right, prayerCellHeight - 38*sratio, 0, 20*sratio)];
+            commentsCount.font = [FontService systemFont:13*sratio];
+            commentsCount.textColor = Colour_White;
+            [prayerView addSubview:commentsCount];
+            
+            UIButton *likeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            [likeButton addTarget:self action:@selector(likeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+            [prayerView addSubview:likeButton];
+            
+            [likesCount setText:currentPrayer.likesCount];
+            [likesCount sizeToFit];
+            [likesCount setHeight:20*sratio];
+            [likesCount setLeft:likesIcon.right + 6*sratio];
+            [commentsIcon setLeft:likesCount.right + 24*sratio];
+            
+            [commentsCount setText:currentPrayer.commentsCount];
+            [commentsCount sizeToFit];
+            [commentsCount setHeight:20*sratio];
+            [commentsCount setLeft:commentsIcon.right + 6*sratio];
+            
+            likeButton.frame = CGRectMake(likesIcon.left - 10*sratio, prayerCellHeight - 48*sratio, 10*sratio + likesIcon.width + 6*sratio + likesCount.width + 10*sratio, 42*sratio);
+            
+            return prayerView;
+        }
     }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if ([comments count]>0) {
+    
+    //Mentions
+    if (searchingForMentions) {
         return 0;
     }
+    
+    //Standard
     else {
-        return 44;
+        if (displayCommentsOnly) {
+            if ([comments count]>0) {
+                return 0;
+            }
+            else {
+                return 44;
+            }
+        }
+        else {
+            return 320*sratio;
+        }
     }
 }
 
@@ -576,7 +706,16 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 24*sratio + [self heightToFitCommentText:[(CDComment *)[comments objectAtIndex:indexPath.row] commentText]];
+    
+    //Mentions
+    if (searchingForMentions) {
+        return 46*sratio;
+    }
+    
+    //Standard
+    else {
+        return 24*sratio + [self heightToFitCommentText:[(CDComment *)[comments objectAtIndex:indexPath.row] commentText]];
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
@@ -584,23 +723,102 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [comments count];
+    //Mentions
+    if (searchingForMentions) {
+        return ([mentions count]>0? [mentions count] : 1);
+    }
+    
+    //Normal
+    else return [comments count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    CommentCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([CommentCell class])];
-    
-    if(!cell) {
-        cell = [[CommentCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                  reuseIdentifier:NSStringFromClass([CommentCell class])];
-        cell.delegate = self;
+    //Mentions
+    if (searchingForMentions) {
+        if ([mentions count]>0) {
+            MentionCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MentionCell"];
+            
+            if(!cell) {
+                cell = [[MentionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MentionCell"];
+                [cell setBackgroundColor:Colour_White];
+            }
+            
+            [cell setDetailsWithUserObject:[mentions objectAtIndex:indexPath.row]];
+            
+            return cell;
+        }
+        //disclaimer
+        else {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DisclaimerCell"];
+            
+            if(!cell) {
+                cell = [[MentionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"DisclaimerCell"];
+                [cell setBackgroundColor:Colour_White];
+            }
+            
+            [cell.textLabel setText:LocString(@"No results.")];
+            [cell.textLabel setTextColor:Colour_255RGB(206, 206, 206)];
+            
+            return cell;
+        }
     }
     
-    CDComment *comment = [comments objectAtIndex:indexPath.row];
-    [cell updateWithComment:comment];
-    
-    return cell;
+    //Comments
+    else {
+        CommentCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([CommentCell class])];
+        
+        if(!cell) {
+            cell = [[CommentCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                      reuseIdentifier:NSStringFromClass([CommentCell class])];
+            cell.delegate = self;
+        }
+        
+        CDComment *comment = [comments objectAtIndex:indexPath.row];
+        [cell updateWithComment:comment];
+        
+        return cell;
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (searchingForMentions) {
+        
+        if ([mentions count]>0) {
+            CDUser *userObject = [mentions objectAtIndex:indexPath.row];
+            NSDictionary *userMention = @{@"userObject":userObject, @"mentionIndex":[NSNumber numberWithInteger:mentionIndex]};
+            
+            //Inserting mention
+            if (mentionTotal > [mentionsAdded count]) {
+                [mentionsAdded insertObject:userMention atIndex:mentionIndex];
+            }
+            
+            //Replacing mention
+            if (mentionTotal == [mentionsAdded count]) {
+                [mentionsAdded replaceObjectAtIndex:mentionIndex withObject:userMention];
+            }
+            
+            //Updating comment box text to selected user
+            NSRegularExpression *mentionsExpression = [NSRegularExpression regularExpressionWithPattern:@"(@\\w+)" options:NO error:nil];
+            NSArray *mentionsMatches = [mentionsExpression matchesInString:commentTextView.text options:0 range:NSMakeRange(0, [commentTextView.text length])];
+            
+            NSTextCheckingResult *mentionMatch = [mentionsMatches objectAtIndex:mentionIndex];
+            NSRange mentionMatchRange = [mentionMatch rangeAtIndex:0];
+            
+            NSMutableString *commentStr = [[NSMutableString alloc] initWithString:commentTextView.text];
+            
+            NSString *unfilteredString = [userObject.firstname capitalizedString];
+            NSCharacterSet *notAllowedChars = [[NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"] invertedSet];
+            NSString *filteredString = [[unfilteredString componentsSeparatedByCharactersInSet:notAllowedChars] componentsJoinedByString:@""];
+            
+            [commentStr replaceCharactersInRange:mentionMatchRange withString:[NSString stringWithFormat:@"@%@", filteredString]];
+            [commentTextView setText:commentStr];
+            
+            //Closing search box
+            searchingForMentions = NO;
+            [commentsTable reloadData];
+        }
+    }
 }
 
 
@@ -615,6 +833,28 @@
     }
 }
 
+- (void)showUserFromPrayer {
+    ProfileController *profileController = [[ProfileController alloc] initWithUser:currentPrayer.creator];
+    [self.navigationController pushViewController:profileController animated:YES];
+}
+
+
+#pragma mark - Prayer Actions
+- (void)likeButtonClicked {
+    [likesIcon setImage:[UIImage imageNamed:(currentPrayer.isLiked.boolValue)? @"likeIconOFF" : @"likeIconON"]];
+    
+    if (currentPrayer.isLiked.boolValue == NO) {
+        [likesCount setText:[NSString stringWithFormat:@"%d",[likesCount.text intValue]+1]];
+        [SVProgressHUD showSuccessWithStatus:LocString(@"Liked!")];
+        [DataAccess add1LikeToPrayer:currentPrayer];
+        [NetworkService unlikePostWithID:[currentPrayer.uniqueId stringValue]];
+    }
+    else {
+        [likesCount setText:[NSString stringWithFormat:@"%d",[likesCount.text intValue]-1]];
+        [DataAccess remove1LikeToPrayer:currentPrayer];
+        [NetworkService likePostWithID:[currentPrayer.uniqueId stringValue]];
+    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

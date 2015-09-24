@@ -179,7 +179,6 @@
     user.prayersCount = validObject(prayersCount)? prayersCount : user.prayersCount;
     user.isFollowed = validObject(isFollowed)? isFollowed : user.isFollowed;
     
-    
     NSError *error;
     if (![moc save:&error]) {
         // Handle the error.

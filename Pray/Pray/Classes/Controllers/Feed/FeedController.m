@@ -288,7 +288,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     CDPrayer *prayer = [prayers objectAtIndex:indexPath.row];
-    CommentsController *commentsController = [[CommentsController alloc] initWithPrayer:prayer];
+    CommentsController *commentsController = [[CommentsController alloc] initWithPrayer:prayer andDisplayCommentsOnly:YES];
     [self.navigationController pushViewController:commentsController animated:YES];
 }
 
@@ -423,7 +423,7 @@
 #pragma mark - Comments
 - (void)commentButtonClickedForCell:(PrayerCell *)cell {
     CDPrayer *prayer = [prayers objectAtIndex:[[mainTable indexPathForCell:cell] row]];
-    CommentsController *commentsController = [[CommentsController alloc] initWithPrayer:prayer];
+    CommentsController *commentsController = [[CommentsController alloc] initWithPrayer:prayer andDisplayCommentsOnly:YES];
     [self.navigationController pushViewController:commentsController animated:YES];
 }
 
@@ -459,7 +459,8 @@
 #pragma mark - Search
 - (void)displaySearch {
     SearchController *searchController = [[SearchController alloc] init];
-    [self presentViewController:searchController animated:YES completion:nil];
+    UINavigationController *popupNav = [[UINavigationController alloc] initWithRootViewController:searchController];
+    [self.navigationController presentViewController:popupNav animated:YES completion:nil];
 }
 
 

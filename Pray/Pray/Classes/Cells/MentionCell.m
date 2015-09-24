@@ -37,27 +37,23 @@
     name = [[UILabel alloc] initWithFrame:CGRectMake(iconImageView.right + kPadding, 13*sratio, 165*sratio, 20*sratio)];
     [name setBackgroundColor:Colour_Clear];
     [name setFont:[FontService systemFont:14*sratio]];
-    [name setTextColor:Colour_White];
+    [name setTextColor:Colour_PrayBlue];
     [name setTextAlignment:NSTextAlignmentLeft];
     [self addSubview:name];
 }
 
 
 #pragma mark - Data update
-- (void)setDetailsWithData:(NSDictionary *)data {
+- (void)setDetailsWithUserObject:(CDUser *)userObject {
     
-    if ([[data objectForKey:@"avatar"] isEqualToString:@""] || ![data objectForKey:@"avatar"])
-        [iconImageView setImage:[UIImage imageNamed:@"emptyProfilePicture"]];
-    
-    else [iconImageView sd_setImageWithURL:[NSURL URLWithString:[data objectForKey:@"avatar"]] placeholderImage:[UIImage imageNamed:@"emptyProfilePicture"]];
-    
-    if ([data objectForKey:@"first_name"] && [data objectForKey:@"last_name"]) {
-        [name setText:[NSString stringWithFormat:@"%@ %@", [data objectForKey:@"first_name"], [[data objectForKey:@"last_name"] substringToIndex:1]]];
+    if (userObject.avatar != nil && ![userObject.avatar isEqualToString:@""]) {
+        [iconImageView sd_setImageWithURL:[NSURL URLWithString:userObject.avatar] placeholderImage:[UIImage imageNamed:@"emptyProfile"]];
     }
-    else if ([data objectForKey:@"full_name"]) {
-        [name setText:[data objectForKey:@"full_name"]];
+    else {
+        [iconImageView setImage:[UIImage imageNamed:@"emptyProfile"]];
     }
-    else [name setText:[data objectForKey:@"first_name"]];
+    
+    [name setText:userObject.firstname];
 }
 
 
