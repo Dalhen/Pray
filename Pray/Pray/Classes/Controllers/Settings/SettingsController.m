@@ -114,37 +114,58 @@
 }
 
 
+#pragma mark - UITableView dataSource & delegate
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 50*sratio;
+}
 
-//#pragma mark - UITableView dataSource & delegate
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    return 264*sratio;
-//}
-//
-//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    return prayers.count;
-//}
-//
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    PrayerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PrayerCell"];
-//    
-//    if(!cell) {
-//        cell = [[PrayerCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"PrayerCell"];
-//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        cell.delegate = self;
-//    }
-//    
-//    [cell updateWithPrayerObject:[prayers objectAtIndex:indexPath.row]];
-//    
-//    return cell;
-//}
-//
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    
-//    CDPrayer *prayer = [prayers objectAtIndex:indexPath.row];
-//    CommentsController *commentsController = [[CommentsController alloc] initWithPrayer:prayer];
-//    [self.navigationController pushViewController:commentsController animated:YES];
-//}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 5;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 2;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    
+    if(!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    }
+    
+    //Terms + Info
+    if (indexPath.section == 0) {
+        switch (indexPath.row) {
+            case 0:
+                cell.textLabel.text = LocString(@"Privacy Policy");
+                break;
+                
+            case 1:
+                cell.textLabel.text = LocString(@"Terms Of Service");
+                break;
+                
+            case 2:
+                cell.textLabel.text = LocString(@"Learn more");
+                break;
+                
+            default:
+                break;
+        }
+    }
+    
+    //Log out
+    else {
+        
+    }
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
 
 
 - (void)didReceiveMemoryWarning {
