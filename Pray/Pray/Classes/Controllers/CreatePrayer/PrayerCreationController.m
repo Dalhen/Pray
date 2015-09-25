@@ -436,7 +436,6 @@
 }
 
 
-
 #pragma mark - Post Prayer
 - (void)postPrayer {
     NSData *imageData = [self compressImage:selectedImage];

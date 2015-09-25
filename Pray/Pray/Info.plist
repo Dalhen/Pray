@@ -49,6 +49,11 @@
 	<string>924204237646628</string>
 	<key>FacebookDisplayName</key>
 	<string>Pray</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Pray will use your location only to share it with the prayers you post.</string>
 </dict>

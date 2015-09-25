@@ -9,7 +9,7 @@
 #import "NotificationsController.h"
 #import "PKRevealController.h"
 #import "NotificationsCell.h"
-
+#import "CommentsController.h"
 
 @interface NotificationsController ()
 
@@ -94,11 +94,15 @@
 - (void)registerForEvents {
     Notification_Observe(JXNotification.NotificationsServices.GetNotificationsSuccess, loadNotificationsSuccess:);
     Notification_Observe(JXNotification.NotificationsServices.GetNotificationsFailed, loadNotificationsFailed);
+    Notification_Observe(JXNotification.FeedServices.GetPrayerDetailsSuccess, getPrayerDetailsSuccess:);
+    Notification_Observe(JXNotification.FeedServices.GetPrayerDetailsFailed, getPrayerDetailsFailed);
 }
 
 - (void)unRegisterForEvents {
     Notification_Remove(JXNotification.NotificationsServices.GetNotificationsSuccess);
     Notification_Remove(JXNotification.NotificationsServices.GetNotificationsFailed);
+    Notification_Remove(JXNotification.FeedServices.GetPrayerDetailsSuccess);
+    Notification_Remove(JXNotification.FeedServices.GetPrayerDetailsFailed);
     Notification_RemoveObserver;
 }
 
@@ -166,26 +170,48 @@
     switch ([[notification objectForKey:@"type"] intValue]) {
             
             //Comment a prayer
-        case 1:
-            
+        case 1: {
+            [self getPrayerDetailsForID:[[[notification objectForKey:@"target"] objectForKey:@"data"] objectForKey:@"id"]];
+        }
             break;
             
             //Like a prayer
         case 2:
-            
+            [self getPrayerDetailsForID:[[[notification objectForKey:@"target"] objectForKey:@"data"] objectForKey:@"id"]];
             break;
             
             //Tags in a prayer
         case 3:
+            [self getPrayerDetailsForID:[[[notification objectForKey:@"target"] objectForKey:@"data"] objectForKey:@"id"]];
             break;
             
             //Tags in a comment
         case 4:
+            [self getPrayerDetailsForID:[[[notification objectForKey:@"target"] objectForKey:@"data"] objectForKey:@"id"]];
             break;
             
         default:
             break;
     }
+}
+
+
+#pragma mark - PrayerDetails
+- (void)getPrayerDetailsForID:(NSString *)prayerId {
+    [SVProgressHUD showWithStatus:LocString(@"Loading...") maskType:SVProgressHUDMaskTypeGradient];
+    [NetworkService getPrayerDetailsForID:prayerId];
+}
+
+- (void)getPrayerDetailsSuccess:(NSNotification *)notification {
+    [SVProgressHUD dismiss];
+    
+    CDPrayer *prayer = notification.object;
+    CommentsController *cc = [[CommentsController alloc] initWithPrayer:prayer andDisplayCommentsOnly:NO];
+    [self.navigationController pushViewController:cc animated:YES];
+}
+
+- (void)getPrayerDetailsFailed {
+    [SVProgressHUD showErrorWithStatus:LocString(@"We couldn't load the prayer related to this notification. Please check your internet connection and try again.")];
 }
 
 
