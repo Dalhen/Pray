@@ -7,6 +7,7 @@
 //
 
 #import "PrayerCreationController.h"
+#import "MentionCell.h"
 
 @interface PrayerCreationController ()
 
@@ -21,6 +22,7 @@
     
     if (self) {
         typeStarted = NO;
+        mentionsAdded = [[NSMutableArray alloc] init];
     }
     
     return self;
@@ -44,6 +46,7 @@
     
     [self setupHeader];
     [self setupLayout];
+    [self setupMentionsView];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -63,6 +66,9 @@
     Notification_Observe(JXNotification.UserServices.AutocompleteFailed, searchForMentionUsersFailed);
     Notification_Observe(JXNotification.PostServices.PostPrayerSuccess, postPrayerSuccess);
     Notification_Observe(JXNotification.PostServices.PostPrayerFailed, postPrayerFailed);
+    
+    Notification_Observe(UIKeyboardWillShowNotification, keyboardWillShow:);
+    Notification_Observe(UIKeyboardWillHideNotification, keyboardWillHide:);
 }
 
 - (void)unRegisterForEvents {
@@ -70,7 +76,25 @@
     Notification_Remove(JXNotification.UserServices.AutocompleteFailed);
     Notification_Remove(JXNotification.PostServices.PostPrayerSuccess);
     Notification_Remove(JXNotification.PostServices.PostPrayerFailed);
+    
+    Notification_Remove(UIKeyboardWillShowNotification);
+    Notification_Remove(UIKeyboardWillHideNotification);
+    
     Notification_RemoveObserver;
+}
+
+
+#pragma mark - Keyboard Notifications
+- (void)keyboardWillShow:(NSNotification *)notification {
+    NSDictionary* info = [notification userInfo];
+    CGSize keyBoardSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    keyboardSize = keyBoardSize;
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+    NSDictionary* info = [notification userInfo];
+    CGSize keyBoardSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    keyboardSize = keyBoardSize;
 }
 
 
@@ -141,6 +165,13 @@
     [addImageButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
     [addImageButton addTarget:self action:@selector(takePhoto) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:addImageButton];
+}
+
+- (void)setupMentionsView {
+    mentionsTable = [[UITableView alloc] initWithFrame:CGRectMake(0, self.view.screenHeight, self.view.screenWidth, 140) style:UITableViewStylePlain];
+    [mentionsTable setDataSource:self];
+    [mentionsTable setDelegate:self];
+    [self.view addSubview:mentionsTable];
 }
 
 - (void)goBack {
@@ -297,8 +328,8 @@
 #pragma mark - Tagging (Autocomplete)
 - (void)autocompleteSuccess:(NSNotification *)notification {
     mentions = [[NSArray alloc] initWithArray:notification.object];
-    [tagsTable reloadData];
-    [tagsTable setContentOffset:CGPointZero animated:YES];
+    [mentionsTable reloadData];
+    [mentionsTable setContentOffset:CGPointZero animated:YES];
 }
 
 
@@ -366,6 +397,7 @@
                     }
                 }
                 
+                //[cancelCommentButton setHidden:YES];
                 [self mentionStartedWithText:[textView textInRange:textRange] mentionIndex:mIndex andMentionTotal:[mentionsMatches count]];
             }
         }
@@ -383,6 +415,7 @@
             else {
                 [self mentionRemoved];
             }
+            //[cancelCommentButton setHidden:NO];
         }
     }
 }
@@ -406,7 +439,8 @@
     }
     
     searchingForMentions = NO;
-    [tagsTable reloadData];
+    [self hideMentionsList];
+    [mentionsTable reloadData];
 }
 
 - (void)mentionEnded {
@@ -422,19 +456,128 @@
     }
     
     searchingForMentions = NO;
-    [tagsTable reloadData];
+    [self hideMentionsList];
+    [mentionsTable reloadData];
 }
 
 - (void)searchForMentionUsersSuccess:(NSNotification *)notification {
     mentions = [[NSArray alloc] initWithArray:notification.object];
-    [tagsTable reloadData];
-    [tagsTable setContentOffset:CGPointZero animated:YES];
+    [mentionsTable reloadData];
+    [mentionsTable setContentOffset:CGPointZero animated:YES];
 }
 
 - (void)searchForMentionUsersFailed {
     
 }
 
+- (void)showMentionsList {
+    [UIView animateWithDuration:0.3 animations:^{
+        [mentionsTable setTop:self.view.screenHeight];
+    }];
+}
+
+- (void)hideMentionsList {
+    [UIView animateWithDuration:0.3 animations:^{
+        [mentionsTable setTop:self.view.screenHeight];
+    }];
+}
+
+
+#pragma mark - CommentsTableView delegate & datasource
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    return [[UIView alloc] initWithFrame:CGRectZero];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 0;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return nil;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 46*sratio;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 0.01f;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return ([mentions count]>0? [mentions count] : 1);
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([mentions count]>0) {
+        MentionCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MentionCell"];
+        
+        if(!cell) {
+            cell = [[MentionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MentionCell"];
+            [cell setBackgroundColor:Colour_White];
+        }
+        
+        [cell setDetailsWithUserObject:[mentions objectAtIndex:indexPath.row]];
+        
+        return cell;
+    }
+    //disclaimer
+    else {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DisclaimerCell"];
+        
+        if(!cell) {
+            cell = [[MentionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"DisclaimerCell"];
+            [cell setBackgroundColor:Colour_White];
+        }
+        
+        [cell.textLabel setText:LocString(@"No results.")];
+        [cell.textLabel setTextColor:Colour_255RGB(206, 206, 206)];
+        
+        return cell;
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([mentions count]>0) {
+        CDUser *userObject = [mentions objectAtIndex:indexPath.row];
+        NSDictionary *userMention = @{@"userObject":userObject, @"mentionIndex":[NSNumber numberWithInteger:mentionIndex]};
+        
+        //Inserting mention
+        if (mentionTotal > [mentionsAdded count]) {
+            [mentionsAdded insertObject:userMention atIndex:mentionIndex];
+        }
+        
+        //Replacing mention
+        if (mentionTotal == [mentionsAdded count]) {
+            [mentionsAdded replaceObjectAtIndex:mentionIndex withObject:userMention];
+        }
+        
+        //Updating comment box text to selected user
+        NSRegularExpression *mentionsExpression = [NSRegularExpression regularExpressionWithPattern:@"(@\\w+)" options:NO error:nil];
+        NSArray *mentionsMatches = [mentionsExpression matchesInString:prayerText.text options:0 range:NSMakeRange(0, [prayerText.text length])];
+        
+        NSTextCheckingResult *mentionMatch = [mentionsMatches objectAtIndex:mentionIndex];
+        NSRange mentionMatchRange = [mentionMatch rangeAtIndex:0];
+        
+        NSMutableString *commentStr = [[NSMutableString alloc] initWithString:prayerText.text];
+        
+        NSString *unfilteredString = [userObject.firstname capitalizedString];
+        NSCharacterSet *notAllowedChars = [[NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"] invertedSet];
+        NSString *filteredString = [[unfilteredString componentsSeparatedByCharactersInSet:notAllowedChars] componentsJoinedByString:@""];
+        
+        [commentStr replaceCharactersInRange:mentionMatchRange withString:[NSString stringWithFormat:@"@%@", filteredString]];
+        [prayerText setText:commentStr];
+        
+        //Closing search box
+        searchingForMentions = NO;
+        [self hideMentionList];
+        [mentionsTable reloadData];
+    }
+}
 
 
 #pragma mark - Post Prayer
@@ -443,26 +586,14 @@
     [SVProgressHUD showWithStatus:LocString(@"Sharing your prayer...") maskType:SVProgressHUDMaskTypeGradient];
     
     searchingForMentions = NO;
+    [self hideMentionList];
     
     NSMutableArray *finalMentions = [[NSMutableArray alloc] initWithCapacity:[mentionsAdded count]];
     for (NSDictionary *mentionObject in mentionsAdded) {
         //User mention
-        if ([[mentionObject objectForKey:@"userObject"] isKindOfClass:[NSDictionary class]]) {
-            
-            NSDictionary *userObject = [mentionObject objectForKey:@"userObject"];
-            NSString *unfilteredString = [NSString stringWithFormat:@"%@%@", [[userObject objectForKey:@"first_name"] capitalizedString], [[[userObject objectForKey:@"last_name"] substringToIndex:1] capitalizedString]];
-            NSCharacterSet *notAllowedChars = [[NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"] invertedSet];
-            NSString *filteredString = [[unfilteredString componentsSeparatedByCharactersInSet:notAllowedChars] componentsJoinedByString:@""];
-            
-            NSString *mentionString = [NSString stringWithFormat:@"@%@|%@", filteredString, [userObject objectForKey:@"id"]];
-            [finalMentions addObject:mentionString];
-        }
-        //Text mention
-        else {
-            NSString *unfilteredString = [[mentionObject objectForKey:@"userObject"] capitalizedString];
-            NSCharacterSet *notAllowedChars = [[NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"] invertedSet];
-            NSString *filteredString = [[unfilteredString componentsSeparatedByCharactersInSet:notAllowedChars] componentsJoinedByString:@""];
-            NSString *mentionString = [NSString stringWithFormat:@"@%@|%@", filteredString, @"0"];
+        if ([[mentionObject objectForKey:@"userObject"] isKindOfClass:[CDUser class]]) {
+            CDUser *userObject = [mentionObject objectForKey:@"userObject"];
+            NSString *mentionString = [userObject.uniqueId stringValue];
             [finalMentions addObject:mentionString];
         }
     }
@@ -499,6 +630,8 @@
     }
     else return UIImageJPEGRepresentation(image, POSTImageQuality);
 }
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

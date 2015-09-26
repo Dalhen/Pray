@@ -17,7 +17,7 @@
 
 @interface PrayerCreationController : UIViewController <CLLocationManagerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, UITextViewDelegate, UITableViewDelegate, UITableViewDataSource> {
     
-    UITableView *tagsTable;
+    UITableView *mentionsTable;
     
     UIImageView *prayerImage;
     UIView *imageMask;
@@ -45,6 +45,8 @@
     NSInteger mentionIndex;
     NSInteger mentionTotal;
     NSString *currentMention;
+    
+    CGSize keyboardSize;
     
     //Praying for
     CDUser *currentUser;
