@@ -24,6 +24,7 @@
     UIImage *selectedImage;
     UITextView *prayerText;
     UIButton *addImageButton;
+    UIButton *selectReligionButton;
     
     BOOL typeStarted;
     
@@ -50,6 +51,8 @@
     
     //Praying for
     CDUser *currentUser;
+
+    NSInteger religionType;
 }
 
 @property(nonatomic, assign) id <PrayerCreationDelegate> delegate;

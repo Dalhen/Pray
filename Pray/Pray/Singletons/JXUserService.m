@@ -140,11 +140,6 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-- (void)setPosition:(NSString *)position {
-    [[NSUserDefaults standardUserDefaults] setObject:position forKey:@"position"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
 - (void)setFirstName:(NSString *)firstname {
     [[NSUserDefaults standardUserDefaults] setObject:firstname forKey:@"firstname"];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -153,14 +148,6 @@
 - (void)setLastName:(NSString *)lastname {
     [[NSUserDefaults standardUserDefaults] setObject:lastname forKey:@"lastname"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-- (void)setDepartmentName:(NSString *)departmentName {
-    [[NSUserDefaults standardUserDefaults] setObject:departmentName forKey:@"departmentName"];
-}
-
-- (void)setDepartmentID:(NSString *)departmentID {
-    [[NSUserDefaults standardUserDefaults] setObject:departmentID forKey:@"departmentID"];
 }
 
 - (NSString *)getPassword {
@@ -195,36 +182,12 @@
     return [[NSUserDefaults standardUserDefaults] objectForKey:@"fullname"];
 }
 
-- (NSString *)getCompanyName {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:@"companyName"];
-}
-
-- (NSString *)getCompanyID {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:@"companyID"];
-}
-
-- (NSString *)getPosition {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:@"position"];
-}
-
-- (NSString *)getDepartmentName {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:@"departmentName"];
-}
-
-- (NSString *)getDepartmentID {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:@"departmentID"];
-}
-
 - (NSString *)getBio {
     return [[NSUserDefaults standardUserDefaults] objectForKey:@"bio"];
 }
 
 - (NSString *)getCity {
     return [[NSUserDefaults standardUserDefaults] objectForKey:@"city"];
-}
-
-- (NSString *)getLinkedinID {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:@"linkedinID"];
 }
 
 - (NSString *)getAvatarURL {

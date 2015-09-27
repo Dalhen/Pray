@@ -8,6 +8,7 @@
 
 #import "PrayerCreationController.h"
 #import "MentionCell.h"
+#import "ReligionSelectorController.h"
 
 @interface PrayerCreationController ()
 
@@ -51,7 +52,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [self registerForEvents];
-    [prayerText addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
+    //[prayerText addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -99,12 +100,12 @@
 
 
 #pragma mark - Layout + TextView listeners
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    UITextView *tv = object;
-    CGFloat topCorrect = ([tv bounds].size.height - [tv contentSize].height * [tv zoomScale])/2.0;
-    topCorrect = ( topCorrect < 0.0 ? 0.0 : topCorrect );
-    tv.contentOffset = (CGPoint){.x = 0, .y = -topCorrect};
-}
+//- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+//    UITextView *tv = object;
+//    CGFloat topCorrect = ([tv bounds].size.height - [tv contentSize].height * [tv zoomScale])/2.0;
+//    topCorrect = ( topCorrect < 0.0 ? 0.0 : topCorrect );
+//    tv.contentOffset = (CGPoint){.x = 0, .y = -topCorrect};
+//}
 
 - (void)setupHeader {
     
@@ -148,7 +149,7 @@
     imageMask.alpha = 0.0f;
     [self.view addSubview:imageMask];
     
-    prayerText = [[UITextView alloc] initWithFrame:CGRectMake((self.view.screenWidth - 285*sratio)/2, 60*sratio, 285*sratio, 192*sratio)];
+    prayerText = [[UITextView alloc] initWithFrame:CGRectMake((self.view.screenWidth - 285*sratio)/2, 64*sratio, 285*sratio, 140*sratio)];
     [prayerText setBackgroundColor:Colour_Clear];
     [prayerText setTextColor:Colour_White];
     [prayerText setFont:[FontService systemFont:14*sratio]];
@@ -159,12 +160,22 @@
     [prayerText becomeFirstResponder];
     
     addImageButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [addImageButton setFrame:CGRectMake((self.view.screenWidth - 287*sratio)/2, 234*sratio, 287*sratio, 44*sratio)];
+    [addImageButton setFrame:CGRectMake((self.view.screenWidth - 184*sratio)/2, 234*sratio, 184*sratio, 38*sratio)];
     [addImageButton setBackgroundImage:[UIImage imageNamed:@"addImageButton"] forState:UIControlStateNormal];
     [addImageButton setTitle:LocString(@"Add a background image") forState:UIControlStateNormal];
     [addImageButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
+    addImageButton.titleLabel.font = [FontService systemFont:13*sratio];
     [addImageButton addTarget:self action:@selector(takePhoto) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:addImageButton];
+    
+    selectReligionButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [selectReligionButton setFrame:CGRectMake((self.view.screenWidth - 98*sratio)/2, addImageButton.bottom + 16*sratio, 98*sratio, 38*sratio)];
+    [selectReligionButton setBackgroundImage:[UIImage imageNamed:@"selectReligionButton"] forState:UIControlStateNormal];
+    [selectReligionButton setTitle:LocString(@"Select religion") forState:UIControlStateNormal];
+    [selectReligionButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
+    selectReligionButton.titleLabel.font = [FontService systemFont:13*sratio];
+    [selectReligionButton addTarget:self action:@selector(displayReligionSelector) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:selectReligionButton];
 }
 
 - (void)setupMentionsView {
@@ -176,6 +187,18 @@
 
 - (void)goBack {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+#pragma mark - Religion selection
+- (void)displayReligionSelector {
+    ReligionSelectorController *religionSelector = [[ReligionSelectorController alloc] init];
+    [self.navigationController pushViewController:religionSelector animated:YES];
+}
+
+- (void)religionSelectedWithIndex:(NSInteger)index {
+    religionType = index;
+    //update view here
 }
 
 
@@ -574,10 +597,11 @@
         
         //Closing search box
         searchingForMentions = NO;
-        [self hideMentionList];
+        [self hideMentionsList];
         [mentionsTable reloadData];
     }
 }
+
 
 #pragma mark - Post Prayer
 - (void)postPrayer {
@@ -585,7 +609,7 @@
     [SVProgressHUD showWithStatus:LocString(@"Sharing your prayer...") maskType:SVProgressHUDMaskTypeGradient];
     
     searchingForMentions = NO;
-    [self hideMentionList];
+    [self hideMentionsList];
     
     NSMutableArray *finalMentions = [[NSMutableArray alloc] initWithCapacity:[mentionsAdded count]];
     for (NSDictionary *mentionObject in mentionsAdded) {
@@ -601,7 +625,9 @@
     NSString *currentLongitude = [NSString stringWithFormat:@"%3.6f", currentLocation.coordinate.longitude];
     
     [NetworkService postPrayerWithImage:imageData
-                                   text:prayerText.text withMentionString:[finalMentions componentsJoinedByString:@","]
+                                   text:prayerText.text
+                           religionType:[NSString stringWithFormat:@"%li", (long)religionType]
+                      withMentionString:[finalMentions componentsJoinedByString:@","]
                                latitude:currentLatitude? currentLatitude : @""
                               longitude:currentLongitude? currentLongitude : @""
                         andLocationName:currentCityName? currentCityName : @""];

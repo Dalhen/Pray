@@ -48,6 +48,7 @@
 #define Colour_ImageColor(imageName)     [UIColor colorWithPatternImage:[JXImageCache imageNamed:imageName]]
 
 #define Colour_PrayDarkBlue             Colour_255RGB(38,41,50)
+#define Colour_PrayDarkBlueAlpha(a)     Colour_255RGBA(38,41,50,a)
 #define Colour_PrayBlue                 Colour_255RGB(40,155,229)
 
 #define Colour_ChatBubbleIncoming       Colour_255RGB(235,60,86)

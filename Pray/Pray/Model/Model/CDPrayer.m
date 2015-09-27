@@ -15,6 +15,7 @@
 
 @dynamic uniqueId;
 @dynamic categoryId;
+@dynamic religionType;
 @dynamic commentsCount;
 @dynamic creationDate;
 @dynamic creatorId;

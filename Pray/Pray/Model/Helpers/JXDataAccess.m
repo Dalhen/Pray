@@ -304,6 +304,7 @@
     NSNumber *creatorId = [NSNumber numberWithInt:[[userData objectForKey:@"id"] intValue]];
     NSNumber *categoryId = [NSNumber numberWithInt:[[prayerData objectForKey:@"category_id"] intValue]];
     NSString *prayerText = [prayerData objectForKey:@"body"];
+    NSString *religionType = [prayerData objectForKey:@"religion"];
     NSString *imageURL = [prayerData objectForKey:@"image"];
     NSString *latitude = [prayerData objectForKey:@"latitude"];
     NSString *longitude = [prayerData objectForKey:@"longitude"];
@@ -323,6 +324,7 @@
     prayer.creatorId = validObject(creatorId)? creatorId : prayer.creatorId;
     prayer.categoryId = validObject(categoryId)? categoryId : prayer.categoryId;
     prayer.prayerText = validObject(prayerText)? prayerText : prayer.prayerText;
+    prayer.religionType = validObject(religionType)? religionType : prayer.religionType;
     prayer.imageURL = validObject(imageURL)? imageURL : prayer.imageURL;
     prayer.latitude = validObject(latitude)? latitude : prayer.latitude;
     prayer.longitude = validObject(longitude)? longitude : prayer.longitude;
@@ -362,6 +364,7 @@
         NSNumber *creatorId = [NSNumber numberWithInt:[[userData objectForKey:@"id"] intValue]];
         NSNumber *categoryId = [NSNumber numberWithInt:[[prayerData objectForKey:@"category_id"] intValue]];
         NSString *prayerText = [prayerData objectForKey:@"body"];
+        NSString *religionType = [prayerData objectForKey:@"religion"];
         NSString *imageURL = [prayerData objectForKey:@"image"];
         NSString *latitude = [prayerData objectForKey:@"latitude"];
         NSString *longitude = [prayerData objectForKey:@"longitude"];
@@ -381,6 +384,7 @@
         prayer.creatorId = validObject(creatorId)? creatorId : prayer.creatorId;
         prayer.categoryId = validObject(categoryId)? categoryId : prayer.categoryId;
         prayer.prayerText = validObject(prayerText)? prayerText : prayer.prayerText;
+        prayer.religionType = validObject(religionType)? religionType : prayer.religionType;
         prayer.imageURL = validObject(imageURL)? imageURL : prayer.imageURL;
         prayer.latitude = validObject(latitude)? latitude : prayer.latitude;
         prayer.longitude = validObject(longitude)? longitude : prayer.longitude;

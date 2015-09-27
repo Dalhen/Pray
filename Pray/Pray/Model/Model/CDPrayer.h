@@ -15,6 +15,7 @@
 
 @property (nonatomic, retain) NSNumber * uniqueId;
 @property (nonatomic, retain) NSNumber * categoryId;
+@property (nonatomic, retain) NSString * religionType;
 @property (nonatomic, retain) NSString * commentsCount;
 @property (nonatomic, retain) NSDate * creationDate;
 @property (nonatomic, retain) NSNumber * creatorId;

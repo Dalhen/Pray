@@ -108,6 +108,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)postPrayerWithImage:(NSData *)prayerImage
                        text:(NSString *)prayerText
+               religionType:(NSString *)religionType
           withMentionString:(NSString *)mentionString
                    latitude:(NSString *)latitude
                   longitude:(NSString *)longitude

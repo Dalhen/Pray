@@ -16,6 +16,7 @@
 @synthesize delegate;
 
 
+#pragma mark - Init
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
 
@@ -102,9 +103,16 @@
     UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, prayerCellHeight-1, self.screenWidth, 1)];
     [separator setBackgroundColor:Colour_PrayDarkBlue];
     [self.contentView addSubview:separator];
+    
+    religionType = [[UIImageView alloc] initWithFrame:CGRectMake(self.screenWidth - 12*sratio - 38*sratio, 8*sratio, 38*sratio, 38*sratio)];
+    [religionType setRoundedToDiameter:38*sratio];
+    [religionType setClipsToBounds:YES];
+    religionType.backgroundColor = Colour_PrayDarkBlueAlpha(0.95f);
+    [self.contentView addSubview:religionType];
 }
 
 
+#pragma mark - Update
 - (void)updateWithPrayerObject:(CDPrayer *)prayerObject {
     
     prayer = prayerObject;
@@ -139,9 +147,67 @@
     
     likeButton.frame = CGRectMake(likesIcon.left - 10*sratio, prayerCellHeight - 48*sratio, 10*sratio + likesIcon.width + 6*sratio + likesCount.width + 10*sratio, 42*sratio);
     commentButton.frame = CGRectMake(commentsIcon.left - 10*sratio, prayerCellHeight - 48*sratio, 10*sratio + commentsIcon.width + 6*sratio + commentsCount.width + 10*sratio, 42*sratio);
+    
+    switch ([prayer.religionType integerValue]) {
+        case 0:
+            [religionType setImage:[UIImage imageNamed:@""]];
+            break;
+            
+        case 1:
+            [religionType setImage:[UIImage imageNamed:@""]];
+            break;
+            
+        case 2:
+            [religionType setImage:[UIImage imageNamed:@""]];
+            break;
+            
+        case 3:
+            [religionType setImage:[UIImage imageNamed:@""]];
+            break;
+            
+        case 4:
+            [religionType setImage:[UIImage imageNamed:@""]];
+            break;
+            
+        case 5:
+            [religionType setImage:[UIImage imageNamed:@""]];
+            break;
+            
+        case 6:
+            [religionType setImage:[UIImage imageNamed:@""]];
+            break;
+        
+        case 7:
+            [religionType setImage:[UIImage imageNamed:@""]];
+            break;
+            
+        case 8:
+            [religionType setImage:[UIImage imageNamed:@""]];
+            break;
+            
+        case 9:
+            [religionType setImage:[UIImage imageNamed:@""]];
+            break;
+            
+        case 10:
+            [religionType setImage:[UIImage imageNamed:@""]];
+            break;
+            
+        case 11:
+            [religionType setImage:[UIImage imageNamed:@""]];
+            break;
+            
+        case 12:
+            [religionType setImage:[UIImage imageNamed:@""]];
+            break;
+            
+        default:
+            break;
+    }
 }
 
 
+#pragma mark - Actions
 - (void)likeButtonClicked {
     [likesIcon setImage:[UIImage imageNamed:(prayer.isLiked.boolValue)? @"likeIconOFF" : @"likeIconON"]];
     
@@ -161,6 +227,7 @@
 - (void)commentButtonClicked {
     [delegate commentButtonClickedForCell:self];
 }
+
 
 #pragma mark - Display user profile
 - (void)showUser {

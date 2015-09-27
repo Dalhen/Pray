@@ -36,6 +36,7 @@
     UIButton *likeButton;
     UIButton *commentButton;
     UIView *blackMask;
+    UIImageView *religionType;
 }
 
 @property(nonatomic, strong) CDPrayer *prayer;

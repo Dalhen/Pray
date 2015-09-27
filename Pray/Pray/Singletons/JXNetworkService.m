@@ -1018,6 +1018,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)postPrayerWithImage:(NSData *)prayerImage
                        text:(NSString *)prayerText
+               religionType:(NSString *)religionType
           withMentionString:(NSString *)mentionString
                    latitude:(NSString *)latitude
                   longitude:(NSString *)longitude
@@ -1047,6 +1048,7 @@
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                    prayerText, @"body",
+                                   religionType, @"religion",
                                    latitude, @"latitude",
                                    longitude, @"longitude",
                                    locationName, @"location",

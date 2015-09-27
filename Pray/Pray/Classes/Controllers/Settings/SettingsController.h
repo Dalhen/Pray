@@ -7,8 +7,9 @@
 //
 
 #import "BaseViewController.h"
+#import <MessageUI/MFMailComposeViewController.h>
 
-@interface SettingsController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
+@interface SettingsController : UIViewController <UITableViewDelegate, UITableViewDataSource, MFMailComposeViewControllerDelegate> {
     
     UITableView *mainTable;
 }

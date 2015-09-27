@@ -82,7 +82,6 @@
 		967F17441B8748120047607E /* menuIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 967F17431B8748120047607E /* menuIcon@2x.png */; };
 		967F17461B8762920047607E /* addPrayerButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 967F17451B8762920047607E /* addPrayerButton@2x.png */; };
 		967F17481B8767B90047607E /* backButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 967F17471B8767B90047607E /* backButton@2x.png */; };
-		967F174A1B8778740047607E /* addImageButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 967F17491B8778740047607E /* addImageButton@2x.png */; };
 		96A00CDA1B90E027000E824B /* NotificationsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A00CD91B90E027000E824B /* NotificationsCell.m */; };
 		96A00CDE1B90F83A000E824B /* SearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A00CDD1B90F83A000E824B /* SearchController.m */; };
 		96A00CE21B9359C2000E824B /* UsersListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A00CE11B9359C2000E824B /* UsersListController.m */; };
@@ -209,6 +208,10 @@
 		96ACF7941B815C2D007BAE4A /* smallArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96ACF7931B815C2D007BAE4A /* smallArrow@2x.png */; };
 		96ACF7961B815DCB007BAE4A /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96ACF7951B815DCB007BAE4A /* Bolts.framework */; };
 		96ACF79A1B815E42007BAE4A /* SettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ACF7991B815E42007BAE4A /* SettingsController.m */; };
+		96C475B51BB6EE0E000976C6 /* selectReligionButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C475B41BB6EE0E000976C6 /* selectReligionButton@2x.png */; };
+		96C475B81BB70C19000976C6 /* addImageButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C475B71BB70C19000976C6 /* addImageButton@2x.png */; };
+		96C475BB1BB7111C000976C6 /* ReligionSelectorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C475BA1BB7111C000976C6 /* ReligionSelectorController.m */; };
+		96C475BE1BB867B9000976C6 /* WebController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C475BD1BB867B9000976C6 /* WebController.m */; };
 		96EB6CDB1B6BFAEC00ADA3AB /* backButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96EB6CDA1B6BFAEC00ADA3AB /* backButton@2x.png */; };
 		96EB6CDE1B6CCD6A00ADA3AB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 96EB6CDD1B6CCD6A00ADA3AB /* Localizable.strings */; };
 		96EB6CE01B6D053700ADA3AB /* avatarEmpty@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96EB6CDF1B6D053700ADA3AB /* avatarEmpty@2x.png */; };
@@ -377,7 +380,6 @@
 		967F17431B8748120047607E /* menuIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuIcon@2x.png"; sourceTree = "<group>"; };
 		967F17451B8762920047607E /* addPrayerButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addPrayerButton@2x.png"; sourceTree = "<group>"; };
 		967F17471B8767B90047607E /* backButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backButton@2x.png"; sourceTree = "<group>"; };
-		967F17491B8778740047607E /* addImageButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addImageButton@2x.png"; sourceTree = "<group>"; };
 		96A00CD81B90E027000E824B /* NotificationsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationsCell.h; sourceTree = "<group>"; };
 		96A00CD91B90E027000E824B /* NotificationsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationsCell.m; sourceTree = "<group>"; };
 		96A00CDC1B90F83A000E824B /* SearchController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchController.h; sourceTree = "<group>"; };
@@ -613,6 +615,12 @@
 		96ACF7951B815DCB007BAE4A /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		96ACF7981B815E42007BAE4A /* SettingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsController.h; sourceTree = "<group>"; };
 		96ACF7991B815E42007BAE4A /* SettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsController.m; sourceTree = "<group>"; };
+		96C475B41BB6EE0E000976C6 /* selectReligionButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selectReligionButton@2x.png"; sourceTree = "<group>"; };
+		96C475B71BB70C19000976C6 /* addImageButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addImageButton@2x.png"; sourceTree = "<group>"; };
+		96C475B91BB7111C000976C6 /* ReligionSelectorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReligionSelectorController.h; sourceTree = "<group>"; };
+		96C475BA1BB7111C000976C6 /* ReligionSelectorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReligionSelectorController.m; sourceTree = "<group>"; };
+		96C475BC1BB867B9000976C6 /* WebController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebController.h; sourceTree = "<group>"; };
+		96C475BD1BB867B9000976C6 /* WebController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebController.m; sourceTree = "<group>"; };
 		96EB6CDA1B6BFAEC00ADA3AB /* backButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backButton@2x.png"; sourceTree = "<group>"; };
 		96EB6CDD1B6CCD6A00ADA3AB /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		96EB6CDF1B6D053700ADA3AB /* avatarEmpty@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avatarEmpty@2x.png"; sourceTree = "<group>"; };
@@ -1445,7 +1453,8 @@
 		96ACF76A1B8156BA007BAE4A /* PostPrayer */ = {
 			isa = PBXGroup;
 			children = (
-				967F17491B8778740047607E /* addImageButton@2x.png */,
+				96C475B71BB70C19000976C6 /* addImageButton@2x.png */,
+				96C475B41BB6EE0E000976C6 /* selectReligionButton@2x.png */,
 			);
 			path = PostPrayer;
 			sourceTree = "<group>";
@@ -1506,6 +1515,8 @@
 			children = (
 				96ACF7901B815A09007BAE4A /* PrayerCreationController.h */,
 				96ACF7911B815A09007BAE4A /* PrayerCreationController.m */,
+				96C475B91BB7111C000976C6 /* ReligionSelectorController.h */,
+				96C475BA1BB7111C000976C6 /* ReligionSelectorController.m */,
 			);
 			path = CreatePrayer;
 			sourceTree = "<group>";
@@ -1524,6 +1535,8 @@
 			children = (
 				96ACF7981B815E42007BAE4A /* SettingsController.h */,
 				96ACF7991B815E42007BAE4A /* SettingsController.m */,
+				96C475BC1BB867B9000976C6 /* WebController.h */,
+				96C475BD1BB867B9000976C6 /* WebController.m */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1634,10 +1647,10 @@
 				967F17481B8767B90047607E /* backButton@2x.png in Resources */,
 				96ACF77C1B8156E1007BAE4A /* settingsOFF@2x.png in Resources */,
 				96EB6CDE1B6CCD6A00ADA3AB /* Localizable.strings in Resources */,
+				96C475B51BB6EE0E000976C6 /* selectReligionButton@2x.png in Resources */,
 				96A394A31B878D6D00B3040E /* arrowDown@2x.png in Resources */,
 				96A557901B5A6C690073A4FE /* Images.xcassets in Resources */,
 				967148211B94AF6300DB0166 /* emptyProfile@2x.png in Resources */,
-				967F174A1B8778740047607E /* addImageButton@2x.png in Resources */,
 				96EB6CE01B6D053700ADA3AB /* avatarEmpty@2x.png in Resources */,
 				96ACF7781B8156E1007BAE4A /* notificationsOFF@2x.png in Resources */,
 				96ACF77D1B8156E1007BAE4A /* settingsON@2x.png in Resources */,
@@ -1652,6 +1665,7 @@
 				967F17441B8748120047607E /* menuIcon@2x.png in Resources */,
 				96ACF7941B815C2D007BAE4A /* smallArrow@2x.png in Resources */,
 				96A394B81B87F2F500B3040E /* commentsIcon@2x.png in Resources */,
+				96C475B81BB70C19000976C6 /* addImageButton@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1810,11 +1824,13 @@
 				96ACF78C1B8159A2007BAE4A /* NotificationsController.m in Sources */,
 				96ACF7861B815987007BAE4A /* ProfileController.m in Sources */,
 				967AD47A1B65701C00001B26 /* NSMutableArray+SWUtilityButtons.m in Sources */,
+				96C475BB1BB7111C000976C6 /* ReligionSelectorController.m in Sources */,
 				96A558DD1B5A6D4F0073A4FE /* UIViewController+Extensions.m in Sources */,
 				96A558B51B5A6D4F0073A4FE /* NSFileManager+Extensions.m in Sources */,
 				967AD4601B65701C00001B26 /* AFHTTPSessionManager.m in Sources */,
 				96A557821B5A6C690073A4FE /* main.m in Sources */,
 				967AD46C1B65701C00001B26 /* SDWebImageDownloader.m in Sources */,
+				96C475BE1BB867B9000976C6 /* WebController.m in Sources */,
 				96A00CDE1B90F83A000E824B /* SearchController.m in Sources */,
 				967F173C1B8733680047607E /* PKRevealController.m in Sources */,
 				96A394B21B87CC5000B3040E /* TTTAttributedLabel.m in Sources */,
