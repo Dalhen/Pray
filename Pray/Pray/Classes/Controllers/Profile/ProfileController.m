@@ -173,23 +173,25 @@
     [profileHeader addSubview:verticalSeparator2];
     
     //Follow button
-    followButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [followButton setFrame:CGRectMake(28*sratio, 82*sratio, 78*sratio, 26*sratio)];
-    [followButton.titleLabel setFont:[FontService systemFont:13*sratio]];
-    [followButton.layer setCornerRadius:5.0f];
-    if (currentUser.isFollowed.boolValue == false) {
-        [followButton setTitle:LocString(@"Follow") forState:UIControlStateNormal];
-        [followButton addTarget:self action:@selector(followUser) forControlEvents:UIControlEventTouchUpInside];
-        [followButton setBackgroundColor:Colour_White];
-        [followButton setTitleColor:Colour_PrayBlue forState:UIControlStateNormal];
+    if (![currentUser.uniqueId isEqualToNumber:[UserService getUserIDNumber]]) {
+        followButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [followButton setFrame:CGRectMake(28*sratio, 82*sratio, 78*sratio, 26*sratio)];
+        [followButton.titleLabel setFont:[FontService systemFont:13*sratio]];
+        [followButton.layer setCornerRadius:5.0f];
+        if (currentUser.isFollowed.boolValue == false) {
+            [followButton setTitle:LocString(@"Follow") forState:UIControlStateNormal];
+            [followButton addTarget:self action:@selector(followUser) forControlEvents:UIControlEventTouchUpInside];
+            [followButton setBackgroundColor:Colour_White];
+            [followButton setTitleColor:Colour_PrayBlue forState:UIControlStateNormal];
+        }
+        else {
+            [followButton setTitle:LocString(@"Following") forState:UIControlStateNormal];
+            [followButton addTarget:self action:@selector(unfollowUser) forControlEvents:UIControlEventTouchUpInside];
+            [followButton setBackgroundColor:Colour_255RGB(21, 24, 32)];
+            [followButton setTitleColor:Colour_White forState:UIControlStateNormal];
+        }
+        [self.view addSubview:followButton];
     }
-    else {
-        [followButton setTitle:LocString(@"Following") forState:UIControlStateNormal];
-        [followButton addTarget:self action:@selector(unfollowUser) forControlEvents:UIControlEventTouchUpInside];
-        [followButton setBackgroundColor:Colour_255RGB(21, 24, 32)];
-        [followButton setTitleColor:Colour_White forState:UIControlStateNormal];
-    }
-    [self.view addSubview:followButton];
 }
 
 - (void)setupTableView {
@@ -554,7 +556,8 @@
 #pragma mark - Header actions
 - (void)prayForUser {
     PrayerCreationController *prayerController = [[PrayerCreationController alloc] initWithUser:currentUser];
-    [self.navigationController presentViewController:prayerController animated:YES completion:nil];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:prayerController];
+    [self presentViewController:navController animated:YES completion:nil];
 }
 
 - (void)editProfile {

@@ -61,7 +61,7 @@
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
             button.backgroundColor = Colour_PrayBlue;
             [button.layer setCornerRadius:5.0f];
-            [button setFrame:CGRectMake(50*sratio + 84*sratio*j, 28*sratio + 96*sratio*i, 64*sratio, 64*sratio)];
+            [button setFrame:CGRectMake(44*sratio + 84*sratio*j, 96*sratio + 96*sratio*i, 64*sratio, 64*sratio)];
             [button setBackgroundImage:[UIImage imageNamed:[religionsImages objectAtIndex:i*j]] forState:UIControlStateNormal];
             [button addTarget:self action:@selector(religionSelectedWithIndex:) forControlEvents:UIControlEventTouchUpInside];
             [button setTag:i*j];
@@ -77,7 +77,7 @@
 }
 
 - (void)goBack {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

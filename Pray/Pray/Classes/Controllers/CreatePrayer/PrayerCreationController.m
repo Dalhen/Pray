@@ -57,7 +57,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [self unRegisterForEvents];
-    [prayerText removeObserver:self forKeyPath:@"contentSize"];
+//    [prayerText removeObserver:self forKeyPath:@"contentSize"];
 }
 
 
@@ -487,6 +487,7 @@
     mentions = [[NSArray alloc] initWithArray:notification.object];
     [mentionsTable reloadData];
     [mentionsTable setContentOffset:CGPointZero animated:YES];
+    [self showMentionsList];
 }
 
 - (void)searchForMentionUsersFailed {
@@ -495,7 +496,7 @@
 
 - (void)showMentionsList {
     [UIView animateWithDuration:0.3 animations:^{
-        [mentionsTable setTop:self.view.screenHeight];
+        [mentionsTable setBottom:self.view.screenHeight - keyboardSize.height];
     }];
 }
 

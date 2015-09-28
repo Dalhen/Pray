@@ -452,7 +452,8 @@
 - (void)addPrayer {
     PrayerCreationController *prayerController = [[PrayerCreationController alloc] init];
     [prayerController setDelegate:self];
-    [self.navigationController presentViewController:prayerController animated:YES completion:nil];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:prayerController];
+    [self presentViewController:navController animated:YES completion:nil];
 }
 
 
