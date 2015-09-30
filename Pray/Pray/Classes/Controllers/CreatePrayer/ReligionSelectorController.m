@@ -53,8 +53,41 @@
 - (void)setupLayout {
     [self.view setBackgroundColor:Colour_255RGB(61, 66, 78)];
     
-    NSArray *religionsImages = [[NSArray alloc] initWithObjects:@"", @"", @"", @"", @"", @"", @"", @"", @"", @"", @"", @"", @"", @"", nil];
-    NSArray *religionsTitles = [[NSArray alloc] initWithObjects:@"", @"", @"", @"", @"", @"", @"", @"", @"", @"", @"", @"", @"", @"", nil];
+    NSArray *religionsImages = [[NSArray alloc] initWithObjects:
+                                LocString(@"chrisIcon"),
+                                LocString(@"islamIcon"),
+                                LocString(@"hinduIcon"),
+                                LocString(@"buddhismIcon"),
+                                LocString(@"shintoIcon"),
+                                LocString(@"sikhIcon"),
+                                LocString(@"judaismIcon"),
+                                LocString(@"jainismIcon"),
+                                LocString(@"bahaiIcon"),
+                                LocString(@"caodaism"),
+                                LocString(@"cheondoIcon"),
+                                LocString(@"tenrikyoIcon"),
+                                LocString(@"wiccaIcon"),
+                                LocString(@"messiaIcon"),
+                                LocString(@"seichoIcon"),
+                                LocString(@"atheismIcon"), nil];
+    
+    NSArray *religionsTitles = [[NSArray alloc] initWithObjects:
+                                LocString(@"Christianity"),
+                                LocString(@"Islam"),
+                                LocString(@"Hinduism"),
+                                LocString(@"Buddhism"),
+                                LocString(@"Shinto"),
+                                LocString(@"Sikhism"),
+                                LocString(@"Judaism"),
+                                LocString(@"Jainism"),
+                                LocString(@"Bahai"),
+                                LocString(@"Caodaism"),
+                                LocString(@"Cheondogyo"),
+                                LocString(@"Tenrikyo"),
+                                LocString(@"Wicca"),
+                                LocString(@"Word Messianity"),
+                                LocString(@"Seicho-no-ie"),
+                                LocString(@"Atheism"), nil];
     
     for (NSInteger i = 0; i<4; i++) {
         for (NSInteger j = 0; j<3; j++) {
@@ -82,7 +115,8 @@
 
 
 - (void)religionSelectedWithIndex:(id)sender {
-    [delegate religionSelectedWithIndex:[sender tag]];
+    NSInteger index = [sender tag] + 1;
+    [delegate religionSelectedWithIndex:index];
 }
 
 

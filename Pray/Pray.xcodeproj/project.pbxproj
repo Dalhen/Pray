@@ -215,6 +215,22 @@
 		96EB6CDB1B6BFAEC00ADA3AB /* backButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96EB6CDA1B6BFAEC00ADA3AB /* backButton@2x.png */; };
 		96EB6CDE1B6CCD6A00ADA3AB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 96EB6CDD1B6CCD6A00ADA3AB /* Localizable.strings */; };
 		96EB6CE01B6D053700ADA3AB /* avatarEmpty@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96EB6CDF1B6D053700ADA3AB /* avatarEmpty@2x.png */; };
+		FC6612071BBBDB760048033E /* atheismIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FC6611F71BBBDB760048033E /* atheismIcon@2x.png */; settings = {ASSET_TAGS = (); }; };
+		FC6612081BBBDB760048033E /* bahaiIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FC6611F81BBBDB760048033E /* bahaiIcon@2x.png */; settings = {ASSET_TAGS = (); }; };
+		FC6612091BBBDB760048033E /* buddhismIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FC6611F91BBBDB760048033E /* buddhismIcon@2x.png */; settings = {ASSET_TAGS = (); }; };
+		FC66120A1BBBDB760048033E /* caodaism@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FC6611FA1BBBDB760048033E /* caodaism@2x.png */; settings = {ASSET_TAGS = (); }; };
+		FC66120B1BBBDB760048033E /* cheondoIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FC6611FB1BBBDB760048033E /* cheondoIcon@2x.png */; settings = {ASSET_TAGS = (); }; };
+		FC66120C1BBBDB760048033E /* chrisIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FC6611FC1BBBDB760048033E /* chrisIcon@2x.png */; settings = {ASSET_TAGS = (); }; };
+		FC66120D1BBBDB760048033E /* hinduIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FC6611FD1BBBDB760048033E /* hinduIcon@2x.png */; settings = {ASSET_TAGS = (); }; };
+		FC66120E1BBBDB760048033E /* islamIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FC6611FE1BBBDB760048033E /* islamIcon@2x.png */; settings = {ASSET_TAGS = (); }; };
+		FC66120F1BBBDB760048033E /* jainismIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FC6611FF1BBBDB760048033E /* jainismIcon@2x.png */; settings = {ASSET_TAGS = (); }; };
+		FC6612101BBBDB760048033E /* judaismIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FC6612001BBBDB760048033E /* judaismIcon@2x.png */; settings = {ASSET_TAGS = (); }; };
+		FC6612111BBBDB760048033E /* messiaIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FC6612011BBBDB760048033E /* messiaIcon@2x.png */; settings = {ASSET_TAGS = (); }; };
+		FC6612121BBBDB760048033E /* seichoIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FC6612021BBBDB760048033E /* seichoIcon@2x.png */; settings = {ASSET_TAGS = (); }; };
+		FC6612131BBBDB760048033E /* shintoIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FC6612031BBBDB760048033E /* shintoIcon@2x.png */; settings = {ASSET_TAGS = (); }; };
+		FC6612141BBBDB760048033E /* sikhIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FC6612041BBBDB760048033E /* sikhIcon@2x.png */; settings = {ASSET_TAGS = (); }; };
+		FC6612151BBBDB760048033E /* tenrikyoIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FC6612051BBBDB760048033E /* tenrikyoIcon@2x.png */; settings = {ASSET_TAGS = (); }; };
+		FC6612161BBBDB760048033E /* wiccaIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FC6612061BBBDB760048033E /* wiccaIcon@2x.png */; settings = {ASSET_TAGS = (); }; };
 		FC67F6B61BAC562B00B2318E /* MentionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FC67F6B51BAC562B00B2318E /* MentionCell.m */; };
 /* End PBXBuildFile section */
 
@@ -624,6 +640,22 @@
 		96EB6CDA1B6BFAEC00ADA3AB /* backButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backButton@2x.png"; sourceTree = "<group>"; };
 		96EB6CDD1B6CCD6A00ADA3AB /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		96EB6CDF1B6D053700ADA3AB /* avatarEmpty@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avatarEmpty@2x.png"; sourceTree = "<group>"; };
+		FC6611F71BBBDB760048033E /* atheismIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "atheismIcon@2x.png"; sourceTree = "<group>"; };
+		FC6611F81BBBDB760048033E /* bahaiIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bahaiIcon@2x.png"; sourceTree = "<group>"; };
+		FC6611F91BBBDB760048033E /* buddhismIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buddhismIcon@2x.png"; sourceTree = "<group>"; };
+		FC6611FA1BBBDB760048033E /* caodaism@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "caodaism@2x.png"; sourceTree = "<group>"; };
+		FC6611FB1BBBDB760048033E /* cheondoIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cheondoIcon@2x.png"; sourceTree = "<group>"; };
+		FC6611FC1BBBDB760048033E /* chrisIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chrisIcon@2x.png"; sourceTree = "<group>"; };
+		FC6611FD1BBBDB760048033E /* hinduIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hinduIcon@2x.png"; sourceTree = "<group>"; };
+		FC6611FE1BBBDB760048033E /* islamIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "islamIcon@2x.png"; sourceTree = "<group>"; };
+		FC6611FF1BBBDB760048033E /* jainismIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jainismIcon@2x.png"; sourceTree = "<group>"; };
+		FC6612001BBBDB760048033E /* judaismIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "judaismIcon@2x.png"; sourceTree = "<group>"; };
+		FC6612011BBBDB760048033E /* messiaIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "messiaIcon@2x.png"; sourceTree = "<group>"; };
+		FC6612021BBBDB760048033E /* seichoIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seichoIcon@2x.png"; sourceTree = "<group>"; };
+		FC6612031BBBDB760048033E /* shintoIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shintoIcon@2x.png"; sourceTree = "<group>"; };
+		FC6612041BBBDB760048033E /* sikhIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sikhIcon@2x.png"; sourceTree = "<group>"; };
+		FC6612051BBBDB760048033E /* tenrikyoIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tenrikyoIcon@2x.png"; sourceTree = "<group>"; };
+		FC6612061BBBDB760048033E /* wiccaIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wiccaIcon@2x.png"; sourceTree = "<group>"; };
 		FC67F6B41BAC562B00B2318E /* MentionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MentionCell.h; sourceTree = "<group>"; };
 		FC67F6B51BAC562B00B2318E /* MentionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MentionCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1453,6 +1485,22 @@
 		96ACF76A1B8156BA007BAE4A /* PostPrayer */ = {
 			isa = PBXGroup;
 			children = (
+				FC6611F71BBBDB760048033E /* atheismIcon@2x.png */,
+				FC6611F81BBBDB760048033E /* bahaiIcon@2x.png */,
+				FC6611F91BBBDB760048033E /* buddhismIcon@2x.png */,
+				FC6611FA1BBBDB760048033E /* caodaism@2x.png */,
+				FC6611FB1BBBDB760048033E /* cheondoIcon@2x.png */,
+				FC6611FC1BBBDB760048033E /* chrisIcon@2x.png */,
+				FC6611FD1BBBDB760048033E /* hinduIcon@2x.png */,
+				FC6611FE1BBBDB760048033E /* islamIcon@2x.png */,
+				FC6611FF1BBBDB760048033E /* jainismIcon@2x.png */,
+				FC6612001BBBDB760048033E /* judaismIcon@2x.png */,
+				FC6612011BBBDB760048033E /* messiaIcon@2x.png */,
+				FC6612021BBBDB760048033E /* seichoIcon@2x.png */,
+				FC6612031BBBDB760048033E /* shintoIcon@2x.png */,
+				FC6612041BBBDB760048033E /* sikhIcon@2x.png */,
+				FC6612051BBBDB760048033E /* tenrikyoIcon@2x.png */,
+				FC6612061BBBDB760048033E /* wiccaIcon@2x.png */,
 				96C475B71BB70C19000976C6 /* addImageButton@2x.png */,
 				96C475B41BB6EE0E000976C6 /* selectReligionButton@2x.png */,
 			);
@@ -1638,31 +1686,47 @@
 			buildActionMask = 2147483647;
 			files = (
 				9634F33C1B696EAF002EFD2B /* facebookButton@2x.png in Resources */,
+				FC6612111BBBDB760048033E /* messiaIcon@2x.png in Resources */,
 				96ACF7771B8156E1007BAE4A /* feedON@2x.png in Resources */,
 				96ACF7791B8156E1007BAE4A /* notificationsON@2x.png in Resources */,
 				96ACF77A1B8156E1007BAE4A /* profileOFF@2x.png in Resources */,
+				FC6612151BBBDB760048033E /* tenrikyoIcon@2x.png in Resources */,
+				FC66120C1BBBDB760048033E /* chrisIcon@2x.png in Resources */,
 				96ACF7761B8156E1007BAE4A /* feedOFF@2x.png in Resources */,
+				FC66120D1BBBDB760048033E /* hinduIcon@2x.png in Resources */,
+				FC6612131BBBDB760048033E /* shintoIcon@2x.png in Resources */,
 				96EB6CDB1B6BFAEC00ADA3AB /* backButton@2x.png in Resources */,
+				FC6612141BBBDB760048033E /* sikhIcon@2x.png in Resources */,
+				FC6612081BBBDB760048033E /* bahaiIcon@2x.png in Resources */,
 				9634F33F1B696F87002EFD2B /* backgroundWelcome@2x.jpg in Resources */,
 				967F17481B8767B90047607E /* backButton@2x.png in Resources */,
+				FC6612091BBBDB760048033E /* buddhismIcon@2x.png in Resources */,
 				96ACF77C1B8156E1007BAE4A /* settingsOFF@2x.png in Resources */,
 				96EB6CDE1B6CCD6A00ADA3AB /* Localizable.strings in Resources */,
 				96C475B51BB6EE0E000976C6 /* selectReligionButton@2x.png in Resources */,
 				96A394A31B878D6D00B3040E /* arrowDown@2x.png in Resources */,
+				FC66120E1BBBDB760048033E /* islamIcon@2x.png in Resources */,
 				96A557901B5A6C690073A4FE /* Images.xcassets in Resources */,
+				FC66120A1BBBDB760048033E /* caodaism@2x.png in Resources */,
 				967148211B94AF6300DB0166 /* emptyProfile@2x.png in Resources */,
+				FC6612161BBBDB760048033E /* wiccaIcon@2x.png in Resources */,
 				96EB6CE01B6D053700ADA3AB /* avatarEmpty@2x.png in Resources */,
 				96ACF7781B8156E1007BAE4A /* notificationsOFF@2x.png in Resources */,
+				FC6612121BBBDB760048033E /* seichoIcon@2x.png in Resources */,
 				96ACF77D1B8156E1007BAE4A /* settingsON@2x.png in Resources */,
+				FC66120F1BBBDB760048033E /* jainismIcon@2x.png in Resources */,
 				96ACF77B1B8156E1007BAE4A /* profileON@2x.png in Resources */,
 				96A394B61B87F2F500B3040E /* likeIconON@2x.png in Resources */,
 				967F17461B8762920047607E /* addPrayerButton@2x.png in Resources */,
 				9634F33D1B696EAF002EFD2B /* prayLogo@2x.png in Resources */,
 				96A394B71B87F2F500B3040E /* likeIconOFF@2x.png in Resources */,
 				967AD4781B65701C00001B26 /* SVProgressHUD.bundle in Resources */,
+				FC6612101BBBDB760048033E /* judaismIcon@2x.png in Resources */,
+				FC6612071BBBDB760048033E /* atheismIcon@2x.png in Resources */,
 				96A394A01B878C6A00B3040E /* searchIcon@2x.png in Resources */,
 				96A394BB1B88067100B3040E /* paperPlane@2x.png in Resources */,
 				967F17441B8748120047607E /* menuIcon@2x.png in Resources */,
+				FC66120B1BBBDB760048033E /* cheondoIcon@2x.png in Resources */,
 				96ACF7941B815C2D007BAE4A /* smallArrow@2x.png in Resources */,
 				96A394B81B87F2F500B3040E /* commentsIcon@2x.png in Resources */,
 				96C475B81BB70C19000976C6 /* addImageButton@2x.png in Resources */,
