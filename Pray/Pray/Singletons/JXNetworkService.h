@@ -48,6 +48,14 @@
                  avatarURL:(NSString *)avatarURL
                avatarImage:(NSData *)avatarImage;
 
+- (void)facebookSignupWithFacebookID:(NSString *)facebookId
+                            username:(NSString *)username
+                           firstName:(NSString *)firstName
+                            lastName:(NSString *)lastName
+                               email:(NSString *)email
+                                 bio:(NSString *)bio
+                           avatarURL:(NSString *)avatarURL;
+
 - (void)loginUserWithEmail:(NSString *)email password:(NSString *)password;
 
 - (void)loginUserWithLinkedIn:(NSString *)linkedInID;

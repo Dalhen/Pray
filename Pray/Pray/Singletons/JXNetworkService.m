@@ -365,6 +365,54 @@
     [self checkAccessTokenAndCall:@"api/v1/auth/register" isPost:YES includedImages:avatarImageArray imagesKey:@"avatar_image" parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
+- (void)facebookSignupWithFacebookID:(NSString *)facebookId
+                            username:(NSString *)username
+                           firstName:(NSString *)firstName
+                            lastName:(NSString *)lastName
+                               email:(NSString *)email
+                                 bio:(NSString *)bio
+                           avatarURL:(NSString *)avatarURL {
+    
+    void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
+        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
+        
+        NSInteger statusCode = [operation.response statusCode];
+        
+        //success
+        if (statusCode == 200) {
+            Notification_Post(JXNotification.UserServices.RegistrationSuccess, [responseObject objectForKey:@"data"]);
+        }
+        
+        //invalid
+        else {
+            Notification_Post(JXNotification.UserServices.RegistrationFailed, nil);
+        }
+    };
+    
+    void (^failureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
+        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
+        Notification_Post(JXNotification.UserServices.RegistrationFailed, nil);
+    };
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   facebookId, @"facebook_id",
+                                   username, @"username",
+                                   firstName, @"first_name",
+                                   lastName, @"last_name",
+                                   email, @"email",
+                                   [UserService getOAuthToken], @"access_token", nil];
+    
+    if (avatarURL) {
+        [params setObject:avatarURL forKey:@"avatar"];
+    }
+    
+    if (bio) {
+        [params setObject:bio forKey:@"bio"];
+    }
+    
+    [self checkAccessTokenAndCall:@"api/v1/auth/facebookLogin" isPost:YES includedImages:nil imagesKey:nil parameters:params successBlock:successBlock failureBlock:failureBlock];
+}
+
 - (void)loginUserWithEmail:(NSString *)email password:(NSString *)password {
     void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
         if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);

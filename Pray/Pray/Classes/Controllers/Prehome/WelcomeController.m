@@ -151,13 +151,13 @@
 }
 
 - (void)facebookLoginSuccessWithUserObject:(NSDictionary *)userObject {
-//    [NetworkService signupWithUsername:[NSString stringWithFormat:@"%@%@", [userObject objectForKey:@"first_name"], [userObject objectForKey:@"last_name"]]
-//                             firstName:[userObject objectForKey:@"first_name"]
-//                              lastName:[userObject objectForKey:@"last_name"]
-//                              password:@""
-//                                 email:[userObject objectForKey:@"email"]
-//                                   bio:[userObject objectForKey:@"bio"]
-//                             avatarURL:[userObject objectForKey:@"picture"] avatarImage:nil];
+    [NetworkService facebookSignupWithFacebookID:[userObject objectForKey:@"id"]
+                                        username:[NSString stringWithFormat:@"%@%@", [userObject objectForKey:@"first_name"], [[userObject objectForKey:@"last_name"] substringToIndex:1]]
+                                       firstName:[userObject objectForKey:@"first_name"]
+                                        lastName:[userObject objectForKey:@"last_name"]
+                                           email:[userObject objectForKey:@"email"]
+                                             bio:[userObject objectForKey:@"bio"]
+                                       avatarURL:[userObject objectForKey:@"picture"]];
 }
 
 - (void)facebookLoginFailed {
