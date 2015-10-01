@@ -296,8 +296,8 @@
     NSMutableArray *rightUtilityButtons = [NSMutableArray new];
     [rightUtilityButtons sw_addUtilityButtonWithColor:Colour_255RGB(40, 155, 229) title:@"Report"];
     
-    NSLog(@"UserID: %@", [UserService getUserID]);
-    NSLog(@"CreatorID: %@", prayer.creatorId);
+//    NSLog(@"UserID: %@", [UserService getUserID]);
+//    NSLog(@"CreatorID: %@", prayer.creatorId);
     
     if ([[prayer.creatorId stringValue] isEqualToString:[UserService getUserID]]) {
         [rightUtilityButtons sw_addUtilityButtonWithColor:Colour_255RGB(254, 74, 68) title:@"Delete"];

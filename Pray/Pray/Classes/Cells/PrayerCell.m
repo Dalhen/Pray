@@ -104,10 +104,11 @@
     [separator setBackgroundColor:Colour_PrayDarkBlue];
     [self.contentView addSubview:separator];
     
-    religionType = [[UIImageView alloc] initWithFrame:CGRectMake(self.screenWidth - 12*sratio - 38*sratio, 8*sratio, 38*sratio, 38*sratio)];
-    [religionType setRoundedToDiameter:38*sratio];
+    religionType = [[UIImageView alloc] initWithFrame:CGRectMake(self.screenWidth - 12*sratio - 38*sratio, 8*sratio, 34*sratio, 34*sratio)];
     [religionType setClipsToBounds:YES];
-    religionType.backgroundColor = Colour_PrayDarkBlueAlpha(0.95f);
+    [religionType setContentMode:UIViewContentModeScaleAspectFit];
+    //[religionType setRoundedToDiameter:38*sratio];
+    //religionType.backgroundColor = Colour_PrayDarkBlueAlpha(0.95f);
     [self.contentView addSubview:religionType];
 }
 
@@ -129,7 +130,7 @@
     }
     
     [username setText:[NSString stringWithFormat:@"%@ %@", prayer.creator.firstname, prayer.creator.lastname]];
-    [timeAgo setText:prayer.timeAgo];
+    [timeAgo setText:(prayer.locationName != nil && [prayer.locationName isEqualToString:@""])? prayer.timeAgo : [NSString stringWithFormat:@"%@ • %@", prayer.timeAgo, prayer.locationName]];
     [textView setText:prayer.prayerText];
     
     [likesIcon setImage:[UIImage imageNamed:(prayer.isLiked.boolValue)? @"likeIconON" : @"likeIconOFF"]];
@@ -148,7 +149,7 @@
     likeButton.frame = CGRectMake(likesIcon.left - 10*sratio, prayerCellHeight - 48*sratio, 10*sratio + likesIcon.width + 6*sratio + likesCount.width + 10*sratio, 42*sratio);
     commentButton.frame = CGRectMake(commentsIcon.left - 10*sratio, prayerCellHeight - 48*sratio, 10*sratio + commentsIcon.width + 6*sratio + commentsCount.width + 10*sratio, 42*sratio);
     
-    [religionType setImage:[UIImage imageNamed:[self getImageNameForReligionIndex:[prayer.religionType integerValue]]]];
+    [religionType setImage:[UIImage imageNamed:[self getImageNameForReligionIndex:labs([prayer.religionType integerValue])]]];
     if ([prayer.religionType integerValue] == 0) {
         [religionType setHidden:YES];
     }
@@ -158,22 +159,22 @@
 - (NSString *)getImageNameForReligionIndex:(NSInteger)integer {
     NSArray *religionsImages = [[NSArray alloc] initWithObjects:
                                 LocString(@""),
-                                LocString(@"chrisIcon"),
-                                LocString(@"islamIcon"),
-                                LocString(@"hinduIcon"),
-                                LocString(@"buddhismIcon"),
-                                LocString(@"shintoIcon"),
-                                LocString(@"sikhIcon"),
-                                LocString(@"judaismIcon"),
-                                LocString(@"jainismIcon"),
-                                LocString(@"bahaiIcon"),
-                                LocString(@"caodaism"),
-                                LocString(@"cheondoIcon"),
-                                LocString(@"tenrikyoIcon"),
-                                LocString(@"wiccaIcon"),
-                                LocString(@"messiaIcon"),
-                                LocString(@"seichoIcon"),
-                                LocString(@"atheismIcon"), nil];
+                                LocString(@"chrisIcon.png"),
+                                LocString(@"islamIcon.png"),
+                                LocString(@"hinduIcon.png"),
+                                LocString(@"buddhismIcon.png"),
+                                LocString(@"shintoIcon.png"),
+                                LocString(@"sikhIcon.png"),
+                                LocString(@"judaismIcon.png"),
+                                LocString(@"jainismIcon.png"),
+                                LocString(@"bahaiIcon.png"),
+                                LocString(@"caodaism.png"),
+                                LocString(@"cheondoIcon.png"),
+                                LocString(@"tenrikyoIcon.png"),
+                                LocString(@"wiccaIcon.png"),
+                                LocString(@"messiaIcon.png"),
+                                LocString(@"seichoIcon.png"),
+                                LocString(@"atheismIcon.png"), nil];
     
     return [religionsImages objectAtIndex:integer];
 }

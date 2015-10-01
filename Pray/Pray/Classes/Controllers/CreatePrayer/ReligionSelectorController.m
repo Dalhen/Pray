@@ -54,22 +54,22 @@
     [self.view setBackgroundColor:Colour_255RGB(61, 66, 78)];
     
     NSArray *religionsImages = [[NSArray alloc] initWithObjects:
-                                LocString(@"chrisIcon"),
-                                LocString(@"islamIcon"),
-                                LocString(@"hinduIcon"),
-                                LocString(@"buddhismIcon"),
-                                LocString(@"shintoIcon"),
-                                LocString(@"sikhIcon"),
-                                LocString(@"judaismIcon"),
-                                LocString(@"jainismIcon"),
-                                LocString(@"bahaiIcon"),
-                                LocString(@"caodaism"),
-                                LocString(@"cheondoIcon"),
-                                LocString(@"tenrikyoIcon"),
-                                LocString(@"wiccaIcon"),
-                                LocString(@"messiaIcon"),
-                                LocString(@"seichoIcon"),
-                                LocString(@"atheismIcon"), nil];
+                                LocString(@"chrisIcon.png"),
+                                LocString(@"islamIcon.png"),
+                                LocString(@"hinduIcon.png"),
+                                LocString(@"buddhismIcon.png"),
+                                LocString(@"shintoIcon.png"),
+                                LocString(@"sikhIcon.png"),
+                                LocString(@"judaismIcon.png"),
+                                LocString(@"jainismIcon.png"),
+                                LocString(@"bahaiIcon.png"),
+                                LocString(@"caodaism.png"),
+                                LocString(@"cheondoIcon.png"),
+                                LocString(@"tenrikyoIcon.png"),
+                                LocString(@"wiccaIcon.png"),
+                                LocString(@"messiaIcon.png"),
+                                LocString(@"seichoIcon.png"),
+                                LocString(@"atheismIcon.png"), nil];
     
     NSArray *religionsTitles = [[NSArray alloc] initWithObjects:
                                 LocString(@"Christianity"),
