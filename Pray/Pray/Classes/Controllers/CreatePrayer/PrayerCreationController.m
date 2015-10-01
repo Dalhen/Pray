@@ -8,7 +8,6 @@
 
 #import "PrayerCreationController.h"
 #import "MentionCell.h"
-#import "ReligionSelectorController.h"
 
 @interface PrayerCreationController ()
 
@@ -176,6 +175,11 @@
     selectReligionButton.titleLabel.font = [FontService systemFont:13*sratio];
     [selectReligionButton addTarget:self action:@selector(displayReligionSelector) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:selectReligionButton];
+    
+    religionIcon = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.screenWidth - 12*sratio - 38*sratio, self.view.screenHeight - keyboardSize.height - 12*sratio - 38*sratio, 34*sratio, 34*sratio)];
+    [religionIcon setClipsToBounds:YES];
+    [religionIcon setContentMode:UIViewContentModeScaleAspectFit];
+    [self.view addSubview:religionIcon];
 }
 
 - (void)setupMentionsView {
@@ -193,12 +197,34 @@
 #pragma mark - Religion selection
 - (void)displayReligionSelector {
     ReligionSelectorController *religionSelector = [[ReligionSelectorController alloc] init];
+    [religionSelector setDelegate:self];
     [self.navigationController pushViewController:religionSelector animated:YES];
 }
 
 - (void)religionSelectedWithIndex:(NSInteger)index {
     religionType = index;
-    //update view here
+    
+    NSArray *religionsImages = [[NSArray alloc] initWithObjects:
+                                LocString(@"chrisIcon.png"),
+                                LocString(@"islamIcon.png"),
+                                LocString(@"hinduIcon.png"),
+                                LocString(@"buddhismIcon.png"),
+                                LocString(@"shintoIcon.png"),
+                                LocString(@"sikhIcon.png"),
+                                LocString(@"judaismIcon.png"),
+                                LocString(@"jainismIcon.png"),
+                                LocString(@"bahaiIcon.png"),
+                                LocString(@"caodaism.png"),
+                                LocString(@"cheondoIcon.png"),
+                                LocString(@"tenrikyoIcon.png"),
+                                LocString(@"wiccaIcon.png"),
+                                LocString(@"messiaIcon.png"),
+                                LocString(@"seichoIcon.png"),
+                                LocString(@"atheismIcon.png"), nil];
+    
+    [selectReligionButton setTitle:LocString(@"Modify religion") forState:UIControlStateNormal];
+    [religionIcon setFrame:CGRectMake(self.view.screenWidth - 12*sratio - 38*sratio, self.view.screenHeight - keyboardSize.height - 12*sratio - 38*sratio, 34*sratio, 34*sratio)];
+    [religionIcon setImage:[UIImage imageNamed:[religionsImages objectAtIndex:religionType]]];
 }
 
 

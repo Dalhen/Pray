@@ -90,20 +90,22 @@
                                 LocString(@"Atheism"), nil];
     
     for (NSInteger i = 0; i<4; i++) {
-        for (NSInteger j = 0; j<3; j++) {
+        for (NSInteger j = 0; j<4; j++) {
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-            button.backgroundColor = Colour_PrayBlue;
+            button.backgroundColor = Colour_White;
             [button.layer setCornerRadius:5.0f];
-            [button setFrame:CGRectMake(44*sratio + 84*sratio*j, 96*sratio + 96*sratio*i, 64*sratio, 64*sratio)];
-            [button setBackgroundImage:[UIImage imageNamed:[religionsImages objectAtIndex:i*j]] forState:UIControlStateNormal];
+            [button setFrame:CGRectMake(8*sratio + 80*sratio*j, 92*sratio + 102*sratio*i, 64*sratio, 64*sratio)];
+            [button setImage:[UIImage imageNamed:[religionsImages objectAtIndex:4*i+j]] forState:UIControlStateNormal];
             [button addTarget:self action:@selector(religionSelectedWithIndex:) forControlEvents:UIControlEventTouchUpInside];
-            [button setTag:i*j];
+            [button setTag:4*i+j];
             [self.view addSubview:button];
             
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(38*sratio + 84*sratio*j, 92*sratio + 74*sratio*i, 84*sratio, 20*sratio)];
-            label.text = [religionsTitles objectAtIndex:i*j];
+            UILabel *label = [[UILabel alloc] initWithFrame:
+                              CGRectMake(button.left - 14*sratio, button.bottom, button.width + 28*sratio, 25*sratio)];
+            label.text = [religionsTitles objectAtIndex:4*i+j];
             label.textAlignment = NSTextAlignmentCenter;
-            label.font = [FontService systemFont:13*sratio];
+            label.font = [FontService systemFont:12*sratio];
+            label.textColor = Colour_White;
             [self.view addSubview:label];
         }
     }
@@ -116,6 +118,7 @@
 
 - (void)religionSelectedWithIndex:(id)sender {
     NSInteger index = [sender tag] + 1;
+    [self goBack];
     [delegate religionSelectedWithIndex:index];
 }
 

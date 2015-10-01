@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol ReligionSelectorController <NSObject>
+@protocol ReligionSelectorDelegate <NSObject>
 
 - (void)religionSelectedWithIndex:(NSInteger)index;
 
@@ -18,6 +18,6 @@
     
 }
 
-@property(nonatomic, assign) id <ReligionSelectorController> delegate;
+@property(nonatomic, assign) id <ReligionSelectorDelegate> delegate;
 
 @end

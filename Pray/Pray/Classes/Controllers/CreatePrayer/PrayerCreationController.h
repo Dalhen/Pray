@@ -8,6 +8,7 @@
 
 #import "BaseViewController.h"
 #import <MapKit/MapKit.h>
+#import "ReligionSelectorController.h"
 
 @protocol PrayerCreationDelegate <NSObject>
 
@@ -15,7 +16,7 @@
 
 @end
 
-@interface PrayerCreationController : UIViewController <CLLocationManagerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, UITextViewDelegate, UITableViewDelegate, UITableViewDataSource> {
+@interface PrayerCreationController : UIViewController <CLLocationManagerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, UITextViewDelegate, UITableViewDelegate, UITableViewDataSource, ReligionSelectorDelegate, UITextViewDelegate> {
     
     UITableView *mentionsTable;
     
@@ -53,6 +54,7 @@
     CDUser *currentUser;
 
     NSInteger religionType;
+    UIImageView *religionIcon;
 }
 
 @property(nonatomic, assign) id <PrayerCreationDelegate> delegate;
