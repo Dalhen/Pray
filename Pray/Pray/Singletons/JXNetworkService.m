@@ -327,6 +327,7 @@
         
         //success
         if (statusCode == 200) {
+            [DataAccess addUserWithData:[responseObject objectForKey:@"data"]];
             Notification_Post(JXNotification.UserServices.RegistrationSuccess, responseObject);
         }
         
@@ -380,6 +381,7 @@
         
         //success
         if (statusCode == 200) {
+            [DataAccess addUserWithData:[responseObject objectForKey:@"data"]];
             Notification_Post(JXNotification.UserServices.RegistrationSuccess, [responseObject objectForKey:@"data"]);
         }
         
@@ -421,6 +423,7 @@
         
         //success
         if (statusCode == 200) {
+            [DataAccess addUserWithData:[responseObject objectForKey:@"data"]];
             Notification_Post(JXNotification.UserServices.LoginSuccess, [responseObject objectForKey:@"data"]);
         }
         
@@ -441,36 +444,6 @@
                                    [UserService getOAuthToken], @"access_token", nil];
     
     [self checkAccessTokenAndCall:@"api/v1/auth/login" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
-}
-
-- (void)loginUserWithLinkedIn:(NSString *)linkedInID {
-    void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
-        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
-        
-        NSInteger statusCode = [operation.response statusCode];
-        
-        //success
-        if (statusCode == 200) {
-            Notification_Post(JXNotification.UserServices.LoginSuccess, [responseObject objectForKey:@"data"]);
-        }
-        
-        //invalid
-        else {
-            Notification_Post(JXNotification.UserServices.LoginFailed, nil);
-        }
-    };
-    
-    void (^failureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
-        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
-        Notification_Post(JXNotification.UserServices.LoginFailed, nil);
-    };
-    
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   linkedInID, @"linkedin_id",
-                                   
-                                   [UserService getOAuthToken], @"access_token", nil];
-    
-    [self checkAccessTokenAndCall:@"api/v1/auth/loginLinkedIn" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
 - (void)updateLocationWithCityName:(NSString *)cityName

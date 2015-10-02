@@ -129,10 +129,21 @@
         [userAvatar setImage:[UIImage imageNamed:@"emptyProfile"]];
     }
     
+    //Username
     [username setText:[NSString stringWithFormat:@"%@ %@", prayer.creator.firstname, prayer.creator.lastname]];
-    [timeAgo setText:(prayer.locationName != nil && [prayer.locationName isEqualToString:@""])? prayer.timeAgo : [NSString stringWithFormat:@"%@ • %@", prayer.timeAgo, prayer.locationName]];
+    
+    //Time & Location
+    if (prayer.locationName) {
+        [timeAgo setText:[NSString stringWithFormat:@"%@ • %@", prayer.timeAgo, prayer.locationName]];
+    }
+    else {
+        [timeAgo setText:prayer.timeAgo];
+    }
+    
+    //Prayer Text
     [textView setText:prayer.prayerText];
     
+    //Likes & Comments
     [likesIcon setImage:[UIImage imageNamed:(prayer.isLiked.boolValue)? @"likeIconON" : @"likeIconOFF"]];
     
     [likesCount setText:prayer.likesCount];
@@ -149,6 +160,7 @@
     likeButton.frame = CGRectMake(likesIcon.left - 10*sratio, prayerCellHeight - 48*sratio, 10*sratio + likesIcon.width + 6*sratio + likesCount.width + 10*sratio, 42*sratio);
     commentButton.frame = CGRectMake(commentsIcon.left - 10*sratio, prayerCellHeight - 48*sratio, 10*sratio + commentsIcon.width + 6*sratio + commentsCount.width + 10*sratio, 42*sratio);
     
+    //Religion Type
     [religionType setImage:[UIImage imageNamed:[self getImageNameForReligionIndex:labs([prayer.religionType integerValue])]]];
     if ([prayer.religionType integerValue] == 0) {
         [religionType setHidden:YES];

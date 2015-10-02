@@ -195,7 +195,7 @@
 }
 
 - (void)setupTableView {
-    mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, profileHeader.bottom*sratio, self.view.screenWidth, self.view.screenHeight - profileHeader.bottom)];
+    mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 54*sratio + 160*sratio + 36*sratio, self.view.screenWidth, self.view.screenHeight - 54*sratio + 160*sratio - 60*sratio)];
     [mainTable setBackgroundColor:Colour_PrayDarkBlue];
     [mainTable setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [mainTable setScrollsToTop:YES];

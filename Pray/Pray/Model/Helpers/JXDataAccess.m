@@ -306,9 +306,9 @@
     NSString *prayerText = [prayerData objectForKey:@"body"];
     NSString *religionType = validObject([prayerData objectForKey:@"religion"])? [[prayerData objectForKey:@"religion"] stringValue] : @"0";
     NSString *imageURL = [prayerData objectForKey:@"image"];
-    NSString *latitude = (NSString *)[prayerData objectForKey:@"latitude"];
-    NSString *longitude = (NSString *)[prayerData objectForKey:@"longitude"];
-    NSString *locationName = (NSString *)[prayerData objectForKey:@"location"];
+    NSString *latitude = [prayerData objectForKey:@"latitude"];
+    NSString *longitude = [prayerData objectForKey:@"longitude"];
+    NSString *locationName = [prayerData objectForKey:@"location"];
     NSString *commentsCount = [[prayerData objectForKey:@"comments"] stringValue];
     NSString *likesCount = [[prayerData objectForKey:@"likes"] stringValue];
     NSString *timeAgo = [prayerData objectForKey:@"time_ago"];
@@ -366,9 +366,9 @@
         NSString *prayerText = [prayerData objectForKey:@"body"];
         NSString *religionType = validObject([prayerData objectForKey:@"religion"])? [[prayerData objectForKey:@"religion"] stringValue] : @"0";
         NSString *imageURL = [prayerData objectForKey:@"image"];
-        NSString *latitude = (NSString *)[prayerData objectForKey:@"latitude"];
-        NSString *longitude = (NSString *)[prayerData objectForKey:@"longitude"];
-        NSString *locationName = (NSString *)[prayerData objectForKey:@"location"];
+        NSString *latitude = [prayerData objectForKey:@"latitude"];
+        NSString *longitude = [prayerData objectForKey:@"longitude"];
+        NSString *locationName = [prayerData objectForKey:@"location"];
         NSString *commentsCount = [[prayerData objectForKey:@"comments"] stringValue];
         NSString *likesCount = [[prayerData objectForKey:@"likes"] stringValue];
         NSString *timeAgo = [prayerData objectForKey:@"time_ago"];

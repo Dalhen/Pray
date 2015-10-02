@@ -65,7 +65,7 @@
     [self.view addSubview:backImage];
     
     UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.screenWidth, self.view.screenHeight)];
-    [scrollView setContentSize:CGSizeMake(self.view.screenWidth, self.view.screenHeight + 80*sratio)];
+    [scrollView setContentSize:CGSizeMake(self.view.screenWidth, self.view.screenHeight + 120*sratio)];
     [self.view addSubview:scrollView];
     
     UIImageView *logoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"prayLogo"]];

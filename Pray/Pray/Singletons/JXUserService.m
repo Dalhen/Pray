@@ -100,7 +100,7 @@
     
     [[NSUserDefaults standardUserDefaults] setObject:username forKey:@"username"];
     [[NSUserDefaults standardUserDefaults] setObject:email forKey:@"email"];
-    [[NSUserDefaults standardUserDefaults] setObject:userID forKey:@"userID"];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%@", userID] forKey:@"userID"];
     [[NSUserDefaults standardUserDefaults] setObject:firstname forKey:@"firstname"];
     [[NSUserDefaults standardUserDefaults] setObject:lastname forKey:@"lastname"];
     [[NSUserDefaults standardUserDefaults] setObject:fullname forKey:@"fullname"];
@@ -108,6 +108,8 @@
     [[NSUserDefaults standardUserDefaults] setObject:city forKey:@"city"];
     [[NSUserDefaults standardUserDefaults] setObject:profileURL forKey:@"avatarURL"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    NSLog(@"ID=%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"userID"]);
 }
 
 - (void)setUsername:(NSString *)username {

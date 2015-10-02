@@ -385,6 +385,7 @@
         //&& currentPage < maxPagesCount
     {
         currentPage +=1;
+        refreshing = YES;
         [self loadNextPrayers];
     }
 }

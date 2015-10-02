@@ -58,8 +58,6 @@
 
 - (void)loginUserWithEmail:(NSString *)email password:(NSString *)password;
 
-- (void)loginUserWithLinkedIn:(NSString *)linkedInID;
-
 - (void)updateLocationWithCityName:(NSString *)cityName latitude:(NSString *)latitude longitude:(NSString *)longitude;
 
 - (void)resetPasswordForEmailAddress:(NSString *)email;
