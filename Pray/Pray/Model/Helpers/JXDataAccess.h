@@ -73,5 +73,7 @@
 
 - (void)removeCommentForID:(NSNumber *)commentId;
 
+- (void)add1CommentToPrayer:(CDPrayer *)prayer;
+
 
 @end

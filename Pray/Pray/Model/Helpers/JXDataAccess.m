@@ -631,5 +631,20 @@
     }
 }
 
+- (void)add1CommentToPrayer:(CDPrayer *)prayer {
+    [prayer setCommentsCount:[NSString stringWithFormat:@"%d",[prayer.commentsCount intValue]+1]];
+    
+    if (prayer) {
+        NSManagedObjectContext *moc = [JXDataAccess getDBContext];
+        NSError *error;
+        if (![moc save:&error]) {
+            // Handle the error.
+            if(DEBUGDataAccess) NSLog(@"Error setting -1 comment to prayer");
+        } else {
+            if(DEBUGDataAccess) NSLog(@"+1 comment to prayer");
+        }
+    }
+}
+
 
 @end

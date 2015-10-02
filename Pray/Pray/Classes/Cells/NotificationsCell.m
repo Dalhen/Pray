@@ -42,10 +42,11 @@
     textLabel.textAlignment = NSTextAlignmentLeft;
     [self.contentView addSubview:textLabel];
     
-    timeAgo = [[UILabel alloc] initWithFrame:CGRectMake(self.screenWidth - 52*sratio, 0, 52*sratio, 66*sratio)];
+    timeAgo = [[UILabel alloc] initWithFrame:CGRectMake(self.screenWidth - 44*sratio, 0, 42*sratio, 66*sratio)];
     timeAgo.font = [FontService systemFont:8*sratio];
     timeAgo.textColor = Colour_White;
-    timeAgo.textAlignment = NSTextAlignmentLeft;
+    timeAgo.textAlignment = NSTextAlignmentCenter;
+    timeAgo.numberOfLines = 2;
     [self.contentView addSubview:timeAgo];
     
     UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, 65*sratio, self.screenWidth, 1)];

@@ -1130,6 +1130,7 @@
         //success
         if (statusCode == 200) {
             [DataAccess addCommentWithData:[responseObject objectForKey:@"data"] toPrayer:[NSNumber numberWithInt:[prayerID intValue]]];
+            [DataAccess add1CommentToPrayer:[DataAccess getPrayerForID:[NSNumber numberWithInt:[prayerID intValue]]]];
             Notification_Post(JXNotification.CommentsServices.PostCommentSuccess, tempIdentifier);
         }
         

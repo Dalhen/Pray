@@ -122,6 +122,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [self registerForEvents];
     [self.navigationController setNavigationBarHidden:YES];
+    
+    [mainTable reloadRowsAtIndexPaths:[mainTable indexPathsForVisibleRows] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
