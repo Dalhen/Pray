@@ -21,6 +21,7 @@
 @dynamic tempIdentifier;
 @dynamic creator;
 @dynamic prayer;
+@dynamic tagged;
 
 - (NSComparisonResult)compareByDate:(CDComment *)other {
     return [self.creationDate compare:other.creationDate];

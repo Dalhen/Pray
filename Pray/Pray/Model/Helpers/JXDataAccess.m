@@ -255,6 +255,18 @@
     return ([mutableFetchResults count]>0) ? [mutableFetchResults objectAtIndex:0] : nil;
 }
 
+- (CDUser *)getUserForUsername:(NSString *)username {
+    NSManagedObjectContext *moc = [JXDataAccess getDBContext];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"CDUser" inManagedObjectContext:moc]];
+    [request setPredicate:[NSPredicate predicateWithFormat:@"username == %@", username]];
+    
+    NSError *error;
+    NSMutableArray *mutableFetchResults = [[moc executeFetchRequest:request error:&error] mutableCopy];
+    return ([mutableFetchResults count]>0) ? [mutableFetchResults objectAtIndex:0] : nil;
+}
+
 - (void)followUser:(NSNumber *)userId {
     CDUser *user = [self getUserForID:userId];
     
@@ -299,7 +311,8 @@
     NSManagedObjectContext *moc = [JXDataAccess getDBContext];
     
     NSDictionary *userData = [[prayerData objectForKey:@"user"] objectForKey:@"data"];
-    
+    NSArray *taggedUsers = [[prayerData objectForKey:@"tagged"] objectForKey:@"data"];
+                            
     NSNumber *uniqueId = [NSNumber numberWithInt:[[prayerData objectForKey:@"id"] intValue]];
     NSNumber *creatorId = [NSNumber numberWithInt:[[userData objectForKey:@"id"] intValue]];
     NSNumber *categoryId = [NSNumber numberWithInt:[[prayerData objectForKey:@"category_id"] intValue]];
@@ -335,10 +348,16 @@
     prayer.isLiked = validObject(isLiked)? isLiked : prayer.isLiked;
     prayer.creationDate = validObject(creationDate)? creationDate : prayer.creationDate;
     
+    //Creator
     CDUser *user = [self addUserWithData:userData];
-    
     if (user) {
         [prayer setCreator:user];
+    }
+    
+    //Tagged
+    if ([taggedUsers count]>0) {
+        NSArray *tagsObjects = [DataAccess addUsers:taggedUsers];
+        [prayer addTagged:[NSSet setWithArray:tagsObjects]];
     }
     
     NSError *error;
@@ -359,6 +378,7 @@
     for (NSDictionary *prayerData in prayersData) {
         
         NSDictionary *userData = [[prayerData objectForKey:@"user"] objectForKey:@"data"];
+        NSArray *taggedUsers = [[prayerData objectForKey:@"tagged"] objectForKey:@"data"];
         
         NSNumber *uniqueId = [NSNumber numberWithInt:[[prayerData objectForKey:@"id"] intValue]];
         NSNumber *creatorId = [NSNumber numberWithInt:[[userData objectForKey:@"id"] intValue]];
@@ -395,10 +415,16 @@
         prayer.isLiked = validObject(isLiked)? isLiked : prayer.isLiked;
         prayer.creationDate = validObject(creationDate)? creationDate : prayer.creationDate;
         
+        //Creator
         CDUser *user = [self addUserWithData:userData];
-        
         if (user) {
             [prayer setCreator:user];
+        }
+        
+        //Tagged
+        if ([taggedUsers count]>0) {
+            NSArray *tagsObjects = [DataAccess addUsers:taggedUsers];
+            [prayer addTagged:[NSSet setWithArray:tagsObjects]];
         }
         
         [prayersObjects addObject:prayer];
@@ -506,6 +532,7 @@
     NSManagedObjectContext *moc = [JXDataAccess getDBContext];
     
     NSDictionary *userData = [[commentData objectForKey:@"user"] objectForKey:@"data"];
+    NSArray *taggedUsers = [[commentData objectForKey:@"tagged"] objectForKey:@"data"];
     
     NSNumber *uniqueId = [NSNumber numberWithInt:[[commentData objectForKey:@"id"] intValue]];
     NSString *commentText = [commentData objectForKey:@"body"];
@@ -524,11 +551,19 @@
     comment.timeAgo = validObject(timeAgo)? timeAgo : comment.timeAgo;
     comment.creationDate = validObject(creationDate)? creationDate : comment.creationDate;
     
+    //Creator
     CDUser *user = [self addUserWithData:userData];
     if (user) {
         [comment setCreator:user];
     }
     
+    //Tagged
+    if ([taggedUsers count]>0) {
+        NSArray *tagsObjects = [DataAccess addUsers:taggedUsers];
+        [comment addTagged:[NSSet setWithArray:tagsObjects]];
+    }
+    
+    //Prayer
     CDPrayer *prayer = [self getPrayerForID:prayerId];
     if (prayer) {
         [prayer addCommentsObject:comment];
@@ -552,6 +587,7 @@
     for (NSDictionary *commentData in commentsData) {
         
         NSDictionary *userData = [[commentData objectForKey:@"user"] objectForKey:@"data"];
+        NSArray *taggedUsers = [[commentData objectForKey:@"tagged"] objectForKey:@"data"];
         
         NSNumber *uniqueId = [NSNumber numberWithInt:[[commentData objectForKey:@"id"] intValue]];
         NSString *commentText = [commentData objectForKey:@"body"];
@@ -570,9 +606,16 @@
         comment.timeAgo = validObject(timeAgo)? timeAgo : comment.timeAgo;
         comment.creationDate = validObject(creationDate)? creationDate : comment.creationDate;
         
+        //Creator
         CDUser *user = [self addUserWithData:userData];
         if (user) {
             [comment setCreator:user];
+        }
+        
+        //Tagged
+        if ([taggedUsers count]>0) {
+            NSArray *tagsObjects = [DataAccess addUsers:taggedUsers];
+            [comment addTagged:[NSSet setWithArray:tagsObjects]];
         }
         
         [commentsObjects addObject:comment];

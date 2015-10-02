@@ -75,6 +75,9 @@
 
 #pragma mark - Data update
 - (void)updateWithComment:(CDComment *)aComment {
+    
+    commentObject = aComment;
+    
     if (aComment.creator.avatar != nil && ![aComment.creator.avatar isEqualToString:@""]) {
         [iconImageView sd_setImageWithURL:[NSURL URLWithString:aComment.creator.avatar] placeholderImage:[UIImage imageNamed:@"emptyProfile"]];
     }
@@ -115,14 +118,15 @@
 //        [descriptionText addLinkToTransitInformation:@{@"hashtag":@""} withRange:hashtagMatchRange];
 //    }
     
-    NSDataDetector *linkDetector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:nil];
-    NSArray *linksMatches = [linkDetector matchesInString:stringWithTags options:0 range:NSMakeRange(0, [stringWithTags length])];
-    
-    for (NSTextCheckingResult *linkMatch in linksMatches) {
-        NSRange linkMatchRange = [linkMatch rangeAtIndex:0];
-        [attString addAttribute:NSForegroundColorAttributeName value:Colour_255RGB(0, 122, 255) range:linkMatchRange];
-        [descriptionText addLinkToURL:[NSURL URLWithString:[stringWithTags substringWithRange:linkMatchRange]] withRange:linkMatchRange];
-    }
+//    //Normal links detector
+//    NSDataDetector *linkDetector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:nil];
+//    NSArray *linksMatches = [linkDetector matchesInString:stringWithTags options:0 range:NSMakeRange(0, [stringWithTags length])];
+//    
+//    for (NSTextCheckingResult *linkMatch in linksMatches) {
+//        NSRange linkMatchRange = [linkMatch rangeAtIndex:0];
+//        [attString addAttribute:NSForegroundColorAttributeName value:Colour_255RGB(0, 122, 255) range:linkMatchRange];
+//        [descriptionText addLinkToURL:[NSURL URLWithString:[stringWithTags substringWithRange:linkMatchRange]] withRange:linkMatchRange];
+//    }
     
     //Mentions
      NSRegularExpression *mentionsExpression = [NSRegularExpression regularExpressionWithPattern:@"(@\\w+)" options:NO error:nil];
@@ -130,17 +134,19 @@
      
      
      for (NSTextCheckingResult *mentionMatch in mentionsMatches) {
-     NSRange mentionMatchRange = [mentionMatch rangeAtIndex:0];
-     [attString addAttribute:NSForegroundColorAttributeName value:Colour_PrayBlue range:mentionMatchRange];
-     
-     //        NSString *mentionString = [stringWithTags substringWithRange:mentionMatchRange];
-     //        NSRange linkRange = [stringWithTags rangeOfString:mentionString];
-     //        NSString* user = [mentionString substringFromIndex:1];
-     //        NSString* linkURLString = [NSString stringWithFormat:@"http://www.google.com"];
-     NSArray *keys = [[NSArray alloc] initWithObjects:(id)kCTForegroundColorAttributeName, (id)kCTUnderlineStyleAttributeName, nil];
-     NSArray *objects = [[NSArray alloc] initWithObjects:Colour_PrayBlue, [NSNumber numberWithInt:kCTUnderlineStyleNone], nil];
-     NSDictionary *linkAttributes = [[NSDictionary alloc] initWithObjects:objects forKeys:keys];
-     [descriptionText addLinkWithTextCheckingResult:mentionMatch attributes:linkAttributes];
+         NSRange mentionMatchRange = [mentionMatch rangeAtIndex:0];
+         [attString addAttribute:NSForegroundColorAttributeName value:Colour_PrayBlue range:mentionMatchRange];
+         
+         //        NSString *mentionString = [stringWithTags substringWithRange:mentionMatchRange];
+         //        NSRange linkRange = [stringWithTags rangeOfString:mentionString];
+         //        NSString* user = [mentionString substringFromIndex:1];
+         //        NSString* linkURLString = [NSString stringWithFormat:@"http://www.google.com"];
+         
+         NSArray *keys = [[NSArray alloc] initWithObjects:(id)kCTForegroundColorAttributeName, (id)kCTUnderlineStyleAttributeName, nil];
+         NSArray *objects = [[NSArray alloc] initWithObjects:Colour_PrayBlue, [NSNumber numberWithInt:kCTUnderlineStyleNone], nil];
+         NSDictionary *linkAttributes = [[NSDictionary alloc] initWithObjects:objects forKeys:keys];
+         [descriptionText addLinkWithTextCheckingResult:mentionMatch attributes:linkAttributes];
+         //[descriptionText addLinkToTransitInformation:@{@"tag":@""} withRange:mentionMatchRange];
      }
     
     return attString;
@@ -149,11 +155,14 @@
 
 #pragma mark - TTTAttributedString delegate
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithTextCheckingResult:(NSTextCheckingResult *)result {
-    //NSRange mentionMatchRange = [result rangeAtIndex:0];
-    //NSString *mentionString = [descriptionText.text substringWithRange:mentionMatchRange];
+    NSRange mentionMatchRange = [result rangeAtIndex:0];
+    NSString *mentionString = [[descriptionText.text substringWithRange:mentionMatchRange] substringFromIndex:1];
+    CDUser *userClicked = [DataAccess getUserForUsername:mentionString];
+    [delegate showUserForUserObject:userClicked];
 }
 
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithTransitInformation:(NSDictionary *)components {
+    
     if ([components objectForKey:@"hashtag"]) {
         
     }

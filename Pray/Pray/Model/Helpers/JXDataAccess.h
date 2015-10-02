@@ -37,6 +37,8 @@
 
 - (CDUser *)getUserForID:(NSNumber *)uniqueId;
 
+- (CDUser *)getUserForUsername:(NSString *)username;
+
 - (void)followUser:(NSNumber *)userId;
 
 - (void)unfollowUser:(NSNumber *)userId;

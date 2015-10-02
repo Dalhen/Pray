@@ -258,6 +258,8 @@
         }
         
         [NetworkService postComment:commentTextView.text withMentionString:[finalMentions componentsJoinedByString:@","] forPrayerID:[currentPrayer.uniqueId stringValue] andTempIdentifier:commentObject.tempIdentifier];
+        
+        [commentTextView resignFirstResponder];
     }
 }
 
@@ -807,11 +809,13 @@
             
             NSMutableString *commentStr = [[NSMutableString alloc] initWithString:commentTextView.text];
             
-            NSString *unfilteredString = [userObject.firstname capitalizedString];
-            NSCharacterSet *notAllowedChars = [[NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"] invertedSet];
-            NSString *filteredString = [[unfilteredString componentsSeparatedByCharactersInSet:notAllowedChars] componentsJoinedByString:@""];
+//            NSString *unfilteredString = [userObject.firstname capitalizedString];
+//            NSCharacterSet *notAllowedChars = [[NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"] invertedSet];
+//            NSString *filteredString = [[unfilteredString componentsSeparatedByCharactersInSet:notAllowedChars] componentsJoinedByString:@""];
             
-            [commentStr replaceCharactersInRange:mentionMatchRange withString:[NSString stringWithFormat:@"@%@", filteredString]];
+            NSString *username = userObject.username;
+            
+            [commentStr replaceCharactersInRange:mentionMatchRange withString:[NSString stringWithFormat:@"@%@", username]];
             [commentTextView setText:commentStr];
             
             //Closing search box
@@ -831,6 +835,11 @@
         ProfileController *profileController = [[ProfileController alloc] initWithUser:comment.creator];
         [self.navigationController pushViewController:profileController animated:YES];
     }
+}
+
+- (void)showUserForUserObject:(CDUser *)user {
+    ProfileController *profileController = [[ProfileController alloc] initWithUser:user];
+    [self.navigationController pushViewController:profileController animated:YES];
 }
 
 - (void)showUserFromPrayer {

@@ -615,11 +615,13 @@
         
         NSMutableString *commentStr = [[NSMutableString alloc] initWithString:prayerText.text];
         
-        NSString *unfilteredString = [userObject.firstname capitalizedString];
-        NSCharacterSet *notAllowedChars = [[NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"] invertedSet];
-        NSString *filteredString = [[unfilteredString componentsSeparatedByCharactersInSet:notAllowedChars] componentsJoinedByString:@""];
+//        NSString *unfilteredString = [userObject.firstname capitalizedString];
+//        NSCharacterSet *notAllowedChars = [[NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"] invertedSet];
+//        NSString *filteredString = [[unfilteredString componentsSeparatedByCharactersInSet:notAllowedChars] componentsJoinedByString:@""];
+//[commentStr replaceCharactersInRange:mentionMatchRange withString:[NSString stringWithFormat:@"@%@", filteredString]];
         
-        [commentStr replaceCharactersInRange:mentionMatchRange withString:[NSString stringWithFormat:@"@%@", filteredString]];
+        NSString *username = userObject.username;
+        [commentStr replaceCharactersInRange:mentionMatchRange withString:[NSString stringWithFormat:@"@%@", username]];
         [prayerText setText:commentStr];
         
         //Closing search box

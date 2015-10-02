@@ -28,6 +28,7 @@
 @property (nonatomic, retain) NSString * latitude;
 @property (nonatomic, retain) NSString * longitude;
 @property (nonatomic, retain) NSSet *comments;
+@property (nonatomic, retain) NSSet *tagged;
 @property (nonatomic, retain) CDUser *creator;
 @end
 
@@ -37,5 +38,10 @@
 - (void)removeCommentsObject:(CDComment *)value;
 - (void)addComments:(NSSet *)values;
 - (void)removeComments:(NSSet *)values;
+
+- (void)addTaggedObject:(CDUser *)value;
+- (void)removeTaggedObject:(CDUser *)value;
+- (void)addTagged:(NSSet *)values;
+- (void)removeTagged:(NSSet *)values;
 
 @end

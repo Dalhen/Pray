@@ -29,5 +29,6 @@
 @dynamic longitude;
 @dynamic comments;
 @dynamic creator;
+@dynamic tagged;
 
 @end

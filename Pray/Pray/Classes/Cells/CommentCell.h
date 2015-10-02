@@ -17,6 +17,7 @@
 @protocol CommentCellDelegate <NSObject>
 
 - (void)showUserForCell:(CommentCell *)cell;
+- (void)showUserForUserObject:(CDUser *)user;
 - (float)heightToFitCommentText:(NSString *)text;
 
 @end
@@ -28,6 +29,7 @@
     UILabel *usernameLabel;
     TTTAttributedLabel *descriptionText;
     UILabel *timeAgoLabel;
+    CDComment *commentObject;
 }
 
 @property(nonatomic, weak) id <CommentCellDelegate> delegate;
