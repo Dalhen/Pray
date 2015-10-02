@@ -230,17 +230,17 @@
     if (indexPath.section == 0) {
         //Privacy
         if (indexPath.row == 0) {
-            WebController *webController = [[WebController alloc] initWithURL:@"http://theteemapp.com/privacy.html"];
+            WebController *webController = [[WebController alloc] initWithURL:@"http://www.google.com"];
             [self.navigationController pushViewController:webController animated:YES];
         }
         //Terms of Service
         else if (indexPath.row == 1) {
-            WebController *webController = [[WebController alloc] initWithURL:@"http://theteemapp.com/terms.html"];
+            WebController *webController = [[WebController alloc] initWithURL:@"http://www.google.com"];
             [self.navigationController pushViewController:webController animated:YES];
         }
         //Learn More
         else if (indexPath.row == 2) {
-            WebController *webController = [[WebController alloc] initWithURL:@"http://theteemapp.com/terms.html"];
+            WebController *webController = [[WebController alloc] initWithURL:@"http://www.google.com"];
             [self.navigationController pushViewController:webController animated:YES];
         }
         

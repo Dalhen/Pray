@@ -356,35 +356,35 @@
 
 - (void)textViewDidChange:(UITextView *)textView {
     
-    float numLines = textView.contentSize.height/textView.font.lineHeight;
-    
-    if (numLines == 1) {
-        [addCommentView setFrame:CGRectMake(0, self.view.screenHeight-keyboardSize.height-120, self.view.screenWidth, 58)];
-        [commentTextView setFrame:CGRectMake(8, 10, self.view.screenWidth-58, 42)];
-        [sendCommentButton setFrame:CGRectMake(self.view.screenWidth - 58, 0, 58, 58)];
-        previousCommentHeight = 42.0f;
-    }
-    else if (numLines < 5) {
-        [UIView animateWithDuration:0.3 animations:^{
-            [addCommentView setHeight:textView.contentSize.height + 16 + 5];
-            [addCommentView setBottom:self.view.screenHeight - keyboardSize.height - 58];
-            [sendCommentButton setFrame:CGRectMake(self.view.screenWidth - 58, 0, 58, addCommentView.height)];
-            [textView setHeight:textView.contentSize.height];
-            [textView setTop:10];
-            
-            [cancelCommentButton setFrame:CGRectMake(0, 0, self.view.screenWidth, self.view.screenHeight + kPadding - keyboardSize.height - addCommentView.height - 58)];
-        }];
-        
-        previousCommentHeight = textView.contentSize.height;
-    }
-    
-    [commentsTable setHeight:addCommentView.top - 120];
-    
-    if (commentsTable.contentSize.height > self.view.screenHeight - 58 - 64) {
-        CGPoint bottomOffset = CGPointMake(0, commentsTable.contentSize.height - commentsTable.bounds.size.height);
-        [commentsTable setContentOffset:bottomOffset animated:YES];
-    }
-    
+//    float numLines = textView.contentSize.height/textView.font.lineHeight;
+//    
+//    if (numLines == 1) {
+//        [addCommentView setFrame:CGRectMake(0, self.view.screenHeight-keyboardSize.height-120, self.view.screenWidth, 58)];
+//        [commentTextView setFrame:CGRectMake(8, 10, self.view.screenWidth-58, 42)];
+//        [sendCommentButton setFrame:CGRectMake(self.view.screenWidth - 58, 0, 58, 58)];
+//        previousCommentHeight = 42.0f;
+//    }
+//    else if (numLines < 5) {
+//        [UIView animateWithDuration:0.3 animations:^{
+//            [addCommentView setHeight:textView.contentSize.height + 16 + 5];
+//            [addCommentView setBottom:self.view.screenHeight - keyboardSize.height - 58];
+//            [sendCommentButton setFrame:CGRectMake(self.view.screenWidth - 58, 0, 58, addCommentView.height)];
+//            [textView setHeight:textView.contentSize.height];
+//            [textView setTop:10];
+//            
+//            [cancelCommentButton setFrame:CGRectMake(0, 0, self.view.screenWidth, self.view.screenHeight + kPadding - keyboardSize.height - addCommentView.height - 58)];
+//        }];
+//        
+//        previousCommentHeight = textView.contentSize.height;
+//    }
+//    
+//    [commentsTable setHeight:addCommentView.top - 120];
+//    
+//    if (commentsTable.contentSize.height > self.view.screenHeight - 58 - 64) {
+//        CGPoint bottomOffset = CGPointMake(0, commentsTable.contentSize.height - commentsTable.bounds.size.height);
+//        [commentsTable setContentOffset:bottomOffset animated:YES];
+//    }
+//    
     //Mentions
     NSRange selectedRange = textView.selectedRange;
     

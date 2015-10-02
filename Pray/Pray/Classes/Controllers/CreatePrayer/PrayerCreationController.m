@@ -148,7 +148,7 @@
     imageMask.alpha = 0.0f;
     [self.view addSubview:imageMask];
     
-    prayerText = [[UITextView alloc] initWithFrame:CGRectMake((self.view.screenWidth - 285*sratio)/2, 64*sratio, 285*sratio, 140*sratio)];
+    prayerText = [[UITextView alloc] initWithFrame:CGRectMake((self.view.screenWidth - 285*sratio)/2, 64*sratio - (ISIPHONE4()? 6 : 0), 285*sratio, 140*sratio)];
     [prayerText setBackgroundColor:Colour_Clear];
     [prayerText setTextColor:Colour_White];
     [prayerText setFont:[FontService systemFont:14*sratio]];
@@ -159,7 +159,7 @@
     [prayerText becomeFirstResponder];
     
     addImageButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [addImageButton setFrame:CGRectMake((self.view.screenWidth - 184*sratio)/2, 234*sratio, 184*sratio, 38*sratio)];
+    [addImageButton setFrame:CGRectMake((self.view.screenWidth - 184*sratio)/2, 234*sratio - (ISIPHONE4()? 60 : 0), 184*sratio, 38*sratio)];
     [addImageButton setBackgroundImage:[UIImage imageNamed:@"addImageButton"] forState:UIControlStateNormal];
     [addImageButton setTitle:LocString(@"Add a background image") forState:UIControlStateNormal];
     [addImageButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
@@ -168,7 +168,7 @@
     [self.view addSubview:addImageButton];
     
     selectReligionButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [selectReligionButton setFrame:CGRectMake((self.view.screenWidth - 98*sratio)/2, addImageButton.bottom + 16*sratio, 98*sratio, 38*sratio)];
+    [selectReligionButton setFrame:CGRectMake((self.view.screenWidth - 98*sratio)/2, addImageButton.bottom + 16*sratio - (ISIPHONE4()? 8 : 0), 98*sratio, 38*sratio - (ISIPHONE4()? 4 : 0))];
     [selectReligionButton setBackgroundImage:[UIImage imageNamed:@"selectReligionButton"] forState:UIControlStateNormal];
     [selectReligionButton setTitle:LocString(@"Select religion") forState:UIControlStateNormal];
     [selectReligionButton.titleLabel setTextAlignment:NSTextAlignmentCenter];

@@ -42,7 +42,7 @@
     [backButton addTarget:self action:@selector(goBack) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:backButton];
     
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(58*sratio, 20*sratio, 162*sratio, 26*sratio)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(78*sratio, 20*sratio, 162*sratio, 26*sratio)];
     titleLabel.text = LocString(@"Select a religion");
     titleLabel.font = [FontService systemFont:14*sratio];
     titleLabel.textColor = Colour_White;
@@ -85,7 +85,7 @@
                                 LocString(@"Cheondogyo"),
                                 LocString(@"Tenrikyo"),
                                 LocString(@"Wicca"),
-                                LocString(@"Word Messianity"),
+                                LocString(@"Messianity"),
                                 LocString(@"Seicho-no-ie"),
                                 LocString(@"Atheism"), nil];
     
@@ -94,7 +94,7 @@
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
             button.backgroundColor = Colour_White;
             [button.layer setCornerRadius:5.0f];
-            [button setFrame:CGRectMake(8*sratio + 80*sratio*j, 92*sratio + 102*sratio*i, 64*sratio, 64*sratio)];
+            [button setFrame:CGRectMake(8*sratio + 80*sratio*j, 92*sratio - (ISIPHONE4()? 20 : 0) + 102*sratio*i, 64*sratio, 64*sratio)];
             [button setImage:[UIImage imageNamed:[religionsImages objectAtIndex:4*i+j]] forState:UIControlStateNormal];
             [button addTarget:self action:@selector(religionSelectedWithIndex:) forControlEvents:UIControlEventTouchUpInside];
             [button setTag:4*i+j];

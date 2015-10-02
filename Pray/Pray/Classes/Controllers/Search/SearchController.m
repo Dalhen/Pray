@@ -168,7 +168,7 @@
     NSDictionary* info = [notification userInfo];
     CGSize keyBoardSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
     keyboardSize = keyBoardSize;
-    [mainTable setHeight:self.view.screenHeight - 56*sratio];
+    [mainTable setHeight:self.view.screenHeight - search.bottom];
 }
 
 
@@ -367,7 +367,11 @@
     }
 }
 
-    
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [search resignFirstResponder];
+}
+
 #pragma mark - Like Post
 - (void)likeButtonClickedForCell:(PrayerCell *)cell {
     

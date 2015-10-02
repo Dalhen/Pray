@@ -525,6 +525,7 @@
         
         //success
         if (statusCode == 200) {
+            [DataAccess addUserWithData:[responseObject objectForKey:@"data"]];
             Notification_Post(JXNotification.UserServices.UpdateUserDetailsSuccess, [responseObject objectForKey:@"data"]);
         }
         

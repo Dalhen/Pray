@@ -212,6 +212,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [self registerForEvents];
     [self.navigationController setNavigationBarHidden:YES];
+    [self updateUserInfo];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -280,7 +281,10 @@
     [SVProgressHUD dismiss];
     
     currentUser = notification.object;
-    
+    [self updateUserInfo];
+}
+
+- (void)updateUserInfo {
     //Avatar
     if (currentUser.avatar != nil && ![currentUser.avatar isEqualToString:@""]) {
         [userAvatar sd_setImageWithURL:[NSURL URLWithString:currentUser.avatar] placeholderImage:[UIImage imageNamed:@"emptyProfile"]];
@@ -490,6 +494,7 @@
         //&& currentPage < maxPagesCount
     {
         currentPage +=1;
+        refreshing = YES;
         [self loadNextPrayers];
     }
 }
@@ -585,6 +590,14 @@
     [NetworkService unfollowUserForID:[currentUser.uniqueId stringValue]];
 }
 
+
+#pragma mark - PrayerCell delegate
+- (void)showUserForCell:(PrayerCell *)cell {
+    if (cell.prayer.creator) {
+        ProfileController *profileController = [[ProfileController alloc] initWithUser:cell.prayer.creator];
+        [self.navigationController pushViewController:profileController animated:YES];
+    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
