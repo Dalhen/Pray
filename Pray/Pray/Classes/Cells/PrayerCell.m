@@ -10,6 +10,7 @@
 #import "UIImageView+Rounded.h"
 #import "UIImageView+WebCache.h"
 
+#define kMaxTextSize 40
 
 @implementation PrayerCell
 @synthesize prayer;
@@ -68,10 +69,12 @@
     textView = [[UILabel alloc] initWithFrame:CGRectMake((self.screenWidth-280*sratio)/2, 64*sratio, 280*sratio, 200*sratio)];
     textView.numberOfLines = 8;
     textView.adjustsFontSizeToFitWidth = YES;
-    textView.minimumScaleFactor = (14*sratio)/(50*sratio);
-    textView.font = [FontService systemFont:50*sratio];
+    textView.minimumScaleFactor = (14*sratio)/(kMaxTextSize*sratio);
+    textView.font = [FontService systemFont:kMaxTextSize*sratio];
     textView.textColor = Colour_White;
     [textView setTextAlignment:NSTextAlignmentCenter];
+    //[textView setEnabledTextCheckingTypes:(NSTextCheckingTypeLink|NSTextCheckingTypeAddress|NSTextCheckingTypePhoneNumber)];
+    //[textView setDelegate:self];
     [self.contentView addSubview:textView];
     
     likesIcon = [[UIImageView alloc] initWithFrame:CGRectMake(18*sratio, prayerCellHeight - 38*sratio, 22*sratio, 20*sratio)];
@@ -141,7 +144,7 @@
     }
     
     //Prayer Text
-    [textView setText:prayer.prayerText];
+    [textView setText:prayer.prayerText]; //setAttributedText:[self decorateTagsAndMentions:prayer.prayerText]];
     
     //Likes & Comments
     [likesIcon setImage:[UIImage imageNamed:(prayer.isLiked.boolValue)? @"likeIconON" : @"likeIconOFF"]];
@@ -192,6 +195,107 @@
 }
 
 
+#pragma mark - Attributed Strings
+//- (NSMutableAttributedString *)decorateTagsAndMentions:(NSString *)stringWithTags {
+//    
+//    NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:stringWithTags];
+//    
+//    [attString addAttribute:NSForegroundColorAttributeName value:Colour_White range:NSMakeRange(0, [stringWithTags length])];
+//    [attString addAttribute:NSFontAttributeName value:[FontService systemFont:13*sratio] range:NSMakeRange(0, [stringWithTags length])];
+//    
+//    //Mentions
+//    NSRegularExpression *mentionsExpression = [NSRegularExpression regularExpressionWithPattern:@"(@\\w+)" options:NO error:nil];
+//    NSArray *mentionsMatches = [mentionsExpression matchesInString:stringWithTags options:0 range:NSMakeRange(0, [stringWithTags length])];
+//    
+//    
+//    for (NSTextCheckingResult *mentionMatch in mentionsMatches) {
+//        NSRange mentionMatchRange = [mentionMatch rangeAtIndex:0];
+//        [attString addAttribute:NSForegroundColorAttributeName value:Colour_PrayBlue range:mentionMatchRange];
+//        
+//        //        NSString *mentionString = [stringWithTags substringWithRange:mentionMatchRange];
+//        //        NSRange linkRange = [stringWithTags rangeOfString:mentionString];
+//        //        NSString* user = [mentionString substringFromIndex:1];
+//        //        NSString* linkURLString = [NSString stringWithFormat:@"http://www.google.com"];
+//        
+//        NSArray *keys = [[NSArray alloc] initWithObjects:(id)kCTForegroundColorAttributeName, (id)kCTUnderlineStyleAttributeName, nil];
+//        NSArray *objects = [[NSArray alloc] initWithObjects:Colour_PrayBlue, [NSNumber numberWithInt:kCTUnderlineStyleNone], nil];
+//        NSDictionary *linkAttributes = [[NSDictionary alloc] initWithObjects:objects forKeys:keys];
+//        [textView addLinkWithTextCheckingResult:mentionMatch attributes:linkAttributes];
+//        //[descriptionText addLinkToTransitInformation:@{@"tag":@""} withRange:mentionMatchRange];
+//    }
+//    
+//    return attString;
+//}
+
+
+- (CGFloat)requiredFontSizeForLabel:(UILabel *)label {
+    if (!label) {
+        return 0;
+    }
+    CGFloat originalFontSize = 50*sratio;
+    
+    UIFont* font = label.font;
+    CGFloat fontSize = originalFontSize;
+    
+    BOOL found = NO;
+    do
+    {
+        if( font.pointSize != fontSize )
+        {
+            font = [font fontWithSize: fontSize];
+        }
+        if([self wouldThisFont:font workForThisLabel:label])
+        {
+            found = YES;
+            break;
+        }
+        
+        fontSize -= 0.5*sratio;
+        if( fontSize < (label.minimumScaleFactor * label.font.pointSize))
+        {
+            break;
+        }
+        
+    } while( TRUE );
+    
+    return( fontSize );
+}
+
+- (BOOL)wouldThisFont:(UIFont *)testFont workForThisLabel:(UILabel *)testLabel {
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:testFont, NSFontAttributeName, nil];
+    NSAttributedString *as = [[NSAttributedString alloc] initWithString:testLabel.text attributes:attributes];
+    CGRect bounds = [as boundingRectWithSize:CGSizeMake(CGRectGetWidth(testLabel.frame), CGFLOAT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin) context:nil];
+    BOOL itWorks = [self doesThisSize:bounds.size fitInThisSize:testLabel.bounds.size];
+    return itWorks;
+}
+
+- (BOOL)doesThisSize:(CGSize)aa fitInThisSize:(CGSize)bb {
+    if ( aa.width > bb.width ) return NO;
+    if ( aa.height > bb.height ) return NO;
+    return YES;
+}
+
+
+#pragma mark - TTTAttributedString delegate
+- (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithTextCheckingResult:(NSTextCheckingResult *)result {
+    NSRange mentionMatchRange = [result rangeAtIndex:0];
+    NSString *mentionString = [[textView.text substringWithRange:mentionMatchRange] substringFromIndex:1];
+    CDUser *userClicked = [DataAccess getUserForUsername:mentionString];
+    [delegate showUserForUserObject:userClicked];
+}
+
+- (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithTransitInformation:(NSDictionary *)components {
+    
+    if ([components objectForKey:@"hashtag"]) {
+        
+    }
+}
+
+- (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url {
+    [[UIApplication sharedApplication] openURL:url];
+}
+
+
 #pragma mark - Actions
 - (void)likeButtonClicked {
     [likesIcon setImage:[UIImage imageNamed:(prayer.isLiked.boolValue)? @"likeIconOFF" : @"likeIconON"]];
@@ -218,6 +322,22 @@
 - (void)showUser {
     [delegate showUserForCell:self];
 }
+
+
+#pragma mark - Share Prayer
+- (void)sharePrayer {
+    
+}
+
+
+- (UIImage *)imageFromUIView:(UIView *)view {
+    UIGraphicsBeginImageContextWithOptions(view.bounds.size, view.opaque, 0.0);
+    [view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+}
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

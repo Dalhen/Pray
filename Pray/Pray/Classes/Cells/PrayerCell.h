@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SWTableViewCell.h"
+#import "TTTAttributedLabel.h"
 
 #define prayerCellHeight 320*sratio
 
@@ -18,11 +19,12 @@
 - (void)likeButtonClickedForCell:(PrayerCell *)cell;
 - (void)commentButtonClickedForCell:(PrayerCell *)cell;
 - (void)showUserForCell:(UITableViewCell *)cell;
+- (void)showUserForUserObject:(CDUser *)user;
 
 @end
 
 
-@interface PrayerCell : SWTableViewCell {
+@interface PrayerCell : SWTableViewCell <TTTAttributedLabelDelegate> {
     
     UIImageView *imageView;
     UILabel *textView;
