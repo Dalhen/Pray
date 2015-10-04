@@ -109,7 +109,7 @@
     [[NSUserDefaults standardUserDefaults] setObject:profileURL forKey:@"avatarURL"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    NSLog(@"ID=%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"userID"]);
+    NSLog(@"||| USER ID=%@ |||", [[NSUserDefaults standardUserDefaults] objectForKey:@"userID"]);
 }
 
 - (void)setUsername:(NSString *)username {

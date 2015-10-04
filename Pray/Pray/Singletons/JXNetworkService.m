@@ -328,7 +328,7 @@
         //success
         if (statusCode == 200) {
             [DataAccess addUserWithData:[responseObject objectForKey:@"data"]];
-            Notification_Post(JXNotification.UserServices.RegistrationSuccess, responseObject);
+            Notification_Post(JXNotification.UserServices.RegistrationSuccess, [responseObject objectForKey:@"data"]);
         }
         
         //invalid

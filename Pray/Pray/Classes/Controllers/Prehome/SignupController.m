@@ -293,6 +293,7 @@
         ![profileLastName.text isEqualToString:@""]) {
         
         if ([profilePassword.text length]>= 6) {
+            [SVProgressHUD showWithStatus:LocString(@"Signing up...") maskType:SVProgressHUDMaskTypeGradient];
             [NetworkService signupWithUsername:profileUsername.text firstName:profileFirstName.text lastName:profileLastName.text password:profilePassword.text email:profileEmail.text bio:profileBlob.text avatarURL:nil avatarImage:imageData];
         }
         else {
@@ -305,6 +306,8 @@
 }
 
 - (void)signupAccountSuccess:(NSNotification *)notification {
+    
+    [SVProgressHUD dismiss];
     
     NSDictionary *data = [notification object];
     [UserService setUserWithUsername:[self validString:[data objectForKey:@"username"]]

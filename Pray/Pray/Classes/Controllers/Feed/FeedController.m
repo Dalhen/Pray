@@ -476,6 +476,12 @@
     }
 }
 
+- (void)showUserForUserObject:(CDUser *)user {
+    ProfileController *profileController = [[ProfileController alloc] initWithUser:user];
+    [self.navigationController pushViewController:profileController animated:YES];
+}
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
