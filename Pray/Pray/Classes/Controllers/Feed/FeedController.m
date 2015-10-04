@@ -482,6 +482,12 @@
 }
 
 
+#pragma mark - Sharing
+- (void)sharePrayerImage:(UIImage *)image {
+    UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:@[image] applicationActivities:nil];
+    [self presentViewController:controller animated:YES completion:nil];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

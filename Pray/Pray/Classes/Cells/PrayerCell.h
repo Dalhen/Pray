@@ -21,6 +21,10 @@
 - (void)showUserForCell:(UITableViewCell *)cell;
 - (void)showUserForUserObject:(CDUser *)user;
 
+@optional
+
+- (void)sharePrayerImage:(UIImage *)image;
+
 @end
 
 
@@ -37,6 +41,7 @@
     UIImageView *likesIcon;
     UIButton *likeButton;
     UIButton *commentButton;
+    UIButton *sharePrayerButton;
     UIView *blackMask;
     UIImageView *religionType;
 }

@@ -113,6 +113,12 @@
     //[religionType setRoundedToDiameter:38*sratio];
     //religionType.backgroundColor = Colour_PrayDarkBlueAlpha(0.95f);
     [self.contentView addSubview:religionType];
+    
+    sharePrayerButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [sharePrayerButton setFrame:CGRectMake(self.screenWidth - 46*sratio, prayerCellHeight - 46*sratio, 38*sratio, 38*sratio)];
+    [sharePrayerButton setImage:[UIImage imageNamed:@"shareIcon"] forState:UIControlStateNormal];
+    [sharePrayerButton addTarget:self action:@selector(sharePrayer) forControlEvents:UIControlEventTouchUpInside];
+    [self.contentView addSubview:sharePrayerButton];
 }
 
 
@@ -326,9 +332,10 @@
 
 #pragma mark - Share Prayer
 - (void)sharePrayer {
-    
+    if ([delegate respondsToSelector:@selector(sharePrayerImage:)]) {
+        [delegate sharePrayerImage:[self imageFromUIView:self.contentView]];
+    }
 }
-
 
 - (UIImage *)imageFromUIView:(UIView *)view {
     UIGraphicsBeginImageContextWithOptions(view.bounds.size, view.opaque, 0.0);

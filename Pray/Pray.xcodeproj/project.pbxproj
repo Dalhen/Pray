@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		960FC3CF1BC17766009E28E7 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 960FC3CE1BC17766009E28E7 /* Parse.framework */; settings = {ASSET_TAGS = (); }; };
+		960FC3D21BC17FEE009E28E7 /* shareIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960FC3D11BC17FEE009E28E7 /* shareIcon@2x.png */; settings = {ASSET_TAGS = (); }; };
 		9634F3331B696074002EFD2B /* FeedController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9634F3251B696074002EFD2B /* FeedController.m */; };
 		9634F3341B696074002EFD2B /* LeftMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9634F3281B696074002EFD2B /* LeftMenuController.m */; };
 		9634F3351B696074002EFD2B /* SigninController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9634F32B1B696074002EFD2B /* SigninController.m */; };
@@ -253,6 +254,7 @@
 
 /* Begin PBXFileReference section */
 		960FC3CE1BC17766009E28E7 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = Pray/Parse.framework; sourceTree = SOURCE_ROOT; };
+		960FC3D11BC17FEE009E28E7 /* shareIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shareIcon@2x.png"; sourceTree = "<group>"; };
 		9634F3241B696074002EFD2B /* FeedController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedController.h; sourceTree = "<group>"; };
 		9634F3251B696074002EFD2B /* FeedController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedController.m; sourceTree = "<group>"; };
 		9634F3271B696074002EFD2B /* LeftMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftMenuController.h; sourceTree = "<group>"; };
@@ -1465,6 +1467,7 @@
 		96ACF7681B8156BA007BAE4A /* Feed */ = {
 			isa = PBXGroup;
 			children = (
+				960FC3D11BC17FEE009E28E7 /* shareIcon@2x.png */,
 				96A394B31B87F2F500B3040E /* likeIconON@2x.png */,
 				96A394B41B87F2F500B3040E /* likeIconOFF@2x.png */,
 				96A394B51B87F2F500B3040E /* commentsIcon@2x.png */,
@@ -1694,6 +1697,7 @@
 				FC66120C1BBBDB760048033E /* chrisIcon@2x.png in Resources */,
 				96ACF7761B8156E1007BAE4A /* feedOFF@2x.png in Resources */,
 				FC66120D1BBBDB760048033E /* hinduIcon@2x.png in Resources */,
+				960FC3D21BC17FEE009E28E7 /* shareIcon@2x.png in Resources */,
 				FC6612131BBBDB760048033E /* shintoIcon@2x.png in Resources */,
 				96EB6CDB1B6BFAEC00ADA3AB /* backButton@2x.png in Resources */,
 				FC6612141BBBDB760048033E /* sikhIcon@2x.png in Resources */,
