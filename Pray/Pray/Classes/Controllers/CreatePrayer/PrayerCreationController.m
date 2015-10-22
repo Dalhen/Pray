@@ -302,6 +302,9 @@
 
 #pragma mark UIImagePicker delegates & Camera
 - (void)takePhoto {
+    
+    [prayerText resignFirstResponder];
+    
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:LocString(@"Select Photo Source")
                                                              delegate:self cancelButtonTitle:LocString(@"Cancel") destructiveButtonTitle:nil
                                                     otherButtonTitles:LocString(@"Photo Library"), LocString(@"Camera"), nil];
@@ -320,7 +323,7 @@
     }
     
     else if (buttonIndex == actionSheet.cancelButtonIndex) {
-        
+        [prayerText becomeFirstResponder];
     }
 }
 
@@ -343,6 +346,8 @@
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     [self dismissViewControllerAnimated:YES completion:^{
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+        
+        [prayerText becomeFirstResponder];
     }];
 }
 
