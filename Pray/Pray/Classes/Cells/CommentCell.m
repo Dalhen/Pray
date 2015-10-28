@@ -91,7 +91,6 @@
     [timeAgoLabel setText:aComment.timeAgo];
     
     [descriptionText setAttributedText:[self decorateTagsAndMentions:aComment.commentText]];
-    [descriptionText sizeToFit];
     [self addSubview:descriptionText];
     
     [descriptionText setHeight:[delegate heightToFitCommentText:descriptionText.text]];

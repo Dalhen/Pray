@@ -31,7 +31,7 @@
 @interface PrayerCell : SWTableViewCell <TTTAttributedLabelDelegate> {
     
     UIImageView *imageView;
-    UILabel *textView;
+    TTTAttributedLabel *textView;
     UILabel *timeAgo;
     UILabel *username;
     UIImageView *userAvatar;

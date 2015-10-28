@@ -66,7 +66,7 @@
     timeAgo.textAlignment = NSTextAlignmentLeft;
     [self.contentView addSubview:timeAgo];
     
-    textView = [[UILabel alloc] initWithFrame:CGRectMake((self.screenWidth-280*sratio)/2, 64*sratio, 280*sratio, 200*sratio)];
+    textView = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake((self.screenWidth-280*sratio)/2, 64*sratio, 280*sratio, 200*sratio)];
     textView.numberOfLines = 8;
     textView.adjustsFontSizeToFitWidth = YES;
     textView.minimumScaleFactor = (14*sratio)/(kMaxTextSize*sratio);
@@ -74,7 +74,7 @@
     textView.textColor = Colour_White;
     [textView setTextAlignment:NSTextAlignmentCenter];
     //[textView setEnabledTextCheckingTypes:(NSTextCheckingTypeLink|NSTextCheckingTypeAddress|NSTextCheckingTypePhoneNumber)];
-    //[textView setDelegate:self];
+    [textView setDelegate:self];
     [self.contentView addSubview:textView];
     
     likesIcon = [[UIImageView alloc] initWithFrame:CGRectMake(18*sratio, prayerCellHeight - 38*sratio, 22*sratio, 20*sratio)];
@@ -150,7 +150,8 @@
     }
     
     //Prayer Text
-    [textView setText:prayer.prayerText]; //setAttributedText:[self decorateTagsAndMentions:prayer.prayerText]];
+    [textView setAttributedText:[self decorateTagsAndMentions:prayer.prayerText]];
+    [textView setLineBreakMode:NSLineBreakByTruncatingTail];
     
     //Likes & Comments
     [likesIcon setImage:[UIImage imageNamed:(prayer.isLiked.boolValue)? @"likeIconON" : @"likeIconOFF"]];
@@ -202,83 +203,50 @@
 
 
 #pragma mark - Attributed Strings
-//- (NSMutableAttributedString *)decorateTagsAndMentions:(NSString *)stringWithTags {
-//    
-//    NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:stringWithTags];
-//    
-//    [attString addAttribute:NSForegroundColorAttributeName value:Colour_White range:NSMakeRange(0, [stringWithTags length])];
-//    [attString addAttribute:NSFontAttributeName value:[FontService systemFont:13*sratio] range:NSMakeRange(0, [stringWithTags length])];
-//    
-//    //Mentions
-//    NSRegularExpression *mentionsExpression = [NSRegularExpression regularExpressionWithPattern:@"(@\\w+)" options:NO error:nil];
-//    NSArray *mentionsMatches = [mentionsExpression matchesInString:stringWithTags options:0 range:NSMakeRange(0, [stringWithTags length])];
-//    
-//    
-//    for (NSTextCheckingResult *mentionMatch in mentionsMatches) {
-//        NSRange mentionMatchRange = [mentionMatch rangeAtIndex:0];
-//        [attString addAttribute:NSForegroundColorAttributeName value:Colour_PrayBlue range:mentionMatchRange];
-//        
-//        //        NSString *mentionString = [stringWithTags substringWithRange:mentionMatchRange];
-//        //        NSRange linkRange = [stringWithTags rangeOfString:mentionString];
-//        //        NSString* user = [mentionString substringFromIndex:1];
-//        //        NSString* linkURLString = [NSString stringWithFormat:@"http://www.google.com"];
-//        
-//        NSArray *keys = [[NSArray alloc] initWithObjects:(id)kCTForegroundColorAttributeName, (id)kCTUnderlineStyleAttributeName, nil];
-//        NSArray *objects = [[NSArray alloc] initWithObjects:Colour_PrayBlue, [NSNumber numberWithInt:kCTUnderlineStyleNone], nil];
-//        NSDictionary *linkAttributes = [[NSDictionary alloc] initWithObjects:objects forKeys:keys];
-//        [textView addLinkWithTextCheckingResult:mentionMatch attributes:linkAttributes];
-//        //[descriptionText addLinkToTransitInformation:@{@"tag":@""} withRange:mentionMatchRange];
-//    }
-//    
-//    return attString;
-//}
-
-
-- (CGFloat)requiredFontSizeForLabel:(UILabel *)label {
-    if (!label) {
-        return 0;
+- (NSMutableAttributedString *)decorateTagsAndMentions:(NSString *)stringWithTags {
+    
+    NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:stringWithTags];
+    
+    [attString addAttribute:NSForegroundColorAttributeName value:Colour_White range:NSMakeRange(0, [stringWithTags length])];
+    [attString addAttribute:NSFontAttributeName value:[self findFontSizeToFillContentsWithText:stringWithTags] range:NSMakeRange(0, [stringWithTags length])];
+    
+    //Mentions
+    NSRegularExpression *mentionsExpression = [NSRegularExpression regularExpressionWithPattern:@"(@\\w+)" options:NO error:nil];
+    NSArray *mentionsMatches = [mentionsExpression matchesInString:stringWithTags options:0 range:NSMakeRange(0, [stringWithTags length])];
+    
+    for (NSTextCheckingResult *mentionMatch in mentionsMatches) {
+        NSRange mentionMatchRange = [mentionMatch rangeAtIndex:0];
+        [attString addAttribute:NSForegroundColorAttributeName value:Colour_PrayBlue range:mentionMatchRange];
+        
+      
+        NSArray *keys = [[NSArray alloc] initWithObjects:(id)kCTForegroundColorAttributeName, (id)kCTUnderlineStyleAttributeName, nil];
+        NSArray *objects = [[NSArray alloc] initWithObjects:Colour_PrayBlue, [NSNumber numberWithInt:kCTUnderlineStyleNone], nil];
+        NSDictionary *linkAttributes = [[NSDictionary alloc] initWithObjects:objects forKeys:keys];
+        [textView addLinkWithTextCheckingResult:mentionMatch attributes:linkAttributes];
+        //[descriptionText addLinkToTransitInformation:@{@"tag":@""} withRange:mentionMatchRange];
     }
-    CGFloat originalFontSize = 50*sratio;
     
-    UIFont* font = label.font;
-    CGFloat fontSize = originalFontSize;
-    
-    BOOL found = NO;
-    do
-    {
-        if( font.pointSize != fontSize )
-        {
-            font = [font fontWithSize: fontSize];
-        }
-        if([self wouldThisFont:font workForThisLabel:label])
-        {
-            found = YES;
-            break;
-        }
-        
-        fontSize -= 0.5*sratio;
-        if( fontSize < (label.minimumScaleFactor * label.font.pointSize))
-        {
-            break;
-        }
-        
-    } while( TRUE );
-    
-    return( fontSize );
+    return attString;
 }
 
-- (BOOL)wouldThisFont:(UIFont *)testFont workForThisLabel:(UILabel *)testLabel {
-    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:testFont, NSFontAttributeName, nil];
-    NSAttributedString *as = [[NSAttributedString alloc] initWithString:testLabel.text attributes:attributes];
-    CGRect bounds = [as boundingRectWithSize:CGSizeMake(CGRectGetWidth(testLabel.frame), CGFLOAT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin) context:nil];
-    BOOL itWorks = [self doesThisSize:bounds.size fitInThisSize:testLabel.bounds.size];
-    return itWorks;
-}
 
-- (BOOL)doesThisSize:(CGSize)aa fitInThisSize:(CGSize)bb {
-    if ( aa.width > bb.width ) return NO;
-    if ( aa.height > bb.height ) return NO;
-    return YES;
+#pragma mark - Font size finder
+- (UIFont *)findFontSizeToFillContentsWithText:(NSString *)text {
+    
+    for (int i = kMaxTextSize*sratio; i>14*sratio; i--) {
+        
+        UIFont *font = [UIFont fontWithName:textView.font.fontName size:(CGFloat)i];
+        NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName: font}];
+        
+        CGRect rectSize = [attributedText boundingRectWithSize:CGSizeMake(280*sratio, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin context:nil];
+        
+        if (rectSize.size.height <= 100*sratio) {
+            return [FontService systemFont:(CGFloat)i];
+            break;
+        }
+    }
+    
+    return [FontService systemFont:14*sratio];
 }
 
 

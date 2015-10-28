@@ -289,9 +289,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    CDPrayer *prayer = [prayers objectAtIndex:indexPath.row];
-    CommentsController *commentsController = [[CommentsController alloc] initWithPrayer:prayer andDisplayCommentsOnly:YES];
-    [self.navigationController pushViewController:commentsController animated:YES];
+//    CDPrayer *prayer = [prayers objectAtIndex:indexPath.row];
+//    CommentsController *commentsController = [[CommentsController alloc] initWithPrayer:prayer andDisplayCommentsOnly:YES];
+//    [self.navigationController pushViewController:commentsController animated:YES];
 }
 
 - (NSArray *)cellRightButtonsForCurrentGroupCellAndPrayer:(CDPrayer *)prayer {

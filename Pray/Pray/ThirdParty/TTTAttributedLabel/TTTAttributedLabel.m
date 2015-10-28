@@ -577,7 +577,8 @@ static inline CGSize CTFramesetterSuggestFrameSizeForAttributedStringWithConstra
 
     for (TTTAttributedLabelLink *link in links) {
         if (link.attributes) {
-            [mutableAttributedString addAttributes:link.attributes range:link.result.range];
+#warning Disabled cause crashing app
+            //[mutableAttributedString addAttributes:link.attributes range:link.result.range];
         }
     }
 

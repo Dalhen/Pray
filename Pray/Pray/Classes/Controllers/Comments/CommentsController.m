@@ -41,8 +41,11 @@
     
     [self setupHeader];
     [self setupTableView];
-    [self setupCommentBar];
-    [self loadComments];
+    
+    if (displayCommentsOnly) {
+        [self setupCommentBar];
+        [self loadComments];
+    }
 }
 
 - (void)setupHeader {
@@ -57,7 +60,7 @@
     [self.view addSubview:backButton];
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(76*sratio, 20*sratio, 162*sratio, 26*sratio)];
-    titleLabel.text = LocString(@"Comments");
+    titleLabel.text = (displayCommentsOnly? LocString(@"Comments") : LocString(@"Prayer"));
     titleLabel.font = [FontService systemFont:14*sratio];
     titleLabel.textColor = Colour_White;
     titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -65,7 +68,7 @@
 }
 
 - (void)setupTableView {
-    commentsTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 56*sratio, self.view.screenWidth, self.view.screenHeight - 56*sratio)];
+    commentsTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 56*sratio, self.view.screenWidth, self.view.screenHeight - 56*sratio - 58)];
     [commentsTable setBackgroundColor:Colour_255RGB(244, 244, 244)];
     [commentsTable setSeparatorColor:Colour_255RGB(244, 244, 244)];
     [commentsTable setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
@@ -311,9 +314,8 @@
     UITextView *ghostField = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, commentTextWidth, 0)];
     [ghostField setFont:[FontService systemFont:13*sratio]];
     [ghostField setText:text];
-    [ghostField sizeToFit];
     
-    return (ghostField.height < commentTextMinimumHeight) ? commentTextMinimumHeight : ghostField.height;
+    return (ghostField.contentSize.height < commentTextMinimumHeight) ? commentTextMinimumHeight : ghostField.contentSize.height;
 }
 
 
