@@ -491,35 +491,42 @@
     }
 }
 
-- (void)add1LikeToPrayer:(CDPrayer *)prayer {
+- (void)add1LikeToPrayerWithID:(NSNumber *)prayerId {
     
-    [prayer setIsLiked:[NSNumber numberWithInt:1]];
-    [prayer setLikesCount:[NSString stringWithFormat:@"%d",[prayer.likesCount intValue]+1]];
-    
+    CDPrayer *prayer = [self getPrayerForID:prayerId];
     if (prayer) {
-        NSManagedObjectContext *moc = [JXDataAccess getDBContext];
-        NSError *error;
-        if (![moc save:&error]) {
-            // Handle the error.
-            if(DEBUGDataAccess) NSLog(@"Error adding +1 like to prayer");
-        } else {
-            if(DEBUGDataAccess) NSLog(@"+1 like added to prayer");
+        [prayer setIsLiked:[NSNumber numberWithInt:1]];
+        [prayer setLikesCount:[NSString stringWithFormat:@"%d",[prayer.likesCount intValue]+1]];
+        
+        if (prayer) {
+            NSManagedObjectContext *moc = [JXDataAccess getDBContext];
+            NSError *error;
+            if (![moc save:&error]) {
+                // Handle the error.
+                if(DEBUGDataAccess) NSLog(@"Error adding +1 like to prayer");
+            } else {
+                if(DEBUGDataAccess) NSLog(@"+1 like added to prayer");
+            }
         }
     }
 }
 
-- (void)remove1LikeToPrayer:(CDPrayer *)prayer {
-    [prayer setIsLiked:[NSNumber numberWithInt:0]];
-    [prayer setLikesCount:[NSString stringWithFormat:@"%d",[prayer.likesCount intValue]-1]];
+- (void)remove1LikeToPrayerWithID:(NSNumber *)prayerId {
     
+    CDPrayer *prayer = [self getPrayerForID:prayerId];
     if (prayer) {
-        NSManagedObjectContext *moc = [JXDataAccess getDBContext];
-        NSError *error;
-        if (![moc save:&error]) {
-            // Handle the error.
-            if(DEBUGDataAccess) NSLog(@"Error setting -1 like to prayer");
-        } else {
-            if(DEBUGDataAccess) NSLog(@"-1 like to prayer");
+        [prayer setIsLiked:[NSNumber numberWithInt:0]];
+        [prayer setLikesCount:[NSString stringWithFormat:@"%d",[prayer.likesCount intValue]-1]];
+        
+        if (prayer) {
+            NSManagedObjectContext *moc = [JXDataAccess getDBContext];
+            NSError *error;
+            if (![moc save:&error]) {
+                // Handle the error.
+                if(DEBUGDataAccess) NSLog(@"Error setting -1 like to prayer");
+            } else {
+                if(DEBUGDataAccess) NSLog(@"-1 like to prayer");
+            }
         }
     }
 }
@@ -682,12 +689,26 @@
         NSError *error;
         if (![moc save:&error]) {
             // Handle the error.
-            if(DEBUGDataAccess) NSLog(@"Error setting -1 comment to prayer");
+            if(DEBUGDataAccess) NSLog(@"Error setting +1 comment to prayer");
         } else {
             if(DEBUGDataAccess) NSLog(@"+1 comment to prayer");
         }
     }
 }
 
+- (void)remove1CommentFromPrayer:(CDPrayer *)prayer {
+    [prayer setCommentsCount:[NSString stringWithFormat:@"%d",[prayer.commentsCount intValue]-1]];
+    
+    if (prayer) {
+        NSManagedObjectContext *moc = [JXDataAccess getDBContext];
+        NSError *error;
+        if (![moc save:&error]) {
+            // Handle the error.
+            if(DEBUGDataAccess) NSLog(@"Error setting -1 comment to prayer");
+        } else {
+            if(DEBUGDataAccess) NSLog(@"-1 comment to prayer");
+        }
+    }
+}
 
 @end

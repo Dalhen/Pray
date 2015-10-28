@@ -13,6 +13,8 @@
 #import "CommentsController.h"
 #import "SignupController.h"
 #import "PrayerCreationController.h"
+#import "UsersListController.h"
+
 
 @interface ProfileController ()
 
@@ -48,20 +50,20 @@
 
     if ([currentUser.uniqueId isEqualToNumber:[UserService getUserIDNumber]]) {
         UIButton *menuButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [menuButton setFrame:CGRectMake(10*sratio, 14*sratio, 40*sratio, 40*sratio)];
+        [menuButton setFrame:CGRectMake(10*sratio, 18*sratio, 40*sratio, 40*sratio)];
         [menuButton setImage:[UIImage imageNamed:@"menuIcon"] forState:UIControlStateNormal];
         [menuButton addTarget:self action:@selector(showLeftMenu) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:menuButton];
     }
     else {
         UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [backButton setFrame:CGRectMake(0*sratio, 14*sratio, 40*sratio, 40*sratio)];
+        [backButton setFrame:CGRectMake(0*sratio, 18*sratio, 40*sratio, 40*sratio)];
         [backButton setImage:[UIImage imageNamed:@"backButton"] forState:UIControlStateNormal];
         [backButton addTarget:self action:@selector(goBack) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:backButton];
     }
     
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(76*sratio, 20*sratio, 162*sratio, 26*sratio)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(76*sratio, 28*sratio, 162*sratio, 26*sratio)];
     titleLabel.text = [NSString stringWithFormat:@"@%@", currentUser.username];
     titleLabel.font = [FontService systemFont:14*sratio];
     titleLabel.textColor = Colour_White;
@@ -69,16 +71,17 @@
     [self.view addSubview:titleLabel];
     
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightButton setFrame:CGRectMake(256*sratio, 18*sratio, 52*sratio, 30*sratio)];
-    [rightButton setBackgroundColor:Colour_255RGB(140, 146, 164)];
+    [rightButton setFrame:CGRectMake(256*sratio, 22*sratio, 52*sratio, 30*sratio)];
     [rightButton setTitleColor:Colour_White forState:UIControlStateNormal];
     [rightButton.titleLabel setFont:[FontService systemFont:13*sratio]];
     [rightButton.layer setCornerRadius:5.0f];
     if ([currentUser.uniqueId isEqualToNumber:[UserService getUserIDNumber]]) {
+        [rightButton setBackgroundColor:Colour_255RGB(140, 146, 164)];
         [rightButton setTitle:LocString(@"Edit") forState:UIControlStateNormal];
         [rightButton addTarget:self action:@selector(editProfile) forControlEvents:UIControlEventTouchUpInside];
     }
     else {
+        [rightButton setBackgroundColor:Colour_PrayBlue];
         [rightButton setTitle:LocString(@"Pray") forState:UIControlStateNormal];
         [rightButton addTarget:self action:@selector(prayForUser) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -87,8 +90,7 @@
 
 - (void)setupProfileHeader {
     
-    profileHeader = [[UIView alloc] initWithFrame:CGRectMake(0, 54*sratio, self.view.screenWidth, 160*sratio)];
-    [self.view addSubview:profileHeader];
+    profileHeader = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.screenWidth, 196*sratio)];
     
     userAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(0, 16*sratio, 48*sratio, 48*sratio)];
     [userAvatar setRoundedToDiameter:48*sratio];
@@ -145,6 +147,11 @@
     [followersTitle setFont:[FontService systemFont:12*sratio]];
     [profileHeader addSubview:followersTitle];
     
+    UIButton *followersButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [followersButton setFrame:CGRectMake(self.view.screenWidth/3, 146*sratio, self.view.screenWidth/3, 48*sratio)];
+    [followersButton addTarget:self action:@selector(getFollowers) forControlEvents:UIControlEventTouchUpInside];
+    [profileHeader addSubview:followersButton];
+    
     //Stat 3
     userFollowing = [[UILabel alloc] initWithFrame:CGRectMake(self.view.screenWidth*2/3, 154*sratio, self.view.screenWidth/3, 15*sratio)];
     [userFollowing setTextColor:Colour_PrayBlue];
@@ -160,6 +167,12 @@
     [followingTitle setFont:[FontService systemFont:12*sratio]];
     [profileHeader addSubview:followingTitle];
     
+    UIButton *followingButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [followingButton setFrame:CGRectMake(self.view.screenWidth*2/3, 146*sratio, self.view.screenWidth/3, 48*sratio)];
+    [followingButton addTarget:self action:@selector(getFollowing) forControlEvents:UIControlEventTouchUpInside];
+    [profileHeader addSubview:followingButton];
+    
+    //Separators
     UIView *horizSeparator = [[UIView alloc] initWithFrame:CGRectMake(0, 146*sratio, self.view.screenWidth, 1)];
     [horizSeparator setBackgroundColor:Colour_255RGB(59, 63, 75)];
     [profileHeader addSubview:horizSeparator];
@@ -175,14 +188,14 @@
     //Follow button
     if (![currentUser.uniqueId isEqualToNumber:[UserService getUserIDNumber]]) {
         followButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [followButton setFrame:CGRectMake(28*sratio, 82*sratio, 78*sratio, 26*sratio)];
+        [followButton setFrame:CGRectMake(28*sratio, 30*sratio, 78*sratio, 26*sratio)];
         [followButton.titleLabel setFont:[FontService systemFont:13*sratio]];
         [followButton.layer setCornerRadius:5.0f];
         if (currentUser.isFollowed.boolValue == false) {
             [followButton setTitle:LocString(@"Follow") forState:UIControlStateNormal];
             [followButton addTarget:self action:@selector(followUser) forControlEvents:UIControlEventTouchUpInside];
-            [followButton setBackgroundColor:Colour_White];
-            [followButton setTitleColor:Colour_PrayBlue forState:UIControlStateNormal];
+            [followButton setBackgroundColor:Colour_PrayBlue];
+            [followButton setTitleColor:Colour_White forState:UIControlStateNormal];
         }
         else {
             [followButton setTitle:LocString(@"Following") forState:UIControlStateNormal];
@@ -190,18 +203,20 @@
             [followButton setBackgroundColor:Colour_255RGB(21, 24, 32)];
             [followButton setTitleColor:Colour_White forState:UIControlStateNormal];
         }
-        [self.view addSubview:followButton];
+        [profileHeader addSubview:followButton];
     }
 }
 
 - (void)setupTableView {
-    mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 54*sratio + 160*sratio + 36*sratio, self.view.screenWidth, self.view.screenHeight - 54*sratio + 160*sratio - 60*sratio)];
+    mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 54*sratio, self.view.screenWidth, self.view.screenHeight - 54*sratio)];
     [mainTable setBackgroundColor:Colour_PrayDarkBlue];
     [mainTable setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [mainTable setScrollsToTop:YES];
     [mainTable setDelegate:self];
     [mainTable setDataSource:self];
     [self.view addSubview:mainTable];
+    
+    [mainTable setTableHeaderView:profileHeader];
     
     refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refreshTriggered) forControlEvents:UIControlEventValueChanged];
@@ -243,6 +258,11 @@
     Notification_Observe(JXNotification.UserServices.ViewUserInfoFailed, loadUserInfoFailed);
     Notification_Observe(JXNotification.UserServices.GetPrayersForUserSuccess, loadPrayersForUserSuccess:);
     Notification_Observe(JXNotification.UserServices.GetPrayersForUserFailed, loadPrayersForUserFailed);
+    Notification_Observe(JXNotification.UserServices.GetUserFollowersSuccess, getFollowersSuccess:);
+    Notification_Observe(JXNotification.UserServices.GetUserFollowersFailed, getFollowersFailed);
+    Notification_Observe(JXNotification.UserServices.GetFollowedUsersSuccess, getFollowingSuccess:);
+    Notification_Observe(JXNotification.UserServices.GetFollowedUsersFailed, getFollowingFailed);
+    
     Notification_Observe(JXNotification.FeedServices.DeletePostSuccess, deletePostSuccess);
     Notification_Observe(JXNotification.FeedServices.DeletePostFailed, deletePostFailed);
     Notification_Observe(JXNotification.FeedServices.ReportPostSuccess, reportPostSuccess);
@@ -259,6 +279,11 @@
     Notification_Remove(JXNotification.UserServices.GetPrayersForUserFailed);
     Notification_Remove(JXNotification.UserServices.ViewUserInfoSuccess);
     Notification_Remove(JXNotification.UserServices.ViewUserInfoFailed);
+    Notification_Remove(JXNotification.UserServices.GetUserFollowersSuccess);
+    Notification_Remove(JXNotification.UserServices.GetUserFollowersFailed);
+    Notification_Remove(JXNotification.UserServices.GetFollowedUsersSuccess);
+    Notification_Remove(JXNotification.UserServices.GetFollowedUsersFailed);
+    
     Notification_Remove(JXNotification.FeedServices.DeletePostSuccess);
     Notification_Remove(JXNotification.FeedServices.DeletePostFailed);
     Notification_Remove(JXNotification.FeedServices.ReportPostSuccess);
@@ -285,6 +310,7 @@
 }
 
 - (void)updateUserInfo {
+    
     //Avatar
     if (currentUser.avatar != nil && ![currentUser.avatar isEqualToString:@""]) {
         [userAvatar sd_setImageWithURL:[NSURL URLWithString:currentUser.avatar] placeholderImage:[UIImage imageNamed:@"emptyProfile"]];
@@ -314,8 +340,8 @@
     }
     else {
         [followButton setTitle:LocString(@"Follow") forState:UIControlStateNormal];
-        [followButton setBackgroundColor:Colour_White];
-        [followButton setTitleColor:Colour_PrayBlue forState:UIControlStateNormal];
+        [followButton setBackgroundColor:Colour_PrayBlue];
+        [followButton setTitleColor:Colour_White forState:UIControlStateNormal];
         [followButton removeTarget:self action:@selector(unfollowUser) forControlEvents:UIControlEventTouchUpInside];
         [followButton addTarget:self action:@selector(followUser) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -554,7 +580,7 @@
 }
 
 - (void)reportPostFailed {
-    
+    [SVProgressHUD showSuccessWithStatus:LocString(@"We couldn't report this prayer. Please check your internet connection and try again.")];
 }
 
 
@@ -591,12 +617,60 @@
 }
 
 
+#pragma mark - User followers
+- (void)getFollowers {
+    [SVProgressHUD showWithStatus:LocString(@"Loading followers...")];
+    [NetworkService getFollowersForUserWithID:[currentUser.uniqueId stringValue]];
+}
+
+- (void)getFollowersSuccess:(NSNotification *)notification {
+    [SVProgressHUD dismiss];
+    UsersListController *usersListController = [[UsersListController alloc] initWithTitle:LocString(@"Followers")
+                                                                             andUsersList:notification.object];
+    [self.navigationController pushViewController:usersListController animated:YES];
+}
+
+- (void)getFollowersFailed {
+    [SVProgressHUD showSuccessWithStatus:LocString(@"We couldn't get the list of followers. Please check your internet connection and try again.")];
+}
+
+
+#pragma mark - User following
+- (void)getFollowing {
+    [SVProgressHUD showWithStatus:LocString(@"Loading users...")];
+    [NetworkService getUsersFollowedByUserWithID:[currentUser.uniqueId stringValue]];
+}
+
+- (void)getFollowingSuccess:(NSNotification *)notification {
+    [SVProgressHUD dismiss];
+    UsersListController *usersListController = [[UsersListController alloc] initWithTitle:LocString(@"Following")
+                                                                             andUsersList:notification.object];
+    [self.navigationController pushViewController:usersListController animated:YES];
+}
+
+-  (void)getFollowingFailed {
+    [SVProgressHUD showSuccessWithStatus:LocString(@"We couldn't get the list of users followed. Please check your internet connection and try again.")];
+}
+
+
 #pragma mark - PrayerCell delegate
 - (void)showUserForCell:(PrayerCell *)cell {
     if (cell.prayer.creator) {
         ProfileController *profileController = [[ProfileController alloc] initWithUser:cell.prayer.creator];
         [self.navigationController pushViewController:profileController animated:YES];
     }
+}
+
+- (void)showUserForUserObject:(CDUser *)user {
+    ProfileController *profileController = [[ProfileController alloc] initWithUser:user];
+    [self.navigationController pushViewController:profileController animated:YES];
+}
+
+
+#pragma mark - Sharing
+- (void)sharePrayerImage:(UIImage *)image {
+    UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:@[image] applicationActivities:nil];
+    [self presentViewController:controller animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {

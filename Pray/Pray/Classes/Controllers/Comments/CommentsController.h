@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "CommentCell.h"
 
-@interface CommentsController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextViewDelegate, CommentCellDelegate> {
+@interface CommentsController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextViewDelegate, CommentCellDelegate, UIAlertViewDelegate> {
     
     CDPrayer *currentPrayer;
     

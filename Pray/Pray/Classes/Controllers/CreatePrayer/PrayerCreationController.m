@@ -32,8 +32,11 @@
     self = [super init];
     
     if (self) {
-        currentUser = user;
         typeStarted = NO;
+        currentUser = user;
+        mentionsAdded = [[NSMutableArray alloc] init];
+        
+        [mentionsAdded addObject:@{@"userObject":currentUser, @"mentionIndex":[NSNumber numberWithInteger:0]}];
     }
     
     return self;
@@ -47,6 +50,10 @@
     [self setupHeader];
     [self setupLayout];
     [self setupMentionsView];
+    
+    if (currentUser) {
+        [prayerText setText:[NSString stringWithFormat:@"@%@ ", currentUser.username]];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -205,6 +212,7 @@
     religionType = index;
     
     NSArray *religionsImages = [[NSArray alloc] initWithObjects:
+                                LocString(@""),
                                 LocString(@"chrisIcon.png"),
                                 LocString(@"islamIcon.png"),
                                 LocString(@"hinduIcon.png"),

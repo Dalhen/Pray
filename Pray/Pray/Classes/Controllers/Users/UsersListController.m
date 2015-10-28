@@ -19,9 +19,10 @@
 
 
 #pragma mark - Init
-- (id)initWithUsersList:(NSArray *)usersList {
+- (id)initWithTitle:(NSString *)title andUsersList:(NSArray *)usersList {
     self = [super init];
     if (self) {
+        headerTitle = title;
         users = [[NSArray alloc] initWithArray:usersList];
     }
     
@@ -61,11 +62,22 @@
 
 
 - (void)setupHeader {
-    UIButton *menuButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [menuButton setFrame:CGRectMake(10*sratio, 14*sratio, 40*sratio, 40*sratio)];
-    [menuButton setImage:[UIImage imageNamed:@"menuIcon"] forState:UIControlStateNormal];
-    [menuButton addTarget:self action:@selector(showLeftMenu) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:menuButton];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.screenWidth, 56*sratio)];
+    [headerView setBackgroundColor:Colour_PrayDarkBlue];
+    [self.view addSubview:headerView];
+    
+    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backButton setFrame:CGRectMake(0*sratio, 14*sratio, 40*sratio, 40*sratio)];
+    [backButton setImage:[UIImage imageNamed:@"backButton"] forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(goBack) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:backButton];
+    
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(76*sratio, 20*sratio, 162*sratio, 26*sratio)];
+    titleLabel.text = headerTitle;
+    titleLabel.font = [FontService systemFont:14*sratio];
+    titleLabel.textColor = Colour_White;
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:titleLabel];
 }
 
 - (void)setupTableView {
@@ -80,17 +92,8 @@
     [mainTable reloadData];
 }
 
-
-#pragma mark - Side Navigation
-- (void)showLeftMenu {
-    if (self.navigationController.revealController.focusedController == self.navigationController.revealController.leftViewController)
-    {
-        [self.navigationController.revealController showViewController:self.navigationController.revealController.frontViewController];
-    }
-    else
-    {
-        [self.navigationController.revealController showViewController:self.navigationController.revealController.leftViewController];
-    }
+- (void)goBack {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

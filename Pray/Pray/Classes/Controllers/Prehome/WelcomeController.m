@@ -109,7 +109,7 @@
 #pragma mark - Events registration
 - (void)registerForEvents {
     Notification_Observe(JXNotification.UserServices.RegistrationSuccess, signupAccountSuccess:);
-    Notification_Observe(JXNotification.UserServices.RegistrationFailed, signupAccountFailed);
+    Notification_Observe(JXNotification.UserServices.RegistrationFailed, signupAccountFailed:);
 }
 
 - (void)unRegisterForEvents {
@@ -121,33 +121,34 @@
 
 #pragma mark - Facebook Login
 - (void)facebookConnect {
+    
     FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
-    [login
-     logInWithReadPermissions: @[@"public_profile", @"email"]
-     handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
-         if (error) {
-             NSLog(@"Process error");
-             [self facebookLoginFailed];
-         } else if (result.isCancelled) {
-             NSLog(@"Cancelled");
-         } else {
-             NSLog(@"Logged in");
-             if ([FBSDKAccessToken currentAccessToken])
-             {
-                 [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:@{@"fields": @"id, name, link, first_name, last_name, picture.type(large), email, birthday, bio, location, friends, hometown"}]
-                  startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-                      if (!error)
-                      {
-                          [self facebookLoginSuccessWithUserObject:result];
-                      }
-                      else
-                      {
-                          NSLog(@"Error %@",error);
-                      }
-                  }];
-             }
-         }
-     }];
+    [login logInWithReadPermissions:@[@"public_profile", @"email"]
+                 fromViewController:self
+                            handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+                                if (error) {
+                                    NSLog(@"Process error");
+                                    [self facebookLoginFailed];
+                                } else if (result.isCancelled) {
+                                    NSLog(@"Cancelled");
+                                } else {
+                                    NSLog(@"Logged in");
+                                    if ([FBSDKAccessToken currentAccessToken])
+                                    {
+                                        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:@{@"fields": @"id, name, link, first_name, last_name, picture.type(large), email, birthday, bio, location, friends, hometown"}]
+                                         startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+                                             if (!error)
+                                             {
+                                                 [self facebookLoginSuccessWithUserObject:result];
+                                             }
+                                             else
+                                             {
+                                                 NSLog(@"Error %@",error);
+                                             }
+                                         }];
+                                    }
+                                }
+                            }];
 }
 
 - (void)facebookLoginSuccessWithUserObject:(NSDictionary *)userObject {
@@ -161,7 +162,7 @@
 }
 
 - (void)facebookLoginFailed {
-    
+    [[[UIAlertView alloc] initWithTitle:LocString(@"Facebook signup") message:LocString(@"Something went wrong when trying to log you in with you Facebook account. Please check the permissions for Pray in your Facebook settings and try again.") delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
 }
 
 - (void)signupAccountSuccess:(NSNotification *)notification {
@@ -180,8 +181,33 @@
     [AppDelegate displayMainView];
 }
 
-- (void)signupAccountFailed {
-    [[[UIAlertView alloc] initWithTitle:LocString(@"Account creation") message:LocString(@"We couldn't create your account. Please check your internet connection and try again.") delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+- (void)signupAccountFailed:(NSNotification *)notification {
+    if (notification.object) {
+        
+        NSInteger statusCode = [notification.object integerValue];
+        
+        switch (statusCode) {
+            case 403:
+                [[[UIAlertView alloc] initWithTitle:LocString(@"Account creation") message:LocString(@"This email is already registered on Pray. Please login or select another one.") delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+                break;
+                
+            case 406:
+                [[[UIAlertView alloc] initWithTitle:LocString(@"Account creation") message:LocString(@"This username is already taken. Please select another one.") delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+                break;
+                
+            case 415:
+                [[[UIAlertView alloc] initWithTitle:LocString(@"Account creation") message:LocString(@"Your image is incorrect. Please select another one.") delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+                break;
+                
+            default:
+                [[[UIAlertView alloc] initWithTitle:LocString(@"Account creation") message:LocString(@"We couldn't create your account. Please check your internet connection and try again.") delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+                break;
+        }
+    }
+    
+    else {
+        [[[UIAlertView alloc] initWithTitle:LocString(@"Account creation") message:LocString(@"We couldn't create your account. Please check your internet connection and try again.") delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+    }
 }
 
 - (NSString *)validString:(NSString *)string {

@@ -69,6 +69,11 @@ const struct JXNotificationStruct JXNotification = {
         .UnFollowUserFailed = @"com.pray.userServices.UnFollowUserFailed",
         .AutocompleteSuccess = @"com.pray.userServices.AutocompleteSuccess",
         .AutocompleteFailed = @"com.pray.userServices.AutocompleteFailed",
+       
+        .GetUserFollowersSuccess = @"com.pray.userServices.GetUserFollowersSuccess",
+        .GetUserFollowersFailed = @"com.pray.userServices.GetUserFollowersFailed",
+        .GetFollowedUsersSuccess = @"com.pray.userServices.GetFollowedUsersSuccess",
+        .GetFollowedUsersFailed = @"com.pray.userServices.GetFollowedUsersFailed",
     },
     
     .FeedServices = {

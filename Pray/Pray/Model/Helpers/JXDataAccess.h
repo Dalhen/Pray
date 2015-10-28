@@ -53,9 +53,9 @@
 
 - (CDPrayer *)getPrayerForID:(NSNumber *)uniqueId;
 
-- (void)add1LikeToPrayer:(CDPrayer *)prayer;
+- (void)add1LikeToPrayerWithID:(NSNumber *)prayerId;
 
-- (void)remove1LikeToPrayer:(CDPrayer *)prayer;
+- (void)remove1LikeToPrayerWithID:(NSNumber *)prayerId;
 
 - (void)removePrayerForID:(NSNumber *)prayerId;
 
@@ -77,5 +77,6 @@
 
 - (void)add1CommentToPrayer:(CDPrayer *)prayer;
 
+- (void)remove1CommentFromPrayer:(CDPrayer *)prayer;
 
 @end

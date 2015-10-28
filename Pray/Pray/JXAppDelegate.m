@@ -139,6 +139,7 @@
     navController.navigationBar.barTintColor = Colour_PrayDarkBlue;
     
     self.revealController = [PKRevealController revealControllerWithFrontViewController:navController leftViewController:self.leftMenuViewController];
+    [self.revealController setRecognizesPanningOnFrontView:NO];
     self.window.rootViewController = self.revealController;
     [self.window makeKeyAndVisible];
 }

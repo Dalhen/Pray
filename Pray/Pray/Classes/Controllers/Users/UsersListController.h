@@ -12,6 +12,9 @@
     
     UITableView *mainTable;
     NSArray *users;
+    NSString *headerTitle;
 }
+
+- (id)initWithTitle:(NSString *)title andUsersList:(NSArray *)usersList;
 
 @end

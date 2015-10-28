@@ -108,6 +108,10 @@
 
 - (void)autocompleteForTag:(NSString *)searchText;
 
+- (void)getFollowersForUserWithID:(NSString *)userId;
+
+- (void)getUsersFollowedByUserWithID:(NSString *)userId;
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Post

@@ -65,7 +65,7 @@
 #pragma mark - Events registration
 - (void)registerForEvents {
     Notification_Observe(JXNotification.UserServices.RegistrationSuccess, signupAccountSuccess:);
-    Notification_Observe(JXNotification.UserServices.RegistrationFailed, signupAccountFailed);
+    Notification_Observe(JXNotification.UserServices.RegistrationFailed, signupAccountFailed:);
     Notification_Observe(JXNotification.UserServices.UpdateUserDetailsSuccess, updateProfileSuccess:);
     Notification_Observe(JXNotification.UserServices.UpdateUserDetailsFailed, updateProfileFailed);
 }
@@ -328,8 +328,35 @@
 //    [[[UIAlertView alloc] initWithTitle:LocString(@"Account created!") message:LocString(@"Your account has been created. Please click on the link in the email we've just sent you and press login.") delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
 }
 
-- (void)signupAccountFailed {
-    [[[UIAlertView alloc] initWithTitle:LocString(@"Account creation") message:LocString(@"We couldn't create your account. Please check your internet connection and try again.") delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+- (void)signupAccountFailed:(NSNotification *)notification {
+    [SVProgressHUD dismiss];
+    
+    if (notification.object) {
+        
+        NSInteger statusCode = [notification.object integerValue];
+        
+        switch (statusCode) {
+            case 403:
+                [[[UIAlertView alloc] initWithTitle:LocString(@"Account creation") message:LocString(@"This email is already registered on Pray. Please login or select another one.") delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+                break;
+                
+            case 406:
+                [[[UIAlertView alloc] initWithTitle:LocString(@"Account creation") message:LocString(@"This username is already taken. Please select another one.") delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+                break;
+                
+            case 415:
+                [[[UIAlertView alloc] initWithTitle:LocString(@"Account creation") message:LocString(@"Your image is incorrect. Please select another one.") delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+                break;
+                
+            default:
+                [[[UIAlertView alloc] initWithTitle:LocString(@"Account creation") message:LocString(@"We couldn't create your account. Please check your internet connection and try again.") delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+                break;
+        }
+    }
+    
+    else {
+        [[[UIAlertView alloc] initWithTitle:LocString(@"Account creation") message:LocString(@"We couldn't create your account. Please check your internet connection and try again.") delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+    }
 }
 
 - (NSString *)validString:(NSString *)string {

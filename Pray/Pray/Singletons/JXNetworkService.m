@@ -333,13 +333,13 @@
         
         //invalid
         else {
-            Notification_Post(JXNotification.UserServices.RegistrationFailed, nil);
+            Notification_Post(JXNotification.UserServices.RegistrationFailed, [NSNumber numberWithInteger:statusCode]);
         }
     };
     
     void (^failureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
         if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
-        Notification_Post(JXNotification.UserServices.RegistrationFailed, nil);
+        Notification_Post(JXNotification.UserServices.RegistrationFailed, [NSNumber numberWithInteger:[operation.response statusCode]]);
     };
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -387,13 +387,13 @@
         
         //invalid
         else {
-            Notification_Post(JXNotification.UserServices.RegistrationFailed, nil);
+            Notification_Post(JXNotification.UserServices.RegistrationFailed, [NSNumber numberWithInteger:statusCode]);
         }
     };
     
     void (^failureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
         if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
-        Notification_Post(JXNotification.UserServices.RegistrationFailed, nil);
+        Notification_Post(JXNotification.UserServices.RegistrationFailed, [NSNumber numberWithInteger:[operation.response statusCode]]);
     };
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -713,7 +713,7 @@
     };
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   postId, @"post_id",
+                                   postId, @"prayer_id",
                                    [UserService getUserID], @"user_id",
                                    [UserService getOAuthToken], @"access_token", nil];
     
@@ -743,7 +743,7 @@
     };
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   postId, @"post_id",
+                                   postId, @"prayer_id",
                                    [UserService getUserID], @"user_id",
                                    [UserService getOAuthToken], @"access_token", nil];
     
@@ -1034,6 +1034,68 @@
     [self checkAccessTokenAndCall:@"api/v1/user/autocomplete" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
+- (void)getFollowersForUserWithID:(NSString *)userId {
+    void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
+        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
+        
+        NSInteger statusCode = [operation.response statusCode];
+        
+        //success
+        if (statusCode == 200) {
+            NSArray *users = [DataAccess addUsers:[responseObject objectForKey:@"data"]];
+            Notification_Post(JXNotification.UserServices.GetUserFollowersSuccess, users);
+        }
+        
+        //invalid
+        else {
+            Notification_Post(JXNotification.UserServices.GetUserFollowersFailed, nil);
+        }
+    };
+    
+    void (^failureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
+        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
+        Notification_Post(JXNotification.UserServices.GetUserFollowersFailed, nil);
+    };
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   userId, @"user_id",
+                                   [UserService getUserID], @"visitor_id",
+                                   [UserService getOAuthToken], @"access_token", nil];
+    
+    [self checkAccessTokenAndCall:@"api/v1/user/followers" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
+}
+
+- (void)getUsersFollowedByUserWithID:(NSString *)userId {
+    void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
+        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
+        
+        NSInteger statusCode = [operation.response statusCode];
+        
+        //success
+        if (statusCode == 200) {
+            NSArray *users = [DataAccess addUsers:[responseObject objectForKey:@"data"]];
+            Notification_Post(JXNotification.UserServices.GetFollowedUsersSuccess, users);
+        }
+        
+        //invalid
+        else {
+            Notification_Post(JXNotification.UserServices.GetFollowedUsersFailed, nil);
+        }
+    };
+    
+    void (^failureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
+        if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
+        Notification_Post(JXNotification.UserServices.GetFollowedUsersFailed, nil);
+    };
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   userId, @"user_id",
+                                   [UserService getUserID], @"visitor_id",
+                                   [UserService getOAuthToken], @"access_token", nil];
+    
+    [self checkAccessTokenAndCall:@"api/v1/user/following" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Post
@@ -1182,7 +1244,7 @@
                                    [UserService getUserID], @"user_id",
                                    [UserService getOAuthToken], @"access_token", nil];
     
-    [self checkAccessTokenAndCall:@"api/v1/comment/delete" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
+    [self checkAccessTokenAndCall:@"api/v1/prayers/comment/delete" isPost:YES includedImages:nil imagesKey:@"" parameters:params successBlock:successBlock failureBlock:failureBlock];
 }
 
 

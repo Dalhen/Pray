@@ -124,8 +124,6 @@
     Notification_Observe(JXNotification.CommentsServices.PostCommentFailed, postCommentFailed:);
     Notification_Observe(JXNotification.CommentsServices.DeleteCommentSuccess, deleteCommentSuccess);
     Notification_Observe(JXNotification.CommentsServices.DeleteCommentFailed, deleteCommentFailed);
-    Notification_Observe(JXNotification.FeedServices.ReportPostSuccess, reportPostSuccess);
-    Notification_Observe(JXNotification.FeedServices.ReportPostFailed, reportPostFailed);
     Notification_Observe(JXNotification.UserServices.AutocompleteSuccess, searchForMentionUsersSuccess:);
     Notification_Observe(JXNotification.UserServices.AutocompleteFailed, searchForMentionUsersFailed);
     
@@ -140,8 +138,6 @@
     Notification_Remove(JXNotification.CommentsServices.PostCommentFailed);
     Notification_Remove(JXNotification.CommentsServices.DeleteCommentSuccess);
     Notification_Remove(JXNotification.CommentsServices.DeleteCommentFailed);
-    Notification_Remove(JXNotification.FeedServices.ReportPostSuccess);
-    Notification_Remove(JXNotification.FeedServices.ReportPostFailed);
     
     Notification_Remove(JXNotification.UserServices.AutocompleteSuccess);
     Notification_Remove(JXNotification.UserServices.AutocompleteFailed);
@@ -825,6 +821,54 @@
     }
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    CDComment *comment = [comments objectAtIndex:indexPath.row];
+    if ([comment.creatorId isEqualToNumber:[UserService getUserIDNumber]]) {
+        return YES;
+    }
+    return NO;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle==UITableViewCellEditingStyleDelete)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LocString(@"Delete comment") message:LocString(@"Are you sure you want to delete this comment?") delegate:self cancelButtonTitle:LocString(@"Cancel") otherButtonTitles:@"Delete", nil];
+        [alert setTag:indexPath.row];
+        [alert show];
+    }
+    
+    [tableView reloadData];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return LocString(@"Delete");
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        [SVProgressHUD showWithStatus:LocString(@"Deleting comment...") maskType:SVProgressHUDMaskTypeGradient];
+        CDComment *comment = [comments objectAtIndex:[alertView tag]];
+        [NetworkService deleteCommentWithID:[comment.uniqueId stringValue]];
+        
+        [comments removeObjectAtIndex:[alertView tag]];
+        [commentsTable beginUpdates];
+        [commentsTable deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[alertView tag] inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [commentsTable endUpdates];
+    }
+}
+
+
+#pragma mark - Delete comment
+- (void)deleteCommentSuccess {
+    [DataAccess remove1CommentFromPrayer:currentPrayer];
+    [SVProgressHUD showSuccessWithStatus:LocString(@"Comment deleted!")];
+}
+
+- (void)deleteCommentFailed {
+    [SVProgressHUD showErrorWithStatus:LocString(@"We couldn't delete this comment. Please check your connection and try again.")];
+    [self refreshComments];
+}
+
 
 #pragma mark - UserProfile
 - (void)showUserForCell:(CommentCell *)cell {
@@ -855,13 +899,13 @@
     if (currentPrayer.isLiked.boolValue == NO) {
         [likesCount setText:[NSString stringWithFormat:@"%d",[likesCount.text intValue]+1]];
         [SVProgressHUD showSuccessWithStatus:LocString(@"Liked!")];
-        [DataAccess add1LikeToPrayer:currentPrayer];
-        [NetworkService unlikePostWithID:[currentPrayer.uniqueId stringValue]];
+        [DataAccess add1LikeToPrayerWithID:currentPrayer.uniqueId];
+        [NetworkService likePostWithID:[currentPrayer.uniqueId stringValue]];
     }
     else {
         [likesCount setText:[NSString stringWithFormat:@"%d",[likesCount.text intValue]-1]];
-        [DataAccess remove1LikeToPrayer:currentPrayer];
-        [NetworkService likePostWithID:[currentPrayer.uniqueId stringValue]];
+        [DataAccess remove1LikeToPrayerWithID:currentPrayer.uniqueId];
+        [NetworkService unlikePostWithID:[currentPrayer.uniqueId stringValue]];
     }
 }
 

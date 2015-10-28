@@ -296,7 +296,6 @@
 
 - (NSArray *)cellRightButtonsForCurrentGroupCellAndPrayer:(CDPrayer *)prayer {
     NSMutableArray *rightUtilityButtons = [NSMutableArray new];
-    [rightUtilityButtons sw_addUtilityButtonWithColor:Colour_255RGB(40, 155, 229) title:@"Report"];
     
 //    NSLog(@"UserID: %@", [UserService getUserID]);
 //    NSLog(@"CreatorID: %@", prayer.creatorId);
@@ -304,6 +303,10 @@
     if ([[prayer.creatorId stringValue] isEqualToString:[UserService getUserID]]) {
         [rightUtilityButtons sw_addUtilityButtonWithColor:Colour_255RGB(254, 74, 68) title:@"Delete"];
     }
+    else {
+        [rightUtilityButtons sw_addUtilityButtonWithColor:Colour_255RGB(40, 155, 229) title:@"Report"];
+    }
+    
     return rightUtilityButtons;
 }
 
@@ -313,21 +316,15 @@
 - (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index {
     
     currentlyEditedCell = cell;
-    switch (index) {
-        case 0: {
-            reportPostAlert = [[UIAlertView alloc] initWithTitle:LocString(@"Report a prayer") message:LocString(@"Are you sure you want to report this prayer?") delegate:self cancelButtonTitle:LocString(@"No") otherButtonTitles:LocString(@"Yes, report it!"), nil];
-            [reportPostAlert show];
-        }
-            break;
-            
-        case 1: {
-            deletePostAlert = [[UIAlertView alloc] initWithTitle:LocString(@"Deleting prayer?") message:LocString(@"Are you sure you want to delete your prayer? This action cannot be undone.") delegate:self cancelButtonTitle:LocString(@"No") otherButtonTitles:LocString(@"Yes, delete it!"), nil];
-            [deletePostAlert show];
-        }
-            break;
-            
-        default:
-            break;
+    CDPrayer *prayer = [prayers objectAtIndex:[[mainTable indexPathForCell:currentlyEditedCell] row]];
+    
+    if ([[prayer.creatorId stringValue] isEqualToString:[UserService getUserID]]) {
+        deletePostAlert = [[UIAlertView alloc] initWithTitle:LocString(@"Deleting prayer?") message:LocString(@"Are you sure you want to delete your prayer? This action cannot be undone.") delegate:self cancelButtonTitle:LocString(@"No") otherButtonTitles:LocString(@"Yes, delete it!"), nil];
+        [deletePostAlert show];
+    }
+    else {
+        reportPostAlert = [[UIAlertView alloc] initWithTitle:LocString(@"Report a prayer") message:LocString(@"Are you sure you want to report this prayer?") delegate:self cancelButtonTitle:LocString(@"No") otherButtonTitles:LocString(@"Yes, report it!"), nil];
+        [reportPostAlert show];
     }
 }
 
@@ -352,14 +349,16 @@
     
     [(SWTableViewCell *)currentlyEditedCell hideUtilityButtonsAnimated:YES];
     
+    CDPrayer *prayer = [prayers objectAtIndex:[[mainTable indexPathForCell:currentlyEditedCell] row]];
+    
     if (buttonIndex == 1) {
         if (alertView == reportPostAlert) {
-            [SVProgressHUD showWithStatus:LocString(@"Reporting post...") maskType:SVProgressHUDMaskTypeGradient];
-            [NetworkService reportPostWithID:[prayers objectAtIndex:[[mainTable indexPathForCell:currentlyEditedCell] row]]];
+            [SVProgressHUD showWithStatus:LocString(@"Reporting prayer...") maskType:SVProgressHUDMaskTypeGradient];
+            [NetworkService reportPostWithID:[prayer.uniqueId stringValue]];
         }
         else if (alertView == deletePostAlert) {
-            [SVProgressHUD showWithStatus:LocString(@"Deleting your post...") maskType:SVProgressHUDMaskTypeGradient];
-            [NetworkService deletePostWithID:[prayers objectAtIndex:[[mainTable indexPathForCell:currentlyEditedCell] row]]];
+            [SVProgressHUD showWithStatus:LocString(@"Deleting your prayer...") maskType:SVProgressHUDMaskTypeGradient];
+            [NetworkService deletePostWithID:[prayer.uniqueId stringValue]];
             
             NSInteger row = [[mainTable indexPathForCell:currentlyEditedCell] row];
             [prayers removeObjectAtIndex:row];
@@ -399,10 +398,10 @@
     CDPrayer *prayer = [prayers objectAtIndex:[[mainTable indexPathForCell:cell] row]];
     
     if (prayer.isLiked.boolValue == YES) {
-        [NetworkService unlikePostWithID:[prayer.uniqueId stringValue]];
+        [NetworkService likePostWithID:[prayer.uniqueId stringValue]];
     }
     else {
-        [NetworkService likePostWithID:[prayer.uniqueId stringValue]];
+        [NetworkService unlikePostWithID:[prayer.uniqueId stringValue]];
     }
 }
 

@@ -308,12 +308,12 @@
     
     if (prayer.isLiked.boolValue == NO) {
         [likesCount setText:[NSString stringWithFormat:@"%d",[likesCount.text intValue]+1]];
-        [SVProgressHUD showSuccessWithStatus:LocString(@"Liked!")];
-        [DataAccess add1LikeToPrayer:prayer];
+        [SVProgressHUD showSuccessWithStatus:LocString(@"You've joined this prayer.")];
+        [DataAccess add1LikeToPrayerWithID:prayer.uniqueId];
     }
     else {
         [likesCount setText:[NSString stringWithFormat:@"%d",[likesCount.text intValue]-1]];
-        [DataAccess remove1LikeToPrayer:prayer];
+        [DataAccess remove1LikeToPrayerWithID:prayer.uniqueId];
     }
     
     [delegate likeButtonClickedForCell:self];
@@ -333,7 +333,19 @@
 #pragma mark - Share Prayer
 - (void)sharePrayer {
     if ([delegate respondsToSelector:@selector(sharePrayerImage:)]) {
+        [likesIcon setHidden:YES];
+        [likesCount setHidden:YES];
+        [commentsIcon setHidden:YES];
+        [commentsCount setHidden:YES];
+        [sharePrayerButton setHidden:YES];
+        
         [delegate sharePrayerImage:[self imageFromUIView:self.contentView]];
+        
+        [likesIcon setHidden:NO];
+        [likesCount setHidden:NO];
+        [commentsIcon setHidden:NO];
+        [commentsCount setHidden:NO];
+        [sharePrayerButton setHidden:NO];
     }
 }
 
