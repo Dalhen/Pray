@@ -824,11 +824,16 @@
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    CDComment *comment = [comments objectAtIndex:indexPath.row];
-    if ([comment.creatorId isEqualToNumber:[UserService getUserIDNumber]]) {
-        return YES;
+    if (searchingForMentions) {
+        return NO;
     }
-    return NO;
+    else {
+        CDComment *comment = [comments objectAtIndex:indexPath.row];
+        if ([comment.creatorId isEqualToNumber:[UserService getUserIDNumber]]) {
+            return YES;
+        }
+        return NO;
+    }
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {

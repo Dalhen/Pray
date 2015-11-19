@@ -348,7 +348,9 @@
 }
 
 - (void)loadUserInfoFailed {
-    [SVProgressHUD showErrorWithStatus:LocString(@"We couldn't load the information about the profile. Please check your connection and try again.")];
+    if (!currentUser) {
+        [SVProgressHUD showErrorWithStatus:LocString(@"We couldn't load the information about the profile. Please check your connection and try again.")];
+    }
 }
 
 

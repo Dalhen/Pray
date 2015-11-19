@@ -159,7 +159,7 @@
     [prayerText setBackgroundColor:Colour_Clear];
     [prayerText setTextColor:Colour_White];
     [prayerText setFont:[FontService systemFont:14*sratio]];
-    [prayerText setText:LocString(@"Type your prayer here")];
+    //[prayerText setText:LocString(@"Type your prayer here")];
     [prayerText setTextAlignment:NSTextAlignmentCenter];
     [prayerText setDelegate:self];
     [self.view  addSubview:prayerText];
@@ -410,7 +410,7 @@
     if ([[textView.text stringByReplacingCharactersInRange:range withString:text] length] > 220) {
         return NO;
     }
-    else if (!typeStarted && [textView.text isEqualToString:LocString(@"Type your prayer here")]) {
+    else if (!typeStarted) {
         typeStarted = YES;
         [textView setText:text];
         return NO;

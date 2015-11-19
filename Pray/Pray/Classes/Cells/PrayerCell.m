@@ -34,6 +34,8 @@
 }
 
 - (void)setupLayout {
+    self.clipsToBounds = YES;
+    
     imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.screenWidth, prayerCellHeight)];
     [imageView setBackgroundColor:Colour_255RGB(80, 92, 109)];
     [imageView setContentMode:UIViewContentModeScaleAspectFill];
