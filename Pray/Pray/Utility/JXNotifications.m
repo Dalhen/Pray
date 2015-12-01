@@ -91,6 +91,8 @@ const struct JXNotificationStruct JXNotification = {
         .SearchFailed = @"com.pray.feedServices.SearchFailed",
         .GetPrayerDetailsSuccess = @"com.pray.feedServices.GetPrayerDetailsSuccess",
         .GetPrayerDetailsFailed = @"com.pray.feedServices.GetPrayerDetailsFailed",
+        .GetPrayerLikesListSuccess = @"com.pray.feedServices.GetPrayerLikesListSuccess",
+        .GetPrayerLikesListFailed = @"com.pray.feedServices.GetPrayerLikesListFailed",
     },
     
     .PostServices = {

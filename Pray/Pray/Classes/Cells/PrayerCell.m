@@ -101,6 +101,10 @@
     [likeButton addTarget:self action:@selector(likeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:likeButton];
     
+    likeListButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [likeListButton addTarget:self action:@selector(showLikesList) forControlEvents:UIControlEventTouchUpInside];
+    [self.contentView addSubview:likeListButton];
+    
     commentButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [commentButton addTarget:self action:@selector(commentButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:commentButton];
@@ -169,7 +173,10 @@
     [commentsCount setHeight:20*sratio];
     [commentsCount setLeft:commentsIcon.right + 6*sratio];
     
-    likeButton.frame = CGRectMake(likesIcon.left - 10*sratio, prayerCellHeight - 48*sratio, 10*sratio + likesIcon.width + 6*sratio + likesCount.width + 10*sratio, 42*sratio);
+    likeButton.frame = CGRectMake(likesIcon.left - 10*sratio, prayerCellHeight - 48*sratio, 10*sratio + likesIcon.width + 6*sratio , 42*sratio);
+    likeListButton.frame = CGRectMake(likeButton.right, likeButton.top, likesCount.width + 10*sratio, 42*sratio);
+    //+ likesCount.width + 10*sratio
+    
     commentButton.frame = CGRectMake(commentsIcon.left - 10*sratio, prayerCellHeight - 48*sratio, 10*sratio + commentsIcon.width + 6*sratio + commentsCount.width + 10*sratio, 42*sratio);
     
     //Religion Type
@@ -255,9 +262,15 @@
 #pragma mark - TTTAttributedString delegate
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithTextCheckingResult:(NSTextCheckingResult *)result {
     NSRange mentionMatchRange = [result rangeAtIndex:0];
-    NSString *mentionString = [[textView.text substringWithRange:mentionMatchRange] substringFromIndex:1];
-    CDUser *userClicked = [DataAccess getUserForUsername:mentionString];
-    [delegate showUserForUserObject:userClicked];
+    
+    NSRegularExpression *mentionsExpression = [NSRegularExpression regularExpressionWithPattern:@"(@\\w+)" options:NO error:nil];
+    NSArray *mentionsMatches = [mentionsExpression matchesInString:textView.text options:0 range:NSMakeRange(0, [textView.text length])];
+    
+    if ([mentionsMatches count]>0) {
+        NSString *mentionString = [[textView.text substringWithRange:mentionMatchRange] substringFromIndex:1];
+        CDUser *userClicked = [DataAccess getUserForUsername:mentionString];
+        [delegate showUserForUserObject:userClicked];
+    }
 }
 
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithTransitInformation:(NSDictionary *)components {
@@ -291,6 +304,10 @@
 
 - (void)commentButtonClicked {
     [delegate commentButtonClickedForCell:self];
+}
+
+- (void)showLikesList {
+    [delegate showLikesListForCell:self];
 }
 
 

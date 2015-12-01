@@ -320,7 +320,8 @@
     }
     
     //Name
-    [usernameLabel setText:(([currentUser.firstname isEqualToString:@""]||currentUser.firstname==nil)? @"Unkown" : currentUser.firstname)];
+    [usernameLabel setText:[NSString stringWithFormat:@"%@ %@", currentUser.firstname? currentUser.firstname : @"", currentUser.lastname? currentUser.lastname : @""]];
+     //(([currentUser.firstname isEqualToString:@""]||currentUser.firstname==nil)? @"Unkown" : currentUser.firstname)];
     
     //Description
     [userDescription setText:(([currentUser.bio isEqualToString:@""]||currentUser.bio==nil)? @"No bio." : currentUser.bio)];

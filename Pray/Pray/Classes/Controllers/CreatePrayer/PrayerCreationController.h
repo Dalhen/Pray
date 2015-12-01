@@ -9,6 +9,7 @@
 #import "BaseViewController.h"
 #import <MapKit/MapKit.h>
 #import "ReligionSelectorController.h"
+#import "ImageCropView.h""
 
 @protocol PrayerCreationDelegate <NSObject>
 
@@ -55,6 +56,8 @@
 
     NSInteger religionType;
     UIImageView *religionIcon;
+    
+    ImageCropView *imageCropView;
 }
 
 @property(nonatomic, assign) id <PrayerCreationDelegate> delegate;

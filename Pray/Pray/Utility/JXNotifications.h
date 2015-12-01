@@ -93,6 +93,8 @@ struct FeedServicesStruct {
     __unsafe_unretained NSString * const SearchFailed;
     __unsafe_unretained NSString * const GetPrayerDetailsSuccess;
     __unsafe_unretained NSString * const GetPrayerDetailsFailed;
+    __unsafe_unretained NSString * const GetPrayerLikesListSuccess;
+    __unsafe_unretained NSString * const GetPrayerLikesListFailed;
 };
 
 struct NotificationsServicesStruct {

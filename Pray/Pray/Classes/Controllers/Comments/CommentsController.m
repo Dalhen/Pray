@@ -36,15 +36,19 @@
 
 - (void)loadView {
     self.view = [[UIView alloc] init];
-    [self.view setBackgroundColor:Colour_255RGB(244, 244, 244)];
     [self.navigationController setNavigationBarHidden:YES];
     
     [self setupHeader];
     [self setupTableView];
     
     if (displayCommentsOnly) {
+        [self.view setBackgroundColor:Colour_255RGB(244, 244, 244)];
         [self setupCommentBar];
         [self loadComments];
+    }
+    else {
+        [commentsTable setBackgroundColor:Colour_PrayDarkBlue];
+        [self.view setBackgroundColor:Colour_PrayDarkBlue];
     }
 }
 
@@ -667,6 +671,11 @@
             [commentsCount setHeight:20*sratio];
             [commentsCount setLeft:commentsIcon.right + 6*sratio];
             
+            UIButton *commentButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            commentButton.frame = CGRectMake(commentsIcon.left - 10*sratio, prayerCellHeight - 48*sratio, 10*sratio + commentsIcon.width + 6*sratio + commentsCount.width + 10*sratio, 42*sratio);
+            [commentButton addTarget:self action:@selector(showCommentsList) forControlEvents:UIControlEventTouchUpInside];
+            [prayerView addSubview:commentButton];
+            
             likeButton.frame = CGRectMake(likesIcon.left - 10*sratio, prayerCellHeight - 48*sratio, 10*sratio + likesIcon.width + 6*sratio + likesCount.width + 10*sratio, 42*sratio);
             
             return prayerView;
@@ -896,6 +905,13 @@
 - (void)showUserFromPrayer {
     ProfileController *profileController = [[ProfileController alloc] initWithUser:currentPrayer.creator];
     [self.navigationController pushViewController:profileController animated:YES];
+}
+
+
+#pragma mark - Prayer show comments
+- (void)showCommentsList {
+    CommentsController *commentsController = [[CommentsController alloc] initWithPrayer:currentPrayer andDisplayCommentsOnly:YES];
+    [self.navigationController pushViewController:commentsController animated:YES];
 }
 
 

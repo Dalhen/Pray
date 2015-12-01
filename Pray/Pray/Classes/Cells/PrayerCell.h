@@ -20,6 +20,7 @@
 - (void)commentButtonClickedForCell:(PrayerCell *)cell;
 - (void)showUserForCell:(UITableViewCell *)cell;
 - (void)showUserForUserObject:(CDUser *)user;
+- (void)showLikesListForCell:(PrayerCell *)cell;
 
 @optional
 
@@ -40,6 +41,7 @@
     UIImageView *commentsIcon;
     UIImageView *likesIcon;
     UIButton *likeButton;
+    UIButton *likeListButton;
     UIButton *commentButton;
     UIButton *sharePrayerButton;
     UIView *blackMask;

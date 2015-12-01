@@ -58,6 +58,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [self registerForEvents];
+    
+    [self checkLocation];
     //[prayerText addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
 }
 

@@ -15,6 +15,9 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
+
 #define ParseAppID @"EqAODz0M3ylafH0njkPSXuZVC3AJC0CuXHHa0MvY"
 #define ParseClientKEY @"qZdatXWjpE1mdfLhoLhiEuyKAlzRTutxZU5Mm5w2"
 
@@ -33,6 +36,7 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     [self setupParse];
+    [self setupFabric];
     [self setupWindow];
     [self launchApp];
     
@@ -85,6 +89,10 @@
 
 - (void)setupParse {
     [Parse setApplicationId:ParseAppID clientKey:ParseClientKEY];
+}
+
+- (void)setupFabric {
+    [Fabric with:@[[Crashlytics class]]];
 }
 
 - (void)launchPushNotifications {
