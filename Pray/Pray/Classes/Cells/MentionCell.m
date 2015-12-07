@@ -53,7 +53,7 @@
         [iconImageView setImage:[UIImage imageNamed:@"emptyProfile"]];
     }
     
-    [name setText:[NSString stringWithFormat:@"%@ (@%@)", userObject.firstname, userObject.username]];
+    [name setText:[NSString stringWithFormat:@"%@ %@ (@%@)", userObject.firstname, userObject.lastname, userObject.username]];
 }
 
 

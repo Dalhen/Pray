@@ -89,11 +89,18 @@
     [usernameLabel setText:[NSString stringWithFormat:@"@%@", userObject.username]];
     if ([userObject.isFollowed boolValue]==YES) {
         [followButton setBackgroundColor:Colour_PrayDarkBlue];
-        [followButton setTitle:LocString(@"Followed") forState:UIControlStateNormal];
+        [followButton setTitle:LocString(@"Following") forState:UIControlStateNormal];
     }
     else {
         [followButton setBackgroundColor:Colour_PrayBlue];
         [followButton setTitle:LocString(@"Follow") forState:UIControlStateNormal];
+    }
+    
+    if ([userObject.uniqueId isEqualToNumber:[UserService getUserIDNumber]]) {
+        [followButton setHidden:YES];
+    }
+    else {
+        [followButton setHidden:NO];
     }
 }
 
@@ -111,7 +118,7 @@
     //UnFollow user
     else {
         [followButton setBackgroundColor:Colour_PrayDarkBlue];
-        [followButton setTitle:LocString(@"Followed") forState:UIControlStateNormal];
+        [followButton setTitle:LocString(@"Following") forState:UIControlStateNormal];
         [delegate followUserForCell:self];
     }
 }

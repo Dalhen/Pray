@@ -251,7 +251,12 @@
     [profileBlob centerHorizontallyInSuperView];
     
     if (isProfileEditing) {
-        [profileBlob setText:[UserService getBio]];
+        if (![[UserService getBio] isEqualToString:@""]) {
+            [profileBlob setText:[UserService getBio]];
+        }
+        else {
+            
+        }
     }
     
     UIButton *blobAction = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -293,8 +298,13 @@
         ![profileLastName.text isEqualToString:@""]) {
         
         if ([profilePassword.text length]>= 6) {
-            [SVProgressHUD showWithStatus:LocString(@"Signing up...") maskType:SVProgressHUDMaskTypeGradient];
-            [NetworkService signupWithUsername:profileUsername.text firstName:profileFirstName.text lastName:profileLastName.text password:profilePassword.text email:profileEmail.text bio:profileBlob.text avatarURL:nil avatarImage:imageData];
+            if (![profileUsername.text containsString:@" "]) {
+                [SVProgressHUD showWithStatus:LocString(@"Signing up...") maskType:SVProgressHUDMaskTypeGradient];
+                [NetworkService signupWithUsername:profileUsername.text firstName:profileFirstName.text lastName:profileLastName.text password:profilePassword.text email:profileEmail.text bio:profileBlob.text avatarURL:nil avatarImage:imageData];
+            }
+            else {
+                [[[UIAlertView alloc] initWithTitle:LocString(@"Incorrect Username") message:LocString(@"Please make sure your username doesn't contain a space.") delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+            }
         }
         else {
             [[[UIAlertView alloc] initWithTitle:LocString(@"Incorrect Password") message:LocString(@"Please make sure your password is at least 6 characters before proceeding.") delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];

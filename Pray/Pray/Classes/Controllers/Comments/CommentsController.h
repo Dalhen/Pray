@@ -51,6 +51,7 @@
     //PrayerView
     UIImageView *likesIcon;
     UILabel *likesCount;
+    UIButton *likeListButton;
     UILabel *commentsCount;
 }
 

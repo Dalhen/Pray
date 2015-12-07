@@ -62,7 +62,7 @@
                   moduleName = "Pray"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Jason/Documents/Pray/Pray/Pray/Singletons/JXNetworkService.m"
-                  timestampString = "470704301.263074"
+                  timestampString = "470937876.01809"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "377"
@@ -77,7 +77,7 @@
                   moduleName = "Pray"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Jason/Documents/Pray/Pray/Pray/Singletons/JXNetworkService.m"
-                  timestampString = "470704301.263588"
+                  timestampString = "470937876.018647"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "377"
@@ -110,11 +110,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pray/Classes/Controllers/Comments/CommentsController.m"
-            timestampString = "470702982.410857"
+            timestampString = "470937874.812831"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "264"
-            endingLineNumber = "264"
+            startingLineNumber = "269"
+            endingLineNumber = "269"
             landmarkName = "-postComment"
             landmarkType = "5">
          </BreakpointContent>
@@ -126,11 +126,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pray/Classes/Controllers/Comments/CommentsController.m"
-            timestampString = "470702982.410857"
+            timestampString = "470937874.812831"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "254"
-            endingLineNumber = "254"
+            startingLineNumber = "259"
+            endingLineNumber = "259"
             landmarkName = "-postComment"
             landmarkType = "5">
             <Locations>
@@ -142,11 +142,11 @@
                   moduleName = "Pray"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Jason/Documents/Pray/Pray/Pray/Classes/Controllers/Comments/CommentsController.m"
-                  timestampString = "470704301.269647"
+                  timestampString = "470937876.026466"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "254"
-                  endingLineNumber = "254"
+                  startingLineNumber = "259"
+                  endingLineNumber = "259"
                   offsetFromSymbolStart = "1417">
                </Location>
                <Location
@@ -157,11 +157,11 @@
                   moduleName = "Pray"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Jason/Documents/Pray/Pray/Pray/Classes/Controllers/Comments/CommentsController.m"
-                  timestampString = "470704301.27002"
+                  timestampString = "470937876.027124"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "254"
-                  endingLineNumber = "254"
+                  startingLineNumber = "259"
+                  endingLineNumber = "259"
                   offsetFromSymbolStart = "1429">
                </Location>
             </Locations>
@@ -174,11 +174,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pray/Classes/Controllers/Prehome/SignupController.m"
-            timestampString = "465586585.528108"
+            timestampString = "470939297.926557"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "313"
-            endingLineNumber = "313"
+            startingLineNumber = "323"
+            endingLineNumber = "323"
             landmarkName = "-signupAccountSuccess:"
             landmarkType = "5">
          </BreakpointContent>
@@ -276,22 +276,6 @@
             startingLineNumber = "1127"
             endingLineNumber = "1127"
             landmarkName = "-getUsersFollowedByUserWithID:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Pray/Classes/Controllers/CreatePrayer/PrayerCreationController.m"
-            timestampString = "470704300.187059"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "671"
-            endingLineNumber = "671"
-            landmarkName = "-postPrayer"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -58,8 +58,13 @@
     
     NSDictionary *userInfo = [[notification objectForKey:@"var_one"] objectForKey:@"data"];
     
-    if ([userInfo objectForKey:@"avatar"] != nil && ![[userInfo objectForKey:@"avatar"] isEqualToString:@""]) {
-        [userAvatar sd_setImageWithURL:[NSURL URLWithString:[userInfo objectForKey:@"avatar"]] placeholderImage:[UIImage imageNamed:@"emptyProfile"]];
+    if ([userInfo objectForKey:@"avatar"] != [NSNull null]) {
+        if (![[userInfo objectForKey:@"avatar"] isEqualToString:@""]) {
+            [userAvatar sd_setImageWithURL:[NSURL URLWithString:[userInfo objectForKey:@"avatar"]] placeholderImage:[UIImage imageNamed:@"emptyProfile"]];
+        }
+        else {
+            [userAvatar setImage:[UIImage imageNamed:@"emptyProfile"]];
+        }
     }
     else {
         [userAvatar setImage:[UIImage imageNamed:@"emptyProfile"]];

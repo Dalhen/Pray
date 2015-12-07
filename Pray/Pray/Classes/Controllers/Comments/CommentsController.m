@@ -12,6 +12,7 @@
 #import "UIImageView+Rounded.h"
 #import "UIImageView+WebCache.h"
 #import "MentionCell.h"
+#import "UsersListController.h"
 
 @interface CommentsController ()
 
@@ -133,6 +134,8 @@
     Notification_Observe(JXNotification.CommentsServices.DeleteCommentFailed, deleteCommentFailed);
     Notification_Observe(JXNotification.UserServices.AutocompleteSuccess, searchForMentionUsersSuccess:);
     Notification_Observe(JXNotification.UserServices.AutocompleteFailed, searchForMentionUsersFailed);
+    Notification_Observe(JXNotification.FeedServices.GetPrayerLikesListSuccess, getPrayerLikesSuccess:);
+    Notification_Observe(JXNotification.FeedServices.GetPrayerLikesListFailed, getPrayerLikesFailed);
     
     Notification_Observe(UIKeyboardWillShowNotification, keyboardWillShow:);
     Notification_Observe(UIKeyboardWillHideNotification, keyboardWillHide:);
@@ -145,6 +148,8 @@
     Notification_Remove(JXNotification.CommentsServices.PostCommentFailed);
     Notification_Remove(JXNotification.CommentsServices.DeleteCommentSuccess);
     Notification_Remove(JXNotification.CommentsServices.DeleteCommentFailed);
+    Notification_Remove(JXNotification.FeedServices.GetPrayerLikesListSuccess);
+    Notification_Remove(JXNotification.FeedServices.GetPrayerLikesListFailed);
     
     Notification_Remove(JXNotification.UserServices.AutocompleteSuccess);
     Notification_Remove(JXNotification.UserServices.AutocompleteFailed);
@@ -647,6 +652,10 @@
             likesCount.textColor = Colour_White;
             [prayerView addSubview:likesCount];
             
+            likeListButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            [likeListButton addTarget:self action:@selector(showLikesList) forControlEvents:UIControlEventTouchUpInside];
+            [prayerView addSubview:likeListButton];
+            
             UIImageView *commentsIcon = [[UIImageView alloc] initWithFrame:CGRectMake(0, prayerCellHeight - 38*sratio, 22*sratio, 21*sratio)];
             commentsIcon.image = [UIImage imageNamed:@"commentsIcon"];
             [prayerView addSubview:commentsIcon];
@@ -676,7 +685,8 @@
             [commentButton addTarget:self action:@selector(showCommentsList) forControlEvents:UIControlEventTouchUpInside];
             [prayerView addSubview:commentButton];
             
-            likeButton.frame = CGRectMake(likesIcon.left - 10*sratio, prayerCellHeight - 48*sratio, 10*sratio + likesIcon.width + 6*sratio + likesCount.width + 10*sratio, 42*sratio);
+            likeButton.frame = CGRectMake(likesIcon.left - 10*sratio, prayerCellHeight - 48*sratio, 10*sratio + likesIcon.width + 6*sratio , 42*sratio);
+            likeListButton.frame = CGRectMake(likeButton.right, likeButton.top, likesCount.width + 10*sratio, 42*sratio);
             
             return prayerView;
         }
@@ -906,6 +916,26 @@
     ProfileController *profileController = [[ProfileController alloc] initWithUser:currentPrayer.creator];
     [self.navigationController pushViewController:profileController animated:YES];
 }
+
+
+#pragma mark - Likes
+#pragma mark - Prayer Likes list
+- (void)showLikesList {
+    [SVProgressHUD showWithStatus:LocString(@"Loading likes...")];
+    [NetworkService getPrayerLikesListForID:[currentPrayer.uniqueId stringValue]];
+}
+
+- (void)getPrayerLikesSuccess:(NSNotification *)notification {
+    [SVProgressHUD dismiss];
+    UsersListController *usersListController = [[UsersListController alloc] initWithTitle:LocString(@"Likes")
+                                                                             andUsersList:notification.object];
+    [self.navigationController pushViewController:usersListController animated:YES];
+}
+
+- (void)getPrayerLikesFailed {
+    [SVProgressHUD showSuccessWithStatus:LocString(@"We couldn't get the list of likes. Please check your internet connection and try again.")];
+}
+
 
 
 #pragma mark - Prayer show comments
