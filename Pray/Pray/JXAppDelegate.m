@@ -231,6 +231,10 @@
             default:
                 break;
         }
+        
+        if ([userInfo objectForKey:@"alert"]) {
+            [self showNotificationPopupWithText:[userInfo objectForKey:@"alert"]];
+        }
     }
 }
 

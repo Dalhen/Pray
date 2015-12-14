@@ -41,6 +41,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [self registerForEvents];
     [self.navigationController setNavigationBarHidden:YES];
+    [mainTable reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -112,6 +113,7 @@
     if(!cell) {
         cell = [[UserCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UserCell"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [cell setDelegate:self];
     }
     
     [cell updateWithUserObject:[users objectAtIndex:indexPath.row]];
@@ -122,8 +124,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    CDUser *user = [users objectAtIndex:indexPath.row];
-    ProfileController *profileController = [[ProfileController alloc] initWithUser:user];
+    selectedUser = [users objectAtIndex:indexPath.row];
+    ProfileController *profileController = [[ProfileController alloc] initWithUser:selectedUser];
     [self.navigationController pushViewController:profileController animated:YES];
 }
 
@@ -137,6 +139,28 @@
     [SVProgressHUD showErrorWithStatus:LocString(@"Couldn't load this profile. Please check your connection and try again.")];
 }
 
+
+#pragma mark - UserCell delegate
+- (void)followUserForCell:(UserCell *)cell {
+    [NetworkService followUserForID:[cell.currentUser.uniqueId stringValue]];
+}
+
+- (void)unfollowUserForCell:(UserCell *)cell {
+    [NetworkService unfollowUserForID:[cell.currentUser.uniqueId stringValue]];
+}
+
+- (void)unfollowUserSuccess {
+    
+}
+
+- (void)unfollowUserFailed {
+    
+}
+
+- (void)showUserForCell:(UserCell *)cell {
+    ProfileController *profileController = [[ProfileController alloc] initWithUser:cell.currentUser];
+    [self.navigationController pushViewController:profileController animated:YES];
+}
 
 
 

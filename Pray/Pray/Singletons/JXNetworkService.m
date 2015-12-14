@@ -530,14 +530,15 @@
         }
         
         //invalid
-        else {
-            Notification_Post(JXNotification.UserServices.UpdateUserDetailsFailed, nil);
+        else if (statusCode == 406) {
+            Notification_Post(JXNotification.UserServices.UpdateUserDetailsFailed, [NSNumber numberWithInteger:statusCode]);
         }
     };
     
     void (^failureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject)  {
         if(DEBUGConnections) NSLog(@"ResponseObject: %@", responseObject);
-        Notification_Post(JXNotification.UserServices.UpdateUserDetailsFailed, nil);
+        NSInteger statusCode = [operation.response statusCode];
+        Notification_Post(JXNotification.UserServices.UpdateUserDetailsFailed, [NSNumber numberWithInteger:statusCode]);
     };
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
