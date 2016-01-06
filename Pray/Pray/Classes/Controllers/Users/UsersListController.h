@@ -7,13 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UserCell.h"
 
-@interface UsersListController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
+@interface UsersListController : UIViewController <UITableViewDataSource, UITableViewDelegate, UserCellDelegate> {
     
     UITableView *mainTable;
     NSArray *users;
     NSString *headerTitle;
+    
+    CDUser *selectedUser;
 }
+
+@property(nonatomic, assign) BOOL shouldFollowSelectedUser;
 
 - (id)initWithTitle:(NSString *)title andUsersList:(NSArray *)usersList;
 

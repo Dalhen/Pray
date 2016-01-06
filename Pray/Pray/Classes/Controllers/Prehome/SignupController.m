@@ -67,7 +67,7 @@
     Notification_Observe(JXNotification.UserServices.RegistrationSuccess, signupAccountSuccess:);
     Notification_Observe(JXNotification.UserServices.RegistrationFailed, signupAccountFailed:);
     Notification_Observe(JXNotification.UserServices.UpdateUserDetailsSuccess, updateProfileSuccess:);
-    Notification_Observe(JXNotification.UserServices.UpdateUserDetailsFailed, updateProfileFailed);
+    Notification_Observe(JXNotification.UserServices.UpdateUserDetailsFailed, updateProfileFailed:);
 }
 
 - (void)unRegisterForEvents {
@@ -258,6 +258,10 @@
             
         }
     }
+    else {
+        [profileBlob setText:LocString(@"Write something about you (optional)")];
+        [profileBlob setTextColor:Colour_255RGB(200, 200, 200)];
+    }
     
     UIButton *blobAction = [UIButton buttonWithType:UIButtonTypeCustom];
     [blobAction setFrame:profileBlob.frame];
@@ -414,9 +418,28 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)updateProfileFailed {
+- (void)updateProfileFailed:(NSNotification *)notification {
     [SVProgressHUD dismiss];
-    [[[UIAlertView alloc] initWithTitle:LocString(@"Profile update") message:LocString(@"We couldn't update your profile. Please check your internet connection and try again.") delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+    
+    NSInteger statusCode = [notification.object integerValue];
+    
+    switch (statusCode) {
+        case 403:
+            [[[UIAlertView alloc] initWithTitle:LocString(@"Profile update") message:LocString(@"This email is already registered on Pray. Please login or select another one.") delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+            break;
+            
+        case 406:
+            [[[UIAlertView alloc] initWithTitle:LocString(@"Profile update") message:LocString(@"This username is already taken. Please select another one.") delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+            break;
+            
+        case 415:
+            [[[UIAlertView alloc] initWithTitle:LocString(@"Profile update") message:LocString(@"Your image is incorrect. Please select another one.") delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+            break;
+            
+        default:
+            [[[UIAlertView alloc] initWithTitle:LocString(@"Profile update") message:LocString(@"We couldn't update your profile. Please check your internet connection and try again.") delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+            break;
+    }
 }
 
 
@@ -563,6 +586,13 @@
 
 
 #pragma mark - UITextView delegates
+- (void)textViewDidBeginEditing:(UITextView *)textView {
+    if ([textView.text isEqualToString:LocString(@"Write something about you (optional)")]) {
+        [textView setText:@""];
+        [textView setTextColor:Colour_PrayBlue];
+    }
+}
+
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     if ([text isEqualToString:@"\n"]) {
         [profileBlob resignFirstResponder];

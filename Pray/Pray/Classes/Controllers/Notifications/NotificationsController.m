@@ -10,6 +10,7 @@
 #import "PKRevealController.h"
 #import "NotificationsCell.h"
 #import "CommentsController.h"
+#import "ProfileController.h"
 
 @interface NotificationsController ()
 
@@ -188,6 +189,14 @@
             //Tags in a comment
         case 4:
             [self getPrayerDetailsForID:[[[notification objectForKey:@"target"] objectForKey:@"data"] objectForKey:@"id"]];
+            break;
+            
+            //Someone followed you
+        case 5: {
+            CDUser *user = [DataAccess addUserWithData:[[notification objectForKey:@"target"] objectForKey:@"data"]];
+            ProfileController *profileController = [[ProfileController alloc] initWithUser:user];
+            [self.navigationController pushViewController:profileController animated:YES];
+        }
             break;
             
         default:

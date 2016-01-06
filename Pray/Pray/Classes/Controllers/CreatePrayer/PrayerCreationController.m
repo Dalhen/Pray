@@ -370,7 +370,8 @@
     [prayerText setTextColor:Colour_White];
     [addImageButton setTitleColor:Colour_White forState:UIControlStateNormal];
     [selectReligionButton setTitleColor:Colour_White forState:UIControlStateNormal];
-    
+    [addImageButton setBackgroundImage:[UIImage imageNamed:@"addImageButton"] forState:UIControlStateNormal];
+    [selectReligionButton setBackgroundImage:[UIImage imageNamed:@"selectReligionButton"] forState:UIControlStateNormal];
     
     selectedImage = img;
     
@@ -422,7 +423,7 @@
     }
     else if (!typeStarted) {
         typeStarted = YES;
-        [textView setText:text];
+        [textView setText:[textView.text stringByReplacingCharactersInRange:range withString:text]];
         return NO;
     }
     

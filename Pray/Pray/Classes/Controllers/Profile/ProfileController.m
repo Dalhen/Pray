@@ -71,7 +71,7 @@
     [self.view addSubview:titleLabel];
     
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightButton setFrame:CGRectMake(256*sratio, 22*sratio, 52*sratio, 30*sratio)];
+    [rightButton setFrame:CGRectMake(self.view.width - 12*sratio - 52*sratio, 22*sratio, 52*sratio, 30*sratio)];
     [rightButton setTitleColor:Colour_White forState:UIControlStateNormal];
     [rightButton.titleLabel setFont:[FontService systemFont:13*sratio]];
     [rightButton.layer setCornerRadius:5.0f];
