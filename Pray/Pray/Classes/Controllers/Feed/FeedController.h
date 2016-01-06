@@ -10,7 +10,7 @@
 #import "PrayerCell.h"
 #import "PrayerCreationController.h"
 
-@interface FeedController : UIViewController <UITableViewDataSource, UITableViewDelegate, PrayerCellDelegate, SWTableViewCellDelegate, PrayerCreationDelegate> {
+@interface FeedController : UIViewController <UITableViewDataSource, UITableViewDelegate, PrayerCellDelegate, SWTableViewCellDelegate, PrayerCreationDelegate, UIDocumentInteractionControllerDelegate, UIActionSheetDelegate> {
  
     UIView *switchMenu;
     UIButton *feedButton;
@@ -32,6 +32,10 @@
     SWTableViewCell *currentlyEditedCell;
     UIAlertView *deletePostAlert;
     UIAlertView *reportPostAlert;
+    
+    UIImage *sharedImage;
 }
+
+@property (nonatomic, strong) UIDocumentInteractionController *documentInteractionController;
 
 @end
