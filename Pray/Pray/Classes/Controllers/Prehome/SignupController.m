@@ -578,9 +578,15 @@
     }
     
     else {
-        if (textField == profileUsername && [string isEqualToString:@" "]) {
-            [textField setText:[textField.text stringByReplacingCharactersInRange:range withString:@"_"]];
-            return NO;
+        if (textField == profileUsername) {
+            if ([[textField.text stringByReplacingCharactersInRange:range withString:string] length]<16) {
+                if ([string isEqualToString:@" "]) {
+                    [textField setText:[textField.text stringByReplacingCharactersInRange:range withString:@"_"]];
+                    return NO;
+                }
+                else return YES;
+            }
+            else return NO;
         }
         
         return YES;
