@@ -69,23 +69,6 @@
     titleLabel.textColor = Colour_White;
     titleLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:titleLabel];
-    
-    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightButton setFrame:CGRectMake(self.view.width - 12*sratio - 52*sratio, 22*sratio, 52*sratio, 30*sratio)];
-    [rightButton setTitleColor:Colour_White forState:UIControlStateNormal];
-    [rightButton.titleLabel setFont:[FontService systemFont:13*sratio]];
-    [rightButton.layer setCornerRadius:5.0f];
-    if ([currentUser.uniqueId isEqualToNumber:[UserService getUserIDNumber]]) {
-        [rightButton setBackgroundColor:Colour_255RGB(140, 146, 164)];
-        [rightButton setTitle:LocString(@"Edit") forState:UIControlStateNormal];
-        [rightButton addTarget:self action:@selector(editProfile) forControlEvents:UIControlEventTouchUpInside];
-    }
-    else {
-        [rightButton setBackgroundColor:Colour_PrayBlue];
-        [rightButton setTitle:LocString(@"Pray") forState:UIControlStateNormal];
-        [rightButton addTarget:self action:@selector(prayForUser) forControlEvents:UIControlEventTouchUpInside];
-    }
-    [self.view addSubview:rightButton];
 }
 
 - (void)setupProfileHeader {
@@ -205,6 +188,24 @@
         }
         [profileHeader addSubview:followButton];
     }
+    
+    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightButton setBackgroundColor:Colour_Pink];
+    [rightButton setFrame:CGRectMake(self.view.screenWidth - 12*sratio - 52*sratio, 22*sratio, 52*sratio, 30*sratio)];
+    [rightButton setTitleColor:Colour_White forState:UIControlStateNormal];
+    [rightButton.titleLabel setFont:[FontService systemFont:13*sratio]];
+    [rightButton.layer setCornerRadius:5.0f];
+    if ([currentUser.uniqueId isEqualToNumber:[UserService getUserIDNumber]]) {
+        [rightButton setBackgroundColor:Colour_255RGB(140, 146, 164)];
+        [rightButton setTitle:LocString(@"Edit") forState:UIControlStateNormal];
+        [rightButton addTarget:self action:@selector(editProfile) forControlEvents:UIControlEventTouchUpInside];
+    }
+    else {
+        [rightButton setBackgroundColor:Colour_PrayBlue];
+        [rightButton setTitle:LocString(@"Pray") forState:UIControlStateNormal];
+        [rightButton addTarget:self action:@selector(prayForUser) forControlEvents:UIControlEventTouchUpInside];
+    }
+    [self.view addSubview:rightButton];
 }
 
 - (void)setupTableView {

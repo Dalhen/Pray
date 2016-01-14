@@ -302,12 +302,12 @@
         ![profileLastName.text isEqualToString:@""]) {
         
         if ([profilePassword.text length]>= 6) {
-            if (![profileUsername.text containsString:@" "]) {
+            if ([profileUsername.text length]>2 && [profileUsername.text length]<16) {
                 [SVProgressHUD showWithStatus:LocString(@"Signing up...") maskType:SVProgressHUDMaskTypeGradient];
                 [NetworkService signupWithUsername:profileUsername.text firstName:profileFirstName.text lastName:profileLastName.text password:profilePassword.text email:profileEmail.text bio:profileBlob.text avatarURL:nil avatarImage:imageData];
             }
             else {
-                [[[UIAlertView alloc] initWithTitle:LocString(@"Incorrect Username") message:LocString(@"Please make sure your username doesn't contain a space.") delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+                [[[UIAlertView alloc] initWithTitle:LocString(@"Incorrect Username") message:LocString(@"Please make sure your username lengh is contained between 3 and 15 characters.") delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
             }
         }
         else {
@@ -577,7 +577,14 @@
         return NO;
     }
     
-    return YES;
+    else {
+        if (textField == profileUsername && [string isEqualToString:@" "]) {
+            [textField setText:[textField.text stringByReplacingCharactersInRange:range withString:@"_"]];
+            return NO;
+        }
+        
+        return YES;
+    }
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
