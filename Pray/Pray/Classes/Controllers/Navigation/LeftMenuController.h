@@ -7,9 +7,10 @@
 //
 
 #import "BaseViewController.h"
+#import <MessageUI/MFMailComposeViewController.h>
+#import <MessageUI/MessageUI.h>
 
-
-@interface LeftMenuController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
+@interface LeftMenuController : UIViewController <UITableViewDelegate, UITableViewDataSource, MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate, UIActionSheetDelegate> {
     
     int selectedLine;
 }

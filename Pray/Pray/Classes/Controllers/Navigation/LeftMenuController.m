@@ -73,51 +73,79 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+    return 5;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    LeftMenuCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LeftMenuCell class])];
-    if (!cell) {
-        cell = [[LeftMenuCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NSStringFromClass([LeftMenuCell class])];
+    
+    if (indexPath.row == 4) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Standard"];
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Standard"];
+            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            [cell setBackgroundColor:Colour_PrayDarkBlue];
+        }
+        
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        [button setFrame:CGRectMake(24*sratio, 20*sratio, 170*sratio, 30*sratio)];
+        [button setTitle:LocString(@"Share the app with friends") forState:UIControlStateNormal];
+        [button setBackgroundColor:Colour_WhiteAlpha(0.1)];
+        [button setTitleColor:Colour_White forState:UIControlStateNormal];
+        [button.titleLabel setFont:[FontService systemFont:12*sratio]];
+        [button.layer setCornerRadius:10*sratio];
+        [button addTarget:self action:@selector(showInviteSelector) forControlEvents:UIControlEventTouchUpInside];
+        [cell.contentView addSubview:button];
+        
+        return cell;
     }
     
-    switch (indexPath.row) {
-            
-        case 0:
-            [cell.title setText:LocString(@"Feed")];
-            [cell setIconsSetWithOffImage:@"feedOFF" andOnImage:@"feedON"];
-            [cell.accessoryButton setHidden:YES];
-            break;
-            
-        case 1:
-            [cell.title setText:LocString(@"Profile")];
-            [cell setIconsSetWithOffImage:@"profileOFF" andOnImage:@"profileON"];
-            [cell.accessoryButton setHidden:YES];
-            break;
-            
-        case 2:
-            [cell.title setText:LocString(@"Notitications")];
-            [cell setIconsSetWithOffImage:@"notificationsOFF" andOnImage:@"notificationsON"];
-            [cell.accessoryButton setHidden:YES];
-            break;
-            
-        case 3:
-            [cell.title setText:LocString(@"Settings")];
-            [cell setIconsSetWithOffImage:@"settingsOFF" andOnImage:@"settingsON"];
-            [cell.accessoryButton setHidden:YES];
-            break;
-            
-        default:
-            break;
+    else {
+        LeftMenuCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LeftMenuCell class])];
+        if (!cell) {
+            cell = [[LeftMenuCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NSStringFromClass([LeftMenuCell class])];
+        }
+        
+        switch (indexPath.row) {
+                
+            case 0:
+                [cell.title setText:LocString(@"Feed")];
+                [cell setIconsSetWithOffImage:@"feedOFF" andOnImage:@"feedON"];
+                [cell.accessoryButton setHidden:YES];
+                break;
+                
+            case 1:
+                [cell.title setText:LocString(@"Profile")];
+                [cell setIconsSetWithOffImage:@"profileOFF" andOnImage:@"profileON"];
+                [cell.accessoryButton setHidden:YES];
+                break;
+                
+            case 2:
+                [cell.title setText:LocString(@"Notitications")];
+                [cell setIconsSetWithOffImage:@"notificationsOFF" andOnImage:@"notificationsON"];
+                [cell.accessoryButton setHidden:YES];
+                break;
+                
+            case 3:
+                [cell.title setText:LocString(@"Settings")];
+                [cell setIconsSetWithOffImage:@"settingsOFF" andOnImage:@"settingsON"];
+                [cell.accessoryButton setHidden:YES];
+                break;
+                
+            case 4: {
+                
+            }
+                break;
+                
+            default:
+                break;
+        }
+        
+        return cell;
     }
-    
-    return cell;
 }
 
 
 #pragma mark - Table view delegate
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     UIViewController *controller;
@@ -143,15 +171,71 @@
             break;
     }
     
-    [AppDelegate updateFrontViewControllerWithController:controller andFocus:YES];
+    if (indexPath.row != 4) {
+        [AppDelegate updateFrontViewControllerWithController:controller andFocus:YES];
+    }
+    else {
+        [self showInviteSelector];
+    }
+}
+
+
+#pragma mark - Invites
+- (void)showInviteSelector {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:LocString(@"Share the app by...") delegate:self cancelButtonTitle:LocString(@"Cancel") destructiveButtonTitle:nil otherButtonTitles:LocString(@"Text Message"), LocString(@"Email"), nil];
+    [actionSheet showInView:self.view];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch (buttonIndex) {
+        case 0:
+            [self inviteWithText];
+            break;
+            
+        case 1:
+            [self inviteWithEmail];
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void)inviteWithText {
     
-//    if (indexPath.row == 0) {
-//        
-//    }
-//    else {
-//        LeftMenuCell *cell = (LeftMenuCell *)[mainTable cellForRowAtIndexPath:indexPath];
-//        [cell setSelected:NO animated:YES];
-//    }
+    NSString *body = @"Join and pray with me on PRAY! Download the app here:";
+    
+    MFMessageComposeViewController *messageComposer = [[MFMessageComposeViewController alloc] init];
+    [messageComposer setRecipients:@[]];
+    [messageComposer setBody:body];
+    messageComposer.messageComposeDelegate = self;
+    
+    [self presentViewController:messageComposer animated:YES completion:nil];
+}
+
+- (void)inviteWithEmail {
+    if ([MFMailComposeViewController canSendMail]) {
+        
+        MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
+        picker.mailComposeDelegate = self;
+        
+        [picker setSubject:@"Join me on PRAY App"];
+        NSString *emailBody = @"Hi, I wanted to share PRAY with you. It's an app to share prayers all together. Here is the link to download it:";
+        [picker setMessageBody:emailBody isHTML:YES];
+        
+        [self presentViewController:picker animated:YES completion:nil];
+    }
+    else {
+        [SVProgressHUD showErrorWithStatus:LocString(@"Please set an email on this phone before proceeding.")];
+    }
+}
+
+
+#pragma mark - MFMessage delegate
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller
+                 didFinishWithResult:(MessageComposeResult)result {
+    
+    [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 

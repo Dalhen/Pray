@@ -62,12 +62,12 @@
                   moduleName = "Pray"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Jason/Documents/Pray/Pray/Pray/Singletons/JXNetworkService.m"
-                  timestampString = "473802013.784833"
+                  timestampString = "477015311.656584"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "377"
                   endingLineNumber = "377"
-                  offsetFromSymbolStart = "276">
+                  offsetFromSymbolStart = "292">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -77,30 +77,14 @@
                   moduleName = "Pray"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Jason/Documents/Pray/Pray/Pray/Singletons/JXNetworkService.m"
-                  timestampString = "473802013.785042"
+                  timestampString = "477015311.65692"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "377"
                   endingLineNumber = "377"
-                  offsetFromSymbolStart = "72">
+                  offsetFromSymbolStart = "64">
                </Location>
             </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Pray/Classes/Controllers/Prehome/SigninController.m"
-            timestampString = "464375232.343336"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "144"
-            endingLineNumber = "144"
-            landmarkName = "-loginSuccess:"
-            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -142,12 +126,12 @@
                   moduleName = "Pray"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Jason/Documents/Pray/Pray/Pray/Classes/Controllers/Comments/CommentsController.m"
-                  timestampString = "473802013.788237"
+                  timestampString = "477015311.659162"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "259"
                   endingLineNumber = "259"
-                  offsetFromSymbolStart = "1484">
+                  offsetFromSymbolStart = "1417">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -157,12 +141,12 @@
                   moduleName = "Pray"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Jason/Documents/Pray/Pray/Pray/Classes/Controllers/Comments/CommentsController.m"
-                  timestampString = "473802013.788441"
+                  timestampString = "477015311.659374"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "259"
                   endingLineNumber = "259"
-                  offsetFromSymbolStart = "1504">
+                  offsetFromSymbolStart = "1429">
                </Location>
             </Locations>
          </BreakpointContent>

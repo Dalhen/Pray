@@ -33,6 +33,23 @@
     [imageView setImage:[UIImage new]];
 }
 
+- (UIColor *)generateRandomColor {
+    NSArray *randomColors = [[NSArray alloc] initWithObjects:
+                    Colour_255RGB(91, 189, 225),  //5bbde1
+                    Colour_255RGB(191, 144, 197), //bf90c5
+                    Colour_255RGB(141, 205, 159), //8dcd9f
+                    Colour_255RGB(99, 140, 181),  //638cb5
+                    Colour_255RGB(225, 157, 91),  //e19d5b
+                    Colour_255RGB(141, 140, 181), //8d8cb5
+                    Colour_255RGB(209, 229, 113), //d18171
+                    Colour_255RGB(121, 133, 192), //7985c0
+                    Colour_255RGB(106, 110, 128), //6a6e80
+                    Colour_255RGB(123, 184, 113), //7bb871
+                    nil];
+    
+    return [randomColors objectAtIndex: arc4random() % [randomColors count]];
+}
+
 - (void)setupLayout {
     self.clipsToBounds = YES;
     
@@ -109,9 +126,9 @@
     [commentButton addTarget:self action:@selector(commentButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:commentButton];
     
-    UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, prayerCellHeight-1, self.screenWidth, 1)];
-    [separator setBackgroundColor:Colour_PrayDarkBlue];
-    [self.contentView addSubview:separator];
+//    UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, prayerCellHeight-1, self.screenWidth, 1)];
+//    [separator setBackgroundColor:Colour_PrayDarkBlue];
+//    [self.contentView addSubview:separator];
     
     religionType = [[UIImageView alloc] initWithFrame:CGRectMake(self.screenWidth - 12*sratio - 38*sratio, 8*sratio, 34*sratio, 34*sratio)];
     [religionType setClipsToBounds:YES];
@@ -134,7 +151,11 @@
     prayer = prayerObject;
     
     if (prayer.imageURL != nil && ![prayer.imageURL isEqualToString:@""]) {
+    [imageView setBackgroundColor:Colour_255RGB(80, 92, 109)];
         [imageView sd_setImageWithURL:[NSURL URLWithString:prayer.imageURL]];
+    }
+    else {
+    [imageView setBackgroundColor:[self generateRandomColor]];
     }
     
     if (prayer.creator.avatar != nil && ![prayer.creator.avatar isEqualToString:@""]) {
