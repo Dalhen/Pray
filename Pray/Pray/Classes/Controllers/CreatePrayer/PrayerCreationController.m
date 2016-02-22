@@ -150,6 +150,8 @@
     
     prayerImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 56*sratio, self.view.screenWidth, self.view.screenHeight - 56*sratio)];
     [prayerImage setContentMode:UIViewContentModeScaleAspectFill];
+    selectedImage = [self imageFromRandomColor];
+    [prayerImage setImage:selectedImage];
     [self.view addSubview:prayerImage];
     
     imageMask = [[UIView alloc] initWithFrame:prayerImage.frame];
@@ -202,6 +204,52 @@
 
 - (void)goBack {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+#pragma mark - Colors creation
+- (UIImage *)imageFromRandomColor {
+    UIColor *color = [self generateRandomColor];
+    
+    CGRect rect = CGRectMake(0, 0, 1, 1);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+}
+
+- (UIColor *)generateRandomColor {
+    NSArray *randomColors = [[NSArray alloc] initWithObjects:
+
+                             Colour_255RGB(0, 31, 42),
+                             Colour_255RGB(0, 0, 44),
+                             Colour_255RGB(0, 0, 117),
+                             Colour_255RGB(19, 19, 70),
+                             Colour_255RGB(0, 31, 96),
+                             Colour_255RGB(22, 165, 255),
+                             Colour_255RGB(126, 191, 255),
+                             Colour_255RGB(136, 199, 209),
+                             Colour_255RGB(165, 93, 199),
+                             Colour_255RGB(0, 112, 0),
+                             Colour_255RGB(19, 113, 70),
+                             Colour_255RGB(101, 163, 121),
+                             Colour_255RGB(129, 200, 127),
+                             Colour_255RGB(255, 135, 16),
+                             Colour_255RGB(255, 150, 16),
+                             Colour_255RGB(255, 171, 16),
+                             Colour_255RGB(255, 214, 0),
+                             Colour_255RGB(255, 0, 30),
+                             Colour_255RGB(255, 86, 86),
+                             Colour_255RGB(255, 117, 117),
+                             Colour_255RGB(218, 40, 150),
+                             Colour_255RGB(233, 118, 161),
+                             
+                             nil];
+    
+    return [randomColors objectAtIndex: arc4random() % [randomColors count]];
 }
 
 

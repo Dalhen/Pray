@@ -154,9 +154,9 @@
     [imageView setBackgroundColor:Colour_255RGB(80, 92, 109)];
         [imageView sd_setImageWithURL:[NSURL URLWithString:prayer.imageURL]];
     }
-    else {
-    [imageView setBackgroundColor:[self generateRandomColor]];
-    }
+//    else {
+//    [imageView setBackgroundColor:[self generateRandomColor]];
+//    }
     
     if (prayer.creator.avatar != nil && ![prayer.creator.avatar isEqualToString:@""]) {
         [userAvatar sd_setImageWithURL:[NSURL URLWithString:prayer.creator.avatar] placeholderImage:[UIImage imageNamed:@"emptyProfile"]];
