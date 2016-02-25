@@ -29,7 +29,7 @@
 
 - (void)loadView {
     self.view = [[UIView alloc] init];
-    [self.view setBackgroundColor:Colour_PrayDarkBlue];
+    [self.view setBackgroundColor:Colour_255RGB(232, 232, 232)];
     [self.navigationController setNavigationBarHidden:YES];
     
     [self setupHeader];
@@ -47,14 +47,14 @@
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(76*sratio, 20*sratio, 162*sratio, 26*sratio)];
     titleLabel.text = LocString(@"Settings");
     titleLabel.font = [FontService systemFont:14*sratio];
-    titleLabel.textColor = Colour_White;
+    titleLabel.textColor = Colour_255RGB(82, 82, 82);
     titleLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:titleLabel];
 }
 
 - (void)setupTableView {
     mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 56*sratio, self.view.screenWidth, self.view.screenHeight - 56*sratio) style:UITableViewStylePlain];
-    [mainTable setBackgroundColor:Colour_Clear];
+    [mainTable setBackgroundColor:Colour_White];
     [mainTable setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [mainTable setScrollsToTop:YES];
     [mainTable setDelegate:self];
@@ -142,13 +142,13 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (section == 0) {
         UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.screenWidth, 38*sratio)];
-        [header setBackgroundColor:Colour_255RGB(29, 32, 39)];
+        [header setBackgroundColor:Colour_255RGB(180, 180, 180)];
         
         UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(10*sratio, 0, self.view.screenWidth-20*sratio, 38*sratio)];
         [textLabel setTextAlignment:NSTextAlignmentLeft];
-        [textLabel setBackgroundColor:Colour_255RGB(29, 32, 39)];
+        [textLabel setBackgroundColor:Colour_255RGB(180, 180, 180)];
         [textLabel setFont:[FontService systemFont:13*sratio]];
-        [textLabel setTextColor:Colour_255RGB(93, 98, 113)];
+        [textLabel setTextColor:Colour_White];
         [textLabel setText:LocString(@"About us")];
         [header addSubview:textLabel];
         
@@ -156,13 +156,13 @@
     }
     else {
         UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.screenWidth, 38*sratio)];
-        [header setBackgroundColor:Colour_255RGB(29, 32, 39)];
+        [header setBackgroundColor:Colour_255RGB(180, 180, 180)];
         
         UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(10*sratio, 0, self.view.screenWidth-20*sratio, 38*sratio)];
         [textLabel setTextAlignment:NSTextAlignmentLeft];
-        [textLabel setBackgroundColor:Colour_255RGB(29, 32, 39)];
+        [textLabel setBackgroundColor:Colour_255RGB(180, 180, 180)];
         [textLabel setFont:[FontService systemFont:13*sratio]];
-        [textLabel setTextColor:Colour_255RGB(93, 98, 113)];
+        [textLabel setTextColor:Colour_White];
         [textLabel setText:LocString(@"Account")];
         [header addSubview:textLabel];
         
@@ -183,8 +183,8 @@
     
     if(!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
-        [cell setBackgroundColor:Colour_255RGB(48, 51, 61)];
-        cell.textLabel.textColor = Colour_White;
+        [cell setBackgroundColor:Colour_White];
+        cell.textLabel.textColor = Colour_255RGB(82, 82, 82);
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
@@ -194,19 +194,19 @@
             case 0:
                 cell.textLabel.text = LocString(@"Privacy Policy");
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-                cell.textLabel.textColor = Colour_White;
+                cell.textLabel.textColor = Colour_255RGB(82, 82, 82);
                 break;
                 
             case 1:
                 cell.textLabel.text = LocString(@"Terms Of Service");
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-                cell.textLabel.textColor = Colour_White;
+                cell.textLabel.textColor = Colour_255RGB(82, 82, 82);
                 break;
                 
             case 2:
                 cell.textLabel.text = LocString(@"Learn more");
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-                cell.textLabel.textColor = Colour_White;
+                cell.textLabel.textColor = Colour_255RGB(82, 82, 82);
                 break;
                 
             default:

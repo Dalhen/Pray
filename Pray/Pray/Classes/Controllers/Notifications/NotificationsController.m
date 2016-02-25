@@ -22,7 +22,7 @@
 #pragma mark - Init
 - (void)loadView {
     self.view = [[UIView alloc] init];
-    [self.view setBackgroundColor:Colour_PrayDarkBlue];
+    [self.view setBackgroundColor:Colour_255RGB(232, 232, 232)];
     [self.navigationController setNavigationBarHidden:YES];
     
     [self setupHeader];
@@ -40,7 +40,7 @@
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(76*sratio, 20*sratio, 162*sratio, 26*sratio)];
     titleLabel.text = LocString(@"Notifications");
     titleLabel.font = [FontService systemFont:14*sratio];
-    titleLabel.textColor = Colour_White;
+    titleLabel.textColor = Colour_255RGB(82, 82, 82);
     titleLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:titleLabel];
 }
@@ -48,14 +48,14 @@
 - (void)setupTableView {
     
     noDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(20*sratio, 260*sratio, self.view.screenWidth - 40*sratio, 40*sratio)];
-    [noDataLabel setTextColor:Colour_255RGB(140, 146, 164)];
+    [noDataLabel setTextColor:Colour_255RGB(130, 130, 130)];
     [noDataLabel setFont:[FontService systemFont:14*sratio]];
     [noDataLabel setText:LocString(@"No notifications yet.")];
     [noDataLabel setTextAlignment:NSTextAlignmentCenter];
     [self.view addSubview:noDataLabel];
     
     mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 56*sratio, self.view.screenWidth, self.view.screenHeight - 56*sratio)];
-    [mainTable setBackgroundColor:Colour_PrayDarkBlue];
+    [mainTable setBackgroundColor:Colour_White];
     [mainTable setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [mainTable setScrollsToTop:YES];
     [mainTable setDelegate:self];
@@ -64,7 +64,7 @@
     
     refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refreshTriggered) forControlEvents:UIControlEventValueChanged];
-    [refreshControl setTintColor:Colour_White];
+    [refreshControl setTintColor:Colour_255RGB(82, 82, 82)];
     [mainTable addSubview:refreshControl];
 }
 

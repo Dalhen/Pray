@@ -18,7 +18,7 @@
 
 - (void)loadView {
     self.view = [[UIView alloc] init];
-    [self.view setBackgroundColor:Colour_PrayDarkBlue];
+    [self.view setBackgroundColor:Colour_White];
     [self.navigationController setNavigationBarHidden:YES];
 
     [self setupHeader];
@@ -33,7 +33,7 @@
 - (void)setupHeader {
     
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.screenWidth, 56*sratio)];
-    [headerView setBackgroundColor:Colour_PrayDarkBlue];
+    [headerView setBackgroundColor:Colour_255RGB(232, 232, 232)];
     [self.view addSubview:headerView];
     
     UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -45,13 +45,13 @@
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(78*sratio, 20*sratio, 162*sratio, 26*sratio)];
     titleLabel.text = LocString(@"Select a religion");
     titleLabel.font = [FontService systemFont:14*sratio];
-    titleLabel.textColor = Colour_White;
+    titleLabel.textColor = Colour_255RGB(82, 82, 82);
     titleLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:titleLabel];
 }
 
 - (void)setupLayout {
-    [self.view setBackgroundColor:Colour_255RGB(61, 66, 78)];
+    [self.view setBackgroundColor:Colour_White];
     
     NSArray *religionsImages = [[NSArray alloc] initWithObjects:
                                 LocString(@"chrisIcon.png"),
@@ -92,7 +92,7 @@
     for (NSInteger i = 0; i<4; i++) {
         for (NSInteger j = 0; j<4; j++) {
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-            button.backgroundColor = Colour_White;
+            button.backgroundColor = Colour_255RGB(127, 127, 127);
             [button.layer setCornerRadius:5.0f];
             [button setFrame:CGRectMake(8*sratio + 80*sratio*j, 92*sratio - (ISIPHONE4()? 20 : 0) + 102*sratio*i, 64*sratio, 64*sratio)];
             [button setImage:[UIImage imageNamed:[religionsImages objectAtIndex:4*i+j]] forState:UIControlStateNormal];
@@ -105,7 +105,7 @@
             label.text = [religionsTitles objectAtIndex:4*i+j];
             label.textAlignment = NSTextAlignmentCenter;
             label.font = [FontService systemFont:12*sratio];
-            label.textColor = Colour_White;
+            label.textColor = Colour_255RGB(89, 89, 89);
             [self.view addSubview:label];
         }
     }

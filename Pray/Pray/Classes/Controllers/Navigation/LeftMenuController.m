@@ -35,7 +35,7 @@
 
 - (void)loadView {
     self.view = [[BaseView alloc] init];
-    [self.view setBackgroundColor:Colour_PrayDarkBlue];
+    [self.view setBackgroundColor:Colour_255RGB(232, 232, 232)];
     selectedLine = 0;
     [self setupLayout];
 }
@@ -83,14 +83,14 @@
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Standard"];
             [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-            [cell setBackgroundColor:Colour_PrayDarkBlue];
+            [cell setBackgroundColor:Colour_255RGB(232, 232, 232)];
         }
         
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button setFrame:CGRectMake(24*sratio, 20*sratio, 170*sratio, 30*sratio)];
         [button setTitle:LocString(@"Share the app with friends") forState:UIControlStateNormal];
-        [button setBackgroundColor:Colour_WhiteAlpha(0.1)];
-        [button setTitleColor:Colour_White forState:UIControlStateNormal];
+        [button setBackgroundColor:Colour_BlackAlpha(0.2)];
+        [button setTitleColor:Colour_255RGB(82, 82, 82) forState:UIControlStateNormal];
         [button.titleLabel setFont:[FontService systemFont:12*sratio]];
         [button.layer setCornerRadius:10*sratio];
         [button addTarget:self action:@selector(showInviteSelector) forControlEvents:UIControlEventTouchUpInside];

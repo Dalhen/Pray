@@ -35,7 +35,7 @@
 
 - (void)loadView {
     self.view = [[UIView alloc] init];
-    [self.view setBackgroundColor:Colour_PrayDarkBlue];
+    [self.view setBackgroundColor:Colour_RGB(232, 232, 232)];
     [self.navigationController setNavigationBarHidden:YES];
     
     [self setupHeader];
@@ -57,7 +57,7 @@
     [feedSelector setFrame:CGRectMake((self.view.screenWidth - 200*sratio)/2, 16*sratio, 200*sratio, 38*sratio)];
     [feedSelector setImage:[UIImage imageNamed:@"arrowDown"] forState:UIControlStateNormal];
     [feedSelector setTitle:LocString(@"Discover") forState:UIControlStateNormal];
-    [feedSelector setTitleColor:Colour_White forState:UIControlStateNormal];
+    [feedSelector setTitleColor:Colour_255RGB(82, 82, 82) forState:UIControlStateNormal];
     [feedSelector.titleLabel setFont:[FontService systemFont:16*sratio]];
     [feedSelector setImageEdgeInsets:UIEdgeInsetsMake(4*sratio, 140*sratio, 0, 0)];
     [feedSelector setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 10*sratio)];
@@ -66,14 +66,14 @@
     
     UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [searchButton setFrame:CGRectMake(self.view.screenWidth - 60*sratio, 14*sratio, 40*sratio, 40*sratio)];
-    [searchButton setImage:[UIImage imageNamed:@"searchIcon"] forState:UIControlStateNormal];
+    [searchButton setImage:[UIImage imageNamed:@"searchIconGrey"] forState:UIControlStateNormal];
     [searchButton addTarget:self action:@selector(displaySearch) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:searchButton];
 }
 
 - (void)setupSwitchMenu {
     switchMenu = [[UIView alloc] initWithFrame:CGRectMake(0, 56*sratio, self.view.screenWidth, 0)];
-    [switchMenu setBackgroundColor:Colour_255RGB(46, 48, 56)];
+    [switchMenu setBackgroundColor:Colour_255RGB(212, 212, 212)];
     [switchMenu setClipsToBounds:YES];
     [self.view addSubview:switchMenu];
     
@@ -100,7 +100,7 @@
 
 - (void)setupTableView {
     mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 56*sratio, self.view.screenWidth, self.view.screenHeight - 56*sratio)];
-    [mainTable setBackgroundColor:Colour_PrayDarkBlue];
+    [mainTable setBackgroundColor:Colour_255RGB(232, 232, 232)];
     [mainTable setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [mainTable setScrollsToTop:YES];
     [mainTable setDelegate:self];
@@ -109,7 +109,7 @@
     
     refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refreshTriggered) forControlEvents:UIControlEventValueChanged];
-    [refreshControl setTintColor:Colour_White];
+    [refreshControl setTintColor:Colour_255RGB(82, 82, 82)];
     [mainTable addSubview:refreshControl];
 }
 

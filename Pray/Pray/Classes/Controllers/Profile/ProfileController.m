@@ -36,7 +36,7 @@
 
 - (void)loadView {
     self.view = [[UIView alloc] init];
-    [self.view setBackgroundColor:Colour_PrayDarkBlue];
+    [self.view setBackgroundColor:Colour_White];
     [self.navigationController setNavigationBarHidden:YES];
     
     [self setupHeader];
@@ -66,7 +66,7 @@
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(76*sratio, 28*sratio, 162*sratio, 26*sratio)];
     titleLabel.text = [NSString stringWithFormat:@"@%@", currentUser.username];
     titleLabel.font = [FontService systemFont:14*sratio];
-    titleLabel.textColor = Colour_White;
+    titleLabel.textColor = Colour_255RGB(82, 82, 82);
     titleLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:titleLabel];
 }
@@ -78,7 +78,7 @@
     userAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(0, 16*sratio, 48*sratio, 48*sratio)];
     [userAvatar setRoundedToDiameter:48*sratio];
     [userAvatar setContentMode:UIViewContentModeScaleAspectFill];
-    [userAvatar setBackgroundColor:Colour_White];
+    [userAvatar setBackgroundColor:Colour_255RGB(232, 232, 232)];
     [profileHeader addSubview:userAvatar];
     [userAvatar setImage:[UIImage imageNamed:@"emptyProfile"]];
     [userAvatar centerHorizontallyInSuperView];
@@ -86,14 +86,14 @@
     usernameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, userAvatar.bottom + 4*sratio, self.view.screenWidth, 26*sratio)];
     [usernameLabel setBackgroundColor:Colour_Clear];
     [usernameLabel setFont:[FontService systemFontBold:14*sratio]];
-    [usernameLabel setTextColor:Colour_White];
+    [usernameLabel setTextColor:Colour_255RGB(82, 82, 82)];
     [usernameLabel setTextAlignment:NSTextAlignmentCenter];
     [profileHeader addSubview:usernameLabel];
     [userAvatar centerHorizontallyInSuperView];
     
     userDescription = [[UILabel alloc] initWithFrame:CGRectMake(0, usernameLabel.bottom - 10*sratio, 290*sratio, 58*sratio)];
     [userDescription setFont:[FontService systemFont:12*sratio]];
-    [userDescription setTextColor:Colour_255RGB(140, 146, 164)];
+    [userDescription setTextColor:Colour_255RGB(130, 130, 130)];
     [userDescription setNumberOfLines:3];
     userDescription.textAlignment = NSTextAlignmentCenter;
     [profileHeader addSubview:userDescription];
@@ -109,7 +109,7 @@
     [profileHeader addSubview:userPrayers];
     
     UILabel *prayersTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, userPrayers.bottom, self.view.screenWidth/3, 16*sratio)];
-    [prayersTitle setTextColor:Colour_255RGB(125, 131, 144)];
+    [prayersTitle setTextColor:Colour_255RGB(130, 130, 130)];
     [prayersTitle setTextAlignment:NSTextAlignmentCenter];
     [prayersTitle setText:LocString(@"prayers")];
     [prayersTitle setFont:[FontService systemFont:12*sratio]];
@@ -124,7 +124,7 @@
     [profileHeader addSubview:userFollowers];
     
     UILabel *followersTitle = [[UILabel alloc] initWithFrame:CGRectMake(userFollowers.left, userFollowers.bottom, self.view.screenWidth/3, 16*sratio)];
-    [followersTitle setTextColor:Colour_255RGB(125, 131, 144)];
+    [followersTitle setTextColor:Colour_255RGB(130, 130, 130)];
     [followersTitle setTextAlignment:NSTextAlignmentCenter];
     [followersTitle setText:LocString(@"followers")];
     [followersTitle setFont:[FontService systemFont:12*sratio]];
@@ -144,7 +144,7 @@
     [profileHeader addSubview:userFollowing];
     
     UILabel *followingTitle = [[UILabel alloc] initWithFrame:CGRectMake(userFollowing.left, userPrayers.bottom, self.view.screenWidth/3, 16*sratio)];
-    [followingTitle setTextColor:Colour_255RGB(125, 141, 144)];
+    [followingTitle setTextColor:Colour_255RGB(130, 130, 130)];
     [followingTitle setTextAlignment:NSTextAlignmentCenter];
     [followingTitle setText:LocString(@"following")];
     [followingTitle setFont:[FontService systemFont:12*sratio]];
@@ -157,15 +157,15 @@
     
     //Separators
     UIView *horizSeparator = [[UIView alloc] initWithFrame:CGRectMake(0, 146*sratio, self.view.screenWidth, 1)];
-    [horizSeparator setBackgroundColor:Colour_255RGB(59, 63, 75)];
+    [horizSeparator setBackgroundColor:Colour_255RGB(232, 232, 232)];
     [profileHeader addSubview:horizSeparator];
     
     UIView *verticalSeparator1 = [[UIView alloc] initWithFrame:CGRectMake(self.view.screenWidth/3, 160*sratio, 1, 22*sratio)];
-    [verticalSeparator1 setBackgroundColor:Colour_255RGB(59, 63, 75)];
+    [verticalSeparator1 setBackgroundColor:Colour_255RGB(232, 232, 232)];
     [profileHeader addSubview:verticalSeparator1];
     
     UIView *verticalSeparator2 = [[UIView alloc] initWithFrame:CGRectMake(self.view.screenWidth*2/3, 160*sratio, 1, 22*sratio)];
-    [verticalSeparator2 setBackgroundColor:Colour_255RGB(59, 63, 75)];
+    [verticalSeparator2 setBackgroundColor:Colour_255RGB(232, 232, 232)];
     [profileHeader addSubview:verticalSeparator2];
     
     //Follow button
@@ -177,31 +177,30 @@
         if (currentUser.isFollowed.boolValue == false) {
             [followButton setTitle:LocString(@"Follow") forState:UIControlStateNormal];
             [followButton addTarget:self action:@selector(followUser) forControlEvents:UIControlEventTouchUpInside];
-            [followButton setBackgroundColor:Colour_PrayBlue];
+            [followButton setBackgroundColor:Colour_255RGB(82, 82, 82)];
             [followButton setTitleColor:Colour_White forState:UIControlStateNormal];
         }
         else {
             [followButton setTitle:LocString(@"Following") forState:UIControlStateNormal];
             [followButton addTarget:self action:@selector(unfollowUser) forControlEvents:UIControlEventTouchUpInside];
-            [followButton setBackgroundColor:Colour_255RGB(21, 24, 32)];
+            [followButton setBackgroundColor:Colour_255RGB(232, 232, 232)];
             [followButton setTitleColor:Colour_White forState:UIControlStateNormal];
         }
         [profileHeader addSubview:followButton];
     }
     
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightButton setBackgroundColor:Colour_Pink];
     [rightButton setFrame:CGRectMake(self.view.screenWidth - 12*sratio - 52*sratio, 22*sratio, 52*sratio, 30*sratio)];
     [rightButton setTitleColor:Colour_White forState:UIControlStateNormal];
     [rightButton.titleLabel setFont:[FontService systemFont:13*sratio]];
     [rightButton.layer setCornerRadius:5.0f];
     if ([currentUser.uniqueId isEqualToNumber:[UserService getUserIDNumber]]) {
-        [rightButton setBackgroundColor:Colour_255RGB(140, 146, 164)];
+        [rightButton setBackgroundColor:Colour_255RGB(82, 82, 82)];
         [rightButton setTitle:LocString(@"Edit") forState:UIControlStateNormal];
         [rightButton addTarget:self action:@selector(editProfile) forControlEvents:UIControlEventTouchUpInside];
     }
     else {
-        [rightButton setBackgroundColor:Colour_PrayBlue];
+        [rightButton setBackgroundColor:Colour_255RGB(82, 82, 82)];
         [rightButton setTitle:LocString(@"Pray") forState:UIControlStateNormal];
         [rightButton addTarget:self action:@selector(prayForUser) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -210,7 +209,7 @@
 
 - (void)setupTableView {
     mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 54*sratio, self.view.screenWidth, self.view.screenHeight - 54*sratio)];
-    [mainTable setBackgroundColor:Colour_PrayDarkBlue];
+    [mainTable setBackgroundColor:Colour_White];
     [mainTable setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [mainTable setScrollsToTop:YES];
     [mainTable setDelegate:self];
@@ -221,7 +220,7 @@
     
     refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refreshTriggered) forControlEvents:UIControlEventValueChanged];
-    [refreshControl setTintColor:Colour_White];
+    [refreshControl setTintColor:Colour_255RGB(82, 82, 82)];
     [mainTable addSubview:refreshControl];
 }
 

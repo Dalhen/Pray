@@ -218,6 +218,8 @@
 		96C475B81BB70C19000976C6 /* addImageButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C475B71BB70C19000976C6 /* addImageButton@2x.png */; };
 		96C475BB1BB7111C000976C6 /* ReligionSelectorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C475BA1BB7111C000976C6 /* ReligionSelectorController.m */; };
 		96C475BE1BB867B9000976C6 /* WebController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C475BD1BB867B9000976C6 /* WebController.m */; };
+		96CF058B1C7FAE3F0044AE26 /* searchIconGrey@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CF058A1C7FAE3F0044AE26 /* searchIconGrey@2x.png */; };
+		96CF058E1C7FB90E0044AE26 /* backButtonWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CF058D1C7FB90E0044AE26 /* backButtonWhite@2x.png */; };
 		96EB6CDB1B6BFAEC00ADA3AB /* backButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96EB6CDA1B6BFAEC00ADA3AB /* backButton@2x.png */; };
 		96EB6CDE1B6CCD6A00ADA3AB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 96EB6CDD1B6CCD6A00ADA3AB /* Localizable.strings */; };
 		96EB6CE01B6D053700ADA3AB /* avatarEmpty@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96EB6CDF1B6D053700ADA3AB /* avatarEmpty@2x.png */; };
@@ -653,6 +655,8 @@
 		96C475BA1BB7111C000976C6 /* ReligionSelectorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReligionSelectorController.m; sourceTree = "<group>"; };
 		96C475BC1BB867B9000976C6 /* WebController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebController.h; sourceTree = "<group>"; };
 		96C475BD1BB867B9000976C6 /* WebController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebController.m; sourceTree = "<group>"; };
+		96CF058A1C7FAE3F0044AE26 /* searchIconGrey@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "searchIconGrey@2x.png"; sourceTree = "<group>"; };
+		96CF058D1C7FB90E0044AE26 /* backButtonWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backButtonWhite@2x.png"; sourceTree = "<group>"; };
 		96EB6CDA1B6BFAEC00ADA3AB /* backButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backButton@2x.png"; sourceTree = "<group>"; };
 		96EB6CDD1B6CCD6A00ADA3AB /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		96EB6CDF1B6D053700ADA3AB /* avatarEmpty@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avatarEmpty@2x.png"; sourceTree = "<group>"; };
@@ -1501,6 +1505,7 @@
 		96ACF7681B8156BA007BAE4A /* Feed */ = {
 			isa = PBXGroup;
 			children = (
+				96CF058A1C7FAE3F0044AE26 /* searchIconGrey@2x.png */,
 				960FC3D11BC17FEE009E28E7 /* shareIcon@2x.png */,
 				96A394B31B87F2F500B3040E /* likeIconON@2x.png */,
 				96A394B41B87F2F500B3040E /* likeIconOFF@2x.png */,
@@ -1564,6 +1569,7 @@
 		96ACF76D1B8156E1007BAE4A /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				96CF058D1C7FB90E0044AE26 /* backButtonWhite@2x.png */,
 				967F17471B8767B90047607E /* backButton@2x.png */,
 				967F17431B8748120047607E /* menuIcon@2x.png */,
 				96ACF7931B815C2D007BAE4A /* smallArrow@2x.png */,
@@ -1728,6 +1734,7 @@
 			files = (
 				9634F33C1B696EAF002EFD2B /* facebookButton@2x.png in Resources */,
 				FC6612111BBBDB760048033E /* messiaIcon@2x.png in Resources */,
+				96CF058B1C7FAE3F0044AE26 /* searchIconGrey@2x.png in Resources */,
 				96ACF7771B8156E1007BAE4A /* feedON@2x.png in Resources */,
 				9607F9AE1C1DF14D00B9686E /* selectReligionButtonDark@2x.png in Resources */,
 				96ACF7791B8156E1007BAE4A /* notificationsON@2x.png in Resources */,
@@ -1756,6 +1763,7 @@
 				96EB6CE01B6D053700ADA3AB /* avatarEmpty@2x.png in Resources */,
 				96ACF7781B8156E1007BAE4A /* notificationsOFF@2x.png in Resources */,
 				FC6612121BBBDB760048033E /* seichoIcon@2x.png in Resources */,
+				96CF058E1C7FB90E0044AE26 /* backButtonWhite@2x.png in Resources */,
 				96ACF77D1B8156E1007BAE4A /* settingsON@2x.png in Resources */,
 				FC66120F1BBBDB760048033E /* jainismIcon@2x.png in Resources */,
 				96ACF77B1B8156E1007BAE4A /* profileON@2x.png in Resources */,

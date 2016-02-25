@@ -30,7 +30,7 @@
 
 - (void)loadView {
     self.view = [[UIView alloc] init];
-    [self.view setBackgroundColor:Colour_PrayDarkBlue];
+    [self.view setBackgroundColor:Colour_RGB(232, 232, 232)];
     [self.navigationController setNavigationBarHidden:YES];
     
     [self setupHeader];
@@ -40,7 +40,7 @@
 
 - (void)setupHeader {
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.screenWidth, 56*sratio)];
-    [headerView setBackgroundColor:Colour_PrayDarkBlue];
+    [headerView setBackgroundColor:Colour_White];
     [self.view addSubview:headerView];
     
     UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -51,7 +51,7 @@
     
     segmentControl = [[UISegmentedControl alloc] initWithItems:@[@"People", @"Prayers"]];
     [segmentControl setFrame:CGRectMake((self.view.screenWidth - 200*sratio)/2, 24*sratio, 200*sratio, 26*sratio)];
-    [segmentControl setTintColor:Colour_White];//Colour_255RGB(157, 160, 171)];
+    [segmentControl setTintColor:Colour_255RGB(82, 82, 82)];//Colour_255RGB(157, 160, 171)];
     //[segmentControl setBackgroundColor:Colour_255RGB(157, 160, 171)];
     [segmentControl addTarget:self action:@selector(selectorChanged:) forControlEvents:UIControlEventValueChanged];
     [segmentControl setSelectedSegmentIndex:0];
@@ -68,13 +68,13 @@
     
     
     UIView *searchBar = [[UIView alloc] initWithFrame:CGRectMake(0, 56*sratio, self.view.screenWidth, 50*sratio)];
-    [searchBar setBackgroundColor:Colour_255RGB(157, 160, 171)];
+    [searchBar setBackgroundColor:Colour_255RGB(212, 212, 212)];
     [self.view addSubview:searchBar];
     
     search = [[UITextField alloc] initWithFrame:CGRectMake(20*sratio, 56*sratio, self.view.screenWidth - 40*sratio, 50*sratio)];
-    [search setBackgroundColor:Colour_255RGB(157, 160, 171)];
+    [search setBackgroundColor:Colour_255RGB(212, 212, 212)];
     [search setPlaceholder:LocString(@"Search...")];
-    [search setTextColor:Colour_White];
+    [search setTextColor:Colour_255RGB(82, 82, 82)];
     search.returnKeyType = UIReturnKeySearch;
     [search setDelegate:self];
     [self.view addSubview:search];
@@ -84,7 +84,7 @@
 
 - (void)setupTableView {
     mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, search.bottom, self.view.screenWidth, self.view.screenHeight - search.bottom)];
-    [mainTable setBackgroundColor:Colour_PrayDarkBlue];
+    [mainTable setBackgroundColor:Colour_White];
     [mainTable setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [mainTable setScrollsToTop:YES];
     [mainTable setDelegate:self];
@@ -203,6 +203,12 @@
     
     if ([string isEqualToString:@"\n"]) {
         [textField resignFirstResponder];
+        
+        if (textField.text.length>2) {
+            [self updateSearch];
+        }
+        
+        return NO;
     }
     
     return YES;

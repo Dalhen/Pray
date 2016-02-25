@@ -55,7 +55,7 @@
 
 - (void)setupHeader {
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.screenWidth, 56*sratio)];
-    [headerView setBackgroundColor:Colour_PrayDarkBlue];
+    [headerView setBackgroundColor:Colour_255RGB(232, 232, 232)];
     [self.view addSubview:headerView];
     
     UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -67,7 +67,7 @@
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(76*sratio, 20*sratio, 162*sratio, 26*sratio)];
     titleLabel.text = (displayCommentsOnly? LocString(@"Comments") : LocString(@"Prayer"));
     titleLabel.font = [FontService systemFont:14*sratio];
-    titleLabel.textColor = Colour_White;
+    titleLabel.textColor = Colour_255RGB(82, 82, 82);
     titleLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:titleLabel];
 }

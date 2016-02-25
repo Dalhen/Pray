@@ -31,7 +31,7 @@
 
 - (void)loadView {
     self.view = [[UIView alloc] init];
-    [self.view setBackgroundColor:Colour_PrayDarkBlue];
+    [self.view setBackgroundColor:Colour_White];
     [self.navigationController setNavigationBarHidden:YES];
     
     [self setupHeader];
@@ -64,7 +64,7 @@
 
 - (void)setupHeader {
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.screenWidth, 56*sratio)];
-    [headerView setBackgroundColor:Colour_PrayDarkBlue];
+    [headerView setBackgroundColor:Colour_255RGB(232, 232, 232)];
     [self.view addSubview:headerView];
     
     UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -76,14 +76,14 @@
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(76*sratio, 20*sratio, 162*sratio, 26*sratio)];
     titleLabel.text = headerTitle;
     titleLabel.font = [FontService systemFont:14*sratio];
-    titleLabel.textColor = Colour_White;
+    titleLabel.textColor = Colour_255RGB(82, 82, 82);
     titleLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:titleLabel];
 }
 
 - (void)setupTableView {
     mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 56*sratio, self.view.screenWidth, self.view.screenHeight - 56*sratio)];
-    [mainTable setBackgroundColor:Colour_PrayDarkBlue];
+    [mainTable setBackgroundColor:Colour_White];
     [mainTable setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [mainTable setScrollsToTop:YES];
     [mainTable setDelegate:self];

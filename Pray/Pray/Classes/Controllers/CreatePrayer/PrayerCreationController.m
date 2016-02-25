@@ -44,7 +44,7 @@
 
 - (void)loadView {
     self.view = [[UIView alloc] init];
-    [self.view setBackgroundColor:Colour_PrayDarkBlue];
+    [self.view setBackgroundColor:Colour_RGB(232, 232, 232)];
     [self.navigationController setNavigationBarHidden:YES];
     
     [self setupHeader];
@@ -118,7 +118,7 @@
 - (void)setupHeader {
     
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.screenWidth, 56*sratio)];
-    [headerView setBackgroundColor:Colour_PrayDarkBlue];
+    [headerView setBackgroundColor:Colour_255RGB(232, 232, 232)];
     [self.view addSubview:headerView];
     
     UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -130,17 +130,17 @@
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(78*sratio, 20*sratio, 162*sratio, 26*sratio)];
     titleLabel.text = LocString(@"Post a prayer");
     titleLabel.font = [FontService systemFont:14*sratio];
-    titleLabel.textColor = Colour_White;
+    titleLabel.textColor = Colour_255RGB(82, 82, 82);
     titleLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:titleLabel];
     
     UIButton *postButton = [UIButton buttonWithType:UIButtonTypeCustom];
     postButton.frame = CGRectMake(self.view.screenWidth - 86*sratio, 20*sratio, 74*sratio, 30*sratio);
     [postButton setTitle:LocString(@"Post") forState:UIControlStateNormal];
-    [postButton setTitleColor:Colour_White forState:UIControlStateNormal];
+    [postButton setTitleColor:Colour_255RGB(82, 82, 82) forState:UIControlStateNormal];
     [postButton.titleLabel setFont:[FontService systemFont:13*sratio]];
     [postButton.layer setCornerRadius:5.0f];
-    postButton.backgroundColor = Colour_PrayBlue;
+    postButton.backgroundColor = Colour_255RGB(212, 212, 212);
     [postButton addTarget:self action:@selector(postPrayer) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:postButton];
 }

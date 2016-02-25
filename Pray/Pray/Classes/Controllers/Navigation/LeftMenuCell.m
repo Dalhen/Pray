@@ -23,7 +23,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
-        [self.contentView setBackgroundColor:Colour_PrayDarkBlue];
+        [self.contentView setBackgroundColor:Colour_255RGB(232, 232, 232)];
         [self setSelectionStyle:UITableViewCellSelectionStyleNone];
         
         iconView = [[UIImageView alloc] initWithFrame:CGRectMake(32*sratio, 23*sratio, 24*sratio, 24*sratio)];
@@ -33,7 +33,7 @@
         title = [[UILabel alloc] initWithFrame:CGRectMake(iconView.right + 8*sratio, 23*sratio, 160*sratio, 24*sratio)];
         [title setBackgroundColor:Colour_Clear];
         [title setFont:[FontService systemFont:12*sratio]];
-        [title setTextColor:Colour_White];
+        [title setTextColor:Colour_255RGB(82, 82, 82)];
         [self.contentView addSubview:title];
         
         UIImageView *accessoryArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"smallArrow.png"]];
@@ -41,7 +41,7 @@
         [self.contentView addSubview:accessoryArrow];
         
         UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(36*sratio, 69*sratio, self.screenWidth - 36*sratio, 1)];
-        [separator setBackgroundColor:Colour_255RGB(83, 84, 90)];
+        [separator setBackgroundColor:Colour_255RGB(82, 82, 82)];
         [self.contentView addSubview:separator];
     }
     
@@ -55,7 +55,7 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-    [title setTextColor:selected ? Colour_PrayBlue : Colour_White];
+    [title setTextColor:selected ? Colour_PrayBlue : Colour_255RGB(82, 82, 82)];
     [iconView setImage:[UIImage imageNamed:selected ? iconON : iconOFF]];
 }
 

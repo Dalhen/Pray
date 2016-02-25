@@ -83,7 +83,7 @@
 - (void)setupHeader {
     UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [backButton setFrame:CGRectMake(0, 28*sratio, 48*sratio, 14*sratio)];
-    [backButton setImage:[UIImage imageNamed:@"backButton"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"backButtonWhite"] forState:UIControlStateNormal];
     [backButton addTarget:self.navigationController action:@selector(popViewControllerAnimated:)
          forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:backButton];

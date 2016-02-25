@@ -28,7 +28,7 @@
 }
 
 - (void)setupLayout {
-    self.backgroundColor = Colour_255RGB(59, 63, 75);
+    self.backgroundColor = Colour_White;
     
     userAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(12*sratio, 14*sratio, 38*sratio, 38*sratio)];
     [userAvatar setRoundedToDiameter:38*sratio];
@@ -37,20 +37,20 @@
     
     textLabel = [[UILabel alloc] initWithFrame:CGRectMake(userAvatar.right + 8*sratio, 0, 210*sratio, 66*sratio)];
     textLabel.font = [FontService systemFont:13*sratio];
-    textLabel.textColor = Colour_White;
+    textLabel.textColor = Colour_255RGB(82, 82, 82);
     [textLabel setNumberOfLines:3];
     textLabel.textAlignment = NSTextAlignmentLeft;
     [self.contentView addSubview:textLabel];
     
     timeAgo = [[UILabel alloc] initWithFrame:CGRectMake(self.screenWidth - 44*sratio, 0, 42*sratio, 66*sratio)];
     timeAgo.font = [FontService systemFont:8*sratio];
-    timeAgo.textColor = Colour_White;
+    timeAgo.textColor = Colour_255RGB(82, 82, 82);
     timeAgo.textAlignment = NSTextAlignmentCenter;
     timeAgo.numberOfLines = 2;
     [self.contentView addSubview:timeAgo];
     
     UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, 65*sratio, self.screenWidth, 1)];
-    [separator setBackgroundColor:Colour_255RGB(38, 41, 50)];
+    [separator setBackgroundColor:Colour_255RGB(232, 232, 232)];
     [self.contentView addSubview:separator];
 }
 
