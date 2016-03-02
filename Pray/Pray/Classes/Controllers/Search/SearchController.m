@@ -432,7 +432,7 @@
 }
 
 - (void)reportPostFailed {
-    
+    [SVProgressHUD dismiss];
 }
 
 
