@@ -324,7 +324,7 @@
     [ghostField setFont:[FontService systemFont:13*sratio]];
     [ghostField setText:text];
     
-    return (ghostField.contentSize.height < commentTextMinimumHeight) ? commentTextMinimumHeight : ghostField.contentSize.height;
+    return (ghostField.contentSize.height < commentTextMinimumHeight) ? commentTextMinimumHeight : ghostField.contentSize.height*1.1;
 }
 
 

@@ -346,6 +346,8 @@
         [commentsIcon setHidden:YES];
         [commentsCount setHidden:YES];
         [sharePrayerButton setHidden:YES];
+        [timeAgo setHidden:YES];
+        [religionType setHidden:YES];
         
         [delegate sharePrayerImage:[self imageFromUIView:self.contentView]];
         
@@ -354,6 +356,8 @@
         [commentsIcon setHidden:NO];
         [commentsCount setHidden:NO];
         [sharePrayerButton setHidden:NO];
+        [timeAgo setHidden:NO];
+        [religionType setHidden:NO];
     }
 }
 

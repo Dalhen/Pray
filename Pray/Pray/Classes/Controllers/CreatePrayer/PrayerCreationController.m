@@ -171,9 +171,9 @@
     
     addImageButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [addImageButton setFrame:CGRectMake((self.view.screenWidth - 184*sratio)/2, 234*sratio - (ISIPHONE4()? 60 : 0), 184*sratio, 38*sratio)];
-    [addImageButton setBackgroundImage:[UIImage imageNamed:@"addImageButtonDark"] forState:UIControlStateNormal];
+    [addImageButton setBackgroundImage:[UIImage imageNamed:@"addImageButton"] forState:UIControlStateNormal];
     [addImageButton setTitle:LocString(@"Add a background image") forState:UIControlStateNormal];
-    [addImageButton setTitleColor:Colour_255RGB(61, 66, 78) forState:UIControlStateNormal];
+    [addImageButton setTitleColor:Colour_White forState:UIControlStateNormal]; //Colour_255RGB(61, 66, 78)
     [addImageButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
     addImageButton.titleLabel.font = [FontService systemFont:13*sratio];
     [addImageButton addTarget:self action:@selector(takePhoto) forControlEvents:UIControlEventTouchUpInside];
@@ -181,9 +181,9 @@
     
     selectReligionButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [selectReligionButton setFrame:CGRectMake((self.view.screenWidth - 98*sratio)/2, addImageButton.bottom + 16*sratio - (ISIPHONE4()? 8 : 0), 98*sratio, 38*sratio - (ISIPHONE4()? 4 : 0))];
-    [selectReligionButton setBackgroundImage:[UIImage imageNamed:@"selectReligionButtonDark"] forState:UIControlStateNormal];
+    [selectReligionButton setBackgroundImage:[UIImage imageNamed:@"selectReligionButton"] forState:UIControlStateNormal];
     [selectReligionButton setTitle:LocString(@"Select religion") forState:UIControlStateNormal];
-    [selectReligionButton setTitleColor:Colour_255RGB(61, 66, 78) forState:UIControlStateNormal];
+    [selectReligionButton setTitleColor:Colour_White forState:UIControlStateNormal]; //Colour_255RGB(61, 66, 78)
     [selectReligionButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
     selectReligionButton.titleLabel.font = [FontService systemFont:13*sratio];
     [selectReligionButton addTarget:self action:@selector(displayReligionSelector) forControlEvents:UIControlEventTouchUpInside];
@@ -405,7 +405,7 @@
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     [self dismissViewControllerAnimated:YES completion:^{
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
         
         [prayerText becomeFirstResponder];
     }];
@@ -424,7 +424,7 @@
     selectedImage = img;
     
     [self dismissViewControllerAnimated:YES completion:^{
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
         
         [UIView animateWithDuration:0.3 animations:^{
             imageMask.alpha = 1.0;

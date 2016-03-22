@@ -51,7 +51,7 @@
     self.navigationController.navigationBar.shadowImage = [UIImage new];
     [self.navigationController.navigationBar setTranslucent:YES];
     navTitle.textColor = [UIColor whiteColor];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
 }
 
 - (void)setupPlainNavBar {
