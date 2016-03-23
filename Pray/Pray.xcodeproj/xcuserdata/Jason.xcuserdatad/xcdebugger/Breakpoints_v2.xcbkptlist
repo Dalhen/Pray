@@ -62,12 +62,12 @@
                   moduleName = "Pray"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Jason/Documents/Pray/Pray/Pray/Singletons/JXNetworkService.m"
-                  timestampString = "480300633.633912"
+                  timestampString = "480301159.512705"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "377"
                   endingLineNumber = "377"
-                  offsetFromSymbolStart = "289">
+                  offsetFromSymbolStart = "292">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -77,12 +77,12 @@
                   moduleName = "Pray"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Jason/Documents/Pray/Pray/Pray/Singletons/JXNetworkService.m"
-                  timestampString = "480300633.634258"
+                  timestampString = "480301159.512924"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "377"
                   endingLineNumber = "377"
-                  offsetFromSymbolStart = "83">
+                  offsetFromSymbolStart = "64">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -126,12 +126,12 @@
                   moduleName = "Pray"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Jason/Documents/Pray/Pray/Pray/Classes/Controllers/Comments/CommentsController.m"
-                  timestampString = "480300633.638189"
+                  timestampString = "480301159.51505"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "259"
                   endingLineNumber = "259"
-                  offsetFromSymbolStart = "1484">
+                  offsetFromSymbolStart = "1417">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -141,12 +141,12 @@
                   moduleName = "Pray"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Jason/Documents/Pray/Pray/Pray/Classes/Controllers/Comments/CommentsController.m"
-                  timestampString = "480300633.638481"
+                  timestampString = "480301159.515237"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "259"
                   endingLineNumber = "259"
-                  offsetFromSymbolStart = "1523">
+                  offsetFromSymbolStart = "1429">
                </Location>
             </Locations>
          </BreakpointContent>
