@@ -73,7 +73,7 @@
     [backButton addTarget:self action:@selector(goBack) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:backButton];
     
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(76*sratio, 20*sratio, 162*sratio, 26*sratio)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(56*sratio, 20*sratio, 202*sratio, 26*sratio)];
     titleLabel.text = headerTitle;
     titleLabel.font = [FontService systemFont:14*sratio];
     titleLabel.textColor = Colour_255RGB(82, 82, 82);

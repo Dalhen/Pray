@@ -177,7 +177,17 @@
     }
     
     //Prayer Text
-    [textView setAttributedText:[self decorateTagsAndMentions:prayer.prayerText]];
+    if ([prayer.tagged count]>0) {
+        [textView setAttributedText:[self decorateTagsAndMentions:prayer.prayerText]];
+    }
+    else {
+        NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:prayer.prayerText];
+        
+        [attString addAttribute:NSForegroundColorAttributeName value:Colour_White range:NSMakeRange(0, [prayer.prayerText length])];
+        [attString addAttribute:NSFontAttributeName value:[self findFontSizeToFillContentsWithText:prayer.prayerText] range:NSMakeRange(0, [prayer.prayerText length])];
+        [textView setAttributedText:attString];
+    }
+    
     [textView setLineBreakMode:NSLineBreakByTruncatingTail];
     
     //Likes & Comments
@@ -348,6 +358,8 @@
         [sharePrayerButton setHidden:YES];
         [timeAgo setHidden:YES];
         [religionType setHidden:YES];
+        [userAvatar setHidden:YES];
+        [username setHidden:YES];
         
         [delegate sharePrayerImage:[self imageFromUIView:self.contentView]];
         
@@ -358,6 +370,8 @@
         [sharePrayerButton setHidden:NO];
         [timeAgo setHidden:NO];
         [religionType setHidden:NO];
+        [userAvatar setHidden:NO];
+        [username setHidden:NO ];
     }
 }
 

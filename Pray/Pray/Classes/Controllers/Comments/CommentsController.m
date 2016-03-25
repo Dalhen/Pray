@@ -927,7 +927,7 @@
 
 - (void)getPrayerLikesSuccess:(NSNotification *)notification {
     [SVProgressHUD dismiss];
-    UsersListController *usersListController = [[UsersListController alloc] initWithTitle:LocString(@"Likes")
+    UsersListController *usersListController = [[UsersListController alloc] initWithTitle:LocString(@"People who prayed for this")
                                                                              andUsersList:notification.object];
     [self.navigationController pushViewController:usersListController animated:YES];
 }

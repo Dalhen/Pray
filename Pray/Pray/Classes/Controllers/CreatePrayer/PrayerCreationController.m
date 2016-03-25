@@ -161,7 +161,7 @@
     
     prayerText = [[UITextView alloc] initWithFrame:CGRectMake((self.view.screenWidth - 285*sratio)/2, 64*sratio - (ISIPHONE4()? 6 : 0), 285*sratio, 140*sratio)];
     [prayerText setBackgroundColor:Colour_Clear];
-    [prayerText setTextColor:Colour_255RGB(61, 66, 78)];//Colour_White];
+    [prayerText setTextColor:Colour_White];//Colour_255RGB(61, 66, 78)];//Colour_White];
     [prayerText setFont:[FontService systemFont:14*sratio]];
     //[prayerText setText:LocString(@"Type your prayer here")];
     [prayerText setTextAlignment:NSTextAlignmentCenter];
