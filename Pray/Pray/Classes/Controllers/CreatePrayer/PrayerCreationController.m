@@ -456,10 +456,9 @@
 
 #pragma mark - UITextView delegates
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-//    if ([text isEqualToString:@"\n"]) {
-//        [prayerText resignFirstResponder];
-//        return NO;
-//    }
+    if ([text isEqualToString:@"\n"]) {
+        return NO;
+    }
     
     addedSpaceCharacter = ([text isEqualToString:@" "])? YES : NO;
     addedArobaseCharacter = ([text isEqualToString:@"@"])? YES : NO;

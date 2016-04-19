@@ -73,7 +73,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return 6;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -87,13 +87,34 @@
         }
         
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button setFrame:CGRectMake(24*sratio, 20*sratio, 170*sratio, 30*sratio)];
+        [button setFrame:CGRectMake(24*sratio, 30*sratio, 170*sratio, 30*sratio)];
         [button setTitle:LocString(@"Share the app with friends") forState:UIControlStateNormal];
         [button setBackgroundColor:Colour_BlackAlpha(0.2)];
         [button setTitleColor:Colour_255RGB(82, 82, 82) forState:UIControlStateNormal];
         [button.titleLabel setFont:[FontService systemFont:12*sratio]];
         [button.layer setCornerRadius:10*sratio];
         [button addTarget:self action:@selector(showInviteSelector) forControlEvents:UIControlEventTouchUpInside];
+        [cell.contentView addSubview:button];
+        
+        return cell;
+    }
+    
+    else if (indexPath.row == 5) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Standard"];
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Standard"];
+            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            [cell setBackgroundColor:Colour_255RGB(232, 232, 232)];
+        }
+        
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        [button setFrame:CGRectMake(24*sratio, 20*sratio, 170*sratio, 30*sratio)];
+        [button setTitle:LocString(@"Send a feedback") forState:UIControlStateNormal];
+        [button setBackgroundColor:Colour_BlackAlpha(0.2)];
+        [button setTitleColor:Colour_255RGB(82, 82, 82) forState:UIControlStateNormal];
+        [button.titleLabel setFont:[FontService systemFont:12*sratio]];
+        [button.layer setCornerRadius:10*sratio];
+        [button addTarget:self action:@selector(sendFeedbackSelector) forControlEvents:UIControlEventTouchUpInside];
         [cell.contentView addSubview:button];
         
         return cell;
@@ -171,11 +192,34 @@
             break;
     }
     
-    if (indexPath.row != 4) {
+    if (indexPath.row != 4 & indexPath.row != 5) {
         [AppDelegate updateFrontViewControllerWithController:controller andFocus:YES];
     }
-    else {
+    else if (indexPath.row == 4) {
         [self showInviteSelector];
+    }
+    else {
+        [self sendFeedbackSelector];
+    }
+}
+
+
+#pragma mark - Send Feedback
+- (void)sendFeedbackSelector {
+    if ([MFMailComposeViewController canSendMail]) {
+        
+        MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
+        picker.mailComposeDelegate = self;
+        
+        [picker setSubject:@"Feedback"];
+        [picker setToRecipients:@[@"feedback@getpray.com"]];
+        NSString *emailBody = @"Hi, I wanted to send you my feedback:";
+        [picker setMessageBody:emailBody isHTML:YES];
+        
+        [self presentViewController:picker animated:YES completion:nil];
+    }
+    else {
+        [SVProgressHUD showErrorWithStatus:LocString(@"Please set an email on this phone before proceeding.")];
     }
 }
 

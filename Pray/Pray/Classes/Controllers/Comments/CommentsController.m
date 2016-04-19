@@ -348,6 +348,11 @@
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    
+    if ([text isEqualToString:@"\n"]) {
+        return NO;
+    }
+    
     addedSpaceCharacter = ([text isEqualToString:@" "])? YES : NO;
     addedArobaseCharacter = ([text isEqualToString:@"@"])? YES : NO;
     removedSpaceCharacter = ([[textView.text substringWithRange:range] isEqualToString:@" "])? YES : NO;
