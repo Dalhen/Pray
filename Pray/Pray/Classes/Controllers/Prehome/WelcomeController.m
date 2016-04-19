@@ -34,7 +34,7 @@
     [self.view addSubview:backImage];
     
     logoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"prayLogo"]];
-    [logoImage setFrame:CGRectMake(0, 52*sratio, 84*sratio, 88*sratio)];
+    [logoImage setFrame:CGRectMake(0, 110*sratio, 84*sratio, 88*sratio)];
     [logoImage setContentMode:UIViewContentModeCenter];
     logoImage.alpha = 0;
     [self.view addSubview:logoImage];
@@ -44,7 +44,7 @@
     [titleLabel setFont:[FontService systemFont:15*sratio]];
     [titleLabel setTextColor:Colour_White];
     [titleLabel setTextAlignment:NSTextAlignmentCenter];
-    [titleLabel setText:LocString(@"Share your prayers with\nyour community.")];
+    [titleLabel setText:LocString(@"Different Beliefs\nCommon Prayers")];
     [titleLabel setNumberOfLines:2];
     logoImage.alpha = 0;
     [self.view addSubview:titleLabel];
