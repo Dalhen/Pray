@@ -12,7 +12,7 @@
 #import "SearchController.h"
 #import "ProfileController.h"
 #import "UsersListController.h"
-
+#import "SDWebImagePrefetcher.h"
 
 @interface FeedController ()
 
@@ -250,8 +250,20 @@
         prayers = [[NSMutableArray alloc] initWithArray:notification.object];
         if ([refreshControl isRefreshing]) [refreshControl endRefreshing];
         [mainTable reloadData];
+        
+        NSMutableArray *preFetchURLs = [[NSMutableArray alloc] initWithCapacity:[prayers count]];
+        for (CDPrayer *prayer in notification.object) {
+            if ([prayer.imageURL length]>0)[preFetchURLs addObject:prayer.imageURL];
+        }
+        [[SDWebImagePrefetcher sharedImagePrefetcher] prefetchURLs:preFetchURLs];
     }
     else {
+        NSMutableArray *preFetchURLs = [[NSMutableArray alloc] initWithCapacity:[prayers count]];
+        for (CDPrayer *prayer in notification.object) {
+            if ([prayer.imageURL length]>0)[preFetchURLs addObject:prayer.imageURL];
+        }
+        [[SDWebImagePrefetcher sharedImagePrefetcher] prefetchURLs:preFetchURLs];
+        
         [prayers addObjectsFromArray:notification.object];
         if ([refreshControl isRefreshing]) [refreshControl endRefreshing];
         [mainTable reloadData];
