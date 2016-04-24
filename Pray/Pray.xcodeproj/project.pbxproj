@@ -2128,7 +2128,7 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.religion.pray;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "5fe30e0b-1621-4893-95f3-613e641564d1";
+				PROVISIONING_PROFILE = "de5ded64-d430-4030-baf9-e462098dd999";
 			};
 			name = Release;
 		};
