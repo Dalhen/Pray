@@ -141,7 +141,7 @@
                 break;
                 
             case 2:
-                [cell.title setText:LocString(@"Notitications")];
+                [cell.title setText:LocString(@"Notifications")];
                 [cell setIconsSetWithOffImage:@"notificationsOFF" andOnImage:@"notificationsON"];
                 [cell.accessoryButton setHidden:YES];
                 break;
@@ -247,7 +247,7 @@
 
 - (void)inviteWithText {
     
-    NSString *body = @"Join and pray with me on PRAY! Download the app here:";
+    NSString *body = @"Join and pray with me on PRAY! Download the app here: https://itunes.apple.com/us/app/pray-for-iphone/id860868081?mt=8";
     
     MFMessageComposeViewController *messageComposer = [[MFMessageComposeViewController alloc] init];
     [messageComposer setRecipients:@[]];
@@ -264,7 +264,7 @@
         picker.mailComposeDelegate = self;
         
         [picker setSubject:@"Join me on PRAY App"];
-        NSString *emailBody = @"Hi, I wanted to share PRAY with you. It's an app to share prayers all together. Here is the link to download it:";
+        NSString *emailBody = [NSString stringWithFormat:@"%@\n%@", @"Hi, I wanted to share PRAY with you. It's an app to share prayers all together. Here is the link to download it:", @"https://itunes.apple.com/us/app/pray-for-iphone/id860868081?mt=8"];
         [picker setMessageBody:emailBody isHTML:YES];
         
         [self presentViewController:picker animated:YES completion:nil];

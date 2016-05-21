@@ -85,7 +85,11 @@
         [iconImageView setImage:[UIImage imageNamed:@"emptyProfile"]];
     }
     
-    [usernameLabel setText:[[DataAccess getUserForID:aComment.creatorId] firstname]];
+    CDUser *user = [DataAccess getUserForID:aComment.creatorId];
+    NSString *firstname = [user firstname]? [user firstname] : @"";
+    NSString *lastname = [user lastname]? [user lastname] : @"";
+    
+    [usernameLabel setText:[NSString stringWithFormat:@"%@ %@", firstname, lastname]];
     [usernameLabel sizeToFit];
     
     [timeAgoLabel setText:aComment.timeAgo];

@@ -272,6 +272,9 @@
     Notification_Observe(JXNotification.FeedServices.LikePostFailed, likePostFailed);
     Notification_Observe(JXNotification.FeedServices.UnLikePostSuccess, unlikePostSuccess);
     Notification_Observe(JXNotification.FeedServices.UnLikePostFailed, unlikePostFailed);
+    
+    Notification_Observe(JXNotification.FeedServices.GetPrayerLikesListSuccess, getPrayerLikesSuccess:);
+    Notification_Observe(JXNotification.FeedServices.GetPrayerLikesListFailed, getPrayerLikesFailed);
 }
 
 - (void)unRegisterForEvents {
@@ -293,6 +296,9 @@
     Notification_Remove(JXNotification.FeedServices.LikePostFailed);
     Notification_Remove(JXNotification.FeedServices.UnLikePostSuccess);
     Notification_Remove(JXNotification.FeedServices.UnLikePostFailed);
+    
+    Notification_Remove(JXNotification.FeedServices.GetPrayerLikesListSuccess);
+    Notification_Remove(JXNotification.FeedServices.GetPrayerLikesListFailed);
     Notification_RemoveObserver;
 }
 
@@ -667,6 +673,22 @@
 - (void)showUserForUserObject:(CDUser *)user {
     ProfileController *profileController = [[ProfileController alloc] initWithUser:user];
     [self.navigationController pushViewController:profileController animated:YES];
+}
+
+- (void)showLikesListForCell:(PrayerCell *)cell {
+    [SVProgressHUD showWithStatus:LocString(@"Loading likes...")];
+    [NetworkService getPrayerLikesListForID:[cell.prayer.uniqueId stringValue]];
+}
+
+- (void)getPrayerLikesSuccess:(NSNotification *)notification {
+    [SVProgressHUD dismiss];
+    UsersListController *usersListController = [[UsersListController alloc] initWithTitle:LocString(@"People who prayed for this")
+                                                                             andUsersList:notification.object];
+    [self.navigationController pushViewController:usersListController animated:YES];
+}
+
+- (void)getPrayerLikesFailed {
+    [SVProgressHUD showSuccessWithStatus:LocString(@"We couldn't get the list of likes. Please check your internet connection and try again.")];
 }
 
 

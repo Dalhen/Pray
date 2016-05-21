@@ -195,7 +195,9 @@
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    modifiedText = [[textField text] stringByReplacingCharactersInRange:range withString:string];
+    if (![string isEqualToString:@"\n"]) {
+        modifiedText = [[textField text] stringByReplacingCharactersInRange:range withString:string];
+    }
     
     if (modifiedText.length>2) {
         [self updateSearch];

@@ -1168,6 +1168,7 @@
                                    latitude, @"latitude",
                                    longitude, @"longitude",
                                    locationName, @"location",
+                                   mentionString, @"tagged",
                                    [UserService getUserID], @"user_id",
                                    [UserService getOAuthToken], @"access_token", nil];
     

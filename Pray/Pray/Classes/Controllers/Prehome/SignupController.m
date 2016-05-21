@@ -390,6 +390,10 @@
         if ([profilePassword.text length]>= 6 || [profilePassword.text length] == 0) {
             [SVProgressHUD showWithStatus:LocString(@"Updating your profile...") maskType:SVProgressHUDMaskTypeGradient];
             
+            if ([profileBlob.text isEqualToString:LocString(@"Write something about you (optional)")]) {
+                [profileBlob setText:@""];
+            }
+            
             [NetworkService updateProfileWithUsername:profileUsername.text firstName:profileFirstName.text lastName:profileLastName.text password:profilePassword.text email:profileEmail.text bio:profileBlob.text avatarImage:imageData];
         }
         else {
