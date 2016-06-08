@@ -1163,7 +1163,6 @@
     };
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   prayerText, @"body",
                                    religionType, @"religion",
                                    latitude, @"latitude",
                                    longitude, @"longitude",
@@ -1171,6 +1170,9 @@
                                    mentionString, @"tagged",
                                    [UserService getUserID], @"user_id",
                                    [UserService getOAuthToken], @"access_token", nil];
+    
+    if ([prayerText length]>0) [params setObject:prayerText forKey:@"body"];
+    else [params setObject:@"" forKey:@"body"];
     
     NSMutableArray *prayerImageArray = [[NSMutableArray alloc] init];
     if (prayerImage) {

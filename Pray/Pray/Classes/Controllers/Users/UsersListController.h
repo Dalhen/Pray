@@ -12,7 +12,7 @@
 @interface UsersListController : UIViewController <UITableViewDataSource, UITableViewDelegate, UserCellDelegate> {
     
     UITableView *mainTable;
-    NSArray *users;
+    NSMutableArray *users;
     NSString *headerTitle;
     
     CDUser *selectedUser;

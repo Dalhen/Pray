@@ -23,7 +23,7 @@
     self = [super init];
     if (self) {
         headerTitle = title;
-        users = [[NSArray alloc] initWithArray:usersList];
+        users = [[NSMutableArray alloc] initWithArray:usersList];
     }
     
     return self;
@@ -41,6 +41,15 @@
 - (void)viewWillAppear:(BOOL)animated {
     [self registerForEvents];
     [self.navigationController setNavigationBarHidden:YES];
+    
+    NSArray *currentUsers = [[NSArray alloc] initWithArray:users];
+    
+    for (NSInteger i = 0; i<[currentUsers count]; i++) {
+        CDUser *user = [currentUsers objectAtIndex:i];
+        CDUser *updatedUser = [DataAccess getUserForID:user.uniqueId];
+        [users replaceObjectAtIndex:i withObject:updatedUser];
+    }
+    
     [mainTable reloadData];
 }
 

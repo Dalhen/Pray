@@ -57,33 +57,33 @@
     [imageView setBackgroundColor:Colour_255RGB(80, 92, 109)];
     [imageView setContentMode:UIViewContentModeScaleAspectFill];
     [imageView setClipsToBounds:YES];
-    [self.contentView addSubview:imageView];
+    [self addSubview:imageView];
     
     blackMask = [[UIView alloc] initWithFrame:imageView.frame];
     [blackMask setBackgroundColor:Colour_BlackAlpha(0.3)];
-    [self.contentView addSubview:blackMask];
+    [self addSubview:blackMask];
     
     userAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(12*sratio, 8*sratio, 38*sratio, 38*sratio)];
     [userAvatar setRoundedToDiameter:38*sratio];
     [userAvatar setContentMode:UIViewContentModeScaleAspectFill];
-    [self.contentView addSubview:userAvatar];
+    [self addSubview:userAvatar];
     
     UIButton *userAction = [UIButton buttonWithType:UIButtonTypeCustom];
     [userAction setFrame:userAvatar.frame];
     [userAction addTarget:self action:@selector(showUser) forControlEvents:UIControlEventTouchUpInside];
-    [self.contentView addSubview:userAction];
+    [self addSubview:userAction];
     
     username = [[UILabel alloc] initWithFrame:CGRectMake(userAvatar.right + 10*sratio, 12*sratio, 250*sratio, 20*sratio)];
     username.font = [FontService systemFont:14*sratio];
     username.textColor = Colour_White;
     username.textAlignment = NSTextAlignmentLeft;
-    [self.contentView addSubview:username];
+    [self addSubview:username];
     
     timeAgo = [[UILabel alloc] initWithFrame:CGRectMake(username.left, username.bottom, 250*sratio,12*sratio)];
     timeAgo.font = [FontService systemFont:9*sratio];
     timeAgo.textColor = Colour_White;
     timeAgo.textAlignment = NSTextAlignmentLeft;
-    [self.contentView addSubview:timeAgo];
+    [self addSubview:timeAgo];
     
     textView = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake((self.screenWidth-280*sratio)/2, 64*sratio, 280*sratio, 200*sratio)];
     textView.numberOfLines = 8;
@@ -94,37 +94,37 @@
     [textView setTextAlignment:NSTextAlignmentCenter];
     //[textView setEnabledTextCheckingTypes:(NSTextCheckingTypeLink|NSTextCheckingTypeAddress|NSTextCheckingTypePhoneNumber)];
     [textView setDelegate:self];
-    [self.contentView addSubview:textView];
+    [self addSubview:textView];
     
     likesIcon = [[UIImageView alloc] initWithFrame:CGRectMake(18*sratio, prayerCellHeight - 38*sratio, 22*sratio, 20*sratio)];
     likesIcon.image = [UIImage imageNamed:@"likeIconOFF"];
-    [self.contentView addSubview:likesIcon];
+    [self addSubview:likesIcon];
     
     likesCount = [[UILabel alloc] initWithFrame:CGRectMake(likesIcon.right + 6*sratio, prayerCellHeight - 38*sratio, 0, 20*sratio)];
     likesCount.font = [FontService systemFont:13*sratio];
     likesCount.textColor = Colour_White;
-    [self.contentView addSubview:likesCount];
+    [self addSubview:likesCount];
     
     commentsIcon = [[UIImageView alloc] initWithFrame:CGRectMake(0, prayerCellHeight - 38*sratio, 22*sratio, 21*sratio)];
     commentsIcon.image = [UIImage imageNamed:@"commentsIcon"];
-    [self.contentView addSubview:commentsIcon];
+    [self addSubview:commentsIcon];
     
     commentsCount = [[UILabel alloc] initWithFrame:CGRectMake(commentsIcon.right, prayerCellHeight - 38*sratio, 0, 20*sratio)];
     commentsCount.font = [FontService systemFont:13*sratio];
     commentsCount.textColor = Colour_White;
-    [self.contentView addSubview:commentsCount];
+    [self addSubview:commentsCount];
     
     likeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [likeButton addTarget:self action:@selector(likeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    [self.contentView addSubview:likeButton];
+    [self addSubview:likeButton];
     
     likeListButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [likeListButton addTarget:self action:@selector(showLikesList) forControlEvents:UIControlEventTouchUpInside];
-    [self.contentView addSubview:likeListButton];
+    [self addSubview:likeListButton];
     
     commentButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [commentButton addTarget:self action:@selector(commentButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    [self.contentView addSubview:commentButton];
+    [self addSubview:commentButton];
     
 //    UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, prayerCellHeight-1, self.screenWidth, 1)];
 //    [separator setBackgroundColor:Colour_PrayDarkBlue];
@@ -135,13 +135,13 @@
     [religionType setContentMode:UIViewContentModeScaleAspectFit];
     //[religionType setRoundedToDiameter:38*sratio];
     //religionType.backgroundColor = Colour_PrayDarkBlueAlpha(0.95f);
-    [self.contentView addSubview:religionType];
+    [self addSubview:religionType];
     
     sharePrayerButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [sharePrayerButton setFrame:CGRectMake(self.screenWidth - 46*sratio, prayerCellHeight - 46*sratio, 38*sratio, 38*sratio)];
     [sharePrayerButton setImage:[UIImage imageNamed:@"shareIcon"] forState:UIControlStateNormal];
     [sharePrayerButton addTarget:self action:@selector(sharePrayer) forControlEvents:UIControlEventTouchUpInside];
-    [self.contentView addSubview:sharePrayerButton];
+    [self addSubview:sharePrayerButton];
 }
 
 
@@ -361,7 +361,7 @@
         [userAvatar setHidden:YES];
         [username setHidden:YES];
         
-        [delegate sharePrayerImage:[self imageFromUIView:self.contentView]];
+        [delegate sharePrayerImage:[self imageFromUIView:self]];
         
         [likesIcon setHidden:NO];
         [likesCount setHidden:NO];

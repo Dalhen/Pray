@@ -75,8 +75,8 @@
 }
 
 - (BOOL)isOAuthExpired {
-    //NSLog(@"NOW: %@", [NSDate dateWithTimeIntervalSinceNow:0]);
-    //NSLog(@"EXP: %@", [self getOAuthExpiracyDate]);
+    NSLog(@"NOW: %@", [NSDate dateWithTimeIntervalSinceNow:0]);
+    NSLog(@"EXP: %@", [self getOAuthExpiracyDate]);
     
     if ([[NSDate dateWithTimeIntervalSinceNow:0] compare:[self getOAuthExpiracyDate]] == NSOrderedAscending) {
         return NO;
@@ -165,6 +165,8 @@
 }
 
 - (NSString *)getUserID {
+    NSLog(@"My user ID: %@", [[NSUserDefaults standardUserDefaults] objectForKey:@"userID"]);
+    
     return [NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"userID"]];
 }
 

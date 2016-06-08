@@ -102,6 +102,7 @@
     mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 56*sratio, self.view.screenWidth, self.view.screenHeight - 56*sratio)];
     [mainTable setBackgroundColor:Colour_255RGB(232, 232, 232)];
     [mainTable setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    [mainTable setSeparatorColor:Colour_Clear];
     [mainTable setScrollsToTop:YES];
     [mainTable setDelegate:self];
     [mainTable setDataSource:self];
@@ -297,10 +298,10 @@
         cell = [[PrayerCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"PrayerCell"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.leftUtilityButtons = nil;
+        cell.rightUtilityButtons = nil;
         cell.delegate = self;
     }
     
-    cell.rightUtilityButtons = [self cellRightButtonsForCurrentGroupCellAndPrayer:[prayers objectAtIndex:indexPath.row]];
     [cell updateWithPrayerObject:[prayers objectAtIndex:indexPath.row]];
     
     return cell;
@@ -312,6 +313,43 @@
 //    CDPrayer *prayer = [prayers objectAtIndex:indexPath.row];
 //    CommentsController *commentsController = [[CommentsController alloc] initWithPrayer:prayer andDisplayCommentsOnly:YES];
 //    [self.navigationController pushViewController:commentsController animated:YES];
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Return YES if you want the specified item to be editable.
+    return YES;
+}
+
+- (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    CDPrayer *prayer = [prayers objectAtIndex:indexPath.row];
+    
+    if ([[prayer.creatorId stringValue] isEqualToString:[UserService getUserID]]) {
+        UITableViewRowAction *button = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"Delete" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
+                                        {
+                                            currentlyEditedCell = [tableView cellForRowAtIndexPath:indexPath];
+                                            deletePostAlert = [[UIAlertView alloc] initWithTitle:LocString(@"Deleting prayer?") message:LocString(@"Are you sure you want to delete your prayer? This action cannot be undone.") delegate:self cancelButtonTitle:LocString(@"No") otherButtonTitles:LocString(@"Yes, delete it!"), nil];
+                                            [deletePostAlert show];
+                                        }];
+        button.backgroundColor = Colour_255RGB(254, 74, 68);
+        return @[button];
+    }
+    else {
+        UITableViewRowAction *button = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"Report" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
+                                        {
+                                            currentlyEditedCell = [tableView cellForRowAtIndexPath:indexPath];
+                                            reportPostAlert = [[UIAlertView alloc] initWithTitle:LocString(@"Report a prayer") message:LocString(@"Are you sure you want to report this prayer?") delegate:self cancelButtonTitle:LocString(@"No") otherButtonTitles:LocString(@"Yes, report it!"), nil];
+                                            [reportPostAlert show];
+                                        }];
+        button.backgroundColor = Colour_255RGB(40, 155, 229);
+        return @[button];
+    }
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+//    if (editingStyle == UITableViewCellEditingStyleDelete) {
+//        //add code here for when you hit delete
+//    }
 }
 
 - (NSArray *)cellRightButtonsForCurrentGroupCellAndPrayer:(CDPrayer *)prayer {
@@ -332,36 +370,37 @@
 
 
 #pragma mark - SWTableViewCell Delegates
-// click event on right utility button
-- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index {
-    
-    currentlyEditedCell = cell;
-    CDPrayer *prayer = [prayers objectAtIndex:[[mainTable indexPathForCell:currentlyEditedCell] row]];
-    
-    if ([[prayer.creatorId stringValue] isEqualToString:[UserService getUserID]]) {
-        deletePostAlert = [[UIAlertView alloc] initWithTitle:LocString(@"Deleting prayer?") message:LocString(@"Are you sure you want to delete your prayer? This action cannot be undone.") delegate:self cancelButtonTitle:LocString(@"No") otherButtonTitles:LocString(@"Yes, delete it!"), nil];
-        [deletePostAlert show];
-    }
-    else {
-        reportPostAlert = [[UIAlertView alloc] initWithTitle:LocString(@"Report a prayer") message:LocString(@"Are you sure you want to report this prayer?") delegate:self cancelButtonTitle:LocString(@"No") otherButtonTitles:LocString(@"Yes, report it!"), nil];
-        [reportPostAlert show];
-    }
-}
+//// click event on right utility button
+//- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index {
+//    
+//    currentlyEditedCell = cell;
+//    CDPrayer *prayer = [prayers objectAtIndex:[[mainTable indexPathForCell:currentlyEditedCell] row]];
+//    
+//    if ([[prayer.creatorId stringValue] isEqualToString:[UserService getUserID]]) {
+//        deletePostAlert = [[UIAlertView alloc] initWithTitle:LocString(@"Deleting prayer?") message:LocString(@"Are you sure you want to delete your prayer? This action cannot be undone.") delegate:self cancelButtonTitle:LocString(@"No") otherButtonTitles:LocString(@"Yes, delete it!"), nil];
+//        [deletePostAlert show];
+//    }
+//    else {
+//        reportPostAlert = [[UIAlertView alloc] initWithTitle:LocString(@"Report a prayer") message:LocString(@"Are you sure you want to report this prayer?") delegate:self cancelButtonTitle:LocString(@"No") otherButtonTitles:LocString(@"Yes, report it!"), nil];
+//        [reportPostAlert show];
+//    }
+//}
 
-// utility button open/close event
-- (void)swipeableTableViewCell:(SWTableViewCell *)cell scrollingToState:(SWCellState)state {
-    
-}
-
-// prevent multiple cells from showing utilty buttons simultaneously
-- (BOOL)swipeableTableViewCellShouldHideUtilityButtonsOnSwipe:(SWTableViewCell *)cell {
-    return YES;
-}
-
-// prevent cell(s) from displaying left/right utility buttons
-- (BOOL)swipeableTableViewCell:(SWTableViewCell *)cell canSwipeToState:(SWCellState)state {
-    return YES;
-}
+//
+//// utility button open/close event
+//- (void)swipeableTableViewCell:(SWTableViewCell *)cell scrollingToState:(SWCellState)state {
+//    
+//}
+//
+//// prevent multiple cells from showing utilty buttons simultaneously
+//- (BOOL)swipeableTableViewCellShouldHideUtilityButtonsOnSwipe:(SWTableViewCell *)cell {
+//    return YES;
+//}
+//
+//// prevent cell(s) from displaying left/right utility buttons
+//- (BOOL)swipeableTableViewCell:(SWTableViewCell *)cell canSwipeToState:(SWCellState)state {
+//    return YES;
+//}
 
 
 #pragma mark - SWTableViewCell Actions

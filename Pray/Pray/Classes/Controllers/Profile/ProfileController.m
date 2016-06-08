@@ -693,9 +693,38 @@
 
 
 #pragma mark - Sharing
+#pragma mark - Sharing
 - (void)sharePrayerImage:(UIImage *)image {
-    UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:@[image] applicationActivities:nil];
-    [self presentViewController:controller animated:YES completion:nil];
+    sharedImage = image;
+    
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:LocString(@"Sharing") delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Instagram", @"Other apps", nil];
+    [actionSheet showInView:self.view];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        NSString *documentDirectory = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+        NSString *saveImagePath = [documentDirectory stringByAppendingPathComponent:@"Image.igo"];
+        NSData *imageData = UIImagePNGRepresentation(sharedImage);
+        [imageData writeToFile:saveImagePath atomically:YES];
+        
+        NSURL *fileURL=[NSURL fileURLWithPath:saveImagePath];
+        
+        //    NSURL *instagramURL = [NSURL URLWithString:@"instagram://location?id=1"];
+        //    if ([[UIApplication sharedApplication] canOpenURL:instagramURL]) {
+        //        [[UIApplication sharedApplication] openURL:instagramURL];
+        //    }
+        
+        self.documentInteractionController = [UIDocumentInteractionController interactionControllerWithURL:fileURL];
+        self.documentInteractionController.UTI = @"com.instagram.exclusivegram";
+        self.documentInteractionController.delegate = self;
+        [self.documentInteractionController presentOpenInMenuFromRect:CGRectZero inView:self.view animated:YES];
+    }
+    
+    if (buttonIndex == 1) {
+        UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:@[sharedImage] applicationActivities:nil];
+        [self presentViewController:controller animated:YES completion:nil];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

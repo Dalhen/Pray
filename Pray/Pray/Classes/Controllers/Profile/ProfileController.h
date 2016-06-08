@@ -10,7 +10,7 @@
 #import "PrayerCell.h"
 
 
-@interface ProfileController : UIViewController <PrayerCellDelegate, UITableViewDataSource, UITableViewDelegate, SWTableViewCellDelegate> {
+@interface ProfileController : UIViewController <PrayerCellDelegate, UITableViewDataSource, UITableViewDelegate, SWTableViewCellDelegate, UIDocumentInteractionControllerDelegate, UIActionSheetDelegate> {
     
     CDUser *currentUser;
     
@@ -38,7 +38,11 @@
     UIAlertView *reportPostAlert;
     
     UIButton *followButton;
+    
+    UIImage *sharedImage;
 }
+
+@property (nonatomic, strong) UIDocumentInteractionController *documentInteractionController;
 
 - (id)initWithUser:(CDUser *)aUser;
 

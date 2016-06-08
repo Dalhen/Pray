@@ -123,6 +123,7 @@
 - (void)facebookConnect {
     
     FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
+    [login logOut];
     [login logInWithReadPermissions:@[@"public_profile", @"email"]
                  fromViewController:self
                             handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
@@ -152,13 +153,14 @@
 }
 
 - (void)facebookLoginSuccessWithUserObject:(NSDictionary *)userObject {
+    NSString *avatarURL = [[[userObject objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"];
     [NetworkService facebookSignupWithFacebookID:[userObject objectForKey:@"id"]
                                         username:[NSString stringWithFormat:@"%@%@", [userObject objectForKey:@"first_name"], [[userObject objectForKey:@"last_name"] substringToIndex:1]]
                                        firstName:[userObject objectForKey:@"first_name"]
                                         lastName:[userObject objectForKey:@"last_name"]
                                            email:[userObject objectForKey:@"email"]
                                              bio:[userObject objectForKey:@"bio"]
-                                       avatarURL:[userObject objectForKey:@"picture"]];
+                                       avatarURL:avatarURL];
 }
 
 - (void)facebookLoginFailed {

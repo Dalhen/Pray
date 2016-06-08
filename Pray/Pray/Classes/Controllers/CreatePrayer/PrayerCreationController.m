@@ -98,6 +98,8 @@
     NSDictionary* info = [notification userInfo];
     CGSize keyBoardSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
     keyboardSize = keyBoardSize;
+    
+    [prayerImage setHeight:self.view.screenHeight - 56*sratio - keyBoardSize.height];
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification {
@@ -210,6 +212,8 @@
 #pragma mark - Colors creation
 - (UIImage *)imageFromRandomColor {
     UIColor *color = [self generateRandomColor];
+    
+    self.view.backgroundColor = color;
     
     CGRect rect = CGRectMake(0, 0, 1, 1);
     UIGraphicsBeginImageContext(rect.size);
