@@ -140,7 +140,7 @@
                                          startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
                                              if (!error)
                                              {
-                                                 [self facebookLoginSuccessWithUserObject:result];
+                                                 [self facebookLoginSuccessWithUserObject:result andFacebookToken:[[FBSDKAccessToken currentAccessToken] tokenString]];
                                              }
                                              else
                                              {
@@ -152,9 +152,10 @@
                             }];
 }
 
-- (void)facebookLoginSuccessWithUserObject:(NSDictionary *)userObject {
+- (void)facebookLoginSuccessWithUserObject:(NSDictionary *)userObject andFacebookToken:(NSString *)fbToken {
     NSString *avatarURL = [[[userObject objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"];
     [NetworkService facebookSignupWithFacebookID:[userObject objectForKey:@"id"]
+                                   facebookToken:fbToken
                                         username:[NSString stringWithFormat:@"%@%@", [userObject objectForKey:@"first_name"], [[userObject objectForKey:@"last_name"] substringToIndex:1]]
                                        firstName:[userObject objectForKey:@"first_name"]
                                         lastName:[userObject objectForKey:@"last_name"]

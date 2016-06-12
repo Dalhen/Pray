@@ -367,6 +367,7 @@
 }
 
 - (void)facebookSignupWithFacebookID:(NSString *)facebookId
+                       facebookToken:(NSString *)facebookToken
                             username:(NSString *)username
                            firstName:(NSString *)firstName
                             lastName:(NSString *)lastName
@@ -402,6 +403,7 @@
                                    firstName, @"first_name",
                                    lastName, @"last_name",
                                    email, @"email",
+                                   facebookToken, @"facebook_token",
                                    [UserService getOAuthToken], @"access_token", nil];
     
     if (avatarURL) {

@@ -62,7 +62,7 @@
                   moduleName = "Pray"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Jason/Documents/Pray/Pray/Pray/Classes/Controllers/Comments/CommentsController.m"
-                  timestampString = "487115354.488199"
+                  timestampString = "487333448.374394"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "259"
@@ -77,7 +77,7 @@
                   moduleName = "Pray"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Jason/Documents/Pray/Pray/Pray/Classes/Controllers/Comments/CommentsController.m"
-                  timestampString = "487115354.488614"
+                  timestampString = "487333448.374535"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "259"
@@ -142,11 +142,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pray/Singletons/JXNetworkService.m"
-            timestampString = "470702048.452045"
+            timestampString = "487202000.01855"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1127"
-            endingLineNumber = "1127"
+            startingLineNumber = "1129"
+            endingLineNumber = "1129"
             landmarkName = "-getUsersFollowedByUserWithID:"
             landmarkType = "5">
          </BreakpointContent>
@@ -158,11 +158,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pray/Singletons/JXNetworkService.m"
-            timestampString = "478635741.399383"
+            timestampString = "487202000.01855"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "682"
-            endingLineNumber = "682"
+            startingLineNumber = "684"
+            endingLineNumber = "684"
             landmarkName = "-reportPostWithID:"
             landmarkType = "5">
          </BreakpointContent>
@@ -174,11 +174,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pray/Singletons/JXNetworkService.m"
-            timestampString = "478635742.398085"
+            timestampString = "487202000.01855"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "677"
-            endingLineNumber = "677"
+            startingLineNumber = "679"
+            endingLineNumber = "679"
             landmarkName = "-reportPostWithID:"
             landmarkType = "5">
          </BreakpointContent>
@@ -222,12 +222,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pray/Singletons/JXNetworkService.m"
-            timestampString = "487110620.124953"
+            timestampString = "487202000.01855"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "385"
-            endingLineNumber = "385"
-            landmarkName = "-facebookSignupWithFacebookID:username:firstName:lastName:email:bio:avatarURL:"
+            startingLineNumber = "386"
+            endingLineNumber = "386"
+            landmarkName = "-facebookSignupWithFacebookID:facebookToken:username:firstName:lastName:email:bio:avatarURL:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -238,12 +238,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pray/Singletons/JXNetworkService.m"
-            timestampString = "487110620.999096"
+            timestampString = "487202000.01855"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "390"
-            endingLineNumber = "390"
-            landmarkName = "-facebookSignupWithFacebookID:username:firstName:lastName:email:bio:avatarURL:"
+            startingLineNumber = "391"
+            endingLineNumber = "391"
+            landmarkName = "-facebookSignupWithFacebookID:facebookToken:username:firstName:lastName:email:bio:avatarURL:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -254,12 +254,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pray/Singletons/JXNetworkService.m"
-            timestampString = "487110623.09911"
+            timestampString = "487202000.01855"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "396"
-            endingLineNumber = "396"
-            landmarkName = "-facebookSignupWithFacebookID:username:firstName:lastName:email:bio:avatarURL:"
+            startingLineNumber = "397"
+            endingLineNumber = "397"
+            landmarkName = "-facebookSignupWithFacebookID:facebookToken:username:firstName:lastName:email:bio:avatarURL:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -270,11 +270,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pray/Classes/Controllers/Prehome/WelcomeController.m"
-            timestampString = "487111431.552531"
+            timestampString = "487202000.01855"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "167"
-            endingLineNumber = "167"
+            startingLineNumber = "168"
+            endingLineNumber = "168"
             landmarkName = "-facebookLoginFailed"
             landmarkType = "5">
          </BreakpointContent>
@@ -302,12 +302,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pray/Singletons/JXNetworkService.m"
-            timestampString = "487111926.875427"
+            timestampString = "487202000.01855"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "415"
-            endingLineNumber = "415"
-            landmarkName = "-facebookSignupWithFacebookID:username:firstName:lastName:email:bio:avatarURL:"
+            startingLineNumber = "417"
+            endingLineNumber = "417"
+            landmarkName = "-facebookSignupWithFacebookID:facebookToken:username:firstName:lastName:email:bio:avatarURL:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -324,22 +324,6 @@
             startingLineNumber = "361"
             endingLineNumber = "361"
             landmarkName = "-cellRightButtonsForCurrentGroupCellAndPrayer:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Pray/Singletons/JXNetworkService.m"
-            timestampString = "487115097.776284"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1182"
-            endingLineNumber = "1182"
-            landmarkName = "-postPrayerWithImage:text:religionType:withMentionString:latitude:longitude:andLocationName:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

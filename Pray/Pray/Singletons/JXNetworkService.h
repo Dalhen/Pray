@@ -49,6 +49,7 @@
                avatarImage:(NSData *)avatarImage;
 
 - (void)facebookSignupWithFacebookID:(NSString *)facebookId
+                       facebookToken:(NSString *)facebookToken
                             username:(NSString *)username
                            firstName:(NSString *)firstName
                             lastName:(NSString *)lastName
