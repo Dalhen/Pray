@@ -125,14 +125,12 @@
 - (void)viewWillAppear:(BOOL)animated {
     [self registerForEvents];
     [self.navigationController setNavigationBarHidden:YES];
-    
     [mainTable reloadRowsAtIndexPaths:[mainTable indexPathsForVisibleRows] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [self unRegisterForEvents];
 }
-
 
 #pragma mark - Side Navigation
 - (void)showLeftMenu {
@@ -224,7 +222,6 @@
     [self loadFeedAnimated:YES];
 }
 
-
 #pragma mark - Loading data
 - (void)refreshTriggered {
     [self loadFeedAnimated:NO];
@@ -246,7 +243,6 @@
     refreshing = NO;
     //maxPagesCount = [[notification.object objectForKey:@"page_count"] intValue];
     maxMomentPerPage = [notification.object count];
-    
     if (currentPage==0) {
         prayers = [[NSMutableArray alloc] initWithArray:notification.object];
         if ([refreshControl isRefreshing]) [refreshControl endRefreshing];
@@ -264,14 +260,12 @@
             if ([prayer.imageURL length]>0)[preFetchURLs addObject:prayer.imageURL];
         }
         [[SDWebImagePrefetcher sharedImagePrefetcher] prefetchURLs:preFetchURLs];
-        
         [prayers addObjectsFromArray:notification.object];
         if ([refreshControl isRefreshing]) [refreshControl endRefreshing];
         [mainTable reloadData];
     }
     
     [SVProgressHUD dismiss];
-    
     //[mainTable setHidden:([prayers count]==0)];
 }
 

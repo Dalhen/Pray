@@ -11,6 +11,7 @@
 #import "NSString+Extensions.h"
 #import "BaseView.h"
 #import "UIImageView+WebCache.h"
+#import "InviteFriends.h"
 
 @interface SignupController ()
 
@@ -333,8 +334,11 @@
                                  bio:[self validString:[data objectForKey:@"bio"]]
                                 city:[self validString:[data objectForKey:@"city"]]
                           profileURL:[self validString:[data objectForKey:@"avatar"]]];
-    
-    [AppDelegate displayMainView];
+
+    InviteFriends *signinController = [[InviteFriends alloc] init];
+    [self.navigationController pushViewController:signinController animated:YES];
+
+//    [AppDelegate displayMainView];
     
 //    LoginController *loginController = [[LoginController alloc] initWithEmail:profileEmail.text andPassword:profilePassword.text];
 //    [self.navigationController setViewControllers:@[[self.navigationController.viewControllers objectAtIndex:0], loginController] animated:YES];

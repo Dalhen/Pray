@@ -133,6 +133,11 @@
     [self.window makeKeyAndVisible];
 }
 
+-(void)displayinvitefriends{
+    
+}
+
+
 - (void)displayMainView {
     self.leftMenuViewController = [[LeftMenuController alloc] init];
     FeedController *feedController = [[FeedController alloc] init];

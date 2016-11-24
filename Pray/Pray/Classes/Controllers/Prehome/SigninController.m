@@ -8,7 +8,7 @@
 
 #import "SigninController.h"
 #import "BaseView.h"
-
+#import "InviteFriends.h"
 @interface SigninController ()
 
 @end
@@ -152,7 +152,10 @@
                           profileURL:[self validString:[data objectForKey:@"avatar"]]];
     
     [AppDelegate launchPushNotifications];
-    [AppDelegate displayMainView];
+//    [AppDelegate displayMainView];
+    InviteFriends *signinController = [[InviteFriends alloc] init];
+    [self.navigationController pushViewController:signinController animated:YES];
+
 }
 
 - (void)loginFailed {

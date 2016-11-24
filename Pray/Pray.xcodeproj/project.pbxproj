@@ -225,6 +225,7 @@
 		96EB6CE01B6D053700ADA3AB /* avatarEmpty@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96EB6CDF1B6D053700ADA3AB /* avatarEmpty@2x.png */; };
 		96EDDFD51C0B42DA000FB8E1 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96EDDFD31C0B42DA000FB8E1 /* Fabric.framework */; };
 		96EDDFD61C0B42DA000FB8E1 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96EDDFD41C0B42DA000FB8E1 /* Crashlytics.framework */; };
+		EBEDFF881DE708BE00E9F2BB /* InviteFriends.m in Sources */ = {isa = PBXBuildFile; fileRef = EBEDFF871DE708BE00E9F2BB /* InviteFriends.m */; };
 		FC6612071BBBDB760048033E /* atheismIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FC6611F71BBBDB760048033E /* atheismIcon@2x.png */; };
 		FC6612081BBBDB760048033E /* bahaiIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FC6611F81BBBDB760048033E /* bahaiIcon@2x.png */; };
 		FC6612091BBBDB760048033E /* buddhismIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FC6611F91BBBDB760048033E /* buddhismIcon@2x.png */; };
@@ -662,6 +663,8 @@
 		96EB6CDF1B6D053700ADA3AB /* avatarEmpty@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avatarEmpty@2x.png"; sourceTree = "<group>"; };
 		96EDDFD31C0B42DA000FB8E1 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		96EDDFD41C0B42DA000FB8E1 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		EBEDFF861DE7089B00E9F2BB /* InviteFriends.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InviteFriends.h; sourceTree = "<group>"; };
+		EBEDFF871DE708BE00E9F2BB /* InviteFriends.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InviteFriends.m; sourceTree = "<group>"; };
 		FC6611F71BBBDB760048033E /* atheismIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "atheismIcon@2x.png"; sourceTree = "<group>"; };
 		FC6611F81BBBDB760048033E /* bahaiIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bahaiIcon@2x.png"; sourceTree = "<group>"; };
 		FC6611F91BBBDB760048033E /* buddhismIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buddhismIcon@2x.png"; sourceTree = "<group>"; };
@@ -1286,6 +1289,7 @@
 		96A5580C1B5A6D4F0073A4FE /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				EBEDFF851DE7087500E9F2BB /* invitefriends */,
 				9634F3291B696074002EFD2B /* Prehome */,
 				9634F3231B696074002EFD2B /* Feed */,
 				96ACF7811B8157CB007BAE4A /* CreatePrayer */,
@@ -1634,6 +1638,15 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		EBEDFF851DE7087500E9F2BB /* invitefriends */ = {
+			isa = PBXGroup;
+			children = (
+				EBEDFF861DE7089B00E9F2BB /* InviteFriends.h */,
+				EBEDFF871DE708BE00E9F2BB /* InviteFriends.m */,
+			);
+			name = invitefriends;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1889,6 +1902,7 @@
 				9634F3351B696074002EFD2B /* SigninController.m in Sources */,
 				967AD4681B65701C00001B26 /* NSData+ImageContentType.m in Sources */,
 				96A5591B1B5A6D4F0073A4FE /* JXImageCache.m in Sources */,
+				EBEDFF881DE708BE00E9F2BB /* InviteFriends.m in Sources */,
 				967AD4851B65701C00001B26 /* UIProgressView+AFNetworking.m in Sources */,
 				96A558C81B5A6D4F0073A4FE /* UIImage+Grayscale.m in Sources */,
 				96A558B31B5A6D4F0073A4FE /* NSDictionary+KeyValuePair.m in Sources */,
