@@ -1685,6 +1685,7 @@
 					96A5577B1B5A6C690073A4FE = {
 						CreatedOnToolsVersion = 6.4;
 						DevelopmentTeam = E888NAK43S;
+						ProvisioningStyle = Automatic;
 					};
 					96A557971B5A6C690073A4FE = {
 						CreatedOnToolsVersion = 6.4;
@@ -2082,6 +2083,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2100,7 +2102,7 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.religion.pray;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "66c6117f-86b3-4077-8721-0461c27b8d97";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -2110,6 +2112,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Religion America Inc. (E888NAK43S)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2128,7 +2131,7 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.religion.pray;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "de5ded64-d430-4030-baf9-e462098dd999";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

@@ -562,8 +562,10 @@
 - (void)sharePrayerImage:(UIImage *)image {
     sharedImage = image;
     
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:LocString(@"Sharing") delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Instagram", @"Other apps", nil];
-    [actionSheet showInView:self.view];
+    UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:@[sharedImage] applicationActivities:nil];
+    [self presentViewController:controller animated:YES completion:nil];
+   // UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:LocString(@"Sharing") delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Instagram", @"Other apps", nil];
+   // [actionSheet showInView:self.view];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
