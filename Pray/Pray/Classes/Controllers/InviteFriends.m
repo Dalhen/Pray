@@ -24,59 +24,58 @@
 @implementation InviteFriends
 
 - (void)loadView {
-    self.view = [[BaseView alloc] init];
+   self.view = [[BaseView alloc] init];
     [self setupLayout];
 }
 
 - (void)setupLayout {
-    
     UIImageView *backImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"backgroundWelcome.jpg"]];
     [backImage setFrame:self.view.frame];
     [backImage setContentMode:UIViewContentModeScaleAspectFill];
     [self.view addSubview:backImage];
     
-//    logoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"prayLogo"]];
-//    [logoImage setFrame:CGRectMake(0, 110*sratio, 84*sratio, 88*sratio)];
-//    [logoImage setContentMode:UIViewContentModeCenter];
-//    logoImage.alpha = 0;
-//    [self.view addSubview:logoImage];
-//    [logoImage centerHorizontallyInSuperView];
-//    
-//    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20*sratio, logoImage.bottom + 18*sratio, self.view.screenWidth - 40*sratio, 50*sratio)];
-//    [titleLabel setFont:[FontService systemFont:15*sratio]];
-//    [titleLabel setTextColor:Colour_White];
-//    [titleLabel setTextAlignment:NSTextAlignmentCenter];
-//    [titleLabel setText:LocString(@"Different Beliefs\nCommon Prayers")];
-//    [titleLabel setNumberOfLines:2];
-//    logoImage.alpha = 0;
-//    [self.view addSubview:titleLabel];
+    logoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"prayLogo.png"]];
+    [logoImage setFrame:CGRectMake(0, 110*sratio, 84*sratio, 88*sratio)];
+    [logoImage setContentMode:UIViewContentModeCenter];
+    logoImage.alpha = 0;
+    [self.view addSubview:logoImage];
+    [logoImage centerHorizontallyInSuperView];
+    
+    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20*sratio, logoImage.bottom + 18*sratio, self.view.screenWidth - 40*sratio, 50*sratio)];
+    [titleLabel setFont:[FontService systemFont:15*sratio]];
+    [titleLabel setTextColor:Colour_White];
+    [titleLabel setTextAlignment:NSTextAlignmentCenter];
+    [titleLabel setText:LocString(@"Different Beliefs\nCommon Prayers")];
+    [titleLabel setNumberOfLines:2];
+    logoImage.alpha = 0;
+    [self.view addSubview:titleLabel];
     
     bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.screenHeight, self.view.screenWidth, 208*sratio)];
     [bottomView setBackgroundColor:Colour_255RGB(38, 41, 50)];
     [self.view addSubview:bottomView];
-
-    NSLog(@"arrive a la creatoin du bouton");
+    
     UIButton *friendsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [friendsButton setFrame:CGRectMake(0, 110*sratio, 84*sratio, 88*sratio)];
-    [friendsButton setTitle:LocString(@"friends LOGIN") forState:UIControlStateNormal];
+    [friendsButton setFrame:CGRectMake(0, 26*sratio, 178*sratio, 40*sratio)];
+    [friendsButton setTitle:LocString(@"SIGN UP") forState:UIControlStateNormal];
     [friendsButton setTitleColor:Colour_White forState:UIControlStateNormal];
     [friendsButton.titleLabel setFont:[FontService systemFont:13*sratio]];
-    [friendsButton setBackgroundColor:Colour_255RGB(89, 117, 177)];
+    [friendsButton setBackgroundColor:Colour_PrayBlue];
     [friendsButton addTarget:self action:@selector(friendsConnect) forControlEvents:UIControlEventTouchUpInside];
     [friendsButton.layer setCornerRadius:5*sratio];
-    [self.view addSubview:friendsButton];
+    [bottomView addSubview:friendsButton];
     [friendsButton centerHorizontallyInSuperView];
     
     UIButton *ContinueButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [ContinueButton setFrame:CGRectMake(0, 350*sratio, 84*sratio, 88*sratio)];
-    [ContinueButton setTitle:LocString(@"Continue") forState:UIControlStateNormal];
+    [ContinueButton setFrame:CGRectMake(0, friendsButton.bottom + 28*sratio, 178*sratio, 40*sratio)];
+    [ContinueButton setTitle:LocString(@"LOG IN") forState:UIControlStateNormal];
     [ContinueButton setTitleColor:Colour_White forState:UIControlStateNormal];
     [ContinueButton.titleLabel setFont:[FontService systemFont:13*sratio]];
-    [ContinueButton setBackgroundColor:Colour_255RGB(89, 117, 177)];
+    [ContinueButton setBackgroundColor:Colour_255RGB(64, 67, 79)];
     [ContinueButton addTarget:self action:@selector(Continue) forControlEvents:UIControlEventTouchUpInside];
     [ContinueButton.layer setCornerRadius:5*sratio];
-    [self.view addSubview:ContinueButton];
+    [bottomView addSubview:ContinueButton];
     [ContinueButton centerHorizontallyInSuperView];
+
 }
 
 -(void)Continue{
