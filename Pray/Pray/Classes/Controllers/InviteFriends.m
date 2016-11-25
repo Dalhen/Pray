@@ -24,67 +24,57 @@
 @implementation InviteFriends
 
 - (void)loadView {
-   self.view = [[BaseView alloc] init];
+    self.view = [[BaseView alloc] init];
     [self setupLayout];
 }
 
+
 - (void)setupLayout {
+    
     UIImageView *backImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"backgroundWelcome.jpg"]];
     [backImage setFrame:self.view.frame];
     [backImage setContentMode:UIViewContentModeScaleAspectFill];
     [self.view addSubview:backImage];
     
-    logoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"prayLogo.png"]];
-    [logoImage setFrame:CGRectMake(0, 110*sratio, 84*sratio, 88*sratio)];
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.screenWidth, self.view.screenHeight)];
+    [scrollView setContentSize:CGSizeMake(self.view.screenWidth, self.view.screenHeight)];
+    [self.view addSubview:scrollView];
+    
+   logoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"prayLogo"]];
+    [logoImage setFrame:CGRectMake(0, 110*sratio, 90*sratio, 96*sratio)];
     [logoImage setContentMode:UIViewContentModeCenter];
-    logoImage.alpha = 0;
-    [self.view addSubview:logoImage];
+    [scrollView addSubview:logoImage];
     [logoImage centerHorizontallyInSuperView];
     
-    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20*sratio, logoImage.bottom + 18*sratio, self.view.screenWidth - 40*sratio, 50*sratio)];
-    [titleLabel setFont:[FontService systemFont:15*sratio]];
-    [titleLabel setTextColor:Colour_White];
-    [titleLabel setTextAlignment:NSTextAlignmentCenter];
-    [titleLabel setText:LocString(@"Different Beliefs\nCommon Prayers")];
-    [titleLabel setNumberOfLines:2];
-    logoImage.alpha = 0;
-    [self.view addSubview:titleLabel];
+    UIButton *loginButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [loginButton setFrame:CGRectMake(0, logoImage.bottom + 192*sratio, 176*sratio, 40*sratio)];
+    [loginButton setTitle:LocString(@"Invite my friends") forState:UIControlStateNormal];
+    [loginButton setTitleColor:Colour_White forState:UIControlStateNormal];
+    [loginButton.titleLabel setFont:[FontService systemFont:13*sratio]];
+    [loginButton setBackgroundColor:Colour_PrayBlue];
+    [loginButton addTarget:self action:@selector(friendsConnect) forControlEvents:UIControlEventTouchUpInside];
+    [loginButton.layer setCornerRadius:3.0f*sratio];
+    [scrollView addSubview:loginButton];
+    [loginButton centerHorizontallyInSuperView];
     
-    bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.screenHeight, self.view.screenWidth, 208*sratio)];
-    [bottomView setBackgroundColor:Colour_255RGB(38, 41, 50)];
-    [self.view addSubview:bottomView];
-    
-    UIButton *friendsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [friendsButton setFrame:CGRectMake(0, 26*sratio, 178*sratio, 40*sratio)];
-    [friendsButton setTitle:LocString(@"SIGN UP") forState:UIControlStateNormal];
-    [friendsButton setTitleColor:Colour_White forState:UIControlStateNormal];
-    [friendsButton.titleLabel setFont:[FontService systemFont:13*sratio]];
-    [friendsButton setBackgroundColor:Colour_PrayBlue];
-    [friendsButton addTarget:self action:@selector(friendsConnect) forControlEvents:UIControlEventTouchUpInside];
-    [friendsButton.layer setCornerRadius:5*sratio];
-    [bottomView addSubview:friendsButton];
-    [friendsButton centerHorizontallyInSuperView];
-    
-    UIButton *ContinueButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [ContinueButton setFrame:CGRectMake(0, friendsButton.bottom + 28*sratio, 178*sratio, 40*sratio)];
-    [ContinueButton setTitle:LocString(@"LOG IN") forState:UIControlStateNormal];
-    [ContinueButton setTitleColor:Colour_White forState:UIControlStateNormal];
-    [ContinueButton.titleLabel setFont:[FontService systemFont:13*sratio]];
-    [ContinueButton setBackgroundColor:Colour_255RGB(64, 67, 79)];
-    [ContinueButton addTarget:self action:@selector(Continue) forControlEvents:UIControlEventTouchUpInside];
-    [ContinueButton.layer setCornerRadius:5*sratio];
-    [bottomView addSubview:ContinueButton];
-    [ContinueButton centerHorizontallyInSuperView];
+    UIButton *resetButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [resetButton setFrame:CGRectMake(0, loginButton.bottom + 30*sratio, 220*sratio, 36*sratio)];
+    [resetButton setTitle:LocString(@"Continue to Pray") forState:UIControlStateNormal];
+    [resetButton setTitleColor:Colour_White forState:UIControlStateNormal];
+    [resetButton.titleLabel setFont:[FontService systemFont:13*sratio]];
+    [resetButton setBackgroundColor:Colour_255RGB(64, 67, 79)];
+    [resetButton addTarget:self action:@selector(Continue) forControlEvents:UIControlEventTouchUpInside];
+    [resetButton.layer setCornerRadius:5*sratio];
 
+    [scrollView addSubview:resetButton];
+    [resetButton centerHorizontallyInSuperView];
 }
 
 -(void)Continue{
     [AppDelegate displayMainView];
-
 }
 
 - (void)friendsConnect {
-    NSLog(@"Passe dans friendsconnect");
     UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:@[@"Join and pray with me on PRAY! Download the app here: https://itunes.apple.com/us/app/pray-for-iphone/id860868081?mt=8"] applicationActivities:nil];
     [self presentViewController:controller animated:YES completion:nil];
 }
@@ -92,8 +82,6 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-
-
 }
 
 

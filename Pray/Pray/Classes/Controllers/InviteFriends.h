@@ -21,6 +21,8 @@
     UIImageView *logoImage;
     UILabel *titleLabel;
     UIView *bottomView;
+    UITextField *emailField;
+    UITextField *passwordField;
 
 }
 

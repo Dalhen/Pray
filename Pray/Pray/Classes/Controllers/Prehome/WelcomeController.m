@@ -86,31 +86,8 @@
     [bottomView addSubview:loginButton];
     [loginButton centerHorizontallyInSuperView];
 
-
-
-//boutton de test pour aller sur l'ecran d'invitations d'amis
-    
-    
-//    UIButton *testButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [testButton setFrame:CGRectMake(0, registerButton.bottom + 27*sratio, 170*sratio, 40*sratio)];
-//    [testButton setTitle:LocString(@"TEST FRIENDS") forState:UIControlStateNormal];
-//    [testButton setTitleColor:Colour_White forState:UIControlStateNormal];
-//    [testButton.titleLabel setFont:[FontService systemFont:13*sratio]];
-//    [testButton setBackgroundColor:Colour_255RGB(64, 67, 79)];
-//    [testButton addTarget:self action:@selector(testfriends) forControlEvents:UIControlEventTouchUpInside];
-//    [testButton.layer setCornerRadius:5*sratio];
-//    [bottomView addSubview:testButton];
-//    [testButton centerHorizontallyInSuperView];
-
-
-
 }
 
--(void)testfriends{
-    NSLog(@"passe dans testfriends");
-    InviteFriends *signinController = [[InviteFriends alloc] init];
-    [self.navigationController pushViewController:signinController animated:YES];
-}
 - (void)viewWillAppear:(BOOL)animated {
     [self registerForEvents];
     
