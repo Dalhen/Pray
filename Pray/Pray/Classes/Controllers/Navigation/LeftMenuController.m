@@ -228,6 +228,15 @@
 - (void)showInviteSelector {
     
     UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:@[@"Join and pray with me on PRAY! Download the app here: https://itunes.apple.com/us/app/pray-for-iphone/id860868081?mt=8"] applicationActivities:nil];
+    NSArray *excludeActivities = @[UIActivityTypeAirDrop,
+                                   UIActivityTypePrint,
+                                   UIActivityTypeAssignToContact,
+                                   UIActivityTypeSaveToCameraRoll,
+                                   UIActivityTypeAddToReadingList,
+                                   UIActivityTypeCopyToPasteboard,
+                                   UIActivityTypeOpenInIBooks,
+                                   UIActivityTypePostToVimeo];
+    controller.excludedActivityTypes = excludeActivities;
     [self presentViewController:controller animated:YES completion:nil];
 }
 
