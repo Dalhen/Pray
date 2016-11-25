@@ -226,53 +226,11 @@
 
 #pragma mark - Invites
 - (void)showInviteSelector {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:LocString(@"Share the app by...") delegate:self cancelButtonTitle:LocString(@"Cancel") destructiveButtonTitle:nil otherButtonTitles:LocString(@"Text Message"), LocString(@"Email"), nil];
-    [actionSheet showInView:self.view];
+    
+    UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:@[@"Join and pray with me on PRAY! Download the app here: https://itunes.apple.com/us/app/pray-for-iphone/id860868081?mt=8"] applicationActivities:nil];
+    [self presentViewController:controller animated:YES completion:nil];
 }
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    switch (buttonIndex) {
-        case 0:
-            [self inviteWithText];
-            break;
-            
-        case 1:
-            [self inviteWithEmail];
-            break;
-            
-        default:
-            break;
-    }
-}
-
-- (void)inviteWithText {
-    
-    NSString *body = @"Join and pray with me on PRAY! Download the app here: https://itunes.apple.com/us/app/pray-for-iphone/id860868081?mt=8";
-    
-    MFMessageComposeViewController *messageComposer = [[MFMessageComposeViewController alloc] init];
-    [messageComposer setRecipients:@[]];
-    [messageComposer setBody:body];
-    messageComposer.messageComposeDelegate = self;
-    
-    [self presentViewController:messageComposer animated:YES completion:nil];
-}
-
-- (void)inviteWithEmail {
-    if ([MFMailComposeViewController canSendMail]) {
-        
-        MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
-        picker.mailComposeDelegate = self;
-        
-        [picker setSubject:@"Join me on PRAY App"];
-        NSString *emailBody = [NSString stringWithFormat:@"%@\n%@", @"Hi, I wanted to share PRAY with you. It's an app to share prayers all together. Here is the link to download it:", @"https://itunes.apple.com/us/app/pray-for-iphone/id860868081?mt=8"];
-        [picker setMessageBody:emailBody isHTML:YES];
-        
-        [self presentViewController:picker animated:YES completion:nil];
-    }
-    else {
-        [SVProgressHUD showErrorWithStatus:LocString(@"Please set an email on this phone before proceeding.")];
-    }
-}
 
 
 #pragma mark - MFMessage delegate

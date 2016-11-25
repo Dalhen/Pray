@@ -28,7 +28,6 @@
     [self setupLayout];
 }
 
-
 - (void)setupLayout {
     
     UIImageView *backImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"backgroundWelcome.jpg"]];
