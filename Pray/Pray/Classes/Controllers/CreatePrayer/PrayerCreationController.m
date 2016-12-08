@@ -728,6 +728,10 @@
     NSString *currentLatitude = [NSString stringWithFormat:@"%3.6f", currentLocation.coordinate.latitude];
     NSString *currentLongitude = [NSString stringWithFormat:@"%3.6f", currentLocation.coordinate.longitude];
     
+    //Pour pouvoir poster sans ajouter de text on met un character invisible
+    if ([prayerText.text  isEqual: @""])
+        prayerText.text = @"\u00a0";
+    
     [NetworkService postPrayerWithImage:imageData
                                    text:prayerText.text
                            religionType:[NSString stringWithFormat:@"%li", (long)religionType]
