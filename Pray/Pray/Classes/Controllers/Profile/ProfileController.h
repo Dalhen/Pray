@@ -8,9 +8,9 @@
 
 #import "BaseViewController.h"
 #import "PrayerCell.h"
+#import "PrayerCreationController.h"
 
-
-@interface ProfileController : UIViewController <PrayerCellDelegate, UITableViewDataSource, UITableViewDelegate, SWTableViewCellDelegate, UIDocumentInteractionControllerDelegate, UIActionSheetDelegate> {
+@interface ProfileController : UIViewController <PrayerCellDelegate, UITableViewDataSource, UITableViewDelegate, PrayerCreationDelegate, SWTableViewCellDelegate, UIDocumentInteractionControllerDelegate, UIActionSheetDelegate> {
     
     CDUser *currentUser;
     
@@ -38,7 +38,7 @@
     UIAlertView *reportPostAlert;
     
     UIButton *followButton;
-    
+    UIButton *addPrayerButton;
     UIImage *sharedImage;
 }
 

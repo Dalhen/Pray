@@ -53,9 +53,9 @@
     [menuButton setImage:[UIImage imageNamed:@"menuIcon"] forState:UIControlStateNormal];
     [menuButton addTarget:self action:@selector(showLeftMenu) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:menuButton];
-    
+   // CGRectMake(CGFloat x, <#CGFloat y#>, <#CGFloat width#>, <#CGFloat height#>)
     feedSelector = [UIButton buttonWithType:UIButtonTypeCustom];
-    [feedSelector setFrame:CGRectMake((self.view.screenWidth - 300*sratio)/2, 16*sratio, 200*sratio, 38*sratio)];
+    [feedSelector setFrame:CGRectMake((self.view.screenWidth - 250*sratio)/2, 16*sratio, 150*sratio, 38*sratio)];
     // [feedSelector setImage:[UIImage imageNamed:@"arrowDown"] forState:UIControlStateNormal];
     [feedSelector setTitle:LocString(@"Feed") forState:UIControlStateNormal];
     [feedSelector setTitleColor:Colour_255RGB(82, 82, 182) forState:UIControlStateNormal];

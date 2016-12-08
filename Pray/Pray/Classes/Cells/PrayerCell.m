@@ -16,7 +16,6 @@
 @synthesize prayer;
 @synthesize delegate;
 
-
 #pragma mark - Init
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -46,7 +45,6 @@
                     Colour_255RGB(106, 110, 128), //6a6e80
                     Colour_255RGB(123, 184, 113), //7bb871
                     nil];
-    
     return [randomColors objectAtIndex: arc4random() % [randomColors count]];
 }
 
@@ -341,12 +339,10 @@
     [delegate showLikesListForCell:self];
 }
 
-
 #pragma mark - Display user profile
 - (void)showUser {
     [delegate showUserForCell:self];
 }
-
 
 #pragma mark - Share Prayer
 - (void)sharePrayer {
@@ -382,7 +378,6 @@
     UIGraphicsEndImageContext();
     return image;
 }
-
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

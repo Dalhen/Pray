@@ -38,15 +38,31 @@
     self.view = [[UIView alloc] init];
     [self.view setBackgroundColor:Colour_White];
     [self.navigationController setNavigationBarHidden:YES];
-    
+   
     [self setupHeader];
     [self setupProfileHeader];
     [self setupTableView];
+    [self setupAddPrayerButton];
     [self loadUserInfoWithID:[currentUser.uniqueId stringValue]];
     [self loadUsersPrayersAnimated:YES];
 }
 
+#pragma mark - AddPrayer
+- (void)addPrayer {
+    PrayerCreationController *prayerController = [[PrayerCreationController alloc] init];
+    [prayerController setDelegate:self];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:prayerController];
+    [self presentViewController:navController animated:YES completion:nil];
+}
+- (void)setupAddPrayerButton {
+    addPrayerButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [addPrayerButton setFrame:CGRectMake((self.view.screenWidth - 128*sratio)/2, self.view.screenHeight - 60*sratio, 128*sratio, 39*sratio)];
+    [addPrayerButton setImage:[UIImage imageNamed:@"addPrayerButton"] forState:UIControlStateNormal];
+    [addPrayerButton addTarget:self action:@selector(addPrayer) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:addPrayerButton];
+}
 - (void)setupHeader {
+    
     if ([currentUser.uniqueId isEqualToNumber:[UserService getUserIDNumber]]) {
         UIButton *menuButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [menuButton setFrame:CGRectMake(10*sratio, 18*sratio, 40*sratio, 40*sratio)];

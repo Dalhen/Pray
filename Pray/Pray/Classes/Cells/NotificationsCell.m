@@ -29,19 +29,19 @@
 
 - (void)setupLayout {
     self.backgroundColor = Colour_White;
-    
+
     userAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(12*sratio, 14*sratio, 38*sratio, 38*sratio)];
     [userAvatar setRoundedToDiameter:38*sratio];
     [userAvatar setContentMode:UIViewContentModeScaleAspectFill];
     [self.contentView addSubview:userAvatar];
-    
+
     textLabel = [[UILabel alloc] initWithFrame:CGRectMake(userAvatar.right + 8*sratio, 0, 210*sratio, 66*sratio)];
     textLabel.font = [FontService systemFont:13*sratio];
     textLabel.textColor = Colour_255RGB(82, 82, 82);
     [textLabel setNumberOfLines:3];
     textLabel.textAlignment = NSTextAlignmentLeft;
     [self.contentView addSubview:textLabel];
-    
+
     timeAgo = [[UILabel alloc] initWithFrame:CGRectMake(self.screenWidth - 44*sratio, 0, 42*sratio, 66*sratio)];
     timeAgo.font = [FontService systemFont:8*sratio];
     timeAgo.textColor = Colour_255RGB(82, 82, 82);
@@ -69,11 +69,9 @@
     else {
         [userAvatar setImage:[UIImage imageNamed:@"emptyProfile"]];
     }
-    
     [textLabel setText:[notification objectForKey:@"body"]];
     [timeAgo setText:[notification objectForKey:@"time_ago"]];
 }
-
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

@@ -42,7 +42,6 @@
     [self addSubview:name];
 }
 
-
 #pragma mark - Data update
 - (void)setDetailsWithUserObject:(CDUser *)userObject {
     
