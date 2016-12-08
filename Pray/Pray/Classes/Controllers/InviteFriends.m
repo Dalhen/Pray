@@ -2,12 +2,11 @@
 //  InviteFriends.m
 //  Pray
 //
-//  Created by Clement on 24/11/2016.
+//  Created by Clement Hardelay on 24/11/2016.
 //  Copyright © 2016 Pray Ltd. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-
 #import "FeedController.h"
 #import "PKRevealController.h"
 #import "CommentsController.h"
@@ -39,7 +38,7 @@
     [scrollView setContentSize:CGSizeMake(self.view.screenWidth, self.view.screenHeight)];
     [self.view addSubview:scrollView];
     
-   logoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"prayLogo"]];
+    logoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"prayLogo"]];
     [logoImage setFrame:CGRectMake(0, 110*sratio, 90*sratio, 96*sratio)];
     [logoImage setContentMode:UIViewContentModeCenter];
     [scrollView addSubview:logoImage];
@@ -91,6 +90,4 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
 @end

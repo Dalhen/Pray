@@ -47,7 +47,6 @@
 }
 
 - (void)setupHeader {
-
     if ([currentUser.uniqueId isEqualToNumber:[UserService getUserIDNumber]]) {
         UIButton *menuButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [menuButton setFrame:CGRectMake(10*sratio, 18*sratio, 40*sratio, 40*sratio)];

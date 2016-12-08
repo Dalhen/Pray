@@ -15,13 +15,10 @@
 
 @implementation WebController
 
-
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 
 - (id)initWithURL:(NSString *)url {
     self = [super init];
@@ -31,7 +28,6 @@
     return self;
 }
 
-
 - (void)loadView {
     self.view = [[BaseView alloc] init];
     [self.view setBackgroundColor:Colour_White];
@@ -39,7 +35,6 @@
     [self setupLayout];
     [self setupHeader];
 }
-
 
 #pragma mark - Layout
 - (void)setupHeader {

@@ -13,6 +13,7 @@
 #import "ProfileController.h"
 #import "UsersListController.h"
 #import "SDWebImagePrefetcher.h"
+#import "NotificationsController.h"
 
 @interface FeedController ()
 
@@ -40,7 +41,7 @@
     
     [self setupHeader];
     [self setupTableView];
-    [self setupSwitchMenu];
+   // [self setupSwitchMenu];
     [self setupAddPrayerButton];
     [self loadFeedAnimated:YES];
 }
@@ -53,50 +54,79 @@
     [menuButton addTarget:self action:@selector(showLeftMenu) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:menuButton];
     
-    UIButton *feedSelector = [UIButton buttonWithType:UIButtonTypeCustom];
-    [feedSelector setFrame:CGRectMake((self.view.screenWidth - 200*sratio)/2, 16*sratio, 200*sratio, 38*sratio)];
-    [feedSelector setImage:[UIImage imageNamed:@"arrowDown"] forState:UIControlStateNormal];
-    [feedSelector setTitle:LocString(@"Discover") forState:UIControlStateNormal];
-    [feedSelector setTitleColor:Colour_255RGB(82, 82, 82) forState:UIControlStateNormal];
+    feedSelector = [UIButton buttonWithType:UIButtonTypeCustom];
+    [feedSelector setFrame:CGRectMake((self.view.screenWidth - 300*sratio)/2, 16*sratio, 200*sratio, 38*sratio)];
+    // [feedSelector setImage:[UIImage imageNamed:@"arrowDown"] forState:UIControlStateNormal];
+    [feedSelector setTitle:LocString(@"Feed") forState:UIControlStateNormal];
+    [feedSelector setTitleColor:Colour_255RGB(82, 82, 182) forState:UIControlStateNormal];
     [feedSelector.titleLabel setFont:[FontService systemFont:16*sratio]];
-    [feedSelector setImageEdgeInsets:UIEdgeInsetsMake(4*sratio, 140*sratio, 0, 0)];
+    //[feedSelector setImageEdgeInsets:UIEdgeInsetsMake(4*sratio, 140*sratio, 0, 0)];
     [feedSelector setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 10*sratio)];
-    [feedSelector addTarget:self action:@selector(switchMenuClicked) forControlEvents:UIControlEventTouchUpInside];
+    [feedSelector addTarget:self action:@selector(displayFeed) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:feedSelector];
     
+    followingSelector = [UIButton buttonWithType:UIButtonTypeCustom];
+    [followingSelector setFrame:CGRectMake((self.view.screenWidth - 80*sratio)/2, 16*sratio, 200*sratio, 38*sratio)];
+    [followingSelector setTitle:LocString(@"Following") forState:UIControlStateNormal];
+    [followingSelector setTitleColor:Colour_255RGB(82, 82, 82) forState:UIControlStateNormal];
+    [followingSelector.titleLabel setFont:[FontService systemFont:16*sratio]];
+    [followingSelector setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 10*sratio)];
+    [followingSelector addTarget:self action:@selector(displayFollowing) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:followingSelector];
+//    
+//    feedButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [feedButton setFrame:CGRectMake((self.view.screenWidth - 180*sratio)/2, 16*sratio, 200*sratio, 38*sratio)];
+//    [feedButton setTitle:LocString(@"Feed") forState:UIControlStateNormal];
+//    [feedButton setTitleColor:Colour_255RGB(111, 116, 132) forState:UIControlStateNormal];
+//    [feedButton setTitleColor:Colour_White forState:UIControlStateSelected];
+//    [feedButton.titleLabel setFont:[FontService systemFont:16*sratio]];
+//    [feedButton addTarget:self action:@selector(displayFollowing) forControlEvents:UIControlEventTouchUpInside];
+//    [feedButton setSelected:YES];
+//    [switchMenu addSubview:feedButton];
+//    
+//    followingButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [followingButton setFrame:CGRectMake(self.view.screenWidth/2, 0, self.view.screenWidth/2, 54*sratio)];
+//    [followingButton setTitle:LocString(@"Following") forState:UIControlStateNormal];
+//    [followingButton setTitleColor:Colour_255RGB(111, 116, 132) forState:UIControlStateNormal];
+//    [followingButton setTitleColor:Colour_White forState:UIControlStateSelected];
+//    [followingButton.titleLabel setFont:[FontService systemFont:16*sratio]];
+//    [followingButton addTarget:self action:@selector(displayFollowing) forControlEvents:UIControlEventTouchUpInside];
+//    [followingButton setSelected:NO];
+//    [switchMenu addSubview:followingButton];
+
     UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [searchButton setFrame:CGRectMake(self.view.screenWidth - 60*sratio, 14*sratio, 40*sratio, 40*sratio)];
+    [searchButton setFrame:CGRectMake(self.view.screenWidth - 40*sratio, 14*sratio, 40*sratio, 40*sratio)];
     [searchButton setImage:[UIImage imageNamed:@"searchIconGrey"] forState:UIControlStateNormal];
     [searchButton addTarget:self action:@selector(displaySearch) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:searchButton];
 }
-
-- (void)setupSwitchMenu {
-    switchMenu = [[UIView alloc] initWithFrame:CGRectMake(0, 56*sratio, self.view.screenWidth, 0)];
-    [switchMenu setBackgroundColor:Colour_255RGB(212, 212, 212)];
-    [switchMenu setClipsToBounds:YES];
-    [self.view addSubview:switchMenu];
-    
-    feedButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [feedButton setFrame:CGRectMake(0, 0, self.view.screenWidth/2, 54*sratio)];
-    [feedButton setTitle:LocString(@"Feed") forState:UIControlStateNormal];
-    [feedButton setTitleColor:Colour_255RGB(111, 116, 132) forState:UIControlStateNormal];
-    [feedButton setTitleColor:Colour_White forState:UIControlStateSelected];
-    [feedButton.titleLabel setFont:[FontService systemFont:16*sratio]];
-    [feedButton addTarget:self action:@selector(displayFeed) forControlEvents:UIControlEventTouchUpInside];
-    [feedButton setSelected:YES];
-    [switchMenu addSubview:feedButton];
-    
-    followingButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [followingButton setFrame:CGRectMake(self.view.screenWidth/2, 0, self.view.screenWidth/2, 54*sratio)];
-    [followingButton setTitle:LocString(@"Following") forState:UIControlStateNormal];
-    [followingButton setTitleColor:Colour_255RGB(111, 116, 132) forState:UIControlStateNormal];
-    [followingButton setTitleColor:Colour_White forState:UIControlStateSelected];
-    [followingButton.titleLabel setFont:[FontService systemFont:16*sratio]];
-    [followingButton addTarget:self action:@selector(displayFollowing) forControlEvents:UIControlEventTouchUpInside];
-    [followingButton setSelected:NO];
-    [switchMenu addSubview:followingButton];
-}
+//
+//- (void)setupSwitchMenu {
+//    switchMenu = [[UIView alloc] initWithFrame:CGRectMake(0, 56*sratio, self.view.screenWidth, 0)];
+//    [switchMenu setBackgroundColor:Colour_255RGB(212, 212, 212)];
+//    [switchMenu setClipsToBounds:YES];
+//    [self.view addSubview:switchMenu];
+//    
+//    feedButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [feedButton setFrame:CGRectMake(0, 0, self.view.screenWidth/2, 54*sratio)];
+//    [feedButton setTitle:LocString(@"Feed") forState:UIControlStateNormal];
+//    [feedButton setTitleColor:Colour_255RGB(111, 116, 132) forState:UIControlStateNormal];
+//    [feedButton setTitleColor:Colour_White forState:UIControlStateSelected];
+//    [feedButton.titleLabel setFont:[FontService systemFont:16*sratio]];
+//    [feedButton addTarget:self action:@selector(displayFeed) forControlEvents:UIControlEventTouchUpInside];
+//    [feedButton setSelected:YES];
+//    [switchMenu addSubview:feedButton];
+//    
+//    followingButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [followingButton setFrame:CGRectMake(self.view.screenWidth/2, 0, self.view.screenWidth/2, 54*sratio)];
+//    [followingButton setTitle:LocString(@"Following") forState:UIControlStateNormal];
+//    [followingButton setTitleColor:Colour_255RGB(111, 116, 132) forState:UIControlStateNormal];
+//    [followingButton setTitleColor:Colour_White forState:UIControlStateSelected];
+//    [followingButton.titleLabel setFont:[FontService systemFont:16*sratio]];
+//    [followingButton addTarget:self action:@selector(displayFollowing) forControlEvents:UIControlEventTouchUpInside];
+//    [followingButton setSelected:NO];
+//    [switchMenu addSubview:followingButton];
+//}
 
 - (void)setupTableView {
     mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 56*sratio, self.view.screenWidth, self.view.screenHeight - 56*sratio)];
@@ -211,6 +241,8 @@
     [followingButton setSelected:NO];
     showDiscover = YES;
     [self hideSwitchMenu];
+    [feedSelector setTitleColor:Colour_255RGB(82, 82, 182) forState:UIControlStateNormal];
+    [followingSelector setTitleColor:Colour_255RGB(82, 82, 82) forState:UIControlStateNormal];
     [self loadFeedAnimated:YES];
 }
 
@@ -218,12 +250,33 @@
     [feedButton setSelected:NO];
     [followingButton setSelected:YES];
     showDiscover = NO;
+    [feedSelector setTitleColor:Colour_255RGB(82, 82, 82) forState:UIControlStateNormal];
+    [followingSelector setTitleColor:Colour_255RGB(82, 82, 182) forState:UIControlStateNormal];
     [self hideSwitchMenu];
     [self loadFeedAnimated:YES];
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////
+//    UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"Pray"
+//                                                   message: @"You have new notifications !"
+//                                                  delegate: self
+//                                         cancelButtonTitle:@"Cancel"
+//                                         otherButtonTitles:@"GO",nil];
+//    [alert setTag:10];
+//    [alert show];
+
+- (void)loadNotificationsSuccess:(NSNotification *)notification {
+    NSLog(@"success");
+}
+
+- (void)loadNotifications {
+    [NetworkService loadNotifications];
+}
+
 #pragma mark - Loading data
 - (void)refreshTriggered {
+    [NetworkService loadNotifications];
+
     [self loadFeedAnimated:NO];
 }
 
@@ -274,7 +327,6 @@
     [SVProgressHUD dismiss];
     if ([refreshControl isRefreshing]) [refreshControl endRefreshing];
 }
-
 
 #pragma mark - UITableView dataSource & delegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -399,11 +451,10 @@
 
 #pragma mark - SWTableViewCell Actions
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    
     [(SWTableViewCell *)currentlyEditedCell hideUtilityButtonsAnimated:YES];
     
     CDPrayer *prayer = [prayers objectAtIndex:[[mainTable indexPathForCell:currentlyEditedCell] row]];
-    
+    UIViewController *controller;
     if (buttonIndex == 1) {
         if (alertView == reportPostAlert) {
             [SVProgressHUD showWithStatus:LocString(@"Reporting prayer...") maskType:SVProgressHUDMaskTypeGradient];
@@ -420,9 +471,13 @@
             [mainTable deleteRowsAtIndexPaths:@[[mainTable indexPathForCell:currentlyEditedCell]] withRowAnimation:UITableViewRowAnimationAutomatic];
             [mainTable endUpdates];
         }
+        else if (alertView.tag == 10)
+        {
+            controller = [[NotificationsController alloc] init];
+            [AppDelegate updateFrontViewControllerWithController:controller andFocus:YES];
+        }
     }
 }
-
 
 #pragma mark - UIScrollView delegates
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -443,7 +498,6 @@
         [self loadNextPrayers];
     }
 }
-
 
 #pragma mark - Like Post
 - (void)likeButtonClickedForCell:(PrayerCell *)cell {
@@ -557,6 +611,11 @@
     sharedImage = image;
     
     UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:@[sharedImage] applicationActivities:nil];
+    NSArray *excludeActivities = @[UIActivityTypeAirDrop,
+                                   UIActivityTypeAssignToContact,
+                                   UIActivityTypeAddToReadingList,
+                                   UIActivityTypePostToVimeo];
+    controller.excludedActivityTypes = excludeActivities;
     [self presentViewController:controller animated:YES completion:nil];
    // UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:LocString(@"Sharing") delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Instagram", @"Other apps", nil];
    // [actionSheet showInView:self.view];

@@ -96,6 +96,8 @@
 }
 
 - (void)launchPushNotifications {
+    
+    NSLog(@"passe dans laucnhpushnotificationls");
     // Register for Push Notitications, if running iOS 8
     if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]) {
         UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
@@ -105,7 +107,8 @@
                                                                                  categories:nil];
         [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
         [[UIApplication sharedApplication] registerForRemoteNotifications];
-    } else {
+    }
+    else {
         // Register for Push Notifications before iOS 8
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
                                                                                UIRemoteNotificationTypeAlert |
@@ -198,7 +201,7 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     //[PFPush handlePush:userInfo];
-    
+    NSLog(@"didreceiveremotenotification");
     //App was in the background
     if (application.applicationState == UIApplicationStateInactive || application.applicationState == UIApplicationStateBackground) {
         [self launchedFromNotification:[userInfo objectForKey:@"cdata"]];

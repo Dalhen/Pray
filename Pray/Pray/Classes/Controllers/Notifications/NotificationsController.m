@@ -2,7 +2,7 @@
 //  NotificationsController.m
 //  Pray
 //
-//  Created by Jason LAPIERRE on 17/08/2015.
+//  Created by Clement Hardelay on 17/08/2015.
 //  Copyright (c) 2015 Pray Ltd. All rights reserved.
 //
 
@@ -77,7 +77,6 @@
     [self unRegisterForEvents];
 }
 
-
 #pragma mark - Side Navigation
 - (void)showLeftMenu {
     if (self.navigationController.revealController.focusedController == self.navigationController.revealController.leftViewController)
@@ -89,7 +88,6 @@
         [self.navigationController.revealController showViewController:self.navigationController.revealController.leftViewController];
     }
 }
-
 
 #pragma mark - Events registration
 - (void)registerForEvents {
@@ -106,7 +104,6 @@
     Notification_Remove(JXNotification.FeedServices.GetPrayerDetailsFailed);
     Notification_RemoveObserver;
 }
-
 
 #pragma mark - Loading data
 - (void)refreshTriggered {
@@ -139,7 +136,6 @@
 - (void)loadNotificationsFailed {
     [SVProgressHUD showErrorWithStatus:LocString(@"We couldn't load the latest notifications for now. Please check your internet connection and try again.")];
 }
-
 
 #pragma mark - UITableView dataSource & delegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -204,7 +200,6 @@
     }
 }
 
-
 #pragma mark - PrayerDetails
 - (void)getPrayerDetailsForID:(NSString *)prayerId {
     [SVProgressHUD showWithStatus:LocString(@"Loading...") maskType:SVProgressHUDMaskTypeGradient];
@@ -222,7 +217,6 @@
 - (void)getPrayerDetailsFailed {
     [SVProgressHUD showErrorWithStatus:LocString(@"We couldn't load the prayer related to this notification. Please check your internet connection and try again.")];
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

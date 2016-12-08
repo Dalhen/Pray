@@ -18,7 +18,6 @@
 @synthesize iconOFF;
 @synthesize accessoryButton;
 
-
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
@@ -44,7 +43,6 @@
         [separator setBackgroundColor:Colour_255RGB(82, 82, 82)];
         [self.contentView addSubview:separator];
     }
-    
     return self;
 }
 

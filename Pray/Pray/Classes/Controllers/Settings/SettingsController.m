@@ -71,7 +71,6 @@
     [self unRegisterForEvents];
 }
 
-
 #pragma mark - Side Navigation
 - (void)showLeftMenu {
     if (self.navigationController.revealController.focusedController == self.navigationController.revealController.leftViewController)
@@ -84,7 +83,6 @@
     }
 }
 
-
 #pragma mark - Events registration
 - (void)registerForEvents {
     Notification_Observe(JXNotification.SettingsServices.GetSettingsSuccess, loadSettingsSuccess:);
@@ -96,7 +94,6 @@
     Notification_Remove(JXNotification.SettingsServices.GetSettingsFailed);
     Notification_RemoveObserver;
 }
-
 
 #pragma mark - Loading data
 - (void)loadSettings {
@@ -112,7 +109,6 @@
 - (void)loadSettingsFailed {
     [SVProgressHUD dismiss];
 }
-
 
 #pragma mark - UITableView dataSource & delegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -230,17 +226,17 @@
     if (indexPath.section == 0) {
         //Privacy
         if (indexPath.row == 0) {
-            WebController *webController = [[WebController alloc] initWithURL:@"http://www.google.com"];
+            WebController *webController = [[WebController alloc] initWithURL:@"http://www.getpray.com"];
             [self.navigationController pushViewController:webController animated:YES];
         }
         //Terms of Service
         else if (indexPath.row == 1) {
-            WebController *webController = [[WebController alloc] initWithURL:@"http://www.google.com"];
+            WebController *webController = [[WebController alloc] initWithURL:@"http://www.getpray.com"];
             [self.navigationController pushViewController:webController animated:YES];
         }
         //Learn More
         else if (indexPath.row == 2) {
-            WebController *webController = [[WebController alloc] initWithURL:@"http://www.google.com"];
+            WebController *webController = [[WebController alloc] initWithURL:@"http://www.getpray.com"];
             [self.navigationController pushViewController:webController animated:YES];
         }
         

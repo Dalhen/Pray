@@ -1,11 +1,11 @@
+////
+////  FeedController.h
+////  Pray
+////
+////  Created by Jason LAPIERRE on 29/07/2015.
+////  Copyright (c) 2015 Pray Ltd. All rights reserved.
+////
 //
-//  FeedController.h
-//  Pray
-//
-//  Created by Jason LAPIERRE on 29/07/2015.
-//  Copyright (c) 2015 Pray Ltd. All rights reserved.
-//
-
 #import "BaseViewController.h"
 #import "PrayerCell.h"
 #import "PrayerCreationController.h"
@@ -21,8 +21,12 @@
     BOOL showDiscover;
     BOOL displayingSwitchMenu;
     
-    NSMutableArray *prayers;
+    UIButton *feedSelector;
+    UIButton *followingSelector;
     
+    NSMutableArray *prayers;
+    NSArray *notifications;
+
     NSInteger currentPage;
     NSInteger maxMomentPerPage;
     NSInteger maxPagesCount;

@@ -27,10 +27,8 @@
 
 - (void)prepareForReuse {
     [super prepareForReuse];
-    
     [userAvatar setImage:[UIImage new]];
 }
-
 
 #pragma mark - Layout
 - (void)setupLayout {
@@ -104,7 +102,6 @@
     }
 }
 
-
 #pragma mark - Follow delegate
 - (void)followClicked:(id)sender {
     
@@ -123,12 +120,10 @@
     }
 }
 
-
 #pragma mark - Display user profile
 - (void)showUser {
     [delegate showUserForCell:self];
 }
-
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
